@@ -22,8 +22,12 @@ electrochemical system:
     instrumentation:
         - type: potentiostat
           supplier: Biologic
-        - type: mass spectrometry
+        - type: mass spectrometer
+          model: xyz
           supplier: Pfeiffer
+        - type: pH meter
+          model: Lab850
+          supplier: SI Analytics
     electrolyte:
         type: aq # aqueous = aq, non-aqueous=naq
         components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water
