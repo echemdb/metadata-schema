@@ -1,24 +1,27 @@
-# This file describes a figure from a publication containing electrochemical data
-# Sourec and curator should be provided
+# This file describes a figure from a publication containing electrochemical data.
+# For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
 # Figure description is optional. It is created automatically by the cv module of svgdigitizer
-version: 1
 
-source: 
+source:
+    version: 1
     doi: https://doi.org/10.1016/0039-6028(85)90985-9
     bib: Beden_1985_Voltammetric_833 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
     figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3
-    curve: First cycle # use a unique short description to identify the curve in the figure
+    curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. label, color, etc
     
 curator:
+    version: 1
     name: Albert Engstfeld
     orcid: https://orcid.org/0000-0002-9686-3948
     digitized: 2021-06-01 # YYYY-MM-DD
     
 figure description: #This section will be updated by module `CV`
+    version: 1
     linked measurements: null # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     comment: # Add whatever you think is important to understand the data
 
 electrochemical system:
+    version: 1
     instrumentation:
         - type: potentiostat
           supplier: Biologic
