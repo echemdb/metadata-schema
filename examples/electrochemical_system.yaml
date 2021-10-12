@@ -1,0 +1,82 @@
+# Description of the electrochemical system
+
+electrochemical system:
+    version: 1
+    instrumentation:
+        - type: potentiostat
+          supplier: Biologic
+        - type: mass spectrometer
+          model: xyz
+          supplier: Pfeiffer
+        - type: pH meter
+          model: Lab850
+          supplier: SI Analytics
+    electrolyte:
+        type: aq # aqueous = aq, non-aqueous=naq
+        components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water
+            - name: NaCl # can be trivia name, sum formula, etc
+              concentration:
+                  value: 0.1
+                  unit: M #[M, mM, µM, g kg-1, ...]
+              type: salt #
+              source:
+                  supplier: null
+                  LOT: 
+            - name: water
+              type: solvent
+              proportion:
+                  value: 50
+                  unit: volume percent
+              source:
+                  refinement: Sartorius Arium 611UV
+                  quality: ultrapure water
+                  total organic carbon: 
+                      value: 3
+                      unit: ppb
+            - name: ethanol
+              type: solvent
+              proportion:
+                  value: 50
+                  unit: volume percent
+            - name: sulfuric acid
+              type: acid
+              source:
+                  supplier: null
+                  LOT: 
+              concentration:
+                  value: 0.1
+                  unit: M #[M, mM, µM, g kg-1, ...] 
+        ph: 
+            value: 13
+            uncertainty: 0.1
+        temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
+            value: 298.15 
+            unit: K # [K, C, F]
+    electrodes:
+        configuration: 3 # number of electrodes
+        reference electrode:
+            type: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+            source:
+                supplier: SI Analytics
+        counter electrode:
+            material: Pt
+            crystallographic orientation: poly
+            shape: wire
+        working electrode:
+            material: Ni
+            crystallographic orientation: 111 # hkl, 100, 110, poly
+            source:
+                supplier: null
+                LOT: 
+            shape: # optional
+                type: cylinder # bead/sphere
+                height:
+                    value: 4
+                    unit: mm
+                diameter:
+                    value: 4
+                    unit: mm
+            geometric electrolyte contact area: 
+                value: null
+                unit: cm-2
+            preparation procedure: null # Short description of sample preparation. This can be very useful. :)
