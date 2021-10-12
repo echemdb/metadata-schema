@@ -14,8 +14,7 @@ electrochemical system:
     electrolyte:
         type: aq # aqueous = aq, non-aqueous=naq
         components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water
-            - name: NaCl # replace name by something generic, i.e., for a complex organic compound
-              sum formula:  NaCl
+            - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
                   unit: M #[M, mM, µM, g kg-1, ...]
@@ -24,7 +23,6 @@ electrochemical system:
                   supplier: null
                   LOT: 
             - name: water
-              sum formula: H2O
               type: solvent
               proportion:
                   value: 50
@@ -36,13 +34,11 @@ electrochemical system:
                       value: 3
                       unit: ppb
             - name: ethanol
-              sum formula: EtOH
               type: solvent
               proportion:
                   value: 50
                   unit: volume percent
             - name: sulfuric acid
-              sum formula: H2SO4
               type: acid
               source:
                   supplier: null
