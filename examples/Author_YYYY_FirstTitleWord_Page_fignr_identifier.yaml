@@ -19,7 +19,7 @@ figure description: #This section will be updated by module `CV`
     comment: # Add whatever you think is important to understand the data
 
 electrochemical system:
-    Diagnostics:
+    instrumentation:
         - type: potentiostat
           supplier: Biologic
         - type: mass spectrometry
