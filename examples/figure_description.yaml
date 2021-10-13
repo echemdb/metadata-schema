@@ -1,0 +1,6 @@
+# This file provides additional information on a figure from a publication containing electrochemical data.
+    
+figure description: #This section will be updated by module `CV`
+    version: 1
+    linked measurements: null # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
+    comment: # Add whatever you think is important to understand the data
