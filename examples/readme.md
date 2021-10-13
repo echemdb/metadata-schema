@@ -6,7 +6,7 @@ An example of a metadata file describing an electrochemical system is [electroch
 
 ## echemdb/website
 
-For the [echemdb/website]() project a metadata file named  [Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml.yaml)
+For the [echemdb/website]() project a metadata file named  [Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml)
 
 is required which consists of the yaml files:
 
