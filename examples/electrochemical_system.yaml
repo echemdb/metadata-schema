@@ -64,7 +64,7 @@ electrochemical system:
             shape: wire
         working electrode:
             material: Ni
-            crystallographic orientation: 111 # hkl, 100, 110, poly
+            crystallographic orientation: '111' # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise the zeroes will be stripped from '0001'
             source:
                 supplier: null
                 LOT: 
