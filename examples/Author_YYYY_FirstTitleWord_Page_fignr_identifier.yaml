@@ -22,6 +22,8 @@ figure description: #This section will be updated by module `svgdigitizer.electr
     linked measurements: null # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     comment: # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
 
+# Description of the electrochemical system
+
 electrochemical system:
     version: 1
     instrumentation:
@@ -39,7 +41,7 @@ electrochemical system:
             - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...]
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
               type: salt #
               source:
                   supplier: null
@@ -67,7 +69,7 @@ electrochemical system:
                   LOT: 
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...] 
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
         ph: 
             value: 13
             uncertainty: 0.1
@@ -102,3 +104,4 @@ electrochemical system:
                 value: null
                 unit: cm-2
             preparation procedure: null # Short description of sample preparation. This can be very useful. :)
+

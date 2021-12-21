@@ -17,7 +17,7 @@ electrochemical system:
             - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...]
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
               type: salt #
               source:
                   supplier: null
@@ -45,7 +45,7 @@ electrochemical system:
                   LOT: 
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...] 
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
         ph: 
             value: 13
             uncertainty: 0.1
