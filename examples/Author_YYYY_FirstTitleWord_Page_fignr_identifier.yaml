@@ -4,8 +4,10 @@
 
 source:
     version: 1
-    doi: 10.1016/0039-6028(85)90985-9 #only the number without preceeding doix or https:
-    bib: Beden_1985_Voltammetric_833 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
+    doi: 10.1016/0039-6028(85)90985-9 # only the number without preceeding doix or https:
+    url: https://github.com/echemdb/website # If the article does not have a DOI provide a link to a website
+    bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
+    techniques: XPS, CV, EIS, DEMS # provide a list of techniques used in the publication
     figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3
     curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. label, color, etc
     
@@ -19,6 +21,8 @@ figure description: #This section will be updated by module `svgdigitizer.electr
     version: 1
     linked measurements: null # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     comment: # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
+
+# Description of the electrochemical system
 
 electrochemical system:
     version: 1
@@ -37,7 +41,7 @@ electrochemical system:
             - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...]
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
               type: salt #
               source:
                   supplier: null
@@ -65,7 +69,7 @@ electrochemical system:
                   LOT: 
               concentration:
                   value: 0.1
-                  unit: M #[M, mM, µM, g kg-1, ...] 
+                  unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
         ph: 
             value: 13
             uncertainty: 0.1
@@ -100,3 +104,4 @@ electrochemical system:
                 value: null
                 unit: cm-2
             preparation procedure: null # Short description of sample preparation. This can be very useful. :)
+

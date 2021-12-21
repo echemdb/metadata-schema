@@ -2,7 +2,9 @@
 
 source:
     version: 1
-    doi: 10.1016/0039-6028(85)90985-9 #only the number without preceeding doix or https:
-    bib: Beden_1985_Voltammetric_833 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
+    doi: 10.1016/0039-6028(85)90985-9 # only the number without preceeding doix or https:
+    url: https://github.com/echemdb/website # If the article does not have a DOI provide a link to a website
+    bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
+    techniques: XPS, CV, EIS, DEMS # provide a list of techniques used in the publication
     figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3
     curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. label, color, etc
