@@ -22,6 +22,8 @@ electrochemical system:
               source:
                   supplier: null
                   LOT: 
+              purity:
+                  grade: # 
             - name: water
               type: solvent
               proportion:
@@ -29,7 +31,8 @@ electrochemical system:
                   unit: volume percent
               source:
                   refinement: Sartorius Arium 611UV
-                  quality: ultrapure water
+              purity: 
+                  grade: ultrapure water # qualitative description of the purity commonly used in the community
                   total organic carbon: 
                       value: 3
                       unit: ppb
@@ -38,7 +41,9 @@ electrochemical system:
               proportion:
                   value: 50
                   unit: volume percent
-            - name: sulfuric acid
+              purity: 
+                  grade: analytical grade # qualitative description of the purity commonly used in the community
+            - name: H2SO4
               type: acid
               source:
                   supplier: null
@@ -46,6 +51,18 @@ electrochemical system:
               concentration:
                   value: 0.1
                   unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+            - name: N2
+              type: gas
+              purity:
+                  grade: N5.0 # some genereic name
+              pressure:
+                  unit: 1
+                  value: bar # use 1 bar for saturated solutions
+              proportion:
+                  value: 100
+              flow:
+                  value: null
+                  unit: null
         ph: 
             value: 13
             uncertainty: 0.1
