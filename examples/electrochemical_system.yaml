@@ -97,7 +97,7 @@ electrochemical system:
                 value: null
                 unit: cm-2
             preparation procedure: null # Short description of sample preparation. This can be very useful. :)
-     electrochemical cell:
+    electrochemical cell:
         type: glass electrolysis cell
         components:: # list of components in contact with the electrolyte
             - name: glass
