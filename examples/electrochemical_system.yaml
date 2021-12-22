@@ -104,5 +104,6 @@ electrochemical system:
               part: cell
             - name: nafion
               part: membrane
-        cell description: # Freetext
+        cell description: # freetext description
+        cleaning procedure: storing in highly concentrated KOH and boiling in Milli-Q water # freetext description
         source: # URL where the design is published
