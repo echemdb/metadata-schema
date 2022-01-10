@@ -13,7 +13,37 @@ electrochemical system:
           supplier: SI Analytics
     electrolyte:
         type: aq # aqueous = aq, non-aqueous=naq
-        components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water
+        components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
+            - name: Name # This is a standard component entry. Some entries are related to certain types of components.
+              concentration:
+                  value: 1
+                  unit: mol / l
+              type: # salt, base, acid, solvent, gas, ...
+              source:
+                  supplier: # Company name
+                  LOT: # LOT number
+                  purity:
+                      grade: # analytical grade, 5N, etc
+                      total organic carbon: 
+                          value: 3
+                          unit: ppb
+                  refinement: 
+                      procedure: # Description of additional cleaning procedures post purchase
+                      purity: # puity after refinement
+                          grade: 6N 
+                          total organic carbon:
+                              value: 3
+                              unit: ppb
+              pressure:
+                  unit: 1
+                  value: bar # use 1 bar for saturated solutions
+              proportion:
+                  value: 100
+                  unit: volume percent
+              flow:
+                  value: null
+                  unit: null
+              comment: # text description
             - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
@@ -83,8 +113,10 @@ electrochemical system:
             material: Ni
             crystallographic orientation: '111' # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
             source:
-                supplier: null
-                LOT: 
+                supplier: # Company name
+                LOT: # LOT number
+                purity:
+                    grade: 5N
             shape: # optional
                 type: cylinder # bead/sphere
                 height:
@@ -106,4 +138,6 @@ electrochemical system:
               part: membrane
         cell description: # freetext description
         cleaning procedure: storing in highly concentrated KOH and boiling in Milli-Q water # freetext description
-        source: # URL where the design is published
+        source: 
+           doi: # DOI where the design is published or URL below
+           url: # URL where the design is published
