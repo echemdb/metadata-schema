@@ -13,6 +13,8 @@ electrochemical system:
           manufacturer: SI Analytics
     electrolyte:
         type: aq # aqueous = aq, non-aqueous=naq
+        electrolyte container:
+            description: # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
         components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
             - name: Name # This is a standard component entry. Some entries are related to certain types of components.
               concentration:
