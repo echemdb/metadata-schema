@@ -1,19 +1,53 @@
 # Description of the electrochemical system
-
+    
 electrochemical system:
     version: 1
     instrumentation:
         - type: potentiostat
-          supplier: Biologic
+          manufacturer: Biologic
         - type: mass spectrometer
           model: xyz
-          supplier: Pfeiffer
+          manufacturer: Pfeiffer
         - type: pH meter
           model: Lab850
-          supplier: SI Analytics
+          manufacturer: SI Analytics
     electrolyte:
         type: aq # aqueous = aq, non-aqueous=naq
-        components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water
+        electrolyte container:
+            description: # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
+        components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
+            - name: Name # This is a standard component entry. Some entries are related to certain types of components.
+              concentration:
+                  value: 1
+                  unit: mol / l
+              type: # salt, base, acid, solvent, gas, ...
+              source:
+                  supplier: # Company name, organic chemistry III - Uni Ulm
+                  LOT: # LOT number
+                  supplied purity:
+                      grade: # analytical grade, 5N, etc
+                      total organic carbon: 
+                          value: 3
+                          unit: ppb
+                      total ion conductivity:
+                          value: 18
+                          unit: MOhm cm
+              purity: # puity after refinement
+                  refinement: # Description of additional cleaning procedures post purchase
+                  grade: 6N 
+                  total organic carbon:
+                      value: 3
+                      unit: ppb
+              pressure: # if type gas
+                  unit: 1
+                  value: bar # use 1 bar for saturated solutions
+              proportion: # if type solvent
+                  value: 100
+                  unit: volume percent
+              flow:
+                  value: null
+                  unit: null
+              comment: # text description
             - name: NaCl # can be trivia name, sum formula, etc
               concentration:
                   value: 0.1
@@ -83,8 +117,10 @@ electrochemical system:
             material: Ni
             crystallographic orientation: '111' # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
             source:
-                supplier: null
-                LOT: 
+                supplier: # Company name
+                LOT: # LOT number
+                purity:
+                    grade: 5N
             shape: # optional
                 type: cylinder # bead/sphere
                 height:
@@ -106,4 +142,6 @@ electrochemical system:
               part: membrane
         cell description: # freetext description
         cleaning procedure: storing in highly concentrated KOH and boiling in Milli-Q water # freetext description
-        source: # URL where the design is published
+        source: 
+           doi: # DOI where the design is published or URL below
+           url: # URL where the design is published
