@@ -1,0 +1,9 @@
+{
+    "type": "object",
+    "properties": {
+      "source": {"$ref": "file:source_schema.json"},
+      "curation": {"$ref": "file:curation_schema.json"},
+      "figure description": {"$ref": "file:figure_description_schema.json"},
+      "electrochemical system": {"$ref": "file:electrochemical_system_schema.json"}
+    }
+}
