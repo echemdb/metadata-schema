@@ -1,0 +1,37 @@
+{
+    "type": "object",
+    "required": [ "version", "instrumentation", "electrolyte", "electrode" ],
+    "properties": {
+        "version": { "type": "integer" },
+        "instrumentation": [{
+            "type": "object",
+            "properties": {
+                "type": { "type": "string" },
+                "model": { "type": "string" },
+                "manufacturer": { "type": "string" }
+            }
+        }],
+        "electrolyte": {
+            "type": "object",
+            "properties": {
+                "components": [ {"$ref": "file:component_schema.json"} ],
+                "pH": {
+                    "type": "object",
+                    "properties": {
+                        "value": {"type": "number"},
+                        "uncertainty": {"type": "numer"}
+                    }
+                },
+                "temperature": {
+                    "type": "object",
+                    "properties": {
+                        "value": {"type": "number"},
+                        "unit": {"type": "string"}
+                    }
+                }
+            }
+        },
+        "electrodes":  {"$ref": "file:electrodes_schema.json"}
+
+    }  
+}  

@@ -1,0 +1,30 @@
+{
+    "type": "object",
+    "required": [ "version", "type", "measurment type", "axes" ],
+    "properties": {
+        "version": { "type": "integer" },
+        "simultaneous measurements": [{ "type": "string" }],
+        "comment": { "type": "string" },
+        "type": {"enum": ["digitzed", "raw"]},
+        "measurement type": { "type": "string" },
+        "scan rate": {
+            "type": "object",
+            "properties": {
+                "value": {"type": "number"},
+                "unit": {"type": "string"}
+            }
+        },
+        "axes": [{
+            "type": "object",
+            "required": [ "type", "unit", "orientation" ],
+            "properties": {
+                "quantity": {"type": "string"},
+                "type": {"type": "string"},
+                "unit": {"type": "string"},
+                "reference": {"type": "string"},
+                "orientation": {"enum": ["x", "y"]}
+            }
+        }]
+    }  
+}  
+
