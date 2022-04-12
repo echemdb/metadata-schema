@@ -1,0 +1,14 @@
+# Descriptor of experimental properties, which are not covered in system.yaml.
+experimental:
+  tags:
+  - BCV
+  url: # For example: doi refering to a published work
+  instrumentation:
+    - type: potentiostat
+      manufacturer: Biologic
+    - type: mass spectrometer
+      model: xyz
+      manufacturer: Pfeiffer
+    - type: pH meter
+      model: Lab850
+      manufacturer: SI Analytics
