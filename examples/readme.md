@@ -1,21 +1,44 @@
-This section contains example metadata files which require electrochemical systems metadata.
+This section contains descriptors that are used to describe an electrochemical resource in a tabular-data-package.
+* [curation](curation.yaml): Details on the curation process
+* [eln](eln.yaml): URL to an electronic lab notebook
+* [experimental](experimental.yaml): Descriptor supporting `system.yaml`, e.g., contains a list of instrument.
+* [figure description](figure_description.yaml): contains mainly axis properties.
+* [project](project.yaml): List of projects related to the source data.
+* [source](source.yaml): Source of published data.
+* [system](system.yaml): Details describing the experimental vessel.
 
-## Electrochemical system
+Some of the descriptors are mandatory, while other optional descriptors depend on origin of the data. For example it is very unlikely that there exists an ELN entry of data published in the sixties.
 
-An example of a metadata file describing an electrochemical system is [electrochemical_system.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/electrochemical_system.yaml)
+## Recording raw data
 
-## echemdb/website
+The experimentalist is encouraged to record the following descriptors along with raw data:
 
-For the [echemdb/website]() project a metadata file named  [Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/Author_YYYY_FirstTitleWord_Page_fignr_identifier.yaml)
+<!-- TODO: Add link and description to autotag-metadata -->
+* [curation](curation.yaml)
+* [eln](eln.yaml)
+* [experimental](experimental.yaml)
+* [figure description](figure_description.yaml)
+* [project](project.yaml)
+* [system](system.yaml)
 
-is required which consists of the yaml files:
+## Submission to echemdb/website
 
-* [source.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/source.yaml)
+Data for the [echemdb/website]() can be submitted as a datapackage (JSON) and CVS, YAML and SVG or YAML and CSV.
+In any case the files should be named:
+`Author_YYYY_FirstTitleWord_Page_fignr_identifier` such as `mustermann_2022_electrochemical_1345_1b_solid`. The name should be lower case.
 
-* [curator.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/curator.yaml)
+**Submitting a YAML with an SVG**
+The YAML must contain the following descriptors:
 
-* [figure_description.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/figure_description.yaml)
+* [curation](curation.yaml)
+* [experimental](experimental.yaml)
+* [source](source.yaml)
+* [system](system.yaml)
 
-* [electrochemical_system.yaml](https://github.com/echemdb/electrochemistry-metadata-schema/blob/main/examples/electrochemical_system.yaml)
+**Submitting a YAML with a CSV**
 
-  
+* [curation](curation.yaml)
+* [experimental](experimental.yaml)
+* [figure description](figure_description.yaml)
+* [source](source.yaml)
+* [system](system.yaml)  
