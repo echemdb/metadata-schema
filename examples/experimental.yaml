@@ -1,7 +1,7 @@
 # Descriptor of experimental properties, which are not covered in system.yaml.
 experimental:
   tags:
-  - BCV
+    - BCV
   url: # For example: doi refering to a published work
   instrumentation:
     - type: potentiostat
