@@ -1,18 +1,9 @@
-# Description of the electrochemical system
-    
-electrochemical system:
+# Description of the system in which the actual measurement is conducted, shown for an electrochemical system
+system:
     version: 1
-    instrumentation:
-        - type: potentiostat
-          manufacturer: Biologic
-        - type: mass spectrometer
-          model: xyz
-          manufacturer: Pfeiffer
-        - type: pH meter
-          model: Lab850
-          manufacturer: SI Analytics
+    type: electrochemical
     electrolyte:
-        type: aq # aqueous = aq, non-aqueous=naq
+        type: aq # aqueous = aq, non-aqueous=naq, solid=s, gas=g
         electrolyte container:
             description: # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
         components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
@@ -110,10 +101,11 @@ electrochemical system:
             source:
                 supplier: SI Analytics
         counter electrode:
+            type: wire
             material: Pt
             crystallographic orientation: poly
-            shape: wire
         working electrode:
+            type: single crystal
             material: Ni
             crystallographic orientation: '111' # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
             source:
@@ -130,18 +122,17 @@ electrochemical system:
                     value: 4
                     unit: mm
             geometric electrolyte contact area: 
-                value: null
+                value: 
                 unit: cm-2
-            preparation procedure: null # Short description of sample preparation. This can be very useful. :)
+            preparation procedure: Description step 1. Description Step2. ... # Short description of sample preparation. This can be very useful. :)
     electrochemical cell:
         type: glass electrolysis cell
-        components:: # list of components in contact with the electrolyte
+        components: # list of components in contact with the electrolyte
             - name: glass
               part: cell
             - name: nafion
               part: membrane
         cell description: # freetext description
-        cleaning procedure: storing in highly concentrated KOH and boiling in Milli-Q water # freetext description
+        cleaning procedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
         source: 
-           doi: # DOI where the design is published or URL below
-           url: # URL where the design is published
+           url: # DOI or URL where the design is published
