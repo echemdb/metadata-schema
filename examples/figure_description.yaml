@@ -7,15 +7,15 @@ figure description:
   simultaneous measurements: ring current # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data. Created by `svgdigitizer.electrochemistry.cv.CV`
   comment: # Add whatever you think is important to understand the data.
   fields:
-      - name: E
-        unit: V
-        orientation: horizontal # applicable only for data depicted in a specific plot described in source.yaml
-        reference: RHE
-      - name: j
-        unit: uA / cm2
-        orientation: vertical # applicable only for data depicted in a specific plot described in source.yaml
-      - name: t
-        unit: s
+    - name: E
+      unit: V
+      orientation: horizontal # applicable only for data depicted in a specific plot described in source.yaml
+      reference: RHE
+    - name: j
+      unit: uA / cm2
+      orientation: vertical # applicable only for data depicted in a specific plot described in source.yaml
+    - name: t
+      unit: s
   scan rate: # only required when the time axis is not available
-      value: 50
-      unit: mV / s
+    value: 50
+    unit: mV / s
