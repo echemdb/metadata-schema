@@ -1,10 +1,8 @@
-# This file provides information on the source of a curve in a figure of a scientific publication
-
+# Descriptor of the source of a curve in a figure of a publication.
 source:
-    version: 1
-    doi: 10.1016/0039-6028(85)90985-9 # only the number without preceeding doix or https:
-    url: https://github.com/echemdb/website # If the article does not have a DOI provide a link to a website
-    bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. No prepositions. Fingers crossed that there is no duplicate.
-    techniques: XPS, CV, EIS, DEMS # provide a list of techniques used in the publication
-    figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3
-    curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. label, color, etc
+  version: 1
+  url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
+  bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
+  techniques: XPS, CV, EIS, DEMS # provide a list of techniques used in the publication
+  figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
+  curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
