@@ -1,0 +1,22 @@
+{   
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "id",
+    "title": "echemdb metadata schema",
+    "description": "This is the schema providing metadata of electrochemical measurements hosted on the echemdb website.",
+    "not":
+    {
+        "comment": "This is preload of 'grandchild' dependencies. It is required due to the jsonschema lib issues. See https://github.com/Julian/jsonschema/issues/398.",
+        "anyOf":
+        [
+            { "$ref": "file:electrochemical_system/component.json" },
+            { "$ref": "file:electrochemical_system/electrode.json" }
+        ]
+    },
+    "type": "object",
+    "properties": {
+      "source": {"$ref": "file:source.json"},
+      "curation": {"$ref": "file:curation.json"},
+      "figure description": {"$ref": "file:figure_description.json"},
+      "electrochemical system": {"$ref": "file:electrochemical_system.json"}
+    }
+}

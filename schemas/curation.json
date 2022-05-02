@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [ "version", "process" ],
+    "properties": {
+        "version": { "type": "integer" },
+        "process": {
+            "type": "array",
+            "minItems": 1,
+            "items":  { 
+                "type": "object",
+                "required": [ "role", "name", "date" ],
+                "properties": { 
+                    "role": {"enum": ["experimentalist", "curator", "reviewer"]},
+                    "name": {"type": "string"},
+                    "orcid": {"type": "string"},
+                    "date": {"type": "string", "format": "date"}
+                }
+            }
+        }
+    }  
+}

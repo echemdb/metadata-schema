@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [ "version", "bib", "techniques", "figure", "curve" ],
+    "properties": {
+        "version": { "type": "integer" },
+        "doi": { "type": "string" },
+        "url": { "type": "string" },
+        "techniques": {
+            "type": "array",
+            "contains": {"type": "string"}
+    },
+        "figure": { "type": "string" },
+        "curve": { "type": "string" }        
+    }   
+}

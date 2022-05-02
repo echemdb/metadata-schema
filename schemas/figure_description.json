@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "required": [ "version", "type", "measurement type", "axes" ],
+    "properties": {
+        "version": { "type": "integer" },
+        "simultaneous measurements": { 
+            "type": "array",
+            "items": [{ "type": "string" }]
+        },
+        "comment": { "type": "string" },
+        "type": {"enum": ["digitzed", "raw"]},
+        "measurement type": { "type": "string" },
+        "scan rate": {
+            "type": "object",
+            "properties": {
+                "value": {"type": "number"},
+                "unit": {"type": "string"}
+            }
+        },
+        "axes": {
+            "type": "array",
+            "items": { "type": "object",
+                "required": [ "type", "unit", "orientation" ],
+                "properties": {
+                    "quantity": {"type": "string"},
+                    "type": {"type": "string"},
+                    "unit": {"type": "string"},
+                    "reference": {"type": "string"},
+                    "orientation": {"enum": ["x", "y"]}
+                }
+            }
+        }
+    }  
+}  
