@@ -1,10 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/source.schema.json",
     "type": "object",
     "required": [ "version", "bib", "techniques", "figure", "curve" ],
     "properties": {
         "version": { "type": "integer" },
-        "doi": { "type": "string" },
+        "bib": { "type": "string" },
         "url": { "type": "string" },
         "techniques": {
             "type": "array",
