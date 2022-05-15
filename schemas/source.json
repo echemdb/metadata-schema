@@ -1,19 +1,42 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/source.schema.json",
-    "type": "object",
-    "title": "source",
-    "additionalProperties": false,
-    "required": [ "version", "bib", "techniques", "figure", "curve" ],
-    "properties": {
-        "version": { "type": "integer" },
-        "bib": { "type": "string" },
-        "url": { "type": "string" },
-        "techniques": {
-            "type": "array",
-            "contains": {"type": "string"}
-    },
-        "figure": { "type": "string" },
-        "curve": { "type": "string" }        
-    }   
+    "$ref": "#definitions/Source",
+    "definitions": {
+        "Source": {
+            "type": "object",
+            "title": "source",
+            "additionalProperties": false,
+            "required": [
+                "version",
+                "bib",
+                "techniques",
+                "figure",
+                "curve"
+            ],
+            "properties": {
+                "version": {
+                    "type": "integer"
+                },
+                "bib": {
+                    "type": "string"
+                },
+                "url": {
+                    "$ref": "./general/url.json"
+                },
+                "techniques": {
+                    "type": "array",
+                    "contains": {
+                        "type": "string"
+                    }
+                },
+                "figure": {
+                    "type": "string"
+                },
+                "curve": {
+                    "type": "string"
+                }
+            }   
+        }
+    }
 }
