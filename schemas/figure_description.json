@@ -6,7 +6,7 @@
         "FigureDescription": {
             "type": "object",
             "additionalProperties": false,
-            "title": "figure_description",
+            "title": "figure description",
             "properties": {
                 "version": {
                     "type": "integer"
@@ -77,14 +77,7 @@
         "ScanRate": {
             "type": "object",
             "additionalProperties": false,
-            "properties": {
-                "value": {
-                    "type": "number"
-                },
-                "unit": {
-                    "type": "string"
-                }
-            },
+            "$ref": "./general/quantity.json",
             "required": [
                 "unit",
                 "value"
