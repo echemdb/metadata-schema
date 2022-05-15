@@ -16,13 +16,8 @@
                     }
                 },
                 "url": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "An URL to, i.e., a published work (DOI) or an ELN entry.",
-                    "qt-uri-protocols": [
-                        "https",
-                        "http"
-                    ]
+                    "$ref": "./general/url.json",
+                    "description": "A URL to, i.e., a published work (DOI) or an ELN entry."
                 },
                 "instrumentation": {
                     "type": "array",

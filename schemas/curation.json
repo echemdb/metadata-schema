@@ -46,13 +46,8 @@
                     "type": "string"
                 },
                 "orcid": {
-                    "type": "string",
-                    "format": "uri",
                     "description": "An URL containing the ORCID.",
-                    "qt-uri-protocols": [
-                        "https", 
-                        "http"
-                    ]
+                    "$ref": "./general/url.json"
                 },
                 "date": {
                     "type": "string", 
