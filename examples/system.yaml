@@ -2,20 +2,20 @@
 version: 1
 type: electrochemical
 electrolyte:
-  type: aq # aqueous = aq, non-aqueous=naq, solid=s, gas=g
+  type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
   electrolyte container:
-      description: # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
+      description: Glass flask. # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
   components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
     - name: Name # This is a standard component entry. Some entries are related to certain types of components.
       concentration:
         value: 1
         unit: mol / l
-      type: # salt, base, acid, solvent, gas, ...
+      type: salt # salt, base, acid, solvent, gas, ...
       source:
-        supplier: # Company name, organic chemistry III - Uni Ulm
-        LOT: # LOT number
+        supplier: Company name # Company name, organic chemistry III - Uni Ulm
+        LOT: ABC123 # LOT number
         supplied purity:
-          grade: # analytical grade, 5N, etc
+          grade: 5N # analytical grade, 5N, etc
           total organic carbon:
             value: 3
             unit: ppb
@@ -23,7 +23,7 @@ electrolyte:
             value: 18
             unit: MOhm cm
       purity: # puity after refinement
-        refinement: # Description of additional cleaning procedures post purchase
+        refinement: Distilled. # Description of additional cleaning procedures post purchase
         grade: 6N
         total organic carbon:
           value: 3
@@ -37,17 +37,17 @@ electrolyte:
       flow:
         value: null
         unit: null
-      comment: # text description
+      comment: Old chemical dated back 1994. # text description
     - name: NaCl # can be trivia name, sum formula, etc
       concentration:
         value: 0.1
         unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
       type: salt #
       source:
-        supplier: null
-        LOT:
+        supplier: Company name.
+        LOT: ABC123
       purity:
-        grade: #
+        grade: 5N
     - name: water
       type: solvent
       proportion:
@@ -70,8 +70,8 @@ electrolyte:
     - name: H2SO4
       type: acid
       source:
-        supplier: null
-        LOT:
+        supplier: Company name
+        LOT: ABC123
       concentration:
         value: 0.1
         unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
@@ -85,14 +85,14 @@ electrolyte:
       proportion:
         value: 100
       flow:
-        value: null
-        unit: null
+        value: 5
+        unit: l / h
   ph:
     value: 13
     uncertainty: 0.1
   temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
     value: 298.15
-    unit: K # [K, C, F]
+    unit: K # [K, C]
 electrodes:
   - name: reference electrode
     type: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2

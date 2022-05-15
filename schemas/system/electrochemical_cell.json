@@ -1,37 +1,33 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/electrochemical_cell.schema.json",
-    "type": "object",
-    "additionalProperties": false,
-    "title": "ElectrochemicalCell",
-    "required": [
-        "cell description",
-        "cleaning procedure",
-        "components",
-        "source",
-        "type"
-    ],
-    "properties": {
-        "type": {
-            "type": "string"
-        },
-        "components": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/ElectrochemicalCellComponent"
+    "$ref": "#definitions/ElectrochemicalCell",
+    "definitions": {
+        "ElectrochemicalCell": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "ElectrochemicalCell",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrochemicalCellComponent"
+                    }
+                },
+                "cell description": {
+                    "type": "string"
+                },
+                "cleaning procedure": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/ElectrochemicalCellSource"
+                }
             }
         },
-        "cell description": {
-            "type": "string"
-        },
-        "cleaning procedure": {
-            "type": "string"
-        },
-        "source": {
-            "$ref": "#/definitions/ElectrochemicalCellSource"
-        }
-    },
-    "definitions": {
         "ElectrochemicalCellComponent": {
             "type": "object",
             "additionalProperties": false,
@@ -57,16 +53,9 @@
             "additionalProperties": false,
             "properties": {
                 "url": {
-                    "type": "string",
-                    "format": "uri",
-                    "qt-uri-protocols": [
-                        "https"
-                    ]
+                    "$ref": "../general/url.json"
                 }
             },
-            "required": [
-                "url"
-            ],
             "title": "ElectrochemicalCellSource"
         }
     }

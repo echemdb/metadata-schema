@@ -1,55 +1,56 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/system/electrolyte.schema.json",
-    "type": "object",
-    "title": "Electrolyte",
-    "additionalProperties": false,
-    "required": [
-        "components",
-        "electrolyte container",
-        "ph",
-        "temperature",
-        "type"
-    ],
-    "properties": {
-        "type": {
-            "type": "string"
-        },
-        "electrolyte container": {
-            "$ref": "#/definitions/ElectrolyteContainer"
-        },
-        "components": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/ElectrolyteComponent"
+    "$ref": "#definitions/Electrolyte",
+    "definitions": {
+        "Electrolyte": {
+            "type": "object",
+            "title": "Electrolyte",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "aqueous", "description": "The solvent is water."},
+                        {"const": "non-aqueous", "description": "The solven is an ionic liquid or other organic compound."},
+                        {"const": "solid", "description": "A solid electrolyte."}
+                    ]
+                },
+                "electrolyte container": {
+                    "$ref": "#/definitions/ElectrolyteContainer"
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrolyteComponent"
+                    }
+                },
+                "ph": {
+                    "$ref": "#/definitions/Ph"
+                },
+                "temperature": {
+                    "$ref": "../general/quantity.json"
+                }
             }
         },
-        "ph": {
-            "$ref": "#/definitions/Ph"
-        },
-        "temperature": {
-            "$ref": "../general/quantity.json"
-        }
-    },
-    "definitions": {
         "ElectrolyteComponent": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A unique identifier."
                 },
                 "concentration": {
                     "$ref": "../general/quantity.json"
                 },
                 "type": {
                     "anyOf": [
-                        {
-                            "type": "null"
-                        },
-                        {
-                            "type": "string"
-                        }
+                        {"const": "solvent", "description": "The solvent."},
+                        {"const": "salt", "description": "A salt added the solvent"},
+                        {"const": "acid", "description": "An acid added to the solvent."},
+                        {"const": "base", "description": "A base added to the solvent."},
+                        {"const": "gas", "description": "A gas passed through the solvent."}
                     ]
                 },
                 "source": {
@@ -68,7 +69,7 @@
                     "$ref": "../general/quantity.json"
                 },
                 "comment": {
-                    "type": "null"
+                    "type": "string"
                 }
             },
             "required": [
@@ -82,25 +83,15 @@
             "additionalProperties": false,
             "properties": {
                 "refinement": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "grade": {
-                    "anyOf": [
-                        {
-                            "type": "null"
-                        },
-                        {
-                            "type": "string"
-                        }
-                    ]
+                    "type": "string"
                 },
                 "total organic carbon": {
                     "$ref": "../general/quantity.json"
                 }
             },
-            "required": [
-                "grade"
-            ],
             "title": "ComponentPurity"
         },
         "ComponentSource": {
@@ -108,10 +99,10 @@
             "additionalProperties": false,
             "properties": {
                 "supplier": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "LOT": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "supplied purity": {
                     "$ref": "#/definitions/SuppliedPurity"
@@ -120,7 +111,6 @@
                     "type": "string"
                 }
             },
-            "required": [],
             "title": "ComponentSource"
         },
         "SuppliedPurity": {
@@ -128,7 +118,7 @@
             "additionalProperties": false,
             "properties": {
                 "grade": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "total organic carbon": {
                     "$ref": "../general/quantity.json"
@@ -137,11 +127,6 @@
                     "$ref": "../general/quantity.json"
                 }
             },
-            "required": [
-                "grade",
-                "total ion conductivity",
-                "total organic carbon"
-            ],
             "title": "SuppliedPurity"
         },
         "ElectrolyteContainer": {
@@ -149,12 +134,10 @@
             "additionalProperties": false,
             "properties": {
                 "description": {
-                    "type": "null"
+                    "type": "string",
+                    "description": "The vessel in which the supplying electrolyte as prepared or stored before the measurment."
                 }
             },
-            "required": [
-                "description"
-            ],
             "title": "ElectrolyteContainer"
         },
         "Ph": {
@@ -168,10 +151,6 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "uncertainty",
-                "value"
-            ],
             "title": "Ph"
         }
     }

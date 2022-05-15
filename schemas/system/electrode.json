@@ -1,40 +1,43 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/electrode.schema.json",
-    "type": "object",
-    "additionalProperties": false,
-    "title": "Electrode",
-    "required": [
-        "name",
-        "type"
-    ],
-    "properties": {
-        "name": {
-            "type": "string"
-        },
-        "type": {
-            "type": "string"
-        },
-        "source": {
-            "$ref": "#/definitions/ElectrodeSource"
-        },
-        "material": {
-            "type": "string"
-        },
-        "crystallographic orientation": {
-            "type": "string"
-        },
-        "shape": {
-            "$ref": "#/definitions/Shape"
-        },
-        "geometric electrolyte contact area": {
-            "$ref": "../general/quantity.json"
-        },
-        "preparation procedure": {
-            "type": "string"
-        }
-    },
+    "$ref": "#definitions/Electrode",
     "definitions": {
+        "Electrode": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "Electrode",
+            "required": [
+                "name",
+                "type"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/ElectrodeSource"
+                },
+                "material": {
+                    "type": "string"
+                },
+                "crystallographic orientation": {
+                    "type": "string"
+                },
+                "shape": {
+                    "$ref": "#/definitions/Shape"
+                },
+                "geometric electrolyte contact area": {
+                    "$ref": "../general/quantity.json"
+                },
+                "preparation procedure": {
+                    "type": "string"
+                }
+            }
+        },
         "Shape": {
             "type": "object",
             "additionalProperties": false,
@@ -49,11 +52,6 @@
                     "$ref": "../general/quantity.json"
                 }
             },
-            "required": [
-                "diameter",
-                "height",
-                "type"
-            ],
             "title": "Shape"
         },
         "ElectrodeSource": {
@@ -70,9 +68,6 @@
                     "$ref": "#/definitions/SourcePurity"
                 }
             },
-            "required": [
-                "supplier"
-            ],
             "title": "ElectrodeSource"
         },
         "SourcePurity": {
@@ -83,9 +78,6 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "grade"
-            ],
             "title": "SourcePurity"
         }
     }
