@@ -1,27 +1,30 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/experimental/instrumentation.schema.json",
-    "description": "The instruments used to perform the experiment.",
-    "title": "instrumentation",
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-        "type": {
-            "type": "string"
-        },
-        "manufacturer": {
-            "type": "string"
-        },
-        "name": {
-            "type": "null"
-        },
-        "model": {
-            "type": "string"
+    "$ref": "#definitions/Instrumentation",
+    "definitions": {
+        "Instrumentation": {
+            "description": "The instruments used to perform the experiment.",
+            "title": "instrumentation",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "null"
+                },
+                "model": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ]
         }
-    },
-    "required": [
-        "manufacturer",
-        "name",
-        "type"
-    ]
+    }
 }
