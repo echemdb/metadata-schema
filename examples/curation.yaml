@@ -1,14 +1,13 @@
 # Descriptor of the curation process.
 # The role of the first item is usually the experimentalist.
 # In the case of the digitized of a figure for `echemdb/website`, the role of the first item is the curator.
-curation:
-  version: 1
-  process:
-    - role: curator
-      name: Albert Engstfeld
-      orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2021-07-09 # YYYY-MM-DD
-    - role: reviewer
-      name: Albert Engstfeld
-      orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2022-01-21
+version: 1
+process:
+  - role: curator
+    name: Albert Engstfeld
+    orcid: https://orcid.org/0000-0002-9686-3948
+    date: 2021-07-09 # YYYY-MM-DD
+  - role: reviewer
+    name: Albert Engstfeld
+    orcid: https://orcid.org/0000-0002-9686-3948
+    date: 2022-01-21

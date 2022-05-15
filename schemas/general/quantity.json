@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/quantity.schema.json",
+    "$ref": "#/definitions/Quantity",
+    "definitions": {
+        "Quantity": {
+            "type": "object",
+            "title": "Quantity",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "$ref": "#/definitions/Value"
+                },
+                "unit": {
+                    "$ref": "#/definitions/Unit"
+                }
+            }
+        },
+    "Unit": {
+        "anyOf": [
+            {
+                "type": "integer"
+            },
+            {
+                "type": "null"
+            },
+            {
+                "type": "string"
+            }
+        ],
+        "title": "Unit"
+        },
+    "Value": {
+        "anyOf": [
+            {
+                "type": "number"
+            },
+            {
+                "type": "null"
+            },
+            {
+                "type": "string"
+            }
+        ],
+        "title": "Value"
+        }
+    }
+}

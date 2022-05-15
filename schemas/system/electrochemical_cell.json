@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/electrochemical_cell.schema.json",
+    "$ref": "#definitions/ElectrochemicalCell",
+    "definitions": {
+        "ElectrochemicalCell": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "ElectrochemicalCell",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrochemicalCellComponent"
+                    }
+                },
+                "cell description": {
+                    "type": "string"
+                },
+                "cleaning procedure": {
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/ElectrochemicalCellSource"
+                }
+            }
+        },
+        "ElectrochemicalCellComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "part": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "part"
+            ],
+            "title": "ElectrochemicalCellComponent"
+        },
+        "ElectrochemicalCellSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "$ref": "../general/url.json"
+                }
+            },
+            "title": "ElectrochemicalCellSource"
+        }
+    }
+}
