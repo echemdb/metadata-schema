@@ -1,20 +1,27 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "$id": "https://echemdb.org/metadata-schema/0.1.0/eln.schema.json",
-    "type": "object",
-    "additionalProperties": false,
-    "title": "eln",
-    "description": "A link to an electronic lab notebook (ELN).",
-    "properties": {
-        "url": {
-            "type": "string",
-            "format": "uri",
-            "qt-uri-protocols": [
-                "https"
+    "$ref": "#definitions/Eln",
+    "definitions": {
+        "Eln": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "eln",
+            "description": "A link to an electronic lab notebook (ELN).",
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "qt-uri-protocols": [
+                        "https",
+                        "http"
+                    ]
+                }
+            },
+            "required": [
+                "url"
             ]
         }
-    },
-    "required": [
-        "url"
-    ]
+    }
+    
 }
