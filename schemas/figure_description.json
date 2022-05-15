@@ -1,35 +1,95 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "required": [ "version", "type", "measurement type", "axes" ],
-    "properties": {
-        "version": { "type": "integer" },
-        "simultaneous measurements": { 
-            "type": "array",
-            "items": [{ "type": "string" }]
-        },
-        "comment": { "type": "string" },
-        "type": {"enum": ["digitzed", "raw"]},
-        "measurement type": { "type": "string" },
-        "scan rate": {
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/figure_description.schema.json",
+    "$ref": "#/definitions/FigureDescription",
+    "definitions": {
+        "FigureDescription": {
             "type": "object",
+            "additionalProperties": false,
+            "title": "figure_description",
             "properties": {
-                "value": {"type": "number"},
-                "unit": {"type": "string"}
-            }
-        },
-        "axes": {
-            "type": "array",
-            "items": { "type": "object",
-                "required": [ "type", "unit", "orientation" ],
-                "properties": {
-                    "quantity": {"type": "string"},
-                    "type": {"type": "string"},
-                    "unit": {"type": "string"},
-                    "reference": {"type": "string"},
-                    "orientation": {"enum": ["x", "y"]}
+                "version": {
+                    "type": "integer"
+                },
+                "type":
+                    { "type": "string",
+                        "oneOf": [
+                            {"const": "digitized", "description": "Data inferred from a software such as svgdigitizer"},
+                            {"const": "raw", "description": "Data is consistent with originally recorded data."},
+                            {"const": "simulated", "description": "Data created with a simulation software."}
+                        ]
+                },
+                "measurement type": {
+                    "type": "string"
+                },
+                "simultaneous measurements": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Field"
+                    }
+                },
+                "scan rate": {
+                    "$ref": "#/definitions/ScanRate"
                 }
-            }
+            },
+            "required": [
+                "comment",
+                "fields",
+                "measurement type",
+                "scan rate",
+                "simultaneous measurements",
+                "type",
+                "version"
+            ]
+        },
+        "Field": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "orientation": {
+                    "enum": ["horizontal", "vertical"]
+                },
+                "reference": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "unit"
+            ],
+            "title": "Field"
+        },
+        "ScanRate": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "unit",
+                "value"
+            ],
+            "title": "ScanRate"
         }
-    }  
-}  
+    }
+}

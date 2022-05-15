@@ -1,3 +1,2 @@
 # Descriptor for an electronic lab notebook (ELN) entry.
-eln:
-  url: # URL to the ELN describing the data
+url: https://some.eln.page.org # URL to the ELN describing the data

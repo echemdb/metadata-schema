@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/electrode.schema.json",
+    "type": "object",
+    "additionalProperties": false,
+    "title": "Electrode",
+    "required": [
+        "name",
+        "type"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "source": {
+            "$ref": "#/definitions/ElectrodeSource"
+        },
+        "material": {
+            "type": "string"
+        },
+        "crystallographic orientation": {
+            "type": "string"
+        },
+        "shape": {
+            "$ref": "#/definitions/Shape"
+        },
+        "geometric electrolyte contact area": {
+            "$ref": "../general/quantity.json"
+        },
+        "preparation procedure": {
+            "type": "string"
+        }
+    },
+    "definitions": {
+        "Shape": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "height": {
+                    "$ref": "../general/quantity.json"
+                },
+                "diameter": {
+                    "$ref": "../general/quantity.json"
+                }
+            },
+            "required": [
+                "diameter",
+                "height",
+                "type"
+            ],
+            "title": "Shape"
+        },
+        "ElectrodeSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "supplier": {
+                    "type": "string"
+                },
+                "LOT": {
+                    "type": "integer"
+                },
+                "purity": {
+                    "$ref": "#/definitions/SourcePurity"
+                }
+            },
+            "required": [
+                "supplier"
+            ],
+            "title": "ElectrodeSource"
+        },
+        "SourcePurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "grade"
+            ],
+            "title": "SourcePurity"
+        }
+    }
+}

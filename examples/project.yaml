@@ -1,9 +1,10 @@
 # Descriptor of projects linked to the data.
-project:
-  - name: PPS
-    type: internal
-    url: # link to the description of the project
-  - name: SFB XXX
-    type: external
-    url: # project homepage
-    grant number: XXX
+- name: PPS # an acornym or unique identifier
+  title: A title # A more elaborate title
+  type: internal
+  url: https://some.internal.website.org # link to the description of the project, fr example in an ELN
+- name: SFB XXX
+  title: A title # A more elaborate title
+  type: external
+  url: https://some.public.website.org # project homepage
+  grant number: XXX

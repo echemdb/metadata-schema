@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/experimental.schema.json",
+    "type": "object",
+    "additionalProperties": false,
+    "title": "experimental",
+    "description": "Details about the configuration of the experimental set up.",
+    "required": [
+        "instrumentation",
+        "tags",
+        "url"
+    ],
+    "properties": {
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "An URL to, i.e., a published work (DOI) or an ELN entry.",
+            "qt-uri-protocols": [
+                "https"
+            ]
+        },
+        "instrumentation": {
+            "type": "array",
+            "items": {
+                "$ref": "./experimental/instrumentation.json"
+            }
+        }
+    }
+}

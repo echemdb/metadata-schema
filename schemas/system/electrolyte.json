@@ -1,0 +1,178 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/system/electrolyte.schema.json",
+    "type": "object",
+    "title": "Electrolyte",
+    "additionalProperties": false,
+    "required": [
+        "components",
+        "electrolyte container",
+        "ph",
+        "temperature",
+        "type"
+    ],
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "electrolyte container": {
+            "$ref": "#/definitions/ElectrolyteContainer"
+        },
+        "components": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ElectrolyteComponent"
+            }
+        },
+        "ph": {
+            "$ref": "#/definitions/Ph"
+        },
+        "temperature": {
+            "$ref": "../general/quantity.json"
+        }
+    },
+    "definitions": {
+        "ElectrolyteComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "concentration": {
+                    "$ref": "../general/quantity.json"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "source": {
+                    "$ref": "#/definitions/ComponentSource"
+                },
+                "purity": {
+                    "$ref": "#/definitions/ComponentPurity"
+                },
+                "pressure": {
+                    "$ref": "../general/quantity.json"
+                },
+                "proportion": {
+                    "$ref": "../general/quantity.json"
+                },
+                "flow": {
+                    "$ref": "../general/quantity.json"
+                },
+                "comment": {
+                    "type": "null"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "title": "ElectrolyteComponent"
+        },
+        "ComponentPurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "refinement": {
+                    "type": "null"
+                },
+                "grade": {
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                }
+            },
+            "required": [
+                "grade"
+            ],
+            "title": "ComponentPurity"
+        },
+        "ComponentSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "supplier": {
+                    "type": "null"
+                },
+                "LOT": {
+                    "type": "null"
+                },
+                "supplied purity": {
+                    "$ref": "#/definitions/SuppliedPurity"
+                },
+                "refinement": {
+                    "type": "string"
+                }
+            },
+            "required": [],
+            "title": "ComponentSource"
+        },
+        "SuppliedPurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "null"
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                },
+                "total ion conductivity": {
+                    "$ref": "../general/quantity.json"
+                }
+            },
+            "required": [
+                "grade",
+                "total ion conductivity",
+                "total organic carbon"
+            ],
+            "title": "SuppliedPurity"
+        },
+        "ElectrolyteContainer": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "null"
+                }
+            },
+            "required": [
+                "description"
+            ],
+            "title": "ElectrolyteContainer"
+        },
+        "Ph": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "type": "integer"
+                },
+                "uncertainty": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "uncertainty",
+                "value"
+            ],
+            "title": "Ph"
+        }
+    }
+}
