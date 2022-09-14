@@ -9,32 +9,94 @@
             "title": "Electrode",
             "required": [
                 "name",
-                "type"
+                "function"
             ],
             "properties": {
                 "name": {
                     "type": "string"
                 },
-                "type": {
-                    "type": "string"
+                "function": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "working electrode", "description": "A working electrode."},
+                        {"const": "counter electrode", "description": "A counter electrode."},
+                        {"const": "reference electrode", "description": "A reference electrode."}
+                    ]
+                },
+                "redox system" : {
+                    "type": "string",
+                    "description": "A particular name for a reference electrode such as RHE, MSE, AgCl2, etc."
                 },
                 "source": {
                     "$ref": "#/definitions/ElectrodeSource"
                 },
-                "material": {
-                    "type": "string"
+                "description": {
+                    "type": "string",
+                    "description": "A description of the electrode, for example when it is home made."
                 },
-                "crystallographic orientation": {
-                    "type": "string"
-                },
-                "shape": {
-                    "$ref": "#/definitions/Shape"
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrodeComponent"
+                    }
                 },
                 "geometric electrolyte contact area": {
                     "$ref": "../general/quantity.json"
                 },
                 "preparation procedure": {
                     "type": "string"
+                },
+                "crystallographic orientation": {
+                    "type": "string"
+                }
+            }
+        },
+        "ElectrodeSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "manufacturer": {
+                    "type": "string"
+                },
+                "LOT": {
+                    "type": "integer"
+                },
+                "purity": {
+                    "$ref": "#/definitions/SourcePurity"
+                },
+                "model": {
+                    "type":"string"
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url to a pdf or description of the electrode."
+                }
+            },
+            "title": "ElectrodeSource"
+        },
+        "SourcePurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "string"
+                }
+            },
+            "title": "SourcePurity"
+        },
+        "ElectrodeComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "type": {
+                    "type": "string"
+                },
+                "shape": {
+                    "$ref": "#/definitions/Shape"
                 }
             }
         },
@@ -50,35 +112,16 @@
                 },
                 "diameter": {
                     "$ref": "../general/quantity.json"
+                },
+                "length": {
+                    "$ref": "../general/quantity.json"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the shape."
                 }
             },
             "title": "Shape"
-        },
-        "ElectrodeSource": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "supplier": {
-                    "type": "string"
-                },
-                "LOT": {
-                    "type": "integer"
-                },
-                "purity": {
-                    "$ref": "#/definitions/SourcePurity"
-                }
-            },
-            "title": "ElectrodeSource"
-        },
-        "SourcePurity": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "grade": {
-                    "type": "string"
-                }
-            },
-            "title": "SourcePurity"
         }
     }
 }

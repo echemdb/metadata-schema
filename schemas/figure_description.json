@@ -31,6 +31,9 @@
                 "comment": {
                     "type": "string"
                 },
+                "file structure": {
+                    "type": "string"
+                },
                 "fields": {
                     "type": "array",
                     "items": {
@@ -45,8 +48,6 @@
                 "comment",
                 "fields",
                 "measurement type",
-                "scan rate",
-                "simultaneous measurements",
                 "type",
                 "version"
             ]

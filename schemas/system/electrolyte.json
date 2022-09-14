@@ -12,7 +12,7 @@
                     "type": "string",
                     "oneOf": [
                         {"const": "aqueous", "description": "The solvent is water."},
-                        {"const": "non-aqueous", "description": "The solven is an ionic liquid or other organic compound."},
+                        {"const": "non-aqueous", "description": "The solvent is non-aqueous, i.e., is an ionic liquid or another organic compound."},
                         {"const": "solid", "description": "A solid electrolyte."}
                     ]
                 },
@@ -59,7 +59,7 @@
                 "purity": {
                     "$ref": "#/definitions/ComponentPurity"
                 },
-                "pressure": {
+                "partial pressure": {
                     "$ref": "../general/quantity.json"
                 },
                 "proportion": {
@@ -90,6 +90,17 @@
                 },
                 "total organic carbon": {
                     "$ref": "../general/quantity.json"
+                },
+                "container": {
+                    "type": "string",
+                    "description": "An unambiguous name for the container."
+                },
+                "internal LOT": {
+                    "type": "string"
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url with further details on the electrolyte container."
                 }
             },
             "title": "ComponentPurity"
@@ -136,6 +147,12 @@
                 "description": {
                     "type": "string",
                     "description": "The vessel in which the supplying electrolyte as prepared or stored before the measurment."
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrolyteContainerComponent"
+                    }
                 }
             },
             "title": "ElectrolyteContainer"
@@ -152,6 +169,23 @@
                 }
             },
             "title": "Ph"
+        },
+        "ElectrolyteContainerComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the container, i.e., a flask."
+                },
+                "comment": {
+                    "type": "string"
+                }
+            }
         }
     }
 }

@@ -17,7 +17,8 @@ eln:
 experimental:
   tags:
     - BCV
-  url: # For example: doi refering to a published work
+    - SPST
+  url: # For example: doi referring to a published work
   instrumentation:
     - type: potentiostat
       manufacturer: Biologic
@@ -29,11 +30,13 @@ experimental:
     - type: pH meter
       model: Lab850
       manufacturer: SI Analytics
-      name: # a unique name of the device
+      name: a name # a unique name of the device
+  description: some decsription # A string or a new set of metadata
 figure description: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
     version: 1
     simultaneous measurements: null # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     comment: # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
+    filetype: EClab v4.32
 # Descriptor of projects linked to the data.
 project:
   - name: PPS
@@ -47,9 +50,13 @@ source:
   version: 1
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
   bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
-  techniques: XPS, CV, EIS, DEMS # provide a list of techniques used in the publication
+  techniques: # provide a list of techniques used in the publication
+  - XPS
+  - CV
+  - EIS
+  - DEMS
   figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
-  curve: First cycle # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.   
+  curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
 system:
   version: 1
   type: electrochemical
@@ -57,6 +64,10 @@ system:
     type: aq # aqueous = aq, non-aqueous=naq, solid=s, gas=g
     electrolyte container:
         description: # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
+        components:
+          - name: borosilicate glass
+            type: flask
+            comment: some comment
     components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
       - name: Name # This is a standard component entry. Some entries are related to certain types of components.
         concentration:
@@ -80,7 +91,10 @@ system:
           total organic carbon:
             value: 3
             unit: ppb
-        pressure: # if type gas
+          container: new name # the new container in which the chemical has been transferred for daily use
+          internal LOT: Number # Flask in which some of the chemicals were transferred
+          url: # details on the wiki
+        partial pressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
         proportion: # if type solvent
@@ -146,36 +160,61 @@ system:
       value: 298.15
       unit: K # [K, C, F]
   electrodes:
-    configuration: 3 # number of electrodes
-    reference electrode:
-      type: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+    - name: RHE
+      function: reference electrode
+      redox system: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
       source:
-        supplier: SI Analytics
-    counter electrode:
+        manufacturer: SI Analytics
+        model: MSE Shott
+        url: points to wiki
+      description: home made RHE
+      components: # if not from a supplier an often a quasi Ref
+        - name: Pt
+          type: wire
+          shape: some dimensions
+    - name: CE
+      function: counter electrode
       type: wire
-      material: Pt
-      crystallographic orientation: poly
-    working electrode:
-      type: single crystal
-      material: Ni
-      crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
-      source:
-        supplier: # Company name
-        LOT: # LOT number
-        purity:
-          grade: 5N
-      shape: # optional
-        type: cylinder # bead/sphere
-        height:
-          value: 4
-          unit: mm
-        diameter:
-          value: 4
-          unit: mm
+      components:
+        - name: Pt
+          type: wire
+          shape:
+            length:
+              value: 4
+              unit: mm
+            diameter:
+              value: 4
+              unit: mm
       geometric electrolyte contact area:
-        value:
-        unit: cm-2
-      preparation procedure: Description step 1. Description Step2. ... # Short description of sample preparation. This can be very useful. :)
+          value:
+          unit: cm-2
+      crystallographic orientation: poly
+    - name: WE1
+      function: working electrode
+      components:
+      - name: Ni 111 CD
+        type: single crystal
+        material: Ni
+        crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+        source:
+          supplier: # Company name
+          LOT: # LOT number
+          purity:
+            grade: 5N
+        shape: # optional
+          type: cylinder # bead/sphere
+          height:
+            value: 4
+            unit: mm
+          diameter:
+            value: 4
+            unit: mm
+        geometric electrolyte contact area:
+          value:
+          unit: cm-2
+        preparation procedure:
+          - description: Description step 1. Description Step2. ... # Short description of sample preparation. This can be very useful. :)
+            url: url to wiki
   electrochemical cell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte

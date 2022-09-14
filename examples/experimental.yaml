@@ -13,4 +13,6 @@ instrumentation:
     name: # a unique name of the device
 tags:
   - BCV
-url: https://doi.org/10.1016/0039-6028 # For example: doi refering to a published work
+  - SPST
+url: https://doi.org/10.1016/0039-6028 # For example: doi referring to a published work
+description: Experimental description # A string or a new set of metadata.

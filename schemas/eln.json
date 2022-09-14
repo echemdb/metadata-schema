@@ -11,6 +11,9 @@
                 "url": {
                     "description": "A link to an electronic lab notebook (ELN).",
                     "$ref": "./general/url.json"
+                },
+                "version":{
+                    "type": "integer"
                 }
             },
             "required": [
@@ -18,5 +21,4 @@
             ]
         }
     }
-    
 }

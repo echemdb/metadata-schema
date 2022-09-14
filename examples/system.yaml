@@ -2,9 +2,13 @@
 version: 1
 type: electrochemical
 electrolyte:
-  type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
+  type: aqueous # aqueous, non-aqueous, solid
   electrolyte container:
       description: Glass flask. # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
+      components:
+        - name: borosilicate glass
+          type: flask
+          comment: some comment
   components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
     - name: Name # This is a standard component entry. Some entries are related to certain types of components.
       concentration:
@@ -28,7 +32,10 @@ electrolyte:
         total organic carbon:
           value: 3
           unit: ppb
-      pressure: # if type gas
+        container: new name # the new container in which the chemical has been transferred for daily use
+        internal LOT: Number # Flask in which some of the chemicals were transferred
+        url: # details on the wiki
+      partial pressure: # If type gas. refers to pressure in the electrolyte.
         unit: 1
         value: bar # use 1 bar for saturated solutions
       proportion: # if type solvent
@@ -79,7 +86,7 @@ electrolyte:
       type: gas
       purity:
         grade: N5.0 # some genereic name
-      pressure:
+      partial pressure:
         unit: 1
         value: bar # use 1 bar for saturated solutions
       proportion:
@@ -94,35 +101,64 @@ electrolyte:
     value: 298.15
     unit: K # [K, C]
 electrodes:
-  - name: reference electrode
-    type: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+  - name: RHE
+    function: reference electrode
+    redox system: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
     source:
-      supplier: SI Analytics
-  - name: counter electrode
-    type: wire
-    material: Pt
-    crystallographic orientation: poly
-  - name: working electrode
-    type: single crystal
-    material: Ni
-    crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
-    source:
-      supplier: Mateck # Company name
-      LOT: 1097678 # LOT number
-      purity:
-        grade: 5N
-    shape: # optional
-      type: cylinder # bead/sphere
-      height:
-        value: 4
-        unit: mm
-      diameter:
-        value: 4
-        unit: mm
+      manufacturer: SI Analytics
+      model: MSE Shott
+      url: http://some.url.to.a.pdf.html
+    description: home made RHE
+    components: # if not from a supplier an often a quasi Ref
+      - name: Pt
+        type: wire
+        shape:
+          description: Description of the shape.
+  - name: CE
+    function: counter electrode
+    components:
+      - name: Pt
+        type: wire
+        shape:
+          length:
+            value: 4
+            unit: mm
+          diameter:
+            value: 4
+            unit: mm
     geometric electrolyte contact area:
-      value: 1
+        value:
+        unit: cm-2
+    crystallographic orientation: poly
+  - name: WE1
+    function: working electrode
+    components:
+    - name: Ni 111 CD
+      type: single crystal
+      material: Ni
+      crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      source:
+        manufacturer: Company name
+        LOT: 145823A # LOT number
+        purity:
+          grade: 5N
+      shape: # optional
+        type: cylinder # bead/sphere
+        height:
+          value: 4
+          unit: mm
+        diameter:
+          value: 4
+          unit: mm
+    geometric electrolyte contact area:
+      value:
       unit: cm-2
-    preparation procedure: Description step 1. Description Step2. ... # Short description of sample preparation. This can be very useful. :)
+    preparation procedure:
+      description: # Short description of the sample preparation.
+        - Description step 1.
+        - Description Step 2.
+        - ...
+      url: htps://www.preparation.html # Link to a page with a standard preparation procedure.
 electrochemical cell:
   type: glass electrolysis cell
   components: # list of components in contact with the electrolyte

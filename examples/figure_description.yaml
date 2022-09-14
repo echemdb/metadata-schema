@@ -3,8 +3,9 @@
 version: 1
 type: digitized # raw
 measurement type: CV
-simultaneous measurements: 
+simultaneous measurements:
   - ring current # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data. Created by `svgdigitizer.electrochemistry.cv.CV`
+file structure: EClab v4.32
 comment: Some unusual observation. # Add whatever you think is important to understand the data.
 fields:
   - name: E

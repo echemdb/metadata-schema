@@ -24,6 +24,9 @@
                     "items": {
                         "$ref": "./experimental/instrumentation.json"
                     }
+                },
+                "description":{
+                    "type": "string"
                 }
             }
         }
