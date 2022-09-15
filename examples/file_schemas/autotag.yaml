@@ -30,7 +30,7 @@ experimental:
       model: Lab850
       manufacturer: SI Analytics
       name: FancyDevice15 # a unique name of the device
-  description: some decsription # A string or a new set of metadata
+  description: some description # A string or a new set of metadata
 figure description: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
     version: 1
     type: raw
