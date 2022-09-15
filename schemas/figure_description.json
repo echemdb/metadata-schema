@@ -31,9 +31,6 @@
                 "comment": {
                     "type": "string"
                 },
-                "file structure": {
-                    "type": "string"
-                },
                 "fields": {
                     "type": "array",
                     "items": {
@@ -45,9 +42,6 @@
                 }
             },
             "required": [
-                "comment",
-                "fields",
-                "measurement type",
                 "type",
                 "version"
             ]

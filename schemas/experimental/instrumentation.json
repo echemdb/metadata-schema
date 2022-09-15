@@ -16,7 +16,7 @@
                     "type": "string"
                 },
                 "name": {
-                    "type": "null"
+                    "type": "string"
                 },
                 "model": {
                     "type": "string"

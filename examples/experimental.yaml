@@ -2,15 +2,15 @@
 instrumentation:
   - type: potentiostat
     manufacturer: Biologic
-    name: # a unique name of the device
+    name: Poti1 # a unique name of the device
   - type: mass spectrometer
     model: xyz
     manufacturer: Pfeiffer
-    name: # a unique name of the device
+    name: MS-Lab2 # a unique name of the device
   - type: pH meter
     model: Lab850
     manufacturer: SI Analytics
-    name: # a unique name of the device
+    name: FancyDevice15 # a unique name of the device
 tags:
   - BCV
   - SPST
