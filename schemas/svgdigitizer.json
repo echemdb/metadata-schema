@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/svgdigitizer.schema.json",
+    "$ref": "#/definitions/Svgdigitizer",
+    "definitions": {
+        "Svgdigitizer": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "curation": {
+                    "$ref": "curation.json"
+                },
+                "eln": {
+                    "$ref": "eln.json"
+                },
+                "experimental": {
+                    "$ref": "experimental.json"
+                },
+                "figure description": {
+                    "$ref": "figure_description.json"
+                },
+                "project": {
+                    "$ref": "projects.json"
+                },
+                "source": {
+                    "$ref": "source.json"
+                },
+                "system": {
+                    "$ref": "system.json"
+                }
+            },
+            "required": [
+                "curation",
+                "experimental",
+                "source",
+                "system"
+            ],
+            "title": "Svgdigitizer"
+        }
+    }
+}

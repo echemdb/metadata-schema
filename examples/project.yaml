@@ -1,9 +1,0 @@
-# Descriptor of projects linked to the data.
-project:
-  - name: PPS
-    type: internal
-    url: # link to the description of the project
-  - name: SFB XXX
-    type: external
-    url: # project homepage
-    grant number: XXX

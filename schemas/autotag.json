@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/autotag.schema.json",
+    "$ref": "#/definitions/Autotag",
+    "definitions": {
+        "Autotag": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "curation": {
+                    "$ref": "curation.json"
+                },
+                "echemdb loader": {
+                    "type": "string"
+                },
+                "eln": {
+                    "$ref": "eln.json"
+                },
+                "experimental": {
+                    "$ref": "experimental.json"
+                },
+                "figure description": {
+                    "$ref": "figure_description.json"
+                },
+                "project": {
+                    "$ref": "projects.json"
+                },
+                "system": {
+                    "$ref": "system.json"
+                }
+            },
+            "required": [
+                "curation",
+                "eln",
+                "experimental",
+                "figure description",
+                "system"
+            ],
+            "title": "Autotag"
+        }
+    }
+}

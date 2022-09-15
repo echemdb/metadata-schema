@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/eln.schema.json",
+    "$ref": "#definitions/Eln",
+    "definitions": {
+        "Eln": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "eln",
+            "properties": {
+                "url": {
+                    "description": "A link to an electronic lab notebook (ELN).",
+                    "$ref": "./general/url.json"
+                },
+                "version":{
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "url",
+                "version"
+            ]
+        }
+    }
+}

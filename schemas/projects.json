@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/projects.schema.json",
+    "$ref": "#definitions/Projects",
+    "definitions": {
+        "Projects": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Project"
+            }
+        },
+        "Project": {
+            "title": "projects",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "$ref": "./general/url.json"
+                },
+                "grant number": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "name",
+                "version"
+            ]
+        }
+    }
+}

@@ -1,0 +1,153 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/electrode.schema.json",
+    "$ref": "#definitions/Electrode",
+    "definitions": {
+        "Electrode": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "Electrode",
+            "required": [
+                "name",
+                "function"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "function": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "working electrode", "description": "A working electrode."},
+                        {"const": "counter electrode", "description": "A counter electrode."},
+                        {"const": "reference electrode", "description": "A reference electrode."}
+                    ]
+                },
+                "redox system" : {
+                    "type": "string",
+                    "description": "A particular name for a reference electrode such as RHE, MSE, AgCl2, etc."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A description of the electrode, for example when it is home made."
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrodeComponent"
+                    }
+                },
+                "geometric electrolyte contact area": {
+                    "$ref": "../general/quantity.json"
+                },
+                "preparation procedure": {
+                    "$ref": "#/definitions/ElectrodePreparation"
+                },
+                "source": {
+                    "type": "object",
+                    "$ref": "#/definitions/ElectrodeSource"
+                }
+            }
+        },
+        "ElectrodeComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "type": {
+                    "type": "string"
+                },
+                "shape": {
+                    "$ref": "#/definitions/Shape"
+                },
+                "material": {
+                    "type": "string",
+                    "description": "Abbreviation of a metal compound, i.e., Pt for Platinum."
+                },
+                "source": {
+                    "type": "object",
+                    "$ref": "#/definitions/ElectrodeSource"
+                },
+                "crystallographic orientation": {
+                    "type": "string",
+                    "description": "Miller indices of the surface orientation or 'poly' for polycrystalline samples."
+                }
+            }
+        },
+        "ElectrodeSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "manufacturer": {
+                    "type": "string"
+                },
+                "LOT": {
+                    "type": "string"
+                },
+                "purity": {
+                    "$ref": "#/definitions/SourcePurity"
+                },
+                "model": {
+                    "type":"string"
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url to a pdf or description of the electrode."
+                }
+            },
+            "title": "ElectrodeSource"
+        },
+        "SourcePurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "string"
+                }
+            },
+            "title": "SourcePurity"
+        },
+        "Shape": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "height": {
+                    "$ref": "../general/quantity.json"
+                },
+                "diameter": {
+                    "$ref": "../general/quantity.json"
+                },
+                "length": {
+                    "$ref": "../general/quantity.json"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of the shape."
+                }
+            },
+            "title": "Shape"
+        },
+        "ElectrodePreparation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url to a pdf or description of the electrode."
+                },
+                "description": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

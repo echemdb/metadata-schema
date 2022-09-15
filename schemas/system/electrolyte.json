@@ -1,0 +1,191 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/system/electrolyte.schema.json",
+    "$ref": "#definitions/Electrolyte",
+    "definitions": {
+        "Electrolyte": {
+            "type": "object",
+            "title": "Electrolyte",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "aqueous", "description": "The solvent is water."},
+                        {"const": "non-aqueous", "description": "The solvent is non-aqueous, i.e., is an ionic liquid or another organic compound."},
+                        {"const": "solid", "description": "A solid electrolyte."}
+                    ]
+                },
+                "electrolyte container": {
+                    "$ref": "#/definitions/ElectrolyteContainer"
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrolyteComponent"
+                    }
+                },
+                "ph": {
+                    "$ref": "#/definitions/Ph"
+                },
+                "temperature": {
+                    "$ref": "../general/quantity.json"
+                }
+            }
+        },
+        "ElectrolyteComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "concentration": {
+                    "$ref": "../general/quantity.json"
+                },
+                "type": {
+                    "anyOf": [
+                        {"const": "solvent", "description": "The solvent."},
+                        {"const": "salt", "description": "A salt added the solvent"},
+                        {"const": "acid", "description": "An acid added to the solvent."},
+                        {"const": "base", "description": "A base added to the solvent."},
+                        {"const": "gas", "description": "A gas passed through the solvent."}
+                    ]
+                },
+                "source": {
+                    "$ref": "#/definitions/ComponentSource"
+                },
+                "purity": {
+                    "$ref": "#/definitions/ComponentPurity"
+                },
+                "partial pressure": {
+                    "$ref": "../general/quantity.json"
+                },
+                "proportion": {
+                    "$ref": "../general/quantity.json"
+                },
+                "flow": {
+                    "$ref": "../general/quantity.json"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "title": "ElectrolyteComponent"
+        },
+        "ComponentPurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "refinement": {
+                    "type": "string"
+                },
+                "grade": {
+                    "type": "string"
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                },
+                "container": {
+                    "type": "string",
+                    "description": "An unambiguous name for the container."
+                },
+                "internal LOT": {
+                    "type": "string"
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url with further details on the electrolyte container."
+                }
+            },
+            "title": "ComponentPurity"
+        },
+        "ComponentSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "supplier": {
+                    "type": "string"
+                },
+                "LOT": {
+                    "type": "string"
+                },
+                "supplied purity": {
+                    "$ref": "#/definitions/SuppliedPurity"
+                },
+                "refinement": {
+                    "type": "string"
+                }
+            },
+            "title": "ComponentSource"
+        },
+        "SuppliedPurity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "string"
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                },
+                "total ion conductivity": {
+                    "$ref": "../general/quantity.json"
+                }
+            },
+            "title": "SuppliedPurity"
+        },
+        "ElectrolyteContainer": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "The vessel in which the supplying electrolyte as prepared or stored before the measurment."
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ElectrolyteContainerComponent"
+                    }
+                }
+            },
+            "title": "ElectrolyteContainer"
+        },
+        "Ph": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "type": "integer"
+                },
+                "uncertainty": {
+                    "type": "number"
+                }
+            },
+            "title": "Ph"
+        },
+        "ElectrolyteContainerComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of the container, i.e., a flask."
+                },
+                "comment": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

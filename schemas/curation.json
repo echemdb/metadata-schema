@@ -1,22 +1,59 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "required": [ "version", "process" ],
-    "properties": {
-        "version": { "type": "integer" },
-        "process": {
-            "type": "array",
-            "minItems": 1,
-            "items":  { 
-                "type": "object",
-                "required": [ "role", "name", "date" ],
-                "properties": { 
-                    "role": {"enum": ["experimentalist", "curator", "reviewer"]},
-                    "name": {"type": "string"},
-                    "orcid": {"type": "string"},
-                    "date": {"type": "string", "format": "date"}
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/curation.schema.json",
+    "$ref": "#/definitions/Curation",
+    "definitions": {
+        "Curation": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "curation",
+            "description": "Details on the curation process of the data.",
+            "required": [
+                "version",
+                "process"
+            ],
+            "properties": {
+                "version": {
+                    "type": "integer"
+                },
+                "process": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                    "$ref": "#/definitions/Process"
+                    }
+                }
+            }
+        },
+        "Process": {
+            "type": "object",
+            "required": [
+                "role",
+                "name",
+                "orcid",
+                "date"
+            ],
+            "properties": {
+                "role": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "experimentalist", "description": "The one who initially recorded the (meta)data."},
+                        {"const": "curator", "description": "Someone who modified or added something to the (meta)dataset."},
+                        {"const": "reviewer", "description": "Someone who verified the (meta)data."}
+                    ]
+                },
+                "name": {
+                    "type": "string"
+                },
+                "orcid": {
+                    "description": "An URL containing the ORCID.",
+                    "$ref": "./general/url.json"
+                },
+                "date": {
+                    "type": "string",
+                    "format": "date"
                 }
             }
         }
-    }  
+    }
 }

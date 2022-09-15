@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/system.schema.json",
+    "$ref": "#/definitions/System",
+    "definitions": {
+        "System": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "system",
+            "properties": {
+                "version": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string",
+                    "oneOf": [
+                        {"const": "electrochemical", "description": "An electrochemical system"}
+                    ]
+                },
+                "electrolyte": {
+                    "$ref": "./system/electrolyte.json"
+                },
+                "electrodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "./system/electrode.json"
+                    }
+                },
+                "electrochemical cell": {
+                    "$ref": "./system/electrochemical_cell.json"
+                }
+            },
+            "required": [
+                "electrochemical cell",
+                "electrodes",
+                "electrolyte",
+                "type",
+                "version"
+            ]
+        }
+    }
+}
