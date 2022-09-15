@@ -27,9 +27,6 @@
                     "type": "string",
                     "description": "A particular name for a reference electrode such as RHE, MSE, AgCl2, etc."
                 },
-                "source": {
-                    "$ref": "#/definitions/ElectrodeSource"
-                },
                 "description": {
                     "type": "string",
                     "description": "A description of the electrode, for example when it is home made."
@@ -44,10 +41,39 @@
                     "$ref": "../general/quantity.json"
                 },
                 "preparation procedure": {
+                    "$ref": "#/definitions/ElectrodePreparation"
+                },
+                "source": {
+                    "type": "object",
+                    "$ref": "#/definitions/ElectrodeSource"
+                }
+            }
+        },
+        "ElectrodeComponent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "A unique identifier."
+                },
+                "type": {
                     "type": "string"
                 },
+                "shape": {
+                    "$ref": "#/definitions/Shape"
+                },
+                "material": {
+                    "type": "string",
+                    "description": "Abbreviation of a metal compound, i.e., Pt for Platinum."
+                },
+                "source": {
+                    "type": "object",
+                    "$ref": "#/definitions/ElectrodeSource"
+                },
                 "crystallographic orientation": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Miller indices of the surface orientation or 'poly' for polycrystalline samples."
                 }
             }
         },
@@ -59,7 +85,7 @@
                     "type": "string"
                 },
                 "LOT": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "purity": {
                     "$ref": "#/definitions/SourcePurity"
@@ -84,22 +110,6 @@
             },
             "title": "SourcePurity"
         },
-        "ElectrodeComponent": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "A unique identifier."
-                },
-                "type": {
-                    "type": "string"
-                },
-                "shape": {
-                    "$ref": "#/definitions/Shape"
-                }
-            }
-        },
         "Shape": {
             "type": "object",
             "additionalProperties": false,
@@ -122,6 +132,22 @@
                 }
             },
             "title": "Shape"
+        },
+        "ElectrodePreparation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url to a pdf or description of the electrode."
+                },
+                "description": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
         }
     }
 }

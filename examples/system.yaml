@@ -109,7 +109,7 @@ electrodes:
       model: MSE Shott
       url: http://some.url.to.a.pdf.html
     description: home made RHE
-    components: # if not from a supplier an often a quasi Ref
+    components: # Only applies if the reference electrode is not from a supplier and usually is of type "quasi reference electrode".
       - name: Pt
         type: wire
         shape:
@@ -126,10 +126,10 @@ electrodes:
           diameter:
             value: 4
             unit: mm
+        crystallographic orientation: poly
     geometric electrolyte contact area:
         value:
         unit: cm-2
-    crystallographic orientation: poly
   - name: WE1
     function: working electrode
     components:
@@ -151,14 +151,14 @@ electrodes:
           value: 4
           unit: mm
     geometric electrolyte contact area:
-      value:
+      value: 1
       unit: cm-2
     preparation procedure:
       description: # Short description of the sample preparation.
         - Description step 1.
         - Description Step 2.
         - ...
-      url: htps://www.preparation.html # Link to a page with a standard preparation procedure.
+      url: https://www.preparation.html # Link to a page with a standard preparation procedure.
 electrochemical cell:
   type: glass electrolysis cell
   components: # list of components in contact with the electrolyte
