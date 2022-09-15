@@ -36,7 +36,7 @@
                 "curve": {
                     "type": "string"
                 }
-            }   
+            }
         }
     }
 }

@@ -5,7 +5,7 @@
     "definitions": {
         "Experimental": {
             "type": "object",
-            "additionalProperties": false,
+            "additionalProperties": true,
             "title": "experimental",
             "description": "Details about the configuration of the experimental set up.",
             "properties": {
@@ -27,8 +27,14 @@
                 },
                 "description":{
                     "type": "string"
+                },
+                "version": {
+                    "type": "number"
                 }
-            }
+            },
+            "required": [
+                "version"
+            ]
         }
     }
 }

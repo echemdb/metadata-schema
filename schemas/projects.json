@@ -28,10 +28,14 @@
                 },
                 "grant number": {
                     "type": "string"
+                },
+                "version": {
+                    "type": "number"
                 }
             },
             "required": [
-                "name"
+                "name",
+                "version"
             ]
         }
     }
