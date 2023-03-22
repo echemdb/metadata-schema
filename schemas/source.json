@@ -18,7 +18,7 @@
                 "version": {
                     "type": "integer"
                 },
-                "bib": {
+                "citation key": {
                     "type": "string"
                 },
                 "url": {
