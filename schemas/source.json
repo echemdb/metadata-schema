@@ -9,7 +9,7 @@
             "additionalProperties": false,
             "required": [
                 "version",
-                "bib",
+                "citation key",
                 "techniques",
                 "figure",
                 "curve"
