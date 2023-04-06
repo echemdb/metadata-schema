@@ -1,0 +1,25 @@
+name: Validate Examples
+
+on:
+  push: { branches: [ "main" ] }
+  pull_request: { branches: [ "main" ] }
+
+jobs:
+  verify-objects:
+    strategy:
+      matrix:
+        file: [curation, eln, experimental, figure_descritpion, project, source, system]
+    uses: thiagodnf/yaml-schema-checker@v0.0.9
+    with:
+      jsonSchemaFile: "schemas${{ matrix.file }}.json"
+      yamlFiles: |
+        examples/objects/${{ matrix.file }}.yaml
+  verify-file-schemas:
+    strategy:
+      matrix:
+        file: [autotag, svgdigitizer]
+    uses: thiagodnf/yaml-schema-checker@v0.0.9
+    with:
+      jsonSchemaFile: "schemas${{ matrix.file }}.json"
+      yamlFiles: |
+        examples/file_schemas/${{ matrix.file }}.yaml
