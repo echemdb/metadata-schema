@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/quantity.schema.json",
-    "$ref": "#/definitions/Quantity",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/quantity.json",
+    "allOf": [{ "$ref": "#/definitions/Quantity" }],
     "definitions": {
         "Quantity": {
             "type": "object",

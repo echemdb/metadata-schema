@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/experimental/instrumentation.schema.json",
-    "$ref": "#definitions/Instrumentation",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/experimental/instrumentation.json#",
+    "allOf": [{ "$ref": "#/definitions/Instrumentation" }],
     "definitions": {
         "Instrumentation": {
             "description": "The instruments used to perform the experiment.",

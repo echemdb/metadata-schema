@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/projects.schema.json",
-    "$ref": "#definitions/Projects",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/projects.json",
+    "$ref": "#/definitions/Projects",
     "definitions": {
         "Projects": {
             "type": "array",
@@ -34,8 +34,7 @@
                 }
             },
             "required": [
-                "name",
-                "version"
+                "name"
             ]
         }
     }

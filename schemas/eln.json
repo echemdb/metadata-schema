@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/eln.schema.json",
-    "$ref": "#definitions/Eln",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/eln.json#",
+    "allOf": [{ "$ref": "#/definitions/Eln" }],
     "definitions": {
         "Eln": {
             "type": "object",
