@@ -14,7 +14,7 @@
     },
     "type": "object",
     "properties": {
-      "source": {"$ref": "https://echemdb.org/metadata-schema/0.1.0/source.schema.json"},
+      "source": {"$ref": "https://echemdb.org/metadata-schema/0.1.0/source.json"},
       "curation": {"$ref": "file:curation.json"},
       "figure description": {"$ref": "file:figure_description.json"},
       "electrochemical system": {"$ref": "file:electrochemical_system.json"}

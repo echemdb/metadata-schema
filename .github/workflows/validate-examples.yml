@@ -6,20 +6,45 @@ on:
 
 jobs:
   verify-objects:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        file: [curation, eln, experimental, figure_descritpion, project, source, system]
-    uses: thiagodnf/yaml-schema-checker@v0.0.9
-    with:
-      jsonSchemaFile: "schemas${{ matrix.file }}.json"
-      yamlFiles: |
-        examples/objects/${{ matrix.file }}.yaml
+        file: [curation, eln, experimental, figure_description, projects, source, system]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: { submodules: recursive }
+      - name: Prepare json Files for Local Validation
+        shell: bash -l {0}
+        run: |
+          find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
+      - name: Install Dependencies
+        shell: bash -l {0}
+        run: |
+          pip install check-jsonschema
+      - name: Check Schemas
+        shell: bash -l {0}
+        run: |
+          check-jsonschema --schemafile ./schemas/${{ matrix.file }}.json ./examples/objects/${{ matrix.file }}.yaml
+
   verify-file-schemas:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         file: [autotag, svgdigitizer]
-    uses: thiagodnf/yaml-schema-checker@v0.0.9
-    with:
-      jsonSchemaFile: "schemas${{ matrix.file }}.json"
-      yamlFiles: |
-        examples/file_schemas/${{ matrix.file }}.yaml
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: { submodules: recursive }
+      - name: Prepare json Files for Local Validation
+        shell: bash -l {0}
+        run: |
+          find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
+      - name: Install Dependencies
+        shell: bash -l {0}
+        run: |
+          pip install check-jsonschema
+      - name: Check Schemas
+        shell: bash -l {0}
+        run: |
+          check-jsonschema --schemafile ./schemas/${{ matrix.file }}.json ./examples/file_schemas/${{ matrix.file }}.yaml

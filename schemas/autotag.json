@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/schemas/autotag.schema.json",
-    "$ref": "#/definitions/Autotag",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/autotag.json#",
+    "allOf": [{ "$ref": "#/definitions/Autotag" }],
     "definitions": {
         "Autotag": {
             "type": "object",

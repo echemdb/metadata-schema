@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/url.schema.json",
-    "$ref": "#/definitions/Url",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/url.json",
+    "allOf": [{ "$ref": "#/definitions/Url" }],
     "definitions": {
         "Url": {
             "url": {

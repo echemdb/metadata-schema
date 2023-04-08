@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/figure_description.schema.json",
-    "$ref": "#/definitions/FigureDescription",
+    "$id": "https://echemdb.org/metadata-schema/0.1.0/figure_description.json#",
+    "allOf": [{ "$ref": "#/definitions/FigureDescription" }],
     "definitions": {
         "FigureDescription": {
             "type": "object",
