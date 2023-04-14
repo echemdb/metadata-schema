@@ -1,5 +1,4 @@
 # Description of the system in which the actual measurement is conducted, shown for an electrochemical system
-version: 1
 type: electrochemical
 electrolyte:
   type: aqueous # aqueous, non-aqueous, solid
@@ -48,7 +47,7 @@ electrolyte:
     - name: NaCl # can be trivia name, sum formula, etc
       concentration:
         value: 0.1
-        unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+        unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the astropy string representation of units. https://docs.astropy.org/en/stable/units/index.html
       type: salt #
       source:
         supplier: Company name.
@@ -81,11 +80,11 @@ electrolyte:
         LOT: ABC123
       concentration:
         value: 0.1
-        unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+        unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the astropy string representation of units. https://docs.astropy.org/en/stable/units/index.html
     - name: N2
       type: gas
       purity:
-        grade: N5.0 # some genereic name
+        grade: N5.0 # some generic name
       partial pressure:
         unit: 1
         value: bar # use 1 bar for saturated solutions
@@ -108,7 +107,7 @@ electrodes:
       manufacturer: SI Analytics
       model: MSE Shott
       url: http://some.url.to.a.pdf.html
-    description: home made RHE
+    description: Home made RHE.
     components: # Only applies if the reference electrode is not from a supplier and usually is of type "quasi reference electrode".
       - name: Pt
         type: wire
@@ -130,13 +129,13 @@ electrodes:
     geometric electrolyte contact area:
         value:
         unit: cm-2
-  - name: WE1
+  - name: WE
     function: working electrode
     components:
     - name: Ni 111 CD
       type: single crystal
       material: Ni
-      crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      crystallographic orientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
       source:
         manufacturer: Company name
         LOT: 145823A # LOT number

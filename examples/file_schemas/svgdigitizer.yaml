@@ -2,7 +2,6 @@
 # For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
 # Figure description is optional. It is created automatically by the cv module of svgdigitizer
 curation:
-  version: 1
   process:
     - role: curator
       name: Albert Engstfeld
@@ -13,7 +12,6 @@ curation:
       orcid: https://orcid.org/0000-0002-9686-3948
       date: 2022-01-21
 eln: # not required for svgdigitizer
-  version: 1
   url: # URL to the ELN describing the data
 experimental:
   version: 1
@@ -35,7 +33,6 @@ experimental:
       name: FancyDevice15 # a unique name of the device
   description: some decsription # A string or a new set of metadata
 source:
-  version: 1
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
   citation key: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
   techniques: # provide a list of techniques used in the publication
@@ -46,7 +43,6 @@ source:
   figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
   curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
 system:
-  version: 1
   type: electrochemical
   electrolyte:
     type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g

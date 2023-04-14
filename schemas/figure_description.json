@@ -8,9 +8,6 @@
             "additionalProperties": false,
             "title": "figure description",
             "properties": {
-                "version": {
-                    "type": "integer"
-                },
                 "type":
                     { "type": "string",
                         "oneOf": [
@@ -42,8 +39,7 @@
                 }
             },
             "required": [
-                "type",
-                "version"
+                "type"
             ]
         },
         "Field": {

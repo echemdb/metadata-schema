@@ -2,18 +2,15 @@
 # For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
 # Figure description is optional. It is created automatically by the cv module of svgdigitizer
 curation:
-  version: 1
   process:
     - role: experimentalist
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
       date: 2021-07-09 # YYYY-MM-DD
 eln:
-  version: 1
   url: # URL to the ELN describing the data
 echemdb loader: EClab v4.32
 experimental:
-  version: 1
   tags:
     - BCV
     - SPST
@@ -32,14 +29,12 @@ experimental:
       name: FancyDevice15 # a unique name of the device
   description: some description # A string or a new set of metadata
 figure description: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
-    version: 1
     type: raw
     simultaneous measurements: # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     - Ring disc
     comment: A description of the measurement data. # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
 # Descriptor of projects linked to the data.
 projects:
-  - version: 1
   - name: PPS
     type: internal
     url: # link to the description of the project
@@ -48,7 +43,6 @@ projects:
     url: # project homepage
     grant number: XXX
 source:
-  version: 1
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
   bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
   techniques: # provide a list of techniques used in the publication
@@ -59,7 +53,6 @@ source:
   figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
   curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
 system:
-  version: 1
   type: electrochemical
   electrolyte:
     type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g

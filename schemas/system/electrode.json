@@ -73,7 +73,7 @@
                 },
                 "crystallographic orientation": {
                     "type": "string",
-                    "description": "Miller indices of the surface orientation or 'poly' for polycrystalline samples."
+                    "description": "Miller indices of the surface orientation ((111), (0001), (11,15,1)) or 'poly' for polycrystalline samples."
                 }
             }
         },
