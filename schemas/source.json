@@ -8,16 +8,12 @@
             "title": "source",
             "additionalProperties": false,
             "required": [
-                "version",
                 "citation key",
                 "techniques",
                 "figure",
                 "curve"
             ],
             "properties": {
-                "version": {
-                    "type": "integer"
-                },
                 "citation key": {
                     "type": "string"
                 },

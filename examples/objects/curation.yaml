@@ -1,6 +1,5 @@
 # Descriptor of the curation process.
 # In the case of the digitized of a figure for `echemdb/website`, the role of the first item is the curator.
-version: 1
 process:
   - role: curator # the first role is usually the experimentalist
     name: Albert Engstfeld

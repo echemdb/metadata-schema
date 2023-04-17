@@ -1,5 +1,4 @@
 # Descriptor of experimental properties, which are not covered in system.yaml.
-version: 1
 instrumentation:
   - type: potentiostat
     manufacturer: Biologic

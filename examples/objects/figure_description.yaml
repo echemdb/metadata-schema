@@ -1,6 +1,5 @@
 # Descriptor providing information on the original data axis (field) units, measurement type and linked measuremnts of source data.
 # This descriptor is not required in combination with an SVG converted with `svgdigitizer.electrochemistry.cv.CV`.
-version: 1
 type: digitized # raw, digitized
 measurement type: CV
 simultaneous measurements:

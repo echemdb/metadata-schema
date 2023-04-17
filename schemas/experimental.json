@@ -27,14 +27,8 @@
                 },
                 "description":{
                     "type": "string"
-                },
-                "version": {
-                    "type": "number"
                 }
-            },
-            "required": [
-                "version"
-            ]
+            }
         }
     }
 }

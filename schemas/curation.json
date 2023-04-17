@@ -9,13 +9,9 @@
             "title": "curation",
             "description": "Details on the curation process of the data.",
             "required": [
-                "version",
                 "process"
             ],
             "properties": {
-                "version": {
-                    "type": "integer"
-                },
                 "process": {
                     "type": "array",
                     "minItems": 1,
@@ -37,9 +33,9 @@
                 "role": {
                     "type": "string",
                     "oneOf": [
-                        {"const": "experimentalist", "description": "The one who initially recorded the (meta)data."},
-                        {"const": "curator", "description": "Someone who modified or added something to the (meta)dataset."},
-                        {"const": "reviewer", "description": "Someone who verified the (meta)data."}
+                        {"const": "experimentalist", "description": "The person that initially recorded the (meta)data."},
+                        {"const": "curator", "description": "Someone person that modified or added something to the (meta)dataset."},
+                        {"const": "reviewer", "description": "Someone person that verified the (meta)data."}
                     ]
                 },
                 "name": {
@@ -55,5 +51,5 @@
                 }
             }
         }
-    }    
+    }
 }

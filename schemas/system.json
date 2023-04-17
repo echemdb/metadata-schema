@@ -8,9 +8,6 @@
             "additionalProperties": false,
             "title": "system",
             "properties": {
-                "version": {
-                    "type": "integer"
-                },
                 "type": {
                     "type": "string",
                     "oneOf": [
@@ -34,8 +31,7 @@
                 "electrochemical cell",
                 "electrodes",
                 "electrolyte",
-                "type",
-                "version"
+                "type"
             ]
         }
     }
