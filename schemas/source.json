@@ -9,9 +9,7 @@
             "additionalProperties": false,
             "required": [
                 "citation key",
-                "techniques",
-                "figure",
-                "curve"
+                "url"
             ],
             "properties": {
                 "citation key": {
@@ -27,6 +25,12 @@
                     }
                 },
                 "figure": {
+                    "type": "string"
+                },
+                "bibdata": {
+                    "type": "string"
+                },
+                "comment": {
                     "type": "string"
                 },
                 "curve": {
