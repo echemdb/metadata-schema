@@ -26,16 +26,16 @@
             "required": [
                 "role",
                 "name",
-                "orcid",
-                "date"
+                "orcid"
             ],
             "properties": {
                 "role": {
                     "type": "string",
                     "oneOf": [
-                        {"const": "experimentalist", "description": "The person that initially recorded the (meta)data."},
-                        {"const": "curator", "description": "Someone person that modified or added something to the (meta)dataset."},
-                        {"const": "reviewer", "description": "Someone person that verified the (meta)data."}
+                        {"const": "experimentalist", "description": "A person that recorded the (meta)data."},
+                        {"const": "curator", "description": "A person that created a (meta)dataset from literature data."},
+                        {"const": "reviewer", "description": "A person that verified the (meta)data (usually literature data)."},
+                        {"const": "supervisor", "description": "A person that supervised the experimentalist."}
                     ]
                 },
                 "name": {
