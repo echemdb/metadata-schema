@@ -1,15 +1,17 @@
-# This file describes a figure from a publication containing electrochemical data.
-# For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
-# Figure description is optional. It is created automatically by the cv module of svgdigitizer
+# This file has been inferred from https://github.com/echemdb/metadata-schema
+# It can be used to annotate measurement data during its creation using a tool such as autotag
+# Adding the `echemdb loader` and `field` data in `figure description` in principle allows creating a datapackage.
 curation:
   process:
     - role: experimentalist
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2021-07-09 # YYYY-MM-DD
+    - role: supervisor
+      name: Albert Engstfeld
+      orcid: https://orcid.org/0000-0002-9686-3948
 eln:
   url: # URL to the ELN describing the data
-echemdb loader: EClab v4.32
+echemdb loader: EClab v4.32 # The name of a loader which can be used to load and convert data
 experimental:
   tags:
     - BCV
@@ -33,25 +35,27 @@ figure description: #This section will be updated by module `svgdigitizer.electr
     simultaneous measurements: # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     - Ring disc
     comment: A description of the measurement data. # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
-# Descriptor of projects linked to the data.
-projects:
+    fields:
+      - name: E [V]
+        unit: V
+        type: number
+        dimension: E
+      - name: t [s]
+        unit: s
+        type: number
+        dimension: t
+      - name: I / [A cm-2]
+        unit: A cm-2
+        type: number
+        dimension: j
+projects: # Descriptor of projects linked to the data.
   - name: PPS
     type: internal
     url: # link to the description of the project
   - name: SFB XXX
     type: external
     url: # project homepage
-    grant number: XXX
-source:
-  url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
-  bib: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
-  techniques: # provide a list of techniques used in the publication
-  - XPS
-  - CV
-  - EIS
-  - DEMS
-  figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
-  curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
+    grant number: XXX # In case of numbers, add as string such as `00231`
 system:
   type: electrochemical
   electrolyte:
@@ -79,7 +83,7 @@ system:
             total ion conductivity:
               value: 18
               unit: MOhm cm
-        purity: # puity after refinement
+        purity: # puity after refinement. Otherwise add purity to source
           refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
           grade: 6N
           total organic carbon:
@@ -183,7 +187,7 @@ system:
       geometric electrolyte contact area:
           value:
           unit: cm-2
-    - name: WE1
+    - name: WE
       function: working electrode
       components:
       - name: Ni 111 CD
