@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/system/electrochemical_cell.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system/electrochemical_cell.json#",
     "allOf": [{ "$ref": "#/definitions/ElectrochemicalCell" }],
     "definitions": {
         "ElectrochemicalCell": {

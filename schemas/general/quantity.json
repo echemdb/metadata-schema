@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://echemdb.org/metadata-schema/0.1.0/general/quantity.json",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/quantity.json",
     "allOf": [{ "$ref": "#/definitions/Quantity" }],
     "definitions": {
         "Quantity": {
