@@ -108,7 +108,7 @@ electrodes:
       model: MSE Shott
       url: http://some.url.to.a.pdf.html
     description: Home made RHE.
-    components:
+    components: # Only applies if the reference electrode is not from a supplier and usually is of type "quasi reference electrode".
       - name: Pt
         type: wire
         shape:
