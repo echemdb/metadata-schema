@@ -7,6 +7,9 @@
             "type": "object",
             "title": "Electrolyte",
             "additionalProperties": false,
+            "required": [
+                "type"
+            ],
             "properties": {
                 "type": {
                     "type": "string",
