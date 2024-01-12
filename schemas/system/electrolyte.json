@@ -166,7 +166,7 @@
             "additionalProperties": false,
             "properties": {
                 "value": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "uncertainty": {
                     "type": "number"
