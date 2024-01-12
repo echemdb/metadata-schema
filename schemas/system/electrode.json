@@ -13,7 +13,8 @@
             ],
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A unique identifier."
                 },
                 "function": {
                     "type": "string",
