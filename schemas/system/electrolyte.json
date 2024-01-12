@@ -15,7 +15,8 @@
                     "type": "string",
                     "oneOf": [
                         {"const": "aqueous", "description": "The solvent is water."},
-                        {"const": "non-aqueous", "description": "The solvent is non-aqueous, i.e., is an ionic liquid or another organic compound."},
+                        {"const": "ionic liquid", "description": "The solvent is an ionic liquid."},
+                        {"const": "non-aqueous", "description": "The solvent is non-aqueous other than an ionic liquid, i.e., an organic compound."},
                         {"const": "solid", "description": "A solid electrolyte."}
                     ]
                 },
