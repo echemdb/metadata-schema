@@ -108,6 +108,9 @@
                 "url": {
                     "$ref": "../general/url.json",
                     "description": "A url with further details on the electrolyte container."
+                },
+                "total ionic conductivity": {
+                    "$ref": "../general/quantity.json"
                 }
             },
             "title": "ComponentPurity"
