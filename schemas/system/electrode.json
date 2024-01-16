@@ -32,12 +32,6 @@
                     "type": "string",
                     "description": "A description of the electrode, for example when it is home made."
                 },
-                "components": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/ElectrodeComponent"
-                    }
-                },
                 "geometric electrolyte contact area": {
                     "$ref": "../general/quantity.json"
                 },
@@ -47,16 +41,6 @@
                 "source": {
                     "type": "object",
                     "$ref": "#/definitions/ElectrodeSource"
-                }
-            }
-        },
-        "ElectrodeComponent": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "A unique identifier."
                 },
                 "type": {
                     "type": "string"
@@ -67,10 +51,6 @@
                 "material": {
                     "type": "string",
                     "description": "Abbreviation of a metal compound, i.e., Pt for Platinum."
-                },
-                "source": {
-                    "type": "object",
-                    "$ref": "#/definitions/ElectrodeSource"
                 },
                 "crystallographic orientation": {
                     "type": "string",

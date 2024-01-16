@@ -164,56 +164,54 @@ system:
       source:
         manufacturer: SI Analytics
         model: MSE Shott
-        url: points to wiki
-      description: home made RHE
-      components: # if not from a supplier an often a quasi Ref
-        - name: Pt
-          type: wire
-          shape:
-            description: some dimensions
+        url: http://some.url.to.a.pdf.html
+      description: Home made RHE.
+      material: Pt
+      type: wire
+      shape:
+        description: Description of the shape.
     - name: CE
       function: counter electrode
-      components:
-        - name: Pt
-          type: wire
-          shape:
-            length:
-              value: 4
-              unit: mm
-            diameter:
-              value: 4
-              unit: mm
-          crystallographic orientation: poly
-      geometric electrolyte contact area:
-          value:
-          unit: cm-2
-    - name: WE
-      function: working electrode
-      components:
-      - name: Ni 111 CD
-        type: single crystal
-        material: Ni
-        crystallographic orientation: "111" # 'hkl', '100', '110', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
-        source:
-          manufacturer: Manufacturer Name # Company name
-          LOT: A-45675 # LOT number
-          purity:
-            grade: 5N
-        shape: # optional
-          type: cylinder # bead/sphere
-          height:
-            value: 4
-            unit: mm
-          diameter:
-            value: 4
-            unit: mm
+      material: Pt
+      type: wire
+      shape:
+        length:
+          value: 4
+          unit: mm
+        diameter:
+          value: 4
+          unit: mm
+      crystallographic orientation: poly
       geometric electrolyte contact area:
         value:
         unit: cm-2
+    - name: WE
+      function: working electrode
+      type: single crystal
+      material: Ni
+      crystallographic orientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      source:
+        manufacturer: Company name
+        LOT: 145823A # LOT number
+        purity:
+          grade: 5N
+      shape: # optional
+        type: cylinder # bead/sphere
+        height:
+          value: 4
+          unit: mm
+        diameter:
+          value: 4
+          unit: mm
+      geometric electrolyte contact area:
+        value: 1
+        unit: cm-2
       preparation procedure:
-        description:
-          - Description step 1. Description Step2. ... # Short description of sample preparation. This can be very useful. :)
-        url: https://some.informative.link
+        description: # Short description of the sample preparation.
+          - Description step 1.
+          - Description Step 2.
+          - ...
+        url: https://www.preparation.html # Link to a page with a standard preparation procedure.
   electrochemical cell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte
