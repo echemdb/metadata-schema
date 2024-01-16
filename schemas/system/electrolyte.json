@@ -74,6 +74,9 @@
                 },
                 "comment": {
                     "type": "string"
+                },
+                "pressure": {
+                    "$ref": "../general/quantity.json"
                 }
             },
             "required": [
