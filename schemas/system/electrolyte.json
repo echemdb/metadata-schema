@@ -140,6 +140,12 @@
                 },
                 "total ion conductivity": {
                     "$ref": "../general/quantity.json"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
                 }
             },
             "title": "SuppliedPurity"
