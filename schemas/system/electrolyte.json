@@ -124,6 +124,9 @@
                 },
                 "refinement": {
                     "type": "string"
+                },
+                "quality": {
+                    "type": "string"
                 }
             },
             "title": "ComponentSource"
