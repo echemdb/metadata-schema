@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/svgdigitizer.json #",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/svgdigitizer.json#",
     "allOf": [{ "$ref": "#/definitions/Svgdigitizer" }],
     "definitions": {
         "Svgdigitizer": {
@@ -31,7 +31,6 @@
             },
             "required": [
                 "curation",
-                "experimental",
                 "source",
                 "system"
             ],

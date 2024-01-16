@@ -7,12 +7,16 @@
             "type": "object",
             "title": "Electrolyte",
             "additionalProperties": false,
+            "required": [
+                "type"
+            ],
             "properties": {
                 "type": {
                     "type": "string",
                     "oneOf": [
                         {"const": "aqueous", "description": "The solvent is water."},
-                        {"const": "non-aqueous", "description": "The solvent is non-aqueous, i.e., is an ionic liquid or another organic compound."},
+                        {"const": "ionic liquid", "description": "The solvent is an ionic liquid."},
+                        {"const": "non-aqueous", "description": "The solvent is non-aqueous other than an ionic liquid, i.e., an organic compound."},
                         {"const": "solid", "description": "A solid electrolyte."}
                     ]
                 },
@@ -70,6 +74,9 @@
                 },
                 "comment": {
                     "type": "string"
+                },
+                "pressure": {
+                    "$ref": "../general/quantity.json"
                 }
             },
             "required": [
@@ -101,6 +108,9 @@
                 "url": {
                     "$ref": "../general/url.json",
                     "description": "A url with further details on the electrolyte container."
+                },
+                "total ionic conductivity": {
+                    "$ref": "../general/quantity.json"
                 }
             },
             "title": "ComponentPurity"
@@ -120,6 +130,9 @@
                 },
                 "refinement": {
                     "type": "string"
+                },
+                "quality": {
+                    "type": "string"
                 }
             },
             "title": "ComponentSource"
@@ -136,6 +149,12 @@
                 },
                 "total ion conductivity": {
                     "$ref": "../general/quantity.json"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
                 }
             },
             "title": "SuppliedPurity"
@@ -162,7 +181,7 @@
             "additionalProperties": false,
             "properties": {
                 "value": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "uncertainty": {
                     "type": "number"

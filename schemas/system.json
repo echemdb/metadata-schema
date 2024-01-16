@@ -28,7 +28,6 @@
                 }
             },
             "required": [
-                "electrochemical cell",
                 "electrodes",
                 "electrolyte",
                 "type"
