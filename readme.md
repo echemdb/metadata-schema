@@ -3,11 +3,15 @@
 Development of a metadata schema for experimental data, sepcifically electrochemical and electrocatalytic data.
 
 ## Development
-It it possible to validate metadata files (e.g. of type json or yaml) against the schemas locally. You can use the python package `check-jsonschema` for example.
-This is achieved by omitting the `$id` tag in this repository. It is set to a absolute url upon release.
-- check a single file
+The metadata files (e.g. of type JSON or YAML) can be validated against the schemas locally using, for example, the Python package [`check-jsonschema`](https://github.com/python-jsonschema/check-jsonschema).
+In that case, the `$id` tag in the schemas pointing to this repository must be bypassed by setting an absolute URL to the respective local files.
+- validate a single file
 
-  `check-jsonschema --base-uri <path to schemas> --schemafile <path to schema>/<some schema>.json <file to validate>`
-- validate all files in a directory (inlcuding subdirectories)
+```sh
+check-jsonschema --base-uri <path to schemas> --schemafile <path to schema>/<some schema>.json <file to validate>
+```sh
 
-  `find <path to metadata files> -name "*.<file extension>" -exec echo {} \; -exec check-jsonschema --base-uri <path to schemas> --schemafile <path to schema>/<some schema>.json {} \;`
+- validate all files in a directory (including subdirectories)
+
+```sh
+find <path to metadata files> -name "*.<file extension>" -exec echo {} \; -exec check-jsonschema --base-uri <path to schemas> --schemafile <path to schema>/<some schema>.json {} \;`
