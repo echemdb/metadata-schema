@@ -57,7 +57,8 @@
                         {"const": "salt", "description": "A salt added the solvent"},
                         {"const": "acid", "description": "An acid added to the solvent."},
                         {"const": "base", "description": "A base added to the solvent."},
-                        {"const": "gas", "description": "A gas passed through the solvent."}
+                        {"const": "gas", "description": "A gas passed through the solvent."},
+                        {"const": "solute", "description": "A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water."}
                     ]
                 },
                 "source": {
