@@ -17,7 +17,7 @@ electrolyte:
       source:
         supplier: Company name # Company name, organic chemistry III - Uni Ulm
         LOT: ABC123 # LOT number
-        supplied purity:
+        purity:
           grade: 5N # analytical grade, 5N, etc
           total organic carbon:
             value: 3

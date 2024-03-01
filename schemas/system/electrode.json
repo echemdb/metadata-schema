@@ -35,8 +35,14 @@
                 "geometric electrolyte contact area": {
                     "$ref": "../general/quantity.json"
                 },
+                "purity": {
+                    "$ref": "../general/purity.json"
+                },
                 "preparation procedure": {
                     "$ref": "#/definitions/ElectrodePreparation"
+                },
+                "shape": {
+                    "$ref": "#/definitions/Shape"
                 },
                 "source": {
                     "type": "object",
@@ -44,9 +50,6 @@
                 },
                 "type": {
                     "type": "string"
-                },
-                "shape": {
-                    "$ref": "#/definitions/Shape"
                 },
                 "material": {
                     "type": "string",
@@ -69,7 +72,7 @@
                     "type": "string"
                 },
                 "purity": {
-                    "$ref": "#/definitions/SourcePurity"
+                    "$ref": "../general/purity.json"
                 },
                 "model": {
                     "type":"string"
@@ -80,16 +83,6 @@
                 }
             },
             "title": "ElectrodeSource"
-        },
-        "SourcePurity": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "grade": {
-                    "type": "string"
-                }
-            },
-            "title": "SourcePurity"
         },
         "Shape": {
             "type": "object",
