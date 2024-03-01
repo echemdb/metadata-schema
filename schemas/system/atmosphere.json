@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/atmosphere.json",
+    "allOf": [{ "$ref": "#/definitions/Atmosphere" }],
+    "definitions": {
+        "Atmosphere": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                },
+                "components": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../general/component.json"
+                    }
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url with further details on the experimental setup."
+                },
+                "description": {
+                    "type": "string"
+                },
+                "comment": {
+                    "type": "string"
+                }
+            },
+            "title": "Atmosphere"
+        }
+    }
+}
