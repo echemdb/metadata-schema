@@ -4,6 +4,26 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.2.0
+====================
+
+**Added:**
+
+* Added electrochemical system property `atmosphere`, describing the atmosphere above the electrolyte (glove box, UHV, laboratory conditions, etc.).
+* Added `electrolyte.type : solute`, denoting anything added to a solvent, which does not match with existing types.
+* Added `supplier` and/or `manufacturer` to the source of components, instruments, materials, etc.
+
+**Changed:**
+
+* Changed `supplied purity` to `purity` and use one `purity` schema for all `purity` keys.
+
+**Removed**
+
+* Removed `supplied purity` in favor of `purity`.
+*
+
+
+
 v0.1.0
 ====================
 
