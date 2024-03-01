@@ -80,6 +80,9 @@
                 "url": {
                     "$ref": "../general/url.json",
                     "description": "A url to a pdf or description of the electrode."
+                },
+                "supplier": {
+                    "type": "string"
                 }
             },
             "title": "ElectrodeSource"
