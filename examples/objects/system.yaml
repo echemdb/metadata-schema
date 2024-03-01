@@ -166,3 +166,13 @@ electrochemical cell:
   cleaning procedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
   source:
     url: https://doi.org/10.1016/0039-6028 # DOI or URL where the design is published
+atmosphere:
+    type: inert chamber # glove box, UHV, laboratory, conditions
+    components:
+    - name: Ar
+      type: gas
+      proportion:
+        value: 100
+    description: A nice glove box or UHV machine.
+    url: https://www.detup.html
+    comment: Old equipment.

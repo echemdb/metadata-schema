@@ -25,6 +25,9 @@
                 },
                 "electrochemical cell": {
                     "$ref": "./system/electrochemical_cell.json"
+                },
+                "atmosphere": {
+                    "$ref": "./system/atmosphere.json"
                 }
             },
             "required": [
