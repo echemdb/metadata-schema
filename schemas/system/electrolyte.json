@@ -64,7 +64,7 @@
                     "$ref": "#/definitions/ComponentSource"
                 },
                 "purity": {
-                    "$ref": "#/definitions/ComponentPurity"
+                    "$ref": "../general/purity.json"
                 },
                 "partial pressure": {
                     "$ref": "../general/quantity.json"
@@ -88,36 +88,6 @@
             ],
             "title": "ElectrolyteComponent"
         },
-        "ComponentPurity": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "refinement": {
-                    "type": "string"
-                },
-                "grade": {
-                    "type": "string"
-                },
-                "total organic carbon": {
-                    "$ref": "../general/quantity.json"
-                },
-                "container": {
-                    "type": "string",
-                    "description": "An unambiguous name for the container."
-                },
-                "internal LOT": {
-                    "type": "string"
-                },
-                "url": {
-                    "$ref": "../general/url.json",
-                    "description": "A url with further details on the electrolyte container."
-                },
-                "total ionic conductivity": {
-                    "$ref": "../general/quantity.json"
-                }
-            },
-            "title": "ComponentPurity"
-        },
         "ComponentSource": {
             "type": "object",
             "additionalProperties": false,
@@ -128,8 +98,8 @@
                 "LOT": {
                     "type": "string"
                 },
-                "supplied purity": {
-                    "$ref": "#/definitions/SuppliedPurity"
+                "purity": {
+                    "$ref": "../general/purity.json"
                 },
                 "refinement": {
                     "type": "string"
@@ -139,28 +109,6 @@
                 }
             },
             "title": "ComponentSource"
-        },
-        "SuppliedPurity": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "grade": {
-                    "type": "string"
-                },
-                "total organic carbon": {
-                    "$ref": "../general/quantity.json"
-                },
-                "total ion conductivity": {
-                    "$ref": "../general/quantity.json"
-                },
-                "value": {
-                    "type": "number"
-                },
-                "unit": {
-                    "type": "string"
-                }
-            },
-            "title": "SuppliedPurity"
         },
         "ElectrolyteContainer": {
             "type": "object",

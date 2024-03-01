@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/purity.json",
+    "allOf": [{ "$ref": "#/definitions/Purity" }],
+    "definitions": {
+        "Purity": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "grade": {
+                    "type": "string"
+                },
+                "total organic carbon": {
+                    "$ref": "../general/quantity.json"
+                },
+                "total ion conductivity": {
+                    "$ref": "../general/quantity.json"
+                },
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "container": {
+                    "type": "string",
+                    "description": "An unambiguous name for the container."
+                },
+                "internal LOT": {
+                    "type": "string"
+                },
+                "url": {
+                    "$ref": "../general/url.json",
+                    "description": "A url with further details on the electrolyte container."
+                },
+                "refinement": {
+                    "type": "string"
+                }
+            },
+            "title": "Purity"
+        }
+    }
+}

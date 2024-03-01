@@ -75,7 +75,7 @@ system:
         source:
           supplier: company name # Company name, organic chemistry III - Uni Ulm
           LOT: 155464A # LOT number
-          supplied purity:
+          purity:
             grade: 5N # analytical grade, 5N, etc
             total organic carbon:
               value: 3
