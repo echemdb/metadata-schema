@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "echemdb Data Package Profile",
+    "type": "object",
+    "allOf": [
+        { "$ref": "https://datapackage.org/profiles/2.0/datapackage.json" }
+    ],
+    "properties": {
+        "resources": {
+            "type": "array",
+            "items": {
+                "allOf": [
+                    { "$ref": "https://datapackage.org/profiles/2.0/dataresource.json" },
+                    { "$ref": "#/definitions/echemdb_resource" }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "echemdb_resource": {
+            "type": "object",
+            "properties": {
+                "metadata": {
+                    "type": "object",
+                    "required": ["echemdb"],
+                    "properties": {
+                        "echemdb": {
+                            "type": "object",
+                            "required": ["curation",
+                                        "experimental",
+                                        "figure description",
+                                        "system",
+                                        "source"],
+                            "properties" : {
+                                "curation" : {
+                                    "type": "object",
+                                    "$ref": "curation.json" },
+                                "experimental" : {
+                                    "type": "object",
+                                    "$ref": "experimental.json" },
+                                "figure description" : {
+                                    "type": "object",
+                                    "$ref": "figure_description.json" },
+                                "system" : {
+                                    "type": "object",
+                                    "$ref": "system.json" },
+                                "source" : {
+                                    "type": "object",
+                                    "$ref": "source.json" },
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
