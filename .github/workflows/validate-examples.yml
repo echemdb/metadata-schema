@@ -48,3 +48,4 @@ jobs:
         shell: bash -l {0}
         run: |
           check-jsonschema --schemafile ./schemas/${{ matrix.file }}.json ./examples/file_schemas/${{ matrix.file }}.yaml
+          check-jsonschema --schemafile ./schemas/echemdb_package.json ./examples/file_schemas/demo_package.json
