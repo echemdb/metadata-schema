@@ -48,6 +48,17 @@ jobs:
         shell: bash -l {0}
         run: |
           check-jsonschema --schemafile ./schemas/${{ matrix.file }}.json ./examples/file_schemas/${{ matrix.file }}.yaml
+
+  verify-package-schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: { submodules: recursive }
+      - name: Install Dependencies
+        shell: bash -l {0}
+        run: |
+          pip install check-jsonschema
       - name: Check example package
         shell: bash -l {0}
         run: |
