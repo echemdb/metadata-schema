@@ -1,0 +1,58 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "echemdb Data Package Profile",
+    "type": "object",
+    "allOf": [
+        { "$ref": "https://datapackage.org/profiles/2.0/datapackage.json" }
+    ],
+    "properties": {
+        "resources": {
+            "type": "array",
+            "items": {
+                "allOf": [
+                    { "$ref": "https://datapackage.org/profiles/2.0/dataresource.json" },
+                    { "$ref": "#/definitions/echemdb_resource" }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "echemdb_resource": {
+            "type": "object",
+            "properties": {
+                "metadata": {
+                    "type": "object",
+                    "required": ["echemdb"],
+                    "properties": {
+                        "echemdb": {
+                            "type": "object",
+                            "required": ["figure description"],
+                            "properties" : {
+                                "experimental" : {
+                                    "type": "object",
+                                    "properties": {"tags": {"type": "array",
+                                                            "contains": {"type": "string"}}},
+                                "figure description" : {
+                                    "type": "object",
+                                    "$ref": "figure_description.json" },
+                                "source" : {
+                                    "type": "object",
+                                    "properties": {
+                                        "figure" : {"type": "string"},
+                                        "curve" : {"type": "string"},
+                                        "citation key" : {"type": "string"},
+                                        "url" : {"$ref": "./general/url.json"},
+                                        "techniques" : {"type": "array",
+                                                        "contains": {"type": "string"}}
+                                            }
+                                        }
+                                    },
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
