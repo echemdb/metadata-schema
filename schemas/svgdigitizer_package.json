@@ -31,7 +31,7 @@
                                 "experimental" : {
                                     "type": "object",
                                     "properties": {"tags": {"type": "array",
-                                                            "contains": {"type": "string"}}},
+                                                            "items": {"type": "string"}}},
                                 "figure description" : {
                                     "type": "object",
                                     "$ref": "figure_description.json" },
