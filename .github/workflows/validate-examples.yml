@@ -59,7 +59,11 @@ jobs:
         shell: bash -l {0}
         run: |
           pip install check-jsonschema
-      - name: Check example package
+      - name: Check echemdb package
         shell: bash -l {0}
         run: |
-            check-jsonschema --schemafile ./schemas/echemdb_package.json ./examples/file_schemas/demo_package.json
+            check-jsonschema --schemafile ./schemas/echemdb_package.json ./examples/file_schemas/echemdb_package.json
+      - name: Check svgdigitizer package
+        shell: bash -l {0}
+        run: |
+            check-jsonschema --schemafile ./schemas/svgdigitizer_package.json ./examples/file_schemas/svgdigitizer_package.json
