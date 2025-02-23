@@ -42,6 +42,11 @@ source:
   - DEMS
   figure: 2b # depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.
   curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
+figure description:
+  type: digitized
+  scan rate: 
+    value: 10
+    unit: mv s⁻¹
 system:
   type: electrochemical
   electrolyte:
