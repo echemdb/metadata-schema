@@ -66,13 +66,7 @@
             "title": "Field"
         },
         "ScanRate": {
-            "type": "object",
-            "additionalProperties": false,
-            "$ref": "./general/quantity.json",
-            "required": [
-                "unit",
-                "value"
-            ],
+            "allOf": [{ "$ref": "./general/quantity.json" }],
             "title": "ScanRate"
         }
     }
