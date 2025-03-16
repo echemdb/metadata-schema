@@ -4,14 +4,12 @@
     "allOf": [{ "$ref": "#/definitions/Url" }],
     "definitions": {
         "Url": {
-            "url": {
-                "type": "string",
-                "format": "uri",
-                "qt-uri-protocols": [
-                    "https",
-                    "http"
-                ]
-            }
+            "type": "string",
+            "format": "uri",
+            "qt-uri-protocols": [
+                "https",
+                "http"
+            ]
         }
     }
 }
