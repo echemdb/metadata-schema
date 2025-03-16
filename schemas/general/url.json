@@ -6,10 +6,7 @@
         "Url": {
             "type": "string",
             "format": "uri",
-            "qt-uri-protocols": [
-                "https",
-                "http"
-            ]
+            "pattern": "^https?://.*$"
         }
     }
 }
