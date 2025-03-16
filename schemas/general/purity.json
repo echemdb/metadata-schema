@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/general/purity.json",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/general/purity.json#",
     "allOf": [{ "$ref": "#/definitions/Purity" }],
     "definitions": {
         "Purity": {
