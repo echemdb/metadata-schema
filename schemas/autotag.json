@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/autotag.json#",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/autotag.json#",
     "allOf": [{ "$ref": "#/definitions/Autotag" }],
     "definitions": {
         "Autotag": {

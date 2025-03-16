@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/eln.json#",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/eln.json#",
     "allOf": [{ "$ref": "#/definitions/Eln" }],
     "definitions": {
         "Eln": {

@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system.json#",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/system.json#",
     "allOf": [{ "$ref": "#/definitions/System" }],
     "definitions": {
         "System": {
