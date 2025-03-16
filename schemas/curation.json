@@ -43,7 +43,7 @@
                 },
                 "orcid": {
                     "description": "An URL containing the ORCID.",
-                    "$ref": "./general/url.json"
+                    "$ref": "general/url.json"
                 },
                 "date": {
                     "type": "string",
