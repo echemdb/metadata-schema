@@ -33,7 +33,7 @@ electrolyte:
           unit: ppb
         container: new name # the new container in which the chemical has been transferred for daily use
         internal LOT: Number # Flask in which some of the chemicals were transferred
-        url: # details on the wiki
+        url: http://wiki.url.to.a.html # details on the wiki
       partial pressure: # If type gas. refers to pressure in the electrolyte.
         unit: 1
         value: bar # use 1 bar for saturated solutions

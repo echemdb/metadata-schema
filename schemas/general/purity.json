@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/general/purity.json#",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/general/purity.json",
     "allOf": [{ "$ref": "#/definitions/Purity" }],
     "definitions": {
         "Purity": {
@@ -11,10 +11,10 @@
                     "type": "string"
                 },
                 "total organic carbon": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "total ion conductivity": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "value": {
                     "type": "number"
@@ -30,7 +30,7 @@
                     "type": "string"
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url with further details on the electrolyte container."
                 },
                 "refinement": {

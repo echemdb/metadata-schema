@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/curation.json#",
+    "$id": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/curation.json",
     "allOf": [{ "$ref": "#/definitions/Curation" }],
     "definitions": {
         "Curation": {
@@ -43,7 +43,7 @@
                 },
                 "orcid": {
                     "description": "An URL containing the ORCID.",
-                    "$ref": "https://raw.githubusercontent.com/linuxrider/metadata-schema/draft-test/schemas/general/url.json"
+                    "$ref": "./general/url.json#/definitions/Url"
                 },
                 "date": {
                     "type": "string",

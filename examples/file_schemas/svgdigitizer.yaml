@@ -12,13 +12,13 @@ curation:
       orcid: https://orcid.org/0000-0002-9686-3948
       date: 2022-01-21
 eln: # not required for svgdigitizer
-  url: # URL to the ELN describing the data
+  url: https://some.url # URL to the ELN describing the data
 experimental:
   version: 1
   tags:
     - BCV
     - SPST
-  url: # For example: doi referring to a published work
+  url: https://some.url # For example: doi referring to a published work
   instrumentation:
     - type: potentiostat
       manufacturer: Biologic
@@ -77,7 +77,7 @@ system:
             unit: ppb
           container: new name # the new container in which the chemical has been transferred for daily use
           internal LOT: Number # Flask in which some of the chemicals were transferred
-          url: # details on the wiki
+          url: https://some.url # details on the wiki
         partial pressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
