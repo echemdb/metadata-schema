@@ -43,7 +43,7 @@
                                         "citationKey" : {"type": "string"},
                                         "url" : {"$ref": "./general/url.json#/definitions/Url"},
                                         "techniques" : {"type": "array",
-                                                        "contains": {"type": "string"}}
+                                                        "items": {"type": "string"}}
                                             }
                                         }
                                     },
