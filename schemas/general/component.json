@@ -30,7 +30,7 @@
                 "purity": {
                     "$ref": "../general/purity.json#/definitions/Purity"
                 },
-                "partial pressure": {
+                "partialPressure": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "proportion": {

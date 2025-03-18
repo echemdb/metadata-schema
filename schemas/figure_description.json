@@ -16,10 +16,10 @@
                             {"const": "simulated", "description": "Data created with a simulation software."}
                         ]
                 },
-                "measurement type": {
+                "measurementType": {
                     "type": "string"
                 },
-                "simultaneous measurements": {
+                "simultaneousMeasurements": {
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -34,7 +34,7 @@
                         "$ref": "#/definitions/Field"
                     }
                 },
-                "scan rate": {
+                "scanRate": {
                     "$ref": "#/definitions/ScanRate"
                 }
             },
@@ -66,8 +66,8 @@
             "title": "Field"
         },
         "ScanRate": {
-            "allOf": [{ "$ref": "./general/quantity.json#/definitions/Quantity" }],
-            "title": "ScanRate"
+            "$ref": "./general/quantity.json#/definitions/Quantity",
+            "title": "scan rate"
         }
     }
 }

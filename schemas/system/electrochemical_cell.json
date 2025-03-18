@@ -17,10 +17,10 @@
                         "$ref": "#/definitions/ElectrochemicalCellComponent"
                     }
                 },
-                "cell description": {
+                "cellDescription": {
                     "type": "string"
                 },
-                "cleaning procedure": {
+                "cleaningProcedure": {
                     "type": "string"
                 },
                 "source": {

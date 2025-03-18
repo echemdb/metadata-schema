@@ -23,7 +23,7 @@
                         "$ref": "./system/electrode.json#/definitions/Electrode"
                     }
                 },
-                "electrochemical cell": {
+                "electrochemicalCell": {
                     "$ref": "./system/electrochemical_cell.json#/definitions/ElectrochemicalCell"
                 },
                 "atmosphere": {

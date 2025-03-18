@@ -10,7 +10,7 @@
                 "curation": {
                     "$ref": "curation.json#/definitions/Curation"
                 },
-                "echemdb loader": {
+                "echemdbLoader": {
                     "type": "string"
                 },
                 "eln": {
@@ -19,7 +19,7 @@
                 "experimental": {
                     "$ref": "experimental.json#/definitions/Experimental"
                 },
-                "figure description": {
+                "figureDescription": {
                     "$ref": "figure_description.json#/definitions/FigureDescription"
                 },
                 "project": {
@@ -33,7 +33,7 @@
                 "curation",
                 "eln",
                 "experimental",
-                "figure description",
+                "figureDescription",
                 "system"
             ],
             "title": "Autotag"

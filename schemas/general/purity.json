@@ -10,7 +10,7 @@
                 "grade": {
                     "type": "string"
                 },
-                "total organic carbon": {
+                "totalOrganicCarbon": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "total ion conductivity": {
@@ -26,7 +26,7 @@
                     "type": "string",
                     "description": "An unambiguous name for the container."
                 },
-                "internal LOT": {
+                "internalLot": {
                     "type": "string"
                 },
                 "url": {

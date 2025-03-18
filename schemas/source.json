@@ -8,11 +8,11 @@
             "title": "source",
             "additionalProperties": false,
             "required": [
-                "citation key",
+                "citationKey",
                 "url"
             ],
             "properties": {
-                "citation key": {
+                "citationKey": {
                     "type": "string"
                 },
                 "url": {

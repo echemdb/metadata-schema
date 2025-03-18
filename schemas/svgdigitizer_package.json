@@ -26,13 +26,13 @@
                     "properties": {
                         "echemdb": {
                             "type": "object",
-                            "required": ["figure description"],
+                            "required": ["figureDescription"],
                             "properties" : {
                                 "experimental" : {
                                     "type": "object",
                                     "properties": {"tags": {"type": "array",
                                                             "items": {"type": "string"}}},
-                                "figure description" : {
+                                "figureDescription" : {
                                     "type": "object",
                                     "$ref": "figure_description.json#/definitions/FigureDescription" },
                                 "source" : {
@@ -40,7 +40,7 @@
                                     "properties": {
                                         "figure" : {"type": "string"},
                                         "curve" : {"type": "string"},
-                                        "citation key" : {"type": "string"},
+                                        "citationKey" : {"type": "string"},
                                         "url" : {"$ref": "./general/url.json#/definitions/Url"},
                                         "techniques" : {"type": "array",
                                                         "contains": {"type": "string"}}

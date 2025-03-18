@@ -10,7 +10,7 @@
                 "type": {
                     "type": "string"
                 },
-                "total organic carbon": {
+                "totalOrganicCarbon": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "components": {
