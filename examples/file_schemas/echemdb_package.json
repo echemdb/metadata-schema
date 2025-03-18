@@ -44,9 +44,9 @@
                             {
                                 "name": "WE",
                                 "function": "working electrode",
-                                "crystallographic orientation": "0001",
+                                "crystallographicOrientation": "0001",
                                 "material": "Ru",
-                                "preparation procedure": {
+                                "preparationProcedure": {
                                     "description": [
                                         "Sputtering and flash annealing under UHV conditions with repeated cycles of oxygen adsorption and desorption."
                                     ]
@@ -100,7 +100,7 @@
                         }
                     },
                     "source": {
-                        "citation key": "alves_2011_electrochemistry_6010",
+                        "citationKey": "alves_2011_electrochemistry_6010",
                         "url": "https://doi.org/10.1039/C0CP01001D",
                         "figure": "1a",
                         "curve": "solid",
@@ -128,10 +128,10 @@
                             "HER"
                         ]
                     },
-                    "figure description": {
+                    "figureDescription": {
                         "type": "digitized",
-                        "simultaneous measurements": [],
-                        "measurement type": "CV",
+                        "simultaneousMeasurements": [],
+                        "measurementType": "CV",
                         "fields": [
                             {
                                 "name": "E",
@@ -148,15 +148,15 @@
                             }
                         ],
                         "comment": "",
-                        "scan rate": {
+                        "scanRate": {
                             "value": 0.05,
                             "unit": "V / s"
                         }
                     },
-                    "data description": {
+                    "dataDescription": {
                         "version": 1,
                         "type": "digitized",
-                        "measurement type": "CV"
+                        "measurementType": "CV"
                     }
                 }
             }
