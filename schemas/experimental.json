@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/experimental.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/experimental.json",
     "allOf": [{ "$ref": "#/definitions/Experimental" }],
     "definitions": {
         "Experimental": {
@@ -16,13 +16,13 @@
                     }
                 },
                 "url": {
-                    "$ref": "./general/url.json",
+                    "$ref": "./general/url.json#/definitions/Url",
                     "description": "A URL to, i.e., a published work (DOI) or an ELN entry."
                 },
                 "instrumentation": {
                     "type": "array",
                     "items": {
-                        "$ref": "./experimental/instrumentation.json"
+                        "$ref": "./experimental/instrumentation.json#/definitions/Instrumentation"
                     }
                 },
                 "description":{

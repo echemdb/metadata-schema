@@ -16,7 +16,7 @@
     "properties": {
       "source": {"$ref": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/source.json"},
       "curation": {"$ref": "file:curation.json"},
-      "figure description": {"$ref": "file:figure_description.json"},
-      "electrochemical system": {"$ref": "file:electrochemical_system.json"}
+      "figureDescription": {"$ref": "file:figure_description.json"},
+      "electrochemicalSystem": {"$ref": "file:electrochemical_system.json"}
     }
 }

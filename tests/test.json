@@ -18,12 +18,12 @@
             }
         ]
     },
-    "figure description": {
+    "figureDescription": {
         "version": 1,
         "comment": "some comment",
         "type": "raw",
-        "measurement type": "cyclic voltammetry",
-        "scan rate": {
+        "measurementType": "cyclic voltammetry",
+        "scanRate": {
             "value": 10,
             "unit": "mV s⁻¹"
             },
@@ -43,7 +43,7 @@
             }
         ]
     },
-    "electrochemical system": {
+    "electrochemicalSystem": {
         "version": 1,
         "instrumentation": [{
                 "type": "potentiostat",
@@ -64,6 +64,6 @@
                         "unit": "°C"
                 }        
         },
-        "electrodes":  [{ "electrode material": "working electrode" }]
+        "electrodes":  [{ "electrodeMaterial": "working electrode" }]
     }
 }

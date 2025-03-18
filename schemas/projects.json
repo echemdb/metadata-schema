@@ -24,9 +24,9 @@
                     "type": "string"
                 },
                 "url": {
-                    "$ref": "./general/url.json"
+                    "$ref": "./general/url.json#/definitions/Url"
                 },
-                "grant number": {
+                "grantNumber": {
                     "type": "string"
                 },
                 "version": {

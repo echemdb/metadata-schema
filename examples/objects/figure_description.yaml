@@ -1,8 +1,8 @@
 # Descriptor providing information on the original data axis (field) units, measurement type and linked measuremnts of source data.
 # This descriptor is not required in combination with an SVG converted with `svgdigitizer.electrochemistry.cv.CV`.
 type: digitized # raw, digitized
-measurement type: CV
-simultaneous measurements:
+measurementType: CV
+simultaneousMeasurements:
   - ring current # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data. Created by `svgdigitizer.electrochemistry.cv.CV`
 comment: Some unusual observation. # Add whatever you think is important to understand the data.
 fields:
@@ -15,6 +15,6 @@ fields:
     orientation: vertical # applicable only for data depicted in a specific plot described in source.yaml
   - name: t
     unit: s
-scan rate: # only required when the time axis is not available
+scanRate: # only required when the time axis is not available
   value: 50
   unit: mV / s
