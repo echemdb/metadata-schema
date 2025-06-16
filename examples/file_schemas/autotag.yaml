@@ -1,6 +1,6 @@
 # This file has been inferred from https://github.com/echemdb/metadata-schema
 # It can be used to annotate measurement data during its creation using a tool such as autotag
-# Adding the `echemdb loader` and `field` data in `figure description` in principle allows creating a datapackage.
+# Adding the `echemdb loader` and `field` data in `figureDescription` in principle allows creating a datapackage.
 curation:
   process:
     - role: experimentalist
@@ -11,7 +11,7 @@ curation:
       orcid: https://orcid.org/0000-0002-9686-3948
 eln:
   url: # URL to the ELN describing the data
-echemdb loader: EClab v4.32 # The name of a loader which can be used to load and convert data
+echemdbLoader: EClab v4.32 # The name of a loader which can be used to load and convert data
 experimental:
   tags:
     - BCV
@@ -30,9 +30,9 @@ experimental:
       manufacturer: SI Analytics
       name: FancyDevice15 # a unique name of the device
   description: some description # A string or a new set of metadata
-figure description: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
+figureDescription: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
     type: raw
-    simultaneous measurements: # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
+    simultaneousMeasurements: # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
     - Ring disc
     comment: A description of the measurement data. # Add whatever you think is important to understand the data. This will be updated by the `svgdigitizer.electrochemistry.cv.CV` module and takes the comment from the svg file.
     fields:
@@ -55,12 +55,12 @@ projects: # Descriptor of projects linked to the data.
   - name: SFB XXX
     type: external
     url: # project homepage
-    grant number: XXX # In case of numbers, add as string such as `00231`
+    grantNumber: XXX # In case of numbers, add as string such as `00231`
 system:
   type: electrochemical
   electrolyte:
     type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
-    electrolyte container:
+    electrolyteContainer:
         description: glass flask # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
         components:
           - name: borosilicate glass
@@ -77,22 +77,22 @@ system:
           LOT: 155464A # LOT number
           purity:
             grade: 5N # analytical grade, 5N, etc
-            total organic carbon:
+            totalOrganicCarbon:
               value: 3
               unit: ppb
-            total ion conductivity:
+            totalIonConductivity:
               value: 18
               unit: MOhm cm
         purity: # puity after refinement. Otherwise add purity to source
-          refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
+          refinement: Thorough cleaning. # Description of additional cleaningProcedures post purchase
           grade: 6N
-          total organic carbon:
+          totalOrganicCarbon:
             value: 3
             unit: ppb
           container: new name # the new container in which the chemical has been transferred for daily use
-          internal LOT: Number # Flask in which some of the chemicals were transferred
+          internalLot: Number # Flask in which some of the chemicals were transferred
           url: # details on the wiki
-        partial pressure: # if type gas
+        partialPressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
         proportion: # if type solvent
@@ -121,7 +121,7 @@ system:
           refinement: Sartorius Arium 611UV
         purity:
           grade: ultrapure water # qualitative description of the purity commonly used in the community
-          total organic carbon:
+          totalOrganicCarbon:
             value: 3
             unit: ppb
       - name: ethanol
@@ -143,7 +143,7 @@ system:
         type: gas
         purity:
           grade: N5.0 # some genereic name
-        partial pressure:
+        partialPressure:
           unit: 1
           value: bar # use 1 bar for saturated solutions
         proportion:
@@ -160,7 +160,7 @@ system:
   electrodes:
     - name: RHE
       function: reference electrode
-      redox system: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+      redoxSystem: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
       source:
         manufacturer: SI Analytics
         model: MSE Shott
@@ -181,15 +181,15 @@ system:
         diameter:
           value: 4
           unit: mm
-      crystallographic orientation: poly
-      geometric electrolyte contact area:
+      crystallographicOrientation: poly
+      geometricElectrolyteContactArea:
         value:
         unit: cm-2
     - name: WE
       function: working electrode
       type: single crystal
       material: Ni
-      crystallographic orientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      crystallographicOrientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
       source:
         manufacturer: Company name
         LOT: 145823A # LOT number
@@ -203,23 +203,23 @@ system:
         diameter:
           value: 4
           unit: mm
-      geometric electrolyte contact area:
+      geometricElectrolyteContactArea:
         value: 1
         unit: cm-2
-      preparation procedure:
+      preparationProcedure:
         description: # Short description of the sample preparation.
           - Description step 1.
           - Description Step 2.
           - ...
-        url: https://www.preparation.html # Link to a page with a standard preparation procedure.
-  electrochemical cell:
+        url: https://www.preparation.html # Link to a page with a standard preparationProcedure.
+  electrochemicalCell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte
       - name: glass
         part: cell
       - name: nafion
         part: membrane
-    cell description: A classical electrochemical cell. # freetext description
-    cleaning procedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
+    cellDescription: A classical electrochemicalCell. # freetext description
+    cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
     source:
       url: # DOI or URL where the design is published

@@ -20,7 +20,7 @@
                         {"const": "solid", "description": "A solid electrolyte."}
                     ]
                 },
-                "electrolyte container": {
+                "electrolyteContainer": {
                     "$ref": "#/definitions/ElectrolyteContainer"
                 },
                 "components": {

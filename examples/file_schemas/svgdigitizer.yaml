@@ -1,6 +1,6 @@
 # This file describes a figure from a publication containing electrochemical data.
-# For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
-# Figure description is optional. It is created automatically by the cv module of svgdigitizer
+# For the `echemdb/website` project, the source, curator and electrochemicalSystem is mandatory.
+# figureDescription is optional. It is created automatically by the cv module of svgdigitizer
 curation:
   process:
     - role: curator
@@ -34,7 +34,7 @@ experimental:
   description: some decsription # A string or a new set of metadata
 source:
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
-  citation key: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
+  citationKey: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
   techniques: # provide a list of techniques used in the publication
   - XPS
   - CV
@@ -46,7 +46,7 @@ system:
   type: electrochemical
   electrolyte:
     type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
-    electrolyte container:
+    electrolyteContainer:
         description: glass flask # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
         components:
           - name: borosilicate glass
@@ -63,22 +63,22 @@ system:
           LOT: 155464A # LOT number
           purity:
             grade: 5N # analytical grade, 5N, etc
-            total organic carbon:
+            totalOrganicCarbon:
               value: 3
               unit: ppb
-            total ion conductivity:
+            totalIonConductivity:
               value: 18
               unit: MOhm cm
         purity: # puity after refinement
-          refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
+          refinement: Thorough cleaning. # Description of additional cleaningProcedures post purchase
           grade: 6N
-          total organic carbon:
+          totalOrganicCarbon:
             value: 3
             unit: ppb
           container: new name # the new container in which the chemical has been transferred for daily use
-          internal LOT: Number # Flask in which some of the chemicals were transferred
+          internalLot: Number # Flask in which some of the chemicals were transferred
           url: # details on the wiki
-        partial pressure: # if type gas
+        partialPressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
         proportion: # if type solvent
@@ -107,7 +107,7 @@ system:
           refinement: Sartorius Arium 611UV
         purity:
           grade: ultrapure water # qualitative description of the purity commonly used in the community
-          total organic carbon:
+          totalOrganicCarbon:
             value: 3
             unit: ppb
       - name: ethanol
@@ -129,7 +129,7 @@ system:
         type: gas
         purity:
           grade: N5.0 # some genereic name
-        partial pressure:
+        partialPressure:
           unit: 1
           value: bar # use 1 bar for saturated solutions
         proportion:
@@ -146,7 +146,7 @@ system:
   electrodes:
     - name: RHE
       function: reference electrode
-      redox system: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+      redoxSystem: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
       source:
         manufacturer: SI Analytics
         model: MSE Shott
@@ -167,15 +167,15 @@ system:
         diameter:
           value: 4
           unit: mm
-      crystallographic orientation: poly
-      geometric electrolyte contact area:
+      crystallographicOrientation: poly
+      geometricElectrolyteContactArea:
         value:
         unit: cm-2
     - name: WE
       function: working electrode
       type: single crystal
       material: Ni
-      crystallographic orientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      crystallographicOrientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
       source:
         manufacturer: Company name
         LOT: 145823A # LOT number
@@ -189,23 +189,23 @@ system:
         diameter:
           value: 4
           unit: mm
-      geometric electrolyte contact area:
+      geometricElectrolyteContactArea:
         value: 1
         unit: cm-2
-      preparation procedure:
+      preparationProcedure:
         description: # Short description of the sample preparation.
           - Description step 1.
           - Description Step 2.
           - ...
-        url: https://www.preparation.html # Link to a page with a standard preparation procedure.
-  electrochemical cell:
+        url: https://www.preparation.html # Link to a page with a standard preparationProcedure.
+  electrochemicalCell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte
       - name: glass
         part: cell
       - name: nafion
         part: membrane
-    cell description: A classical electrochemical cell. # freetext description
-    cleaning procedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
+    cellDescription: A classical electrochemicalCell. # freetext description
+    cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
     source:
       url: https://doi.org/doi # DOI or URL where the design is published

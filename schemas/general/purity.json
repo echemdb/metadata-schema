@@ -10,10 +10,10 @@
                 "grade": {
                     "type": "string"
                 },
-                "total organic carbon": {
+                "totalOrganicCarbon": {
                     "$ref": "../general/quantity.json"
                 },
-                "total ion conductivity": {
+                "totalIonConductivity": {
                     "$ref": "../general/quantity.json"
                 },
                 "value": {
@@ -26,12 +26,12 @@
                     "type": "string",
                     "description": "An unambiguous name for the container."
                 },
-                "internal LOT": {
+                "internalLot": {
                     "type": "string"
                 },
                 "url": {
                     "$ref": "../general/url.json",
-                    "description": "A url with further details on the electrolyte container."
+                    "description": "A url with further details on the electrolyteContainer."
                 },
                 "refinement": {
                     "type": "string"

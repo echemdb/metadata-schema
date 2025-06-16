@@ -16,7 +16,7 @@
                 "experimental": {
                     "$ref": "experimental.json"
                 },
-                "figure description": {
+                "figureDescription": {
                     "$ref": "figure_description.json"
                 },
                 "project": {
