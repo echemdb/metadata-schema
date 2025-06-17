@@ -10,7 +10,7 @@
                 "curation": {
                     "$ref": "curation.json"
                 },
-                echemdbLoader: {
+                "echemdbLoader": {
                     "type": "string"
                 },
                 "eln": {
