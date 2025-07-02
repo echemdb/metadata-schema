@@ -2,7 +2,7 @@ This section contains descriptors that are used to describe an electrochemical r
 * [curation](curation.yaml): Details on the curation process
 * [eln](eln.yaml): URL to an electronic lab notebook
 * [experimental](experimental.yaml): Descriptor supporting `system.yaml`, e.g., contains a list of instrument.
-* [figure description](figure_description.yaml): contains mainly axis properties.
+* [figureDescription](figure_description.yaml): contains mainly axis properties.
 * [project](project.yaml): List of projects related to the source data.
 * [source](source.yaml): Source of published data.
 * [system](system.yaml): Details describing the experimental vessel.
@@ -17,7 +17,7 @@ The experimentalist is encouraged to record the following descriptors along with
 * [curation](curation.yaml)
 * [eln](eln.yaml)
 * [experimental](experimental.yaml)
-* [figure description](figure_description.yaml)
+* [figureDescription](figure_description.yaml)
 * [project](project.yaml)
 * [system](system.yaml)
 
@@ -39,6 +39,6 @@ The YAML must contain the following descriptors:
 
 * [curation](curation.yaml)
 * [experimental](experimental.yaml)
-* [figure description](figure_description.yaml)
+* [figureDescription](figure_description.yaml)
 * [source](source.yaml)
 * [system](system.yaml)  

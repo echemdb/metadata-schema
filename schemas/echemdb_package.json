@@ -28,7 +28,7 @@
                             "type": "object",
                             "required": ["curation",
                                         "experimental",
-                                        "figure description",
+                                        "figureDescription",
                                         "system",
                                         "source"],
                             "properties" : {
@@ -38,7 +38,7 @@
                                 "experimental" : {
                                     "type": "object",
                                     "$ref": "experimental.json" },
-                                "figure description" : {
+                                "figureDescription" : {
                                     "type": "object",
                                     "$ref": "figure_description.json" },
                                 "system" : {
