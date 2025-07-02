@@ -219,7 +219,7 @@ system:
         part: cell
       - name: nafion
         part: membrane
-    cellDescription: A classical electrochemicalCell. # freetext description
+    cellDescription: A classical electrochemical cell. # freetext description
     cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
     source:
       url: # DOI or URL where the design is published

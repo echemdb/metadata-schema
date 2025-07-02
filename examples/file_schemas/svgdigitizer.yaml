@@ -70,7 +70,7 @@ system:
               value: 18
               unit: MOhm cm
         purity: # puity after refinement
-          refinement: Thorough cleaning. # Description of additional cleaningProcedures post purchase
+          refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
           grade: 6N
           totalOrganicCarbon:
             value: 3
@@ -205,7 +205,7 @@ system:
         part: cell
       - name: nafion
         part: membrane
-    cellDescription: A classical electrochemicalCell. # freetext description
+    cellDescription: A classical electrochemical cell. # freetext description
     cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
     source:
       url: https://doi.org/doi # DOI or URL where the design is published

@@ -26,7 +26,7 @@ electrolyte:
             value: 18
             unit: MOhm cm
       purity: # puity after refinement
-        refinement: Distilled. # Description of additional cleaningProcedures post purchase
+        refinement: Distilled. # Description of additional cleaning procedures post purchase
         grade: 6N
         totalOrganicCarbon:
           value: 3
