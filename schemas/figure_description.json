@@ -6,7 +6,7 @@
         "FigureDescription": {
             "type": "object",
             "additionalProperties": false,
-            "title": "figure description",
+            "title": "figureDescription",
             "properties": {
                 "type":
                     { "type": "string",

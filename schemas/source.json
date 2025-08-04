@@ -20,7 +20,7 @@
                 },
                 "techniques": {
                     "type": "array",
-                    "contains": {
+                    "items": {
                         "type": "string"
                     }
                 },

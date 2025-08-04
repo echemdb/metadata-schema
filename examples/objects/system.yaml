@@ -1,4 +1,4 @@
-# Description of the system in which the actual measurement is conducted, shown for an electrochemical system
+# Description of the system in which the actual measurement is conducted, shown for an electrochemicalSystem
 type: electrochemical
 electrolyte:
   type: aqueous # aqueous, non-aqueous, solid
@@ -22,7 +22,7 @@ electrolyte:
           totalOrganicCarbon:
             value: 3
             unit: ppb
-          total ion conductivity:
+          totalIonConductivity:
             value: 18
             unit: MOhm cm
       purity: # puity after refinement
