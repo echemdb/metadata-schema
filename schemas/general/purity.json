@@ -11,10 +11,10 @@
                     "type": "string"
                 },
                 "totalOrganicCarbon": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "totalIonConductivity": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "value": {
                     "type": "number"
@@ -30,7 +30,7 @@
                     "type": "string"
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url with further details on the electrolyte container."
                 },
                 "refinement": {

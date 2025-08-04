@@ -11,16 +11,16 @@
                     "type": "string"
                 },
                 "totalOrganicCarbon": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "components": {
                     "type": "array",
                     "items": {
-                        "$ref": "../general/component.json"
+                        "$ref": "../general/component.json#/definitions/Component"
                     }
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url with further details on the experimental setup."
                 },
                 "description": {

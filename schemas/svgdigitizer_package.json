@@ -34,14 +34,14 @@
                                                             "items": {"type": "string"}}},
                                 "figureDescription" : {
                                     "type": "object",
-                                    "$ref": "figure_description.json" },
+                                    "$ref": "figure_description.json#/definitions/FigureDescription" },
                                 "source" : {
                                     "type": "object",
                                     "properties": {
                                         "figure" : {"type": "string"},
                                         "curve" : {"type": "string"},
                                         "citationKey" : {"type": "string"},
-                                        "url" : {"$ref": "./general/url.json"},
+                                        "url" : {"$ref": "./general/url.json#/definitions/Url"},
                                         "techniques" : {"type": "array",
                                                         "contains": {"type": "string"}}
                                             }

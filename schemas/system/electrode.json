@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system/electrode.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system/electrode.json",
     "allOf": [{ "$ref": "#/definitions/Electrode" }],
     "definitions": {
         "Electrode": {
@@ -33,10 +33,10 @@
                     "description": "A description of the electrode, for example when it is home made."
                 },
                 "geometricElectrolyteContactArea": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
                 "preparationProcedure": {
                     "$ref": "#/definitions/ElectrodePreparation"
@@ -72,13 +72,13 @@
                     "type": "string"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
                 "model": {
                     "type":"string"
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url to a pdf or description of the electrode."
                 },
                 "supplier": {
@@ -95,13 +95,13 @@
                     "type": "string"
                 },
                 "height": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "diameter": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "length": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "description": {
                     "type": "string",
@@ -115,7 +115,7 @@
             "additionalProperties": false,
             "properties": {
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url to a pdf or description of the electrode."
                 },
                 "description": {

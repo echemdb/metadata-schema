@@ -10,13 +10,13 @@ curation:
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
 eln:
-  url: # URL to the ELN describing the data
+  url: https://some.url # URL to the ELN describing the data
 echemdbLoader: EClab v4.32 # The name of a loader which can be used to load and convert data
 experimental:
   tags:
     - BCV
     - SPST
-  url: # For example: doi referring to a published work
+  url: https://some.url # For example: doi referring to a published work
   instrumentation:
     - type: potentiostat
       manufacturer: Biologic
@@ -51,10 +51,10 @@ figureDescription: #This section will be updated by module `svgdigitizer.electro
 projects: # Descriptor of projects linked to the data.
   - name: PPS
     type: internal
-    url: # link to the description of the project
+    url: https://some.url # link to the description of the project
   - name: SFB XXX
     type: external
-    url: # project homepage
+    url: https://some.url # project homepage
     grantNumber: XXX # In case of numbers, add as string such as `00231`
 system:
   type: electrochemical
@@ -91,7 +91,7 @@ system:
             unit: ppb
           container: new name # the new container in which the chemical has been transferred for daily use
           internalLot: Number # Flask in which some of the chemicals were transferred
-          url: # details on the wiki
+          url: https://some.url # details on the wiki
         partialPressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
@@ -211,7 +211,7 @@ system:
           - Description step 1.
           - Description Step 2.
           - ...
-        url: https://www.preparation.html # Link to a page with a standard preparationProcedure.
+        url: https://www.preparation.html # Link to a page with a standard preparation procedure.
   electrochemicalCell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte
@@ -222,4 +222,4 @@ system:
     cellDescription: A classical electrochemical cell. # freetext description
     cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
     source:
-      url: # DOI or URL where the design is published
+      url: "https://some.url" # DOI or URL where the design is published

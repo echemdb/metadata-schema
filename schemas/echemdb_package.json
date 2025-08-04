@@ -11,13 +11,13 @@
             "items": {
                 "allOf": [
                     { "$ref": "https://datapackage.org/profiles/2.0/dataresource.json" },
-                    { "$ref": "#/definitions/echemdb_resource" }
+                    { "$ref": "#/definitions/EchemdbResource" }
                 ]
             }
         }
     },
     "definitions": {
-        "echemdb_resource": {
+        "EchemdbResource": {
             "type": "object",
             "properties": {
                 "metadata": {

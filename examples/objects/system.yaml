@@ -33,7 +33,7 @@ electrolyte:
           unit: ppb
         container: new name # the new container in which the chemical has been transferred for daily use
         internalLot: Number # Flask in which some of the chemicals were transferred
-        url: # details on the wiki
+        url: http://wiki.url.to.a.html # details on the wiki
       partialPressure: # If type gas. refers to pressure in the electrolyte.
         unit: 1
         value: bar # use 1 bar for saturated solutions
@@ -153,7 +153,7 @@ electrodes:
         - Description step 1.
         - Description Step 2.
         - ...
-      url: https://www.preparation.html # Link to a page with a standard preparationProcedure.
+      url: https://www.preparation.html # Link to a page with a standard preparation procedure.
 electrochemicalCell:
   type: glass electrolysis cell
   components: # list of components in contact with the electrolyte
