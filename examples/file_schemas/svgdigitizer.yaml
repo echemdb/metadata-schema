@@ -77,11 +77,7 @@ system:
             unit: ppb
           container: new name # the new container in which the chemical has been transferred for daily use
           internalLot: Number # Flask in which some of the chemicals were transferred
-<<<<<<< HEAD
           url: https://some.url # details on the wiki
-=======
-          url: # details on the wiki
->>>>>>> origin/main
         partialPressure: # if type gas
           unit: 1
           value: bar # use 1 bar for saturated solutions
@@ -201,11 +197,7 @@ system:
           - Description step 1.
           - Description Step 2.
           - ...
-<<<<<<< HEAD
         url: https://www.preparation.html # Link to a page with a standard preparation procedure.
-=======
-        url: https://www.preparation.html # Link to a page with a standard preparationProcedure.
->>>>>>> origin/main
   electrochemicalCell:
     type: glass electrolysis cell
     components: # list of components in contact with the electrolyte
