@@ -11,8 +11,17 @@
                 "value": {
                     "$ref": "#/definitions/Value"
                 },
+                "uncertainty": {
+                    "$ref": "#/definitions/Uncertainty"
+                },
                 "unit": {
                     "$ref": "#/definitions/Unit"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "calculation": {
+                    "type": "string"
                 }
             }
         },
@@ -30,6 +39,21 @@
         ],
         "title": "Unit"
         },
+    "Uncertainty": {
+        "anyOf": [
+            {
+                "type": "number"
+            },
+            {
+                "type": "null"
+            },
+            {
+                "type": "string"
+            }
+        ],
+        "title": "Uncertainty"
+        }
+    },
     "Value": {
         "anyOf": [
             {
