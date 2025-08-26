@@ -1,74 +1,93 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/quantity.json",
-  "allOf": [{ "$ref": "#/definitions/Quantity" }],
-  "definitions": {
-    "Quantity": {
-      "type": "object",
-      "title": "Quantity",
-      "additionalProperties": false,
-      "properties": {
-        "value": {
-          "$ref": "#/definitions/Value"
-        },
-        "uncertainty": {
-          "$ref": "#/definitions/Uncertainty"
-        },
-        "unit": {
-          "$ref": "#/definitions/Unit"
-        },
-        "comment": {
-          "type": "string"
-        },
-        "calculation": {
-          "type": "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/quantity.json",
+    "allOf": [
+        {
+            "$ref": "#/definitions/Quantity"
         }
-      }
-    },
-    "Unit": {
-      "anyOf": [
-        { "type": "integer" },
-        { "type": "null" },
-        { "type": "string" }
-      ],
-      "title": "Unit"
-    },
-    "Uncertainty": {
-        "type": "object",
-        "title": "Uncertainty",
-        "properties": {
-            "value": {
-            "type": "number"
-            },
-            "unit": {
-            "type": "string"
-            },
-            "positiveValue": {
-            "type": "number",
-            "description": "Upper bound (+)"
-            },
-            "negativeValue": {
-            "type": "number",
-            "description": "Lower bound (-)"
-            },
-            "comment": {
-            "type": "string"
-            },
-            "type": {
-            "type": "string",
-            "enum": ["absolute", "relative"]
+    ],
+    "definitions": {
+        "Quantity": {
+            "type": "object",
+            "title": "Quantity",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "$ref": "#/definitions/Value"
+                },
+                "uncertainty": {
+                    "$ref": "#/definitions/Uncertainty"
+                },
+                "unit": {
+                    "$ref": "#/definitions/Unit"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "calculation": {
+                    "type": "string"
+                }
             }
         },
-        "additionalProperties": false,
-        "minProperties": 1
+        "Unit": {
+            "anyOf": [
+                {
+                    "type": "integer"
+                },
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ],
+            "title": "Unit"
         },
-    "Value": {
-      "anyOf": [
-        { "type": "number" },
-        { "type": "null" },
-        { "type": "string" }
-      ],
-      "title": "Value"
+        "Uncertainty": {
+            "type": "object",
+            "title": "Uncertainty",
+            "properties": {
+                "value": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "positiveValue": {
+                    "type": "number",
+                    "description": "Upper bound (+)"
+                },
+                "negativeValue": {
+                    "type": "number",
+                    "description": "Lower bound (-)"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "absolute",
+                        "relative"
+                    ]
+                }
+            },
+            "additionalProperties": false,
+            "minProperties": 1
+        },
+        "Value": {
+            "anyOf": [
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "null"
+                },
+                {
+                    "type": "string"
+                }
+            ],
+            "title": "Value"
+        }
     }
-  }
 }
