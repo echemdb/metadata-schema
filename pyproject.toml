@@ -1,0 +1,50 @@
+[project]
+name = "metadata-schema"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+version = "0.3.0"
+readme = "README.md"
+requires-python = ">=3.9"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "win-64"]
+
+[tool.pixi.dependencies]
+pip = "*"
+
+[tool.pixi.pypi-dependencies]
+check-jsonschema = "*"
+
+[tool.pixi.tasks.verify-objects]
+cmd = [
+    "bash", "-c",
+    '''
+    find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
+    for file in curation eln experimental figure_description projects source system; do
+        check-jsonschema --schemafile ./schemas/${file}.json ./examples/objects/${file}.yaml
+    done
+    '''
+]
+
+[tool.pixi.tasks.verify-file-schemas]
+cmd = [
+    "bash", "-c",
+    '''
+    find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
+    for file in autotag svgdigitizer; do
+        check-jsonschema --schemafile ./schemas/${file}.json ./examples/file_schemas/${file}.yaml
+    done
+    '''
+]
+
+[tool.pixi.tasks.verify-package-schemas]
+cmd = [
+    "bash", "-c",
+    '''
+    check-jsonschema --schemafile ./schemas/echemdb_package.json ./examples/file_schemas/echemdb_package.json
+    check-jsonschema --schemafile ./schemas/svgdigitizer_package.json ./examples/file_schemas/svgdigitizer_package.json
+    '''
+]
+
+[tool.pixi.tasks]
+verify = { depends-on = ["verify-objects", "verify-file-schemas", "verify-package-schemas"] }
