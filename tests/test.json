@@ -52,17 +52,19 @@
             }
         ],
         "electrolyte": {
-                "components": [ 
+                "components": [
                     {"name": "electrolyte name"}
                 ],
                 "pH": {
                         "value": 1,
-                        "uncertainty": 0.1
+                        "uncertainty": {
+                            "value": 0.1
+                        }
                 },
                 "temperature": {
                         "value": 23,
                         "unit": "°C"
-                }        
+                }
         },
         "electrodes":  [{ "electrodeMaterial": "working electrode" }]
     }
