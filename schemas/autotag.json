@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/autotag.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/autotag.json",
     "allOf": [{ "$ref": "#/definitions/Autotag" }],
     "definitions": {
         "Autotag": {
@@ -8,32 +8,32 @@
             "additionalProperties": true,
             "properties": {
                 "curation": {
-                    "$ref": "curation.json"
+                    "$ref": "curation.json#/definitions/Curation"
                 },
-                "echemdb loader": {
+                "echemdbLoader": {
                     "type": "string"
                 },
                 "eln": {
-                    "$ref": "eln.json"
+                    "$ref": "eln.json#/definitions/Eln"
                 },
                 "experimental": {
-                    "$ref": "experimental.json"
+                    "$ref": "experimental.json#/definitions/Experimental"
                 },
-                "figure description": {
-                    "$ref": "figure_description.json"
+                "figureDescription": {
+                    "$ref": "figure_description.json#/definitions/FigureDescription"
                 },
                 "project": {
-                    "$ref": "projects.json"
+                    "$ref": "projects.json#/definitions/Projects"
                 },
                 "system": {
-                    "$ref": "system.json"
+                    "$ref": "system.json#/definitions/System"
                 }
             },
             "required": [
                 "curation",
                 "eln",
                 "experimental",
-                "figure description",
+                "figureDescription",
                 "system"
             ],
             "title": "Autotag"

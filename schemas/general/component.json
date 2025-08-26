@@ -12,7 +12,7 @@
                     "description": "A unique identifier."
                 },
                 "concentration": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "type": {
                     "anyOf": [
@@ -28,22 +28,22 @@
                     "$ref": "#/definitions/ComponentSource"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
-                "partial pressure": {
-                    "$ref": "../general/quantity.json"
+                "partialPressure": {
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "proportion": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "flow": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "comment": {
                     "type": "string"
                 },
                 "pressure": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 }
             },
             "required": [
@@ -66,7 +66,7 @@
                     "type": "string"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
                 "refinement": {
                     "type": "string"

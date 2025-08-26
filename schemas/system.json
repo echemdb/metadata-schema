@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system.json",
     "allOf": [{ "$ref": "#/definitions/System" }],
     "definitions": {
         "System": {
@@ -11,23 +11,23 @@
                 "type": {
                     "type": "string",
                     "oneOf": [
-                        {"const": "electrochemical", "description": "An electrochemical system"}
+                        {"const": "electrochemical", "description": "An electrochemicalSystem"}
                     ]
                 },
                 "electrolyte": {
-                    "$ref": "./system/electrolyte.json"
+                    "$ref": "./system/electrolyte.json#/definitions/Electrolyte"
                 },
                 "electrodes": {
                     "type": "array",
                     "items": {
-                        "$ref": "./system/electrode.json"
+                        "$ref": "./system/electrode.json#/definitions/Electrode"
                     }
                 },
-                "electrochemical cell": {
-                    "$ref": "./system/electrochemical_cell.json"
+                "electrochemicalCell": {
+                    "$ref": "./system/electrochemical_cell.json#/definitions/ElectrochemicalCell"
                 },
                 "atmosphere": {
-                    "$ref": "./system/atmosphere.json"
+                    "$ref": "./system/atmosphere.json#/definitions/Atmosphere"
                 }
             },
             "required": [

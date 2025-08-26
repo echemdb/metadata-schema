@@ -10,11 +10,11 @@
                 "grade": {
                     "type": "string"
                 },
-                "total organic carbon": {
-                    "$ref": "../general/quantity.json"
+                "totalOrganicCarbon": {
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
-                "total ion conductivity": {
-                    "$ref": "../general/quantity.json"
+                "totalIonConductivity": {
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "value": {
                     "type": "number"
@@ -26,11 +26,11 @@
                     "type": "string",
                     "description": "An unambiguous name for the container."
                 },
-                "internal LOT": {
+                "internalLot": {
                     "type": "string"
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url with further details on the electrolyte container."
                 },
                 "refinement": {

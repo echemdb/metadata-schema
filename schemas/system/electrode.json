@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system/electrode.json#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system/electrode.json",
     "allOf": [{ "$ref": "#/definitions/Electrode" }],
     "definitions": {
         "Electrode": {
@@ -24,7 +24,7 @@
                         {"const": "reference electrode", "description": "A reference electrode."}
                     ]
                 },
-                "redox system" : {
+                "redoxSystem" : {
                     "type": "string",
                     "description": "A particular name for a reference electrode such as RHE, MSE, AgCl2, etc."
                 },
@@ -32,13 +32,13 @@
                     "type": "string",
                     "description": "A description of the electrode, for example when it is home made."
                 },
-                "geometric electrolyte contact area": {
-                    "$ref": "../general/quantity.json"
+                "geometricElectrolyteContactArea": {
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
-                "preparation procedure": {
+                "preparationProcedure": {
                     "$ref": "#/definitions/ElectrodePreparation"
                 },
                 "shape": {
@@ -55,7 +55,7 @@
                     "type": "string",
                     "description": "Abbreviation of a metal compound, i.e., Pt for Platinum."
                 },
-                "crystallographic orientation": {
+                "crystallographicOrientation": {
                     "type": "string",
                     "description": "Miller indices of the surface orientation ((111), (0001), (11,15,1)) or 'poly' for polycrystalline samples."
                 }
@@ -72,13 +72,13 @@
                     "type": "string"
                 },
                 "purity": {
-                    "$ref": "../general/purity.json"
+                    "$ref": "../general/purity.json#/definitions/Purity"
                 },
                 "model": {
                     "type":"string"
                 },
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url to a pdf or description of the electrode."
                 },
                 "supplier": {
@@ -95,13 +95,13 @@
                     "type": "string"
                 },
                 "height": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "diameter": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "length": {
-                    "$ref": "../general/quantity.json"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "description": {
                     "type": "string",
@@ -115,7 +115,7 @@
             "additionalProperties": false,
             "properties": {
                 "url": {
-                    "$ref": "../general/url.json",
+                    "$ref": "../general/url.json#/definitions/Url",
                     "description": "A url to a pdf or description of the electrode."
                 },
                 "description": {
