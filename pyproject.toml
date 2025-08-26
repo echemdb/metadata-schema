@@ -15,7 +15,7 @@ pip = "*"
 [tool.pixi.pypi-dependencies]
 check-jsonschema = "*"
 
-[tool.pixi.tasks.verify-objects]
+[tool.pixi.tasks.validate-objects]
 cmd = [
     "bash", "-c",
     '''
@@ -26,7 +26,7 @@ cmd = [
     '''
 ]
 
-[tool.pixi.tasks.verify-file-schemas]
+[tool.pixi.tasks.validate-file-schemas]
 cmd = [
     "bash", "-c",
     '''
@@ -37,7 +37,7 @@ cmd = [
     '''
 ]
 
-[tool.pixi.tasks.verify-package-schemas]
+[tool.pixi.tasks.validate-package-schemas]
 cmd = [
     "bash", "-c",
     '''
@@ -47,4 +47,4 @@ cmd = [
 ]
 
 [tool.pixi.tasks]
-verify = { depends-on = ["verify-objects", "verify-file-schemas", "verify-package-schemas"] }
+validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
