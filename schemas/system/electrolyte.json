@@ -30,7 +30,7 @@
                     }
                 },
                 "ph": {
-                    "$ref": "#/definitions/Ph"
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "temperature": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"
@@ -56,25 +56,6 @@
                 }
             },
             "title": "ElectrolyteContainer"
-        },
-        "Ph": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "value": {
-                    "type": "number"
-                },
-                "uncertainty": {
-                    "type": "number"
-                },
-                "comment": {
-                    "type": "string"
-                },
-                "calculation": {
-                    "type": "string"
-                }
-            },
-            "title": "Ph"
         },
         "ElectrolyteContainerComponent": {
             "type": "object",
