@@ -52,8 +52,7 @@
             }
         ],
         "title": "Uncertainty"
-        }
-    },
+        },
     "Value": {
         "anyOf": [
             {
