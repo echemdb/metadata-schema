@@ -1,71 +1,74 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/quantity.json",
-    "allOf": [{ "$ref": "#/definitions/Quantity" }],
-    "definitions": {
-        "Quantity": {
-            "type": "object",
-            "title": "Quantity",
-            "additionalProperties": false,
-            "properties": {
-                "value": {
-                    "$ref": "#/definitions/Value"
-                },
-                "uncertainty": {
-                    "$ref": "#/definitions/Uncertainty"
-                },
-                "unit": {
-                    "$ref": "#/definitions/Unit"
-                },
-                "comment": {
-                    "type": "string"
-                },
-                "calculation": {
-                    "type": "string"
-                }
-            }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/quantity.json",
+  "allOf": [{ "$ref": "#/definitions/Quantity" }],
+  "definitions": {
+    "Quantity": {
+      "type": "object",
+      "title": "Quantity",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/Value"
         },
+        "uncertainty": {
+          "$ref": "#/definitions/Uncertainty"
+        },
+        "unit": {
+          "$ref": "#/definitions/Unit"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "calculation": {
+          "type": "string"
+        }
+      }
+    },
     "Unit": {
-        "anyOf": [
-            {
-                "type": "integer"
-            },
-            {
-                "type": "null"
-            },
-            {
-                "type": "string"
-            }
-        ],
-        "title": "Unit"
-        },
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" },
+        { "type": "string" }
+      ],
+      "title": "Unit"
+    },
     "Uncertainty": {
-        "anyOf": [
-            {
-                "type": "number"
+        "type": "object",
+        "title": "Uncertainty",
+        "properties": {
+            "value": {
+            "type": "number"
             },
-            {
-                "type": "null"
+            "unit": {
+            "type": "string"
             },
-            {
-                "type": "string"
+            "positiveValue": {
+            "type": "number",
+            "description": "Upper bound (+)"
+            },
+            "negativeValue": {
+            "type": "number",
+            "description": "Lower bound (-)"
+            },
+            "comment": {
+            "type": "string"
+            },
+            "type": {
+            "type": "string",
+            "enum": ["absolute", "relative"]
             }
-        ],
-        "title": "Uncertainty"
+        },
+        "additionalProperties": false,
+        "minProperties": 1
         },
     "Value": {
-        "anyOf": [
-            {
-                "type": "number"
-            },
-            {
-                "type": "null"
-            },
-            {
-                "type": "string"
-            }
-        ],
-        "title": "Value"
-        }
+      "anyOf": [
+        { "type": "number" },
+        { "type": "null" },
+        { "type": "string" }
+      ],
+      "title": "Value"
     }
+  }
 }
