@@ -53,7 +53,7 @@ $ACTIVITIES = [
 ]
 
 $VERSION_BUMP_PATTERNS = [
-    ('pyproject.toml', r'version =', 'version = "$VERSION"'),
+    ('pixi.toml', r'version =', 'version = "$VERSION"'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'
