@@ -4,6 +4,20 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.3.1
+====================
+
+**Added:**
+
+* Added pixi configuration file `pixi.toml`, to simplify testing schemas.
+* Added `uncertainty` to quantity, which contains keys such as `value`, `unit`, `comment`,.....
+
+**Changed:**
+
+* Changed `pH` into a quantity.
+
+
+
 v0.3.0
 ====================
 
