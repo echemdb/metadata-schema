@@ -39,12 +39,21 @@ git diff --cached --exit-code
 
 $PROJECT = 'metadata-schema'
 
+from rever.activities.command import command
+
+command('pixi', 'pixi install --manifest-path "$PWD/pyproject.toml" -e dev')
+
 $ACTIVITIES = [
     'version_bump',
+    'pixi',
     'changelog',
     'tag',
     'push_tag',
     'ghrelease',
+]
+
+$VERSION_BUMP_PATTERNS = [
+    ('pixi.toml', r'version =', 'version = "$VERSION"'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'

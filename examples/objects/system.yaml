@@ -95,10 +95,14 @@ electrolyte:
         unit: l / h
   ph:
     value: 13
-    uncertainty: 0.1
+    uncertainty:
+      value: 0.1
   temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
     value: 298.15
     unit: K # [K, C]
+    uncertainty:
+      value: 2
+      unit: K
 electrodes:
   - name: RHE
     function: reference electrode
