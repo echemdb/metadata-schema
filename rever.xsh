@@ -41,7 +41,7 @@ $PROJECT = 'metadata-schema'
 
 from rever.activities.command import command
 
-command('pixi', 'pixi install --manifest-path "$PWD/pixi.toml" -e dev')
+command('pixi', 'pixi install --manifest-path "$PWD/pixi.toml"')
 
 $ACTIVITIES = [
     'version_bump',
