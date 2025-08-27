@@ -1,3 +1,3 @@
 **Added:**
 
-* Added pixi configuration file `pyproject.toml`, to simplify testing schemas.
+* Added pixi configuration file `pixi.toml`, to simplify testing schemas.
