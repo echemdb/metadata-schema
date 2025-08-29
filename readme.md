@@ -5,11 +5,11 @@ Development of a metadata schema for experimental data, specifically electrochem
 ## Install with pip for development
 
 If you want to work on the metadata-schema itself, install [pixi](https://pixi.sh)
-and get a copy of the latest unreleased version of the svgdigitizer:
+and get a copy of the latest unreleased version of the metadata-schema:
 
 ```sh
 git clone https://github.com/echemdb/metadata-schema.git
-cd svgdigitizer
+cd metadata-schema
 ```
 
 To validate the example files, run
