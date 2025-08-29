@@ -4,6 +4,35 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.3.1
+====================
+
+**Added:**
+
+* Added pixi configuration file `pixi.toml`, to simplify testing schemas.
+* Added `uncertainty` to quantity, which contains keys such as `value`, `unit`, `comment`,.....
+
+**Changed:**
+
+* Changed `pH` into a quantity.
+
+
+
+v0.3.0
+====================
+
+**Added:**
+
+* Added JSON schema for validation of Data Packages created by [`svgdigitizer`](https://github.com/echemdb/svgdigitizer).
+
+**Changed:**
+
+* Changed metadata keys to use camelCase for consistency with JSON naming conventions.
+* Changed draft version to draft-07.
+* Changed referencing in schema which allows easier creation of a bundled schema.
+
+
+
 v0.2.1
 ====================
 

@@ -1,4 +1,4 @@
-# Description of the system in which the actual measurement is conducted, shown for an electrochemical system
+# Description of the system in which the actual measurement is conducted, shown for an electrochemicalSystem
 type: electrochemical
 electrolyte:
   type: aqueous # aqueous, non-aqueous, solid
@@ -22,7 +22,7 @@ electrolyte:
           totalOrganicCarbon:
             value: 3
             unit: ppb
-          total ion conductivity:
+          totalIonConductivity:
             value: 18
             unit: MOhm cm
       purity: # puity after refinement
@@ -95,10 +95,14 @@ electrolyte:
         unit: l / h
   ph:
     value: 13
-    uncertainty: 0.1
+    uncertainty:
+      value: 0.1
   temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
     value: 298.15
     unit: K # [K, C]
+    uncertainty:
+      value: 2
+      unit: K
 electrodes:
   - name: RHE
     function: reference electrode

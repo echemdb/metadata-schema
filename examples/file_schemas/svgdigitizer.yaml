@@ -1,6 +1,6 @@
 # This file describes a figure from a publication containing electrochemical data.
-# For the `echemdb/website` project, the source, curator and electrochemical system is mandatory.
-# Figure description is optional. It is created automatically by the cv module of svgdigitizer
+# For the `echemdb/website` project, the source, curator and electrochemicalSystem is mandatory.
+# figureDescription is optional. It is created automatically by the cv module of svgdigitizer
 curation:
   process:
     - role: curator
@@ -66,7 +66,7 @@ system:
             totalOrganicCarbon:
               value: 3
               unit: ppb
-            total ion conductivity:
+            totalIonConductivity:
               value: 18
               unit: MOhm cm
         purity: # puity after refinement
@@ -139,7 +139,8 @@ system:
           unit: null
     ph:
       value: 13
-      uncertainty: 0.1
+      uncertainty:
+        value: 0.1
     temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
       value: 298.15
       unit: K # [K, C, F]

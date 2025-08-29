@@ -13,8 +13,8 @@
                 "totalOrganicCarbon": {
                     "$ref": "./quantity.json#/definitions/Quantity"
                 },
-                "total ion conductivity": {
-                    "$ref": "./quantity.json#/definitions/Quantity"
+                "totalIonConductivity": {
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "value": {
                     "type": "number"

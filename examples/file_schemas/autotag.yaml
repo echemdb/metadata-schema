@@ -1,6 +1,6 @@
 # This file has been inferred from https://github.com/echemdb/metadata-schema
 # It can be used to annotate measurement data during its creation using a tool such as autotag
-# Adding the `echemdb loader` and `field` data in `figure description` in principle allows creating a datapackage.
+# Adding the `echemdb loader` and `field` data in `figureDescription` in principle allows creating a datapackage.
 curation:
   process:
     - role: experimentalist
@@ -80,7 +80,7 @@ system:
             totalOrganicCarbon:
               value: 3
               unit: ppb
-            total ion conductivity:
+            totalIonConductivity:
               value: 18
               unit: MOhm cm
         purity: # puity after refinement. Otherwise add purity to source
@@ -153,7 +153,8 @@ system:
           unit: null
     ph:
       value: 13
-      uncertainty: 0.1
+      uncertainty:
+        value: 0.1
     temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
       value: 298.15
       unit: K # [K, C, F]

@@ -11,7 +11,7 @@
                 "type": {
                     "type": "string",
                     "oneOf": [
-                        {"const": "electrochemical", "description": "An electrochemical system"}
+                        {"const": "electrochemical", "description": "An electrochemicalSystem"}
                     ]
                 },
                 "electrolyte": {
