@@ -8,7 +8,6 @@ version = "0.3.1"
 validate-objects = {cmd = [
     "bash", "-c",
     '''
-    find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
     cd schemas
     for file in curation eln experimental figure_description projects source system; do
         check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/objects/${file}.yaml
@@ -18,10 +17,8 @@ validate-objects = {cmd = [
 validate-file-schemas = {cmd = [
     "bash", "-c",
     '''
-    find . -type f -name "*.json" -exec sed -i '/$id/d' {} +
     cd schemas
     for file in autotag svgdigitizer; do
-
         check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/file_schemas/${file}.yaml
     done
     '''
