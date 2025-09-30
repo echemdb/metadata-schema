@@ -35,3 +35,6 @@ validate = { depends-on = ["validate-objects", "validate-file-schemas", "validat
 
 [dependencies]
 check-jsonschema = "*"
+
+[target.win-64.dependencies]
+m2-bash = "*"
