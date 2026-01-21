@@ -12,12 +12,7 @@
                     "description": "A unique identifier."
                 },
                 "chemicalIdentifiers": {
-                    "type": "array",
-                        "items": {
-                            "items": {
-                                "$ref": "../general/chemical_identifiers.json#/definitions/ChemicalIdentifiers"
-                            }
-                        }
+                    "$ref": "../general/chemical_identifiers.json#/definitions/ChemicalIdentifiers"
                 },
                 "concentration": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"

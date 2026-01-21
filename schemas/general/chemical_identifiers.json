@@ -7,12 +7,17 @@
             "type": "object",
             "additionalProperties": true,
             "properties": {
-                "type": {
-                    "anyOf": [
-                        {"const": "cas", "description": "The CAS identifier of the chemical."},
-                        {"const": "inchi", "description": "The InChi of the chemical"},
-                        {"const": "inchikey", "description": "The InChiKey of the chemical"}
-                    ]
+                "cas": {
+                    "type": "string",
+                    "description": "The CAS identifier of the chemical."
+                },
+                "inchi": {
+                    "type": "string",
+                    "description": "The InChi of the chemical"
+                },
+                "inchikey": {
+                    "type": "string",
+                    "description": "The InChiKey of the chemical"
                 }
             }
         }
