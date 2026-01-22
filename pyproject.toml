@@ -1,0 +1,90 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metadata-schema"
+version = "0.3.1"
+license = "GPL-3.0-or-later"
+description = "Metadata schemas and templates for the echemdb database"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "win-64"]
+
+[tool.pixi.environments]
+python-310 = ["python-310"]
+python-311 = ["python-311"]
+python-312 = ["python-312"]
+python-313 = ["python-313"]
+python-314 = ["python-314"]
+release = ["release"]
+
+[tool.pixi.dependencies]
+python = "*"
+pip = ">=25.0,<26"
+check-jsonschema = "*"
+
+[tool.pixi.feature.python-310.dependencies]
+python = "3.10.*"
+
+[tool.pixi.feature.python-311.dependencies]
+python = "3.11.*"
+
+[tool.pixi.feature.python-312.dependencies]
+python = "3.12.*"
+
+[tool.pixi.feature.python-313.dependencies]
+python = "3.13.*"
+
+[tool.pixi.feature.python-314.dependencies]
+python = "3.14.*"
+
+[tool.pixi.tasks]
+validate-objects = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    for file in curation eln experimental figure_description projects source system; do
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/objects/${file}.yaml
+    done
+    '''
+]}
+validate-file-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    for file in autotag svgdigitizer; do
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/file_schemas/${file}.yaml
+    done
+    '''
+]}
+validate-package-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    check-jsonschema --base-uri . --schemafile ./echemdb_package.json ../examples/file_schemas/echemdb_package.json
+    check-jsonschema --base-uri . --schemafile ./svgdigitizer_package.json ../examples/file_schemas/svgdigitizer_package.json
+    '''
+]}
+validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
+
+[tool.pixi.target.win-64.dependencies]
+m2-bash = "*"
+
+[tool.pixi.feature.release.tasks]
+# To create a new release, run `pixi run rever X.Y.Z`
+rever = { args = [ { "arg" = "version", "default" = "--help" } ],cmd = "rever {{ version }}" }
+
+[tool.pixi.feature.release.dependencies]
+twine = "*"
+rever = "*"
+make = "*"
+setuptools = "*"
+python = "*"
+
+[tool.pixi.feature.release.pypi-dependencies]
+build = "*"
+

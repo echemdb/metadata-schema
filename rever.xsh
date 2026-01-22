@@ -1,7 +1,7 @@
 # ********************************************************************
 #  This file is part of metadata-schema.
 #
-#        Copyright (C) 2022-2024 Albert Engstfeld
+#        Copyright (C) 2022-2025 Albert Engstfeld
 #        Copyright (C) 2022      Johannes Hermann
 #        Copyright (C) 2022      Julian Rüth
 #        Copyright (C) 2022      Nicolas Hörmann
@@ -41,7 +41,7 @@ $PROJECT = 'metadata-schema'
 
 from rever.activities.command import command
 
-command('pixi', 'pixi install --manifest-path "$PWD/pixi.toml"')
+command('pixi', 'pixi install --manifest-path "$PWD/pyproject.toml"')
 
 $ACTIVITIES = [
     'version_bump',
@@ -53,7 +53,7 @@ $ACTIVITIES = [
 ]
 
 $VERSION_BUMP_PATTERNS = [
-    ('pixi.toml', r'version =', 'version = "$VERSION"'),
+    ('pyproject.toml', r'version =', 'version = "$VERSION"'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'
