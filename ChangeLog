@@ -4,6 +4,15 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.3.3
+====================
+
+**Added:**
+
+* Added `originalFilename` to source metadata.
+
+
+
 v0.3.2
 ====================
 
