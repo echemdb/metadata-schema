@@ -35,6 +35,7 @@ experimental:
 source:
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
   citationKey: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
+  originalFilename: experiment_figure2b.csv # name of the original measurement file
   techniques: # provide a list of techniques used in the publication
   - XPS
   - CV
