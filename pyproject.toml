@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "metadata-schema"
-version = "0.3.2"
+version = "0.3.3"
 license = "GPL-3.0-or-later"
 description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
