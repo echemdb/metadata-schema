@@ -27,6 +27,9 @@
                 "figure": {
                     "type": "string"
                 },
+                "originalFilename": {
+                    "type": "string"
+                },
                 "bibdata": {
                     "type": "string"
                 },
