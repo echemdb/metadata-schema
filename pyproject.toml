@@ -3,10 +3,10 @@ requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "metadata-schema"
-version = "0.3.1"
+name = "mdstools"
+version = "0.3.3"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
-description = "Metadata schema for electrochemical data"
+description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
@@ -16,8 +16,9 @@ dependencies = [
 
 [tool.setuptools]
 packages = [
-    "metadata_schema",
+    "mdstools",
 ]
+
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
@@ -30,6 +31,7 @@ python-312 = ["test", "python-312"]
 python-313 = ["test", "python-313"]
 python-314 = ["test", "python-314"]
 dev = ["dev", "test", "lint", "validate"] #, "doc"
+release = ["release"]
 
 [tool.pixi.dependencies]
 pixi-kernel = ">=0.6.1,<0.7"
@@ -43,7 +45,7 @@ check-jsonschema = "*"
 
 
 [tool.pixi.pypi-dependencies]
-metadata-schema = { path = ".", editable = true }
+mdstools = { path = ".", editable = true }
 
 [tool.pixi.feature.python-310.dependencies]
 python = "3.10.*"
@@ -60,6 +62,7 @@ python = "3.13.*"
 [tool.pixi.feature.python-314.dependencies]
 python = "3.14.*"
 
+
 [tool.pixi.feature.test.dependencies]
 check-jsonschema = "*"
 pytest = "*"
@@ -67,6 +70,8 @@ pytest-xdist = "*"
 pytest-doctestplus = "*"
 pytest-remotedata = "*"
 
+[tool.pixi.feature.test.tasks]
+doctest = "pytest -n auto --doctest-modules metadata_schema"
 
 [tool.pixi.feature.lint.dependencies]
 black = "*"
@@ -112,6 +117,19 @@ validate-package-schemas = {cmd = [
 validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
 
 
-
-[tool.target.win-64.dependencies]
+[tool.pixi.target.win-64.dependencies]
 m2-bash = "*"
+
+[tool.pixi.feature.release.tasks]
+# To create a new release, run `pixi run rever X.Y.Z`
+rever = { args = [ { "arg" = "version", "default" = "--help" } ],cmd = "rever {{ version }}" }
+
+[tool.pixi.feature.release.dependencies]
+twine = "*"
+rever = "*"
+make = "*"
+setuptools = "*"
+python = "*"
+
+[tool.pixi.feature.release.pypi-dependencies]
+build = "*"

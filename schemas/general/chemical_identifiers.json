@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/component.json",
+    "allOf": [{ "$ref": "#/definitions/ChemicalIdentifiers" }],
+    "definitions": {
+        "ChemicalIdentifiers": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "cas": {
+                    "type": "string",
+                    "description": "The CAS identifier of the chemical."
+                },
+                "inchi": {
+                    "type": "string",
+                    "description": "The InChi of the chemical"
+                },
+                "inchikey": {
+                    "type": "string",
+                    "description": "The InChiKey of the chemical"
+                }
+            }
+        }
+    }
+}

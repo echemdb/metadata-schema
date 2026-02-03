@@ -4,6 +4,24 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.3.3
+====================
+
+**Added:**
+
+* Added `originalFilename` to source metadata.
+
+
+
+v0.3.2
+====================
+
+**Added:**
+
+* Added property `chemicalIdentfiers` to components for inclusion of, i.e., cas, InChi, or InChiKey identifiers.
+
+
+
 v0.3.1
 ====================
 

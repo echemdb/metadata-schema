@@ -35,6 +35,7 @@ experimental:
 source:
   url: https://doi.org/10.1016/0039-6028(85)90985-9 # DOI or a URL of the source.
   citationKey: mustermann_2021_scientific_102 # AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.
+  originalFilename: experiment_figure2b.csv # name of the original measurement file
   techniques: # provide a list of techniques used in the publication
   - XPS
   - CV
@@ -117,6 +118,21 @@ system:
           unit: volume percent
         purity:
           grade: analytical grade # qualitative description of the purity commonly used in the community
+      - name: BMPyr-TFSI
+        chemicalIdentifiers:
+            cas: 223437-11-4
+            inchi: InChI=1S/C9H20N.C2F6NO4S2/c1-3-4-7-10(2)8-5-6-9-10;3-1(4,5)14(10,11)9-15(12,13)2(6,7)8/h3-9H2,1-2H3;/q+1;-1
+            inchikey: InChIKey=HSLXOARVFIWOQF-UHFFFAOYSA-N
+        proportion:
+          unit: volume percent
+          value: 100
+        source:
+          supplier: MERCK/emd
+          purity:
+            grade: ultrapure
+        purity:
+          refinement: vacuum dried at 120 °C
+        type: solvent
       - name: H2SO4
         type: acid
         source:

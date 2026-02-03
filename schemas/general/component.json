@@ -11,6 +11,9 @@
                     "type": "string",
                     "description": "A unique identifier."
                 },
+                "chemicalIdentifiers": {
+                    "$ref": "../general/chemical_identifiers.json#/definitions/ChemicalIdentifiers"
+                },
                 "concentration": {
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
