@@ -1,0 +1,117 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "metadata-schema"
+version = "0.3.1"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+description = "Metadata schema for electrochemical data"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=1.3,<4",
+    "tabulate>=0.8,<1",
+]
+
+[tool.setuptools]
+packages = [
+    "metadata_schema",
+]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-64", "win-64"]
+
+[tool.pixi.environments]
+python-310 = ["test", "python-310"]
+python-311 = ["test", "python-311"]
+python-312 = ["test", "python-312"]
+python-313 = ["test", "python-313"]
+python-314 = ["test", "python-314"]
+dev = ["dev", "test", "lint", "validate"] #, "doc"
+
+[tool.pixi.dependencies]
+pixi-kernel = ">=0.6.1,<0.7"
+ipykernel = ">=6.29.5,<7"
+pip = ">=25.0,<26"
+jupyterlab = ">=4.3.4,<5"
+jupytext = ">=1.16.6,<2"
+pandas = "*"
+tabulate = "*"
+check-jsonschema = "*"
+
+
+[tool.pixi.pypi-dependencies]
+metadata-schema = { path = ".", editable = true }
+
+[tool.pixi.feature.python-310.dependencies]
+python = "3.10.*"
+
+[tool.pixi.feature.python-311.dependencies]
+python = "3.11.*"
+
+[tool.pixi.feature.python-312.dependencies]
+python = "3.12.*"
+
+[tool.pixi.feature.python-313.dependencies]
+python = "3.13.*"
+
+[tool.pixi.feature.python-314.dependencies]
+python = "3.14.*"
+
+[tool.pixi.feature.test.dependencies]
+check-jsonschema = "*"
+pytest = "*"
+pytest-xdist = "*"
+pytest-doctestplus = "*"
+pytest-remotedata = "*"
+
+
+[tool.pixi.feature.lint.dependencies]
+black = "*"
+isort = "*"
+pylint = "*"
+
+[tool.pixi.feature.dev.tasks]
+test = "pixi run doctest"
+
+[tool.pixi.feature.lint.tasks]
+pylint = "pylint mdstools"
+black = "black mdstools"
+isort = "isort --profile black mdstools"
+lint = { depends-on = ["pylint", "black", "isort"] }
+
+[tool.pixi.feature.validate.tasks]
+validate-objects = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    for file in curation eln experimental figure_description projects source system; do
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/objects/${file}.yaml
+    done
+    '''
+]}
+validate-file-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    for file in autotag svgdigitizer; do
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/file_schemas/${file}.yaml
+    done
+    '''
+]}
+validate-package-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    cd schemas
+    check-jsonschema --base-uri . --schemafile ./echemdb_package.json ../examples/file_schemas/echemdb_package.json
+    check-jsonschema --base-uri . --schemafile ./svgdigitizer_package.json ../examples/file_schemas/svgdigitizer_package.json
+    '''
+]}
+validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
+
+
+
+[tool.target.win-64.dependencies]
+m2-bash = "*"
