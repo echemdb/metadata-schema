@@ -346,17 +346,73 @@ class MetadataConverter:
 
         :param filepath: Path to save the CSV file
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> data = {'experiment': 'test', 'value': 42}
+            >>> converter = MetadataConverter.from_dict(data)
+            >>> converter.to_csv('generated/doctests/example.csv')
+            >>> os.path.exists('generated/doctests/example.csv')
+            True
         """
         self.df.to_csv(filepath, index=False, **kwargs)
 
-    def to_excel(self, filepath, **kwargs):
+    def to_excel(self, filepath, separate_sheets=False, **kwargs):
         """
         Export the flattened data to an Excel file.
 
         :param filepath: Path to save the Excel file
+        :param separate_sheets: If True, create separate sheets for each top-level key
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
+
+        When separate_sheets=True, the Excel file will have one sheet per top-level
+        key in the nested structure, making it easier to navigate large metadata files.
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> data = {'experiment': {'value': 42, 'units': 'mV'}, 'source': {'author': 'test'}}
+            >>> converter = MetadataConverter.from_dict(data)
+            >>> converter.to_excel('generated/doctests/example_single.xlsx')
+            >>> os.path.exists('generated/doctests/example_single.xlsx')
+            True
+            >>> converter.to_excel('generated/doctests/example_multi.xlsx', separate_sheets=True)
+            >>> os.path.exists('generated/doctests/example_multi.xlsx')
+            True
         """
-        self.df.to_excel(filepath, index=False, **kwargs)
+        if not separate_sheets:
+            # Single sheet export (original behavior)
+            self.df.to_excel(filepath, index=False, **kwargs)
+        else:
+            # Multi-sheet export: one sheet per top-level key
+            with pd.ExcelWriter(filepath, engine='openpyxl') as writer:
+                # Group rows by top-level key
+                df = self.df.copy()
+
+                # Extract top-level number (e.g., "1" from "1.2.a")
+                df['TopLevel'] = df['Number'].astype(str).str.split('.').str[0]
+
+                for top_level in df['TopLevel'].unique():
+                    # Get all rows for this top-level key
+                    sheet_df = df[df['TopLevel'] == top_level].copy()
+
+                    # Get sheet name from the first row's key
+                    sheet_name = sheet_df.iloc[0]['Key']
+                    if not sheet_name:  # Handle empty key names
+                        sheet_name = f"Sheet_{top_level}"
+
+                    # Sanitize sheet name (Excel limits: 31 chars, no special chars)
+                    sheet_name = str(sheet_name)[:31]
+                    sheet_name = sheet_name.replace('/', '_').replace('\\', '_').replace('[', '(').replace(']', ')')
+
+                    # Remove the TopLevel helper column
+                    sheet_df = sheet_df[['Number', 'Key', 'Value']]
+
+                    # Write to sheet
+                    sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     def to_markdown(self, **kwargs):
         """

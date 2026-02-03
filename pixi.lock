@@ -4206,7 +4206,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/webcolors-25.10.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/webencodings-0.5.1-pyhd8ed1ab_3.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/websocket-client-1.9.0-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/osx-64/xonsh-0.22.1-py314hee6578b_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/osx-64/xonsh-0.22.2-py314hee6578b_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/yaml-0.2.5-h4132b18_3.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zeromq-4.3.5-h6c33b1e_9.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-3.23.0-pyhcf101f3_1.conda
@@ -13255,9 +13255,9 @@ packages:
   - pkg:pypi/xonsh?source=compressed-mapping
   size: 1901968
   timestamp: 1770120895270
-- conda: https://conda.anaconda.org/conda-forge/osx-64/xonsh-0.22.1-py314hee6578b_0.conda
-  sha256: b729279b54a644a7c1c0757a2174d414bc9918152c6f27afc0802a9c17b69d6e
-  md5: 1415a564cd764733f42c21dc1c2b9b9c
+- conda: https://conda.anaconda.org/conda-forge/osx-64/xonsh-0.22.2-py314hee6578b_0.conda
+  sha256: 2f72ccbbdf8df74b3373aa2ad0cffefac3fa9ab538a00c722a3b5b95257fd0ed
+  md5: 53ae00db339c2f8e87aa3e4c9136dcc1
   depends:
   - prompt_toolkit
   - pygments >=2.2
@@ -13269,8 +13269,8 @@ packages:
   license_family: BSD
   purls:
   - pkg:pypi/xonsh?source=hash-mapping
-  size: 1878063
-  timestamp: 1768400916502
+  size: 1873883
+  timestamp: 1770121305829
 - conda: https://conda.anaconda.org/conda-forge/win-64/xonsh-0.22.2-py314h86ab7b2_0.conda
   sha256: c05aa55df8f2fb15a23a26f81ef212055c8584fd639dacb512ea5c604e107953
   md5: 869ba73449e15a050b40be8596d9e8be
