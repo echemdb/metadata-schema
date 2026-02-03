@@ -1,23 +1,16 @@
 # This file has been inferred from https://github.com/echemdb/metadata-schema
 # It provides a minimum set of metadata to describe an electrochemical system.
-curation: # Required only the curator information
+curation: # Requires only the curator information
   process:
     - role: curator
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-experimental:
-  tags:
-    - BCV
-    - SPST
-figureDescription:
-  type: not available # raw, digitized, not available (refers to data not extracted from a figure or available as raw data)
-  measurementType: CV # default for echemdb
-  simultaneousMeasurements:
-    - ring current # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data. Created by `svgdigitizer.electrochemistry.cv.CV`
-  comment: Some unusual observation. # Add whatever you think is important to understand the data.
-  scanRate: # only required when the time axis is not available
-    value: 50
-    unit: mV / s
+    - role: experimentalist
+      name: Max Doe
+      orcid: https://orcid.org/0000-0002-1234-5678
+    - role: supervisor
+      name: Erika Musterfrau
+      orcid: https://orcid.org/0000-0003-9876-5432
 system:
   type: electrochemical
   electrolyte:
@@ -67,3 +60,31 @@ system:
       geometricElectrolyteContactArea: # optional but recommended
         value: 1
         unit: cm-2
+  electrochemicalCell:
+    type: flow cell attached to UHV system
+    url: https://doi.org/10.1002/chem.201803418 (source describing the setup)
+dataDescription:
+  type: raw, processed, digitized (whichever is most fitting)
+  measurementType: CV (default type for echemdb)
+  tags:
+    - BCV
+    - ORR
+    - COOR
+    - NRR
+  simultaneousMeasurements:
+    - ring current # List of operando methods shown in the same plot, which is linked to the data.
+    - FTIR
+    - SXRD
+    - MS
+  comment: Comment about the data, not the Some unusual observation. # Add whatever you think is important to understand the data.
+  scanRate: # only required when the time axis is not available
+    value: 50
+    unit: mV / s
+source:
+  citationKey: engstfeld_2018_polycrystalline_17743
+  url: https://doi.org/10.1002/chem.201803418
+  figure: 4b (include subfigure)
+  curve: blue (a unique identifier of the curve within the figure, e.g., color, symbol, etc)
+  techniques:
+  - XPS
+  - STM
