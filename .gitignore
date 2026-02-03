@@ -1,5 +1,6 @@
 # project
 /generated
+tests/generated
 
 # pixi environments
 .pixi

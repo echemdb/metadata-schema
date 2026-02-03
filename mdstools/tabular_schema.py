@@ -1,5 +1,7 @@
 import string
 import pandas as pd
+from pathlib import Path
+from typing import Optional
 
 
 # Helper to check if a list contains only primitive values
@@ -184,25 +186,33 @@ class MetadataConverter:
         ['Number', 'Key', 'Value']
     """
 
-    def __init__(self, source_data, source_type='dict'):
+    def __init__(self, source_data, source_type='dict', schema_dir: Optional[str] = None):
         """
         Initialize converter with data from either format.
 
         :param source_data: The data to convert (dict, list, or DataFrame)
         :param source_type: 'dict' for nested dict/list, 'flattened' for tabular data
+        :param schema_dir: Optional path to directory containing JSON Schema files for enrichment
         """
         self._source_data = source_data
         self._source_type = source_type
         self._flattened = None
         self._nested = None
         self._df = None
+        self._enricher = None
+        self._schema_dir = schema_dir
+        
+        if schema_dir:
+            from .schema_enricher import SchemaEnricher
+            self._enricher = SchemaEnricher(schema_dir)
 
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data, schema_dir: Optional[str] = None):
         """
         Create a converter from a nested dictionary.
 
         :param data: The nested dictionary to convert
+        :param schema_dir: Optional path to directory containing JSON Schema files for enrichment
         :return: MetadataConverter instance
 
         EXAMPLES::
@@ -214,7 +224,7 @@ class MetadataConverter:
             >>> len(converter.flattened)
             2
         """
-        return cls(data, source_type='dict')
+        return cls(data, source_type='dict', schema_dir=schema_dir)
 
     @classmethod
     def from_excel(cls, filepath, **kwargs):
@@ -329,6 +339,33 @@ class MetadataConverter:
                     columns=['Number', 'Key', 'Value']
                 )
         return self._df
+    
+    @property
+    def enriched_df(self):
+        """
+        Get the enriched flattened data as a pandas DataFrame with Example and Description columns.
+        
+        Requires schema_dir to be provided during initialization.
+        
+        :return: DataFrame with columns ['Number', 'Key', 'Value', 'Example', 'Description']
+        
+        EXAMPLES::
+        
+            >>> # Example requires schema files
+            >>> # converter = MetadataConverter.from_dict(data, schema_dir='schemas/')
+            >>> # enriched = converter.enriched_df
+            >>> # 'Description' in enriched.columns
+            >>> # True
+            >>> pass  # Placeholder for schema-based test
+        """
+        if not self._enricher:
+            raise ValueError("Schema enrichment not available. Please provide schema_dir during initialization.")
+        
+        enriched_rows = self._enricher.enrich_flattened_data(self.flattened)
+        return pd.DataFrame(
+            enriched_rows,
+            columns=['Number', 'Key', 'Value', 'Example', 'Description']
+        )
 
     def to_dict(self):
         """
@@ -340,11 +377,12 @@ class MetadataConverter:
         """
         return self.nested_dict
 
-    def to_csv(self, filepath, **kwargs):
+    def to_csv(self, filepath, enriched=False, **kwargs):
         """
         Export the flattened data to a CSV file.
 
         :param filepath: Path to save the CSV file
+        :param enriched: If True, include Example and Description columns (requires schema_dir)
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
 
         EXAMPLES::
@@ -357,14 +395,16 @@ class MetadataConverter:
             >>> os.path.exists('generated/doctests/example.csv')
             True
         """
-        self.df.to_csv(filepath, index=False, **kwargs)
+        df = self.enriched_df if enriched else self.df
+        df.to_csv(filepath, index=False, **kwargs)
 
-    def to_excel(self, filepath, separate_sheets=False, **kwargs):
+    def to_excel(self, filepath, separate_sheets=False, enriched=False, **kwargs):
         """
         Export the flattened data to an Excel file.
 
         :param filepath: Path to save the Excel file
         :param separate_sheets: If True, create separate sheets for each top-level key
+        :param enriched: If True, include Example and Description columns (requires schema_dir)
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
 
         When separate_sheets=True, the Excel file will have one sheet per top-level
@@ -383,21 +423,23 @@ class MetadataConverter:
             >>> os.path.exists('generated/doctests/example_multi.xlsx')
             True
         """
+        df = self.enriched_df if enriched else self.df
+        
         if not separate_sheets:
             # Single sheet export (original behavior)
-            self.df.to_excel(filepath, index=False, **kwargs)
+            df.to_excel(filepath, index=False, **kwargs)
         else:
             # Multi-sheet export: one sheet per top-level key
             with pd.ExcelWriter(filepath, engine='openpyxl') as writer:
                 # Group rows by top-level key
-                df = self.df.copy()
+                df_copy = df.copy()
 
                 # Extract top-level number (e.g., "1" from "1.2.a")
-                df['TopLevel'] = df['Number'].astype(str).str.split('.').str[0]
+                df_copy['TopLevel'] = df_copy['Number'].astype(str).str.split('.').str[0]
 
-                for top_level in df['TopLevel'].unique():
+                for top_level in df_copy['TopLevel'].unique():
                     # Get all rows for this top-level key
-                    sheet_df = df[df['TopLevel'] == top_level].copy()
+                    sheet_df = df_copy[df_copy['TopLevel'] == top_level].copy()
 
                     # Get sheet name from the first row's key
                     sheet_name = sheet_df.iloc[0]['Key']
@@ -409,15 +451,19 @@ class MetadataConverter:
                     sheet_name = sheet_name.replace('/', '_').replace('\\', '_').replace('[', '(').replace(']', ')')
 
                     # Remove the TopLevel helper column
-                    sheet_df = sheet_df[['Number', 'Key', 'Value']]
+                    if enriched:
+                        sheet_df = sheet_df[['Number', 'Key', 'Value', 'Example', 'Description']]
+                    else:
+                        sheet_df = sheet_df[['Number', 'Key', 'Value']]
 
                     # Write to sheet
                     sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-    def to_markdown(self, **kwargs):
+    def to_markdown(self, enriched=False, **kwargs):
         """
         Export the flattened data as a Markdown table.
 
+        :param enriched: If True, include Example and Description columns (requires schema_dir)
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_markdown
         :return: Markdown-formatted string
 
@@ -434,4 +480,5 @@ class MetadataConverter:
             | 2.b      |       | b        |
             | 2.c      |       | c        |
         """
-        return self.df.to_markdown(index=False, **kwargs)
+        df = self.enriched_df if enriched else self.df
+        return df.to_markdown(index=False, **kwargs)
