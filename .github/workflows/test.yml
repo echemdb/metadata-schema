@@ -26,3 +26,16 @@ jobs:
         run: pixi run -e ${{ matrix.environment }} test-comprehensive
       - name: test-resolved-schemas
         run: pixi run -e ${{ matrix.environment }} test-resolved-schemas
+
+  check-schemas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+        with: { submodules: recursive }
+      - uses: prefix-dev/setup-pixi@v0.9.3
+        with: { pixi-version: v0.63.2 }
+      - name: resolve-schemas
+        run: pixi run resolve-schemas
+      - name: check schemas match expected
+        run: pixi run diff-schemas
