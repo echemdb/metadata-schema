@@ -101,12 +101,20 @@ class SchemaResolver:
             ref_fragment = ref.split("#")[1] if "#" in ref else ""
 
             # Load the referenced schema
-            ref_file = ref_path.lstrip("./").replace("/", os.sep)
+            # Normalize path by removing leading ./ and handling ../
+            ref_file = ref_path.lstrip("./")
+            # Try to find in cache with both forward slash path and stem
+            ref_file_normalized = ref_file.replace("/", os.sep)
             ref_schema_name = Path(ref_file).stem
 
-            if ref_schema_name in self.schema_cache:
+            # Try multiple lookup strategies
+            ref_schema = None
+            if ref_file_normalized in self.schema_cache:
+                ref_schema = copy.deepcopy(self.schema_cache[ref_file_normalized])
+            elif ref_schema_name in self.schema_cache:
                 ref_schema = copy.deepcopy(self.schema_cache[ref_schema_name])
 
+            if ref_schema is not None:
                 # Resolve any $refs within the referenced schema
                 ref_schema = self._resolve_schema(ref_schema, str(Path(ref_file).parent))
 
@@ -179,10 +187,20 @@ class SchemaResolver:
         all_definitions = {}
         for cached_schema_name, cached_schema in self.schema_cache.items():
             if isinstance(cached_schema, dict) and "definitions" in cached_schema:
-                all_definitions.update(cached_schema["definitions"])
+                # Resolve $refs within definitions and remove $id fields
+                for def_name, def_schema in cached_schema["definitions"].items():
+                    # Resolve any $refs in this definition
+                    resolved_def = self._resolve_schema(def_schema, base_path="", depth=0)
+                    # Remove $id from definitions to avoid scope issues
+                    clean_def = self._remove_schema_ids(resolved_def)
+                    all_definitions[def_name] = clean_def
 
         # Now resolve all external $refs in the schema recursively
-        resolved_schema = self._resolve_schema(schema, depth=0)
+        # Pass empty base_path since we're starting from schema_pieces/ root
+        resolved_schema = self._resolve_schema(schema, base_path="", depth=0)
+
+        # Remove $id fields from resolved content to avoid scope issues in validators
+        resolved_schema = self._remove_schema_ids(resolved_schema)
 
         # Merge collected definitions into the resolved schema
         if "definitions" not in resolved_schema:
@@ -193,6 +211,20 @@ class SchemaResolver:
                 resolved_schema["definitions"][key] = value
 
         return resolved_schema
+
+    def _remove_schema_ids(self, schema: Any) -> Any:
+        """Recursively remove $id fields to avoid creating new schema scopes."""
+        if isinstance(schema, dict):
+            result = {}
+            for k, v in schema.items():
+                if k == "$id":
+                    continue  # Skip $id fields
+                result[k] = self._remove_schema_ids(v)
+            return result
+        elif isinstance(schema, list):
+            return [self._remove_schema_ids(item) for item in schema]
+        else:
+            return schema
 
 
 # Main script
@@ -222,7 +254,10 @@ if __name__ == "__main__":
 
             output_file = output_dir / f"{schema_name}.json"
             with open(output_file, 'w', encoding='utf-8') as f:
-                json.dump(resolved, f, indent=2)
+                json.dump(resolved, f, indent=2, ensure_ascii=False)
+                # json.dump does not save files with a newline, which compromises the tests
+                # where the output files are compared to an expected json.
+                f.write("\n")
 
             print(f"  OK - Saved to {output_file}")
         else:
