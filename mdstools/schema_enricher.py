@@ -1,7 +1,9 @@
+"""Schema enricher for adding descriptions and examples from JSON Schema to flattened data."""
+
 import json
 import os
 from pathlib import Path
-from typing import Dict, Any, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 
 class SchemaEnricher:
@@ -59,7 +61,7 @@ class SchemaEnricher:
         schema_pieces = self.schema_dir / "schema_pieces"
         if schema_pieces.exists():
             for schema_file in schema_pieces.rglob("*.json"):
-                with open(schema_file, 'r', encoding='utf-8') as f:
+                with open(schema_file, "r", encoding="utf-8") as f:
                     schema_name = schema_file.stem
                     # Only load if not already loaded (don't override)
                     if schema_name not in self.schema_cache:
@@ -67,12 +69,13 @@ class SchemaEnricher:
 
         # Also load resolved schemas from root for fallback
         for schema_file in self.schema_dir.glob("*.json"):
-            with open(schema_file, 'r', encoding='utf-8') as f:
+            with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
                     self.schema_cache[schema_name] = json.load(f)
 
-                    # For combined schemas like autotag/svgdigitizer, also register their sub-definitions
+                    # For combined schemas like autotag/svgdigitizer,
+                    # also register their sub-definitions
                     # This allows lookup by top-level keys like "system", "curation", etc.
                     schema_data = self.schema_cache[schema_name]
                     if "definitions" in schema_data:
@@ -83,7 +86,10 @@ class SchemaEnricher:
                                 # Create a minimal schema structure for this definition
                                 self.schema_cache[lowercase_name] = {
                                     "definitions": {def_name: def_value},
-                                    "$schema": schema_data.get("$schema", "http://json-schema.org/draft-07/schema#")
+                                    "$schema": schema_data.get(
+                                        "$schema",
+                                        "http://json-schema.org/draft-07/schema#",
+                                    ),
                                 }
 
     def _resolve_ref(self, ref: str, current_schema: Dict) -> Optional[Dict]:
@@ -104,7 +110,7 @@ class SchemaEnricher:
                 else:
                     return None
             return result
-        elif ref.startswith("./"):
+        if ref.startswith("./"):
             # External reference
             ref_path = ref.split("#")[0]
             ref_fragment = ref.split("#")[1] if "#" in ref else ""
@@ -129,7 +135,9 @@ class SchemaEnricher:
 
         return None
 
-    def _get_field_metadata(self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None) -> Tuple[Optional[str], Optional[str]]:
+    def _get_field_metadata(  # pylint: disable=too-many-nested-blocks,too-many-branches
+        self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
+    ) -> Tuple[Optional[str], Optional[str]]:
         """
         Extract description and example from schema for a given field path.
 
@@ -176,7 +184,11 @@ class SchemaEnricher:
 
                     # Check for examples in different places
                     example = None
-                    if "examples" in current and isinstance(current["examples"], list) and len(current["examples"]) > 0:
+                    if (
+                        "examples" in current
+                        and isinstance(current["examples"], list)
+                        and len(current["examples"]) > 0
+                    ):
                         example = current["examples"][0]
                     elif "example" in current:
                         example = current["example"]
@@ -200,27 +212,29 @@ class SchemaEnricher:
                                 break
 
                     return description, example
-                else:
-                    # Not the last field - if this is an array, resolve its items
-                    if current.get("type") == "array" and "items" in current:
-                        items = current["items"]
 
-                        # Resolve $ref in items if present
-                        while "$ref" in items:
-                            resolved = self._resolve_ref(items["$ref"], root_schema)
-                            if resolved:
-                                items = resolved
-                            else:
-                                break
+                # Not the last field - if this is an array, resolve its items
+                if current.get("type") == "array" and "items" in current:
+                    items = current["items"]
 
-                        current = items
+                    # Resolve $ref in items if present
+                    while "$ref" in items:
+                        resolved = self._resolve_ref(items["$ref"], root_schema)
+                        if resolved:
+                            items = resolved
+                        else:
+                            break
+
+                    current = items
             else:
                 # Can't navigate further with this field
                 return None, None
 
         return None, None
 
-    def enrich_row(self, key_path: str, current_value: Any) -> Tuple[Optional[str], Optional[str]]:
+    def enrich_row(  # pylint: disable=unused-argument
+        self, key_path: str, current_value: Any
+    ) -> Tuple[Optional[str], Optional[str]]:
         """
         Get description and example for a specific field path.
 
@@ -250,7 +264,9 @@ class SchemaEnricher:
                 if main_def_name in schema["definitions"]:
                     main_def = schema["definitions"][main_def_name]
                     # Pass the full schema as root_schema for resolving $refs
-                    return self._get_field_metadata(main_def, parts[1:], root_schema=schema)
+                    return self._get_field_metadata(
+                        main_def, parts[1:], root_schema=schema
+                    )
 
         return None, None
 
@@ -294,7 +310,15 @@ class SchemaEnricher:
             description, example = self.enrich_row(full_path, value)
 
             # Add to result
-            enriched.append([level, key, value, example if example is not None else "", description if description is not None else ""])
+            enriched.append(
+                [
+                    level,
+                    key,
+                    value,
+                    example if example is not None else "",
+                    description if description is not None else "",
+                ]
+            )
 
             # For leaf values (not nested), pop the key from stack
             if value != "<nested>":

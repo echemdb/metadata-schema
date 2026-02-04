@@ -10,6 +10,7 @@ from pathlib import Path
 
 
 def main():
+    """Update expected baseline schemas from current resolved schemas."""
     schemas_dir = Path("schemas")
     expected_dir = Path("schemas/expected")
 
@@ -21,11 +22,11 @@ def main():
         "autotag.json",
         "svgdigitizer.json",
         "echemdb_package.json",
-        "svgdigitizer_package.json"
+        "svgdigitizer_package.json",
     ]
 
     print("Updating expected resolved schemas...")
-    print("="*60)
+    print("=" * 60)
 
     for schema_name in schemas_to_update:
         source = schemas_dir / schema_name
@@ -39,7 +40,7 @@ def main():
         shutil.copy2(source, dest)
         print(f"✓ Updated {dest}")
 
-    print("="*60)
+    print("=" * 60)
     print("✓ Expected schemas updated successfully")
     print("\nCommit these changes with your schema updates:")
     print("  git add schemas/expected/")

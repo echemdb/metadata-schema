@@ -4,37 +4,35 @@ Command-line interface for mdstools metadata conversion.
 """
 
 import argparse
-import yaml
 from pathlib import Path
+
+import yaml
+
 from mdstools.tabular_schema import MetadataConverter
 
 
 def main():
     """Convert YAML metadata to enriched tabular formats."""
     parser = argparse.ArgumentParser(
-        description='Convert nested YAML metadata to enriched Excel/CSV formats'
+        description="Convert nested YAML metadata to enriched Excel/CSV formats"
     )
+    parser.add_argument("yaml_file", type=str, help="Path to input YAML file")
     parser.add_argument(
-        'yaml_file',
+        "--schema-dir",
         type=str,
-        help='Path to input YAML file'
+        default="schemas",
+        help="Directory containing JSON Schema files (default: schemas)",
     )
     parser.add_argument(
-        '--schema-dir',
+        "--output-dir",
         type=str,
-        default='schemas',
-        help='Directory containing JSON Schema files (default: schemas)'
+        default="generated",
+        help="Output directory for converted files (default: generated)",
     )
     parser.add_argument(
-        '--output-dir',
-        type=str,
-        default='generated',
-        help='Output directory for converted files (default: generated)'
-    )
-    parser.add_argument(
-        '--no-enrichment',
-        action='store_true',
-        help='Disable schema enrichment (no Description/Example columns)'
+        "--no-enrichment",
+        action="store_true",
+        help="Disable schema enrichment (no Description/Example columns)",
     )
 
     args = parser.parse_args()
@@ -45,7 +43,7 @@ def main():
         print(f"Error: File not found: {yaml_path}")
         return 1
 
-    with open(yaml_path, 'r', encoding='utf-8') as f:
+    with open(yaml_path, "r", encoding="utf-8") as f:
         data = yaml.safe_load(f)
 
     # Create converter
@@ -63,9 +61,12 @@ def main():
 
     # Show enrichment stats if enabled
     if enriched:
-        has_desc = df['Description'].notna() & (df['Description'] != '')
+        has_desc = df["Description"].notna() & (df["Description"] != "")
         desc_count = has_desc.sum()
-        print(f"Enrichment: {desc_count}/{len(df)} fields ({100*desc_count/len(df):.1f}%) have descriptions")
+        print(
+            f"Enrichment: {desc_count}/{len(df)} fields "
+            f"({100*desc_count/len(df):.1f}%) have descriptions"
+        )
 
     # Create output directory
     output_dir = Path(args.output_dir)
@@ -93,4 +94,6 @@ def main():
 
 
 if __name__ == "__main__":
-    exit(main())
+    import sys
+
+    sys.exit(main())

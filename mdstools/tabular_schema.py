@@ -1,11 +1,14 @@
+"""Tools for converting between YAML and tabular representations with schema enrichment."""
+
 import string
-import pandas as pd
-from pathlib import Path
 from typing import Optional
+
+import pandas as pd
 
 
 # Helper to check if a list contains only primitive values
 def is_primitive_list(lst):
+    """Check if a list contains only primitive values (no dicts or lists)."""
     return all(not isinstance(x, (dict, list)) for x in lst)
 
 
@@ -186,7 +189,9 @@ class MetadataConverter:
         ['Number', 'Key', 'Value']
     """
 
-    def __init__(self, source_data, source_type='dict', schema_dir: Optional[str] = None):
+    def __init__(
+        self, source_data, source_type="dict", schema_dir: Optional[str] = None
+    ):
         """
         Initialize converter with data from either format.
 
@@ -201,9 +206,10 @@ class MetadataConverter:
         self._df = None
         self._enricher = None
         self._schema_dir = schema_dir
-        
+
         if schema_dir:
             from .schema_enricher import SchemaEnricher
+
             self._enricher = SchemaEnricher(schema_dir)
 
     @classmethod
@@ -224,7 +230,7 @@ class MetadataConverter:
             >>> len(converter.flattened)
             2
         """
-        return cls(data, source_type='dict', schema_dir=schema_dir)
+        return cls(data, source_type="dict", schema_dir=schema_dir)
 
     @classmethod
     def from_excel(cls, filepath, **kwargs):
@@ -244,7 +250,7 @@ class MetadataConverter:
             >>> pass  # Placeholder for file-based test
         """
         df = pd.read_excel(filepath, **kwargs)
-        return cls(df, source_type='flattened')
+        return cls(df, source_type="flattened")
 
     @classmethod
     def from_csv(cls, filepath, **kwargs):
@@ -256,7 +262,7 @@ class MetadataConverter:
         :return: MetadataConverter instance
         """
         df = pd.read_csv(filepath, **kwargs)
-        return cls(df, source_type='flattened')
+        return cls(df, source_type="flattened")
 
     @classmethod
     def from_dataframe(cls, df):
@@ -266,7 +272,7 @@ class MetadataConverter:
         :param df: DataFrame with columns ['Number', 'Key', 'Value']
         :return: MetadataConverter instance
         """
-        return cls(df, source_type='flattened')
+        return cls(df, source_type="flattened")
 
     @property
     def flattened(self):
@@ -285,7 +291,7 @@ class MetadataConverter:
              ['1.2', 'units', 'mV']]
         """
         if self._flattened is None:
-            if self._source_type == 'dict':
+            if self._source_type == "dict":
                 self._flattened = flatten_yaml(self._source_data)
             else:  # source_type == 'flattened'
                 # Convert DataFrame to list of lists if needed
@@ -305,7 +311,7 @@ class MetadataConverter:
         NOTE: Unflattening is not yet implemented.
         """
         if self._nested is None:
-            if self._source_type == 'dict':
+            if self._source_type == "dict":
                 self._nested = self._source_data
             else:  # source_type == 'flattened'
                 self._nested = unflatten_yaml(self.flattened)
@@ -331,26 +337,27 @@ class MetadataConverter:
             ['name', 'value']
         """
         if self._df is None:
-            if self._source_type == 'flattened' and isinstance(self._source_data, pd.DataFrame):
+            if self._source_type == "flattened" and isinstance(
+                self._source_data, pd.DataFrame
+            ):
                 self._df = self._source_data
             else:
                 self._df = pd.DataFrame(
-                    self.flattened,
-                    columns=['Number', 'Key', 'Value']
+                    self.flattened, columns=["Number", "Key", "Value"]
                 )
         return self._df
-    
+
     @property
     def enriched_df(self):
         """
         Get the enriched flattened data as a pandas DataFrame with Example and Description columns.
-        
+
         Requires schema_dir to be provided during initialization.
-        
+
         :return: DataFrame with columns ['Number', 'Key', 'Value', 'Example', 'Description']
-        
+
         EXAMPLES::
-        
+
             >>> # Example requires schema files
             >>> # converter = MetadataConverter.from_dict(data, schema_dir='schemas/')
             >>> # enriched = converter.enriched_df
@@ -359,12 +366,13 @@ class MetadataConverter:
             >>> pass  # Placeholder for schema-based test
         """
         if not self._enricher:
-            raise ValueError("Schema enrichment not available. Please provide schema_dir during initialization.")
-        
+            raise ValueError(
+                "Schema enrichment not available. Please provide schema_dir during initialization."
+            )
+
         enriched_rows = self._enricher.enrich_flattened_data(self.flattened)
         return pd.DataFrame(
-            enriched_rows,
-            columns=['Number', 'Key', 'Value', 'Example', 'Description']
+            enriched_rows, columns=["Number", "Key", "Value", "Example", "Description"]
         )
 
     def to_dict(self):
@@ -424,37 +432,46 @@ class MetadataConverter:
             True
         """
         df = self.enriched_df if enriched else self.df
-        
+
         if not separate_sheets:
             # Single sheet export (original behavior)
             df.to_excel(filepath, index=False, **kwargs)
         else:
             # Multi-sheet export: one sheet per top-level key
-            with pd.ExcelWriter(filepath, engine='openpyxl') as writer:
+            with pd.ExcelWriter(filepath, engine="openpyxl") as writer:
                 # Group rows by top-level key
                 df_copy = df.copy()
 
                 # Extract top-level number (e.g., "1" from "1.2.a")
-                df_copy['TopLevel'] = df_copy['Number'].astype(str).str.split('.').str[0]
+                df_copy["TopLevel"] = (
+                    df_copy["Number"].astype(str).str.split(".").str[0]
+                )
 
-                for top_level in df_copy['TopLevel'].unique():
+                for top_level in df_copy["TopLevel"].unique():
                     # Get all rows for this top-level key
-                    sheet_df = df_copy[df_copy['TopLevel'] == top_level].copy()
+                    sheet_df = df_copy[df_copy["TopLevel"] == top_level].copy()
 
                     # Get sheet name from the first row's key
-                    sheet_name = sheet_df.iloc[0]['Key']
+                    sheet_name = sheet_df.iloc[0]["Key"]
                     if not sheet_name:  # Handle empty key names
                         sheet_name = f"Sheet_{top_level}"
 
                     # Sanitize sheet name (Excel limits: 31 chars, no special chars)
                     sheet_name = str(sheet_name)[:31]
-                    sheet_name = sheet_name.replace('/', '_').replace('\\', '_').replace('[', '(').replace(']', ')')
+                    sheet_name = (
+                        sheet_name.replace("/", "_")
+                        .replace("\\", "_")
+                        .replace("[", "(")
+                        .replace("]", ")")
+                    )
 
                     # Remove the TopLevel helper column
                     if enriched:
-                        sheet_df = sheet_df[['Number', 'Key', 'Value', 'Example', 'Description']]
+                        sheet_df = sheet_df[
+                            ["Number", "Key", "Value", "Example", "Description"]
+                        ]
                     else:
-                        sheet_df = sheet_df[['Number', 'Key', 'Value']]
+                        sheet_df = sheet_df[["Number", "Key", "Value"]]
 
                     # Write to sheet
                     sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
