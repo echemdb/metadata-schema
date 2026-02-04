@@ -1,0 +1,17 @@
+# Test data files for doctests
+curation:
+  process:
+    - role: curator
+      name: Jane Doe
+      orcid: https://orcid.org/0000-0001-2345-6789
+
+system:
+  type: electrochemical
+  electrolyte:
+    type: aqueous
+    components:
+      - name: H2SO4
+        type: acid
+        concentration:
+          value: 0.5
+          unit: mol / l

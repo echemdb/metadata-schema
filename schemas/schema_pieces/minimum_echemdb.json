@@ -1,0 +1,31 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/minimum_echemdb.json",
+    "allOf": [{ "$ref": "#/definitions/MinimumEchemdb" }],
+    "definitions": {
+        "MinimumEchemdb": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "curation": {
+                    "$ref": "curation.json#/definitions/Curation"
+                },
+                "system": {
+                    "$ref": "system.json#/definitions/System"
+                },
+                "dataDescription": {
+                    "$ref": "figure_description.json#/definitions/FigureDescription"
+                },
+                "source": {
+                    "$ref": "source.json#/definitions/Source"
+                }
+            },
+            "required": [
+                "curation",
+                "system"
+            ],
+            "title": "MinimumEchemdb",
+            "description": "Minimum set of metadata to describe an electrochemical system for echemdb."
+        }
+    }
+}

@@ -1,0 +1,90 @@
+# This file has been inferred from https://github.com/echemdb/metadata-schema
+# It provides a minimum set of metadata to describe an electrochemical system.
+curation: # Requires only the curator information
+  process:
+    - role: curator
+      name: Albert Engstfeld
+      orcid: https://orcid.org/0000-0002-9686-3948
+    - role: experimentalist
+      name: Max Doe
+      orcid: https://orcid.org/0000-0002-1234-5678
+    - role: supervisor
+      name: Erika Musterfrau
+      orcid: https://orcid.org/0000-0003-9876-5432
+system:
+  type: electrochemical
+  electrolyte:
+    type: aqueous # required: aqueous = aq, non-aqueous=naq, solid=s, gas=g
+    components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
+      - name: NaCl # can be trivia name, sum formula, etc
+        concentration:
+          value: 0.1
+          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+        type: salt #
+      - name: water # default solvent for aqueous electrolytes
+        type: solvent
+        proportion:
+          value: 100
+          unit: volume percent
+      - name: ethanol # optional: only for reactions
+        type: solvent
+        proportion:
+          value: 50
+          unit: volume percent
+      - name: H2SO4
+        type: acid
+        source:
+          supplier: Supplier name
+          LOT: C45456
+        concentration:
+          value: 0.1
+          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+    ph: # optional but recommended
+      value: 13
+      uncertainty:
+        value: 0.1
+  electrodes:
+    - name: RE
+      function: reference electrode
+      redoxSystem: RHE # the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2
+      description: Home made RHE. # optional
+      material: Pt # required if quasi reference
+      type: wire # optional
+      shape:
+        description: Description of the shape.
+    - name: WE # Required
+      function: working electrode
+      type: single crystal
+      material: Ni
+      crystallographicOrientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
+      geometricElectrolyteContactArea: # optional but recommended
+        value: 1
+        unit: cm-2
+  electrochemicalCell:
+    type: flow cell attached to UHV system
+    url: https://doi.org/10.1002/chem.201803418 (source describing the setup)
+dataDescription:
+  type: raw, processed, digitized (whichever is most fitting)
+  measurementType: CV (default type for echemdb)
+  tags:
+    - BCV
+    - ORR
+    - COOR
+    - NRR
+  simultaneousMeasurements:
+    - ring current # List of operando methods shown in the same plot, which is linked to the data.
+    - FTIR
+    - SXRD
+    - MS
+  comment: Comment about the data, not the Some unusual observation. # Add whatever you think is important to understand the data.
+  scanRate: # only required when the time axis is not available
+    value: 50
+    unit: mV / s
+source:
+  citationKey: engstfeld_2018_polycrystalline_17743
+  url: https://doi.org/10.1002/chem.201803418
+  figure: 4b (include subfigure)
+  curve: blue (a unique identifier of the curve within the figure, e.g., color, symbol, etc)
+  techniques:
+  - XPS
+  - STM

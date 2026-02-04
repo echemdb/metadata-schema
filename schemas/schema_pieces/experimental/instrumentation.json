@@ -10,19 +10,29 @@
             "additionalProperties": false,
             "properties": {
                 "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Type or category of instrument.",
+                    "example": "potentiostat"
                 },
                 "manufacturer": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Manufacturer of the instrument.",
+                    "example": "Awesome Supplier Inc."
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name or identifier of the instrument.",
+                    "example": "Poti05"
                 },
                 "model": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Model number or designation.",
+                    "example": "P302NX5"
                 },
                 "supplier": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Supplier of the instrument.",
+                    "example": "Awesome Supplier Inc."
                 }
             },
             "required": [

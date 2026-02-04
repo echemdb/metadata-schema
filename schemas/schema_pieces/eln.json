@@ -7,9 +7,10 @@
             "type": "object",
             "additionalProperties": false,
             "title": "eln",
+            "description": "Electronic lab notebook (ELN) reference for the experiment.",
             "properties": {
                 "url": {
-                    "description": "A link to an electronic lab notebook (ELN).",
+                    "description": "URL to the electronic lab notebook entry.",
                     "$ref": "./general/url.json#/definitions/Url"
                 }
             },

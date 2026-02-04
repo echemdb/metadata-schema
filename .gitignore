@@ -1,5 +1,17 @@
+# project
+/generated
+tests/generated
+
 # pixi environments
 .pixi
 *.egg-info
 
+# Jupyter Notebook
+*.ipynb_checkpoints
+*.ipynb
+
+# rever
 /rever
+
+# Python
+__pycache__/
