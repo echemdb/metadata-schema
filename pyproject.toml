@@ -79,9 +79,9 @@ test-resolved-schemas = "pytest mdstools/tests/test_resolved_schemas.py -v"
 test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
 
 [tool.pixi.feature.lint.dependencies]
-black = ">=26.1.0,<27"
-isort = ">=7.0.0,<8"
-pylint = ">=4.0.4,<5"
+black = "*"
+isort = "*"
+pylint = "*"
 
 [tool.pixi.feature.dev.tasks]
 test = "pixi run test-all"
