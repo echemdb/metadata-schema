@@ -143,9 +143,7 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
         return {"$ref": ref}
 
     # pylint: disable=too-many-return-statements
-    def _resolve_schema(
-        self, schema: Any, base_path: str = "", depth: int = 0
-    ) -> Any:
+    def _resolve_schema(self, schema: Any, base_path: str = "", depth: int = 0) -> Any:
         """Recursively resolve all $refs in a schema."""
         # Prevent infinite recursion
         if depth > 20:
