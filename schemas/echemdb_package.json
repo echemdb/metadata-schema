@@ -1,62 +1,2760 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "echemdb Data Package Profile",
-    "description": "Data package schema for echemdb following the Frictionless Data Package specification with echemdb-specific metadata extensions.",
-    "type": "object",
-    "allOf": [
-        { "$ref": "https://datapackage.org/profiles/2.0/datapackage.json" }
-    ],
-    "properties": {
-        "resources": {
-            "type": "array",
-            "items": {
-                "allOf": [
-                    { "$ref": "https://datapackage.org/profiles/2.0/dataresource.json" },
-                    { "$ref": "#/definitions/EchemdbResource" }
-                ]
-            }
-        }
-    },
-    "definitions": {
-        "EchemdbResource": {
-            "type": "object",
-            "description": "A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.",
-            "properties": {
-                "metadata": {
-                    "type": "object",
-                    "description": "Metadata container for the resource.",
-                    "required": ["echemdb"],
-                    "properties": {
-                        "echemdb": {
-                            "type": "object",
-                            "description": "echemdb-specific metadata for electrochemical data.",
-                            "required": ["curation",
-                                        "experimental",
-                                        "figureDescription",
-                                        "system",
-                                        "source"],
-                            "properties" : {
-                                "curation" : {
-                                    "type": "object",
-                                    "$ref": "curation.json" },
-                                "experimental" : {
-                                    "type": "object",
-                                    "$ref": "experimental.json" },
-                                "figureDescription" : {
-                                    "type": "object",
-                                    "$ref": "figure_description.json" },
-                                "system" : {
-                                    "type": "object",
-                                    "$ref": "system.json" },
-                                "source" : {
-                                    "type": "object",
-                                    "$ref": "source.json" },
-                                "additionalProperties": true
-                            }
-                        }
-                    }
-                }
-            }
-        }
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "echemdb Data Package Profile",
+  "description": "Data package schema for echemdb JSON following the Frictionless Data Package specification with echemdb-specific metadata extensions.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "https://datapackage.org/profiles/2.0/datapackage.json"
     }
+  ],
+  "properties": {
+    "resources": {
+      "type": "array",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
+          },
+          {
+            "$ref": "#/definitions/EchemdbResource"
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "EchemdbResource": {
+      "type": "object",
+      "description": "A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "description": "Metadata container for the resource.",
+          "required": [
+            "echemdb"
+          ],
+          "properties": {
+            "echemdb": {
+              "type": "object",
+              "description": "echemdb-specific metadata for electrochemical data.",
+              "required": [
+                "curation",
+                "experimental",
+                "figureDescription",
+                "system",
+                "source"
+              ],
+              "properties": {
+                "curation": {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/curation.json",
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/Curation"
+                    }
+                  ],
+                  "definitions": {
+                    "Curation": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "title": "curation",
+                      "description": "Details on the curation process of the data.",
+                      "required": [
+                        "process"
+                      ],
+                      "properties": {
+                        "process": {
+                          "type": "array",
+                          "description": "List of people involved in creating, recording, or curating this data.",
+                          "minItems": 1,
+                          "items": {
+                            "$ref": "#/definitions/Process"
+                          }
+                        }
+                      }
+                    },
+                    "Process": {
+                      "type": "object",
+                      "required": [
+                        "role",
+                        "name",
+                        "orcid"
+                      ],
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "oneOf": [
+                            {
+                              "const": "experimentalist",
+                              "description": "A person that recorded the (meta)data."
+                            },
+                            {
+                              "const": "curator",
+                              "description": "A person that created a (meta)dataset from literature data."
+                            },
+                            {
+                              "const": "reviewer",
+                              "description": "A person that verified the (meta)data (usually literature data)."
+                            },
+                            {
+                              "const": "supervisor",
+                              "description": "A person that supervised the experimentalist."
+                            }
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Full name of the person.",
+                          "example": "Jane Doe"
+                        },
+                        "orcid": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https?://.*$",
+                          "default": "https://",
+                          "description": "An URL containing the ORCID.",
+                          "example": "https://example.org"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date",
+                          "description": "Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).",
+                          "example": "2024-01-15"
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "experimental": {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/experimental.json",
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/Experimental"
+                    }
+                  ],
+                  "definitions": {
+                    "Experimental": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "title": "experimental",
+                      "description": "Details about the configuration of the experimental set up.",
+                      "properties": {
+                        "tags": {
+                          "type": "array",
+                          "description": "Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https?://.*$",
+                          "default": "https://",
+                          "description": "URL to related documentation, publication (DOI), or ELN entry.",
+                          "example": "https://example.org"
+                        },
+                        "instrumentation": {
+                          "type": "array",
+                          "description": "Instruments and equipment used in the experiment.",
+                          "items": {
+                            "description": "The instruments used to perform the experiment.",
+                            "title": "instrumentation",
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "Type or category of instrument.",
+                                "example": "potentiostat"
+                              },
+                              "manufacturer": {
+                                "type": "string",
+                                "description": "Manufacturer of the instrument.",
+                                "example": "Awesome Supplier Inc."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Name or identifier of the instrument.",
+                                "example": "Poti05"
+                              },
+                              "model": {
+                                "type": "string",
+                                "description": "Model number or designation.",
+                                "example": "P302NX5"
+                              },
+                              "supplier": {
+                                "type": "string",
+                                "description": "Supplier of the instrument.",
+                                "example": "Awesome Supplier Inc."
+                              }
+                            },
+                            "required": [
+                              "name"
+                            ]
+                          }
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Detailed description of the experimental setup and conditions.",
+                          "example": "Cyclic voltammetry performed at room temperature with 50 mV/s scan rate"
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "figureDescription": {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/figure_description.json",
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/FigureDescription"
+                    }
+                  ],
+                  "definitions": {
+                    "FigureDescription": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "title": "figureDescription",
+                      "description": "Description of the data to a figure or plot including data type and measurement details.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Source or origin of the data.",
+                          "example": "raw",
+                          "anyOf": [
+                            {
+                              "const": "digitized",
+                              "description": "Data extracted from a figure using software (e.g., svgdigitizer)."
+                            },
+                            {
+                              "const": "raw",
+                              "description": "Original data as recorded by the instrument."
+                            },
+                            {
+                              "const": "simulated",
+                              "description": "Data generated by simulation software."
+                            },
+                            {
+                              "const": "processed",
+                              "description": "Data generated by processing raw or simulated data."
+                            }
+                          ]
+                        },
+                        "measurementType": {
+                          "type": "string",
+                          "description": "Acronym type for the measurement performed, such as CV; EIS, XPS, etc.",
+                          "example": "CV"
+                        },
+                        "simultaneousMeasurements": {
+                          "type": "array",
+                          "description": "Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Additional notes about the figure or data.",
+                          "example": "Data below 0 V was cut off by the x-axis."
+                        },
+                        "fields": {
+                          "type": "array",
+                          "description": "Description of data fields/columns in the figure.",
+                          "items": {
+                            "$ref": "#/definitions/Field"
+                          }
+                        },
+                        "scanRate": {
+                          "description": "Scan rate used in the measurement.",
+                          "$ref": "#/definitions/ScanRate"
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    },
+                    "Field": {
+                      "title": "Field",
+                      "description": "Description of a data field (column) following frictionless table-schema with echemdb-specific extensions for physical quantities.",
+                      "allOf": [
+                        {
+                          "$ref": "https://specs.frictionlessdata.io/schemas/table-schema.json#/definitions/field"
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "description": "Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.",
+                              "example": "E_WE"
+                            },
+                            "dimension": {
+                              "type": "string",
+                              "description": "Physical dimension of the field (e.g., 'time', 'potential', 'current density').",
+                              "example": "potential"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "A description of that field.",
+                              "example": "The potential measured between the working electrode and reference electrode."
+                            },
+                            "unit": {
+                              "type": "string",
+                              "description": "Unit of measurement for this field (SI or conventional electrochemical units), following astropy's string unit notation.",
+                              "example": "V"
+                            },
+                            "reference": {
+                              "type": "string",
+                              "description": "Reference electrode or reference point for this measurement (electrochemistry-specific).",
+                              "example": "RHE"
+                            },
+                            "orientation": {
+                              "type": "string",
+                              "description": "Axis orientation in plots (horizontal for x-axis, vertical for y-axis).",
+                              "example": "horizontal",
+                              "enum": [
+                                "horizontal",
+                                "vertical"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        }
+                      ]
+                    },
+                    "ScanRate": {
+                      "type": "object",
+                      "title": "scan rate",
+                      "description": "A physical quantity with a value, unit, and optional uncertainty.",
+                      "additionalProperties": false,
+                      "properties": {
+                        "value": {
+                          "$ref": "#/definitions/Value"
+                        },
+                        "uncertainty": {
+                          "$ref": "#/definitions/Uncertainty"
+                        },
+                        "unit": {
+                          "$ref": "#/definitions/Unit"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Additional notes about the measurement or quantity.",
+                          "example": "Measured at room temperature"
+                        },
+                        "calculation": {
+                          "type": "string",
+                          "description": "Method or formula used to calculate this quantity.",
+                          "example": "Obtained by multiplying U and I"
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "system": {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/system.json",
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/System"
+                    }
+                  ],
+                  "definitions": {
+                    "System": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "title": "system",
+                      "description": "Description of the experimental system including electrodes, electrolyte, and environmental conditions.",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "Type of experimental system.",
+                          "example": "electrochemical",
+                          "oneOf": [
+                            {
+                              "const": "electrochemical",
+                              "description": "An electrochemical system consisting of electrodes, an electrolyte, and an electrochemical cell."
+                            }
+                          ]
+                        },
+                        "electrolyte": {
+                          "type": "object",
+                          "title": "Electrolyte",
+                          "description": "The electrolyte solution used in the experiment.",
+                          "additionalProperties": false,
+                          "required": [
+                            "type"
+                          ],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "description": "Type of electrolyte defined by the solvent.",
+                              "example": "aqueous",
+                              "oneOf": [
+                                {
+                                  "const": "aqueous",
+                                  "description": "The solvent is water."
+                                },
+                                {
+                                  "const": "ionic liquid",
+                                  "description": "The solvent is an ionic liquid."
+                                },
+                                {
+                                  "const": "non-aqueous",
+                                  "description": "The solvent is non-aqueous other than an ionic liquid, i.e., an organic compound."
+                                },
+                                {
+                                  "const": "solid",
+                                  "description": "A solid electrolyte."
+                                }
+                              ]
+                            },
+                            "electrolyteContainer": {
+                              "description": "Container used to prepare or store the electrolyte before the measurement.",
+                              "$ref": "#/definitions/ElectrolyteContainer"
+                            },
+                            "components": {
+                              "type": "array",
+                              "description": "Chemical components of the electrolyte including solvents, salts, acids, bases, and gases.",
+                              "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "description": "A chemical component of the electrolyte solution.",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Name or identifier of the chemical component (trivial name, formula, or IUPAC name).",
+                                    "example": "H2SO4"
+                                  },
+                                  "chemicalIdentifiers": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "description": "Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.",
+                                    "properties": {
+                                      "cas": {
+                                        "type": "string",
+                                        "description": "CAS Registry Number (Chemical Abstracts Service identifier).",
+                                        "example": "7664-93-9"
+                                      },
+                                      "inchi": {
+                                        "type": "string",
+                                        "description": "InChI (International Chemical Identifier) string.",
+                                        "example": "InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)"
+                                      },
+                                      "inchikey": {
+                                        "type": "string",
+                                        "description": "InChIKey (hashed InChI for easier searching).",
+                                        "example": "QAOWNCQODCNURD-UHFFFAOYSA-N"
+                                      }
+                                    }
+                                  },
+                                  "concentration": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Concentration of the component in the electrolyte.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "type": {
+                                    "description": "Role or function of the component in the electrolyte.",
+                                    "example": "acid",
+                                    "anyOf": [
+                                      {
+                                        "const": "solvent",
+                                        "description": "The solvent."
+                                      },
+                                      {
+                                        "const": "salt",
+                                        "description": "A salt added the solvent"
+                                      },
+                                      {
+                                        "const": "acid",
+                                        "description": "An acid added to the solvent."
+                                      },
+                                      {
+                                        "const": "base",
+                                        "description": "A base added to the solvent."
+                                      },
+                                      {
+                                        "const": "gas",
+                                        "description": "A gas passed through the solvent."
+                                      },
+                                      {
+                                        "const": "solute",
+                                        "description": "A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water."
+                                      }
+                                    ]
+                                  },
+                                  "source": {
+                                    "description": "Information about the supplier and supplied quality of the chemical.",
+                                    "$ref": "#/definitions/ComponentSource"
+                                  },
+                                  "purity": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "Purity level of the chemical component after the purification process.",
+                                    "properties": {
+                                      "grade": {
+                                        "type": "string",
+                                        "description": "Quality grade designation.",
+                                        "example": "ACS reagent"
+                                      },
+                                      "totalOrganicCarbon": {
+                                        "type": "object",
+                                        "title": "Quantity",
+                                        "description": "Value for the total organic carbon content measurement.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "$ref": "#/definitions/Value"
+                                          },
+                                          "uncertainty": {
+                                            "$ref": "#/definitions/Uncertainty"
+                                          },
+                                          "unit": {
+                                            "$ref": "#/definitions/Unit"
+                                          },
+                                          "comment": {
+                                            "type": "string",
+                                            "description": "Additional notes about the measurement or quantity.",
+                                            "example": "Measured at room temperature"
+                                          },
+                                          "calculation": {
+                                            "type": "string",
+                                            "description": "Method or formula used to calculate this quantity.",
+                                            "example": "Obtained by multiplying U and I"
+                                          }
+                                        }
+                                      },
+                                      "totalIonConductivity": {
+                                        "type": "object",
+                                        "title": "Quantity",
+                                        "description": "Value for the total ionic conductivity measurement.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "$ref": "#/definitions/Value"
+                                          },
+                                          "uncertainty": {
+                                            "$ref": "#/definitions/Uncertainty"
+                                          },
+                                          "unit": {
+                                            "$ref": "#/definitions/Unit"
+                                          },
+                                          "comment": {
+                                            "type": "string",
+                                            "description": "Additional notes about the measurement or quantity.",
+                                            "example": "Measured at room temperature"
+                                          },
+                                          "calculation": {
+                                            "type": "string",
+                                            "description": "Method or formula used to calculate this quantity.",
+                                            "example": "Obtained by multiplying U and I"
+                                          }
+                                        }
+                                      },
+                                      "value": {
+                                        "type": "number",
+                                        "description": "Purity value as a number.",
+                                        "example": 99.9
+                                      },
+                                      "unit": {
+                                        "type": "string",
+                                        "description": "Unit for purity value.",
+                                        "example": "%"
+                                      },
+                                      "container": {
+                                        "type": "string",
+                                        "description": "Name or identifier of the container in which the chemical is stored.",
+                                        "example": "Glass bottle, amber"
+                                      },
+                                      "internalLot": {
+                                        "type": "string",
+                                        "description": "Internal LOT or batch number.",
+                                        "example": "LOT-2024-001"
+                                      },
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^https?://.*$",
+                                        "default": "https://",
+                                        "description": "URL with further details on the purity or container.",
+                                        "example": "https://example.org"
+                                      },
+                                      "refinement": {
+                                        "type": "string",
+                                        "description": "Description of additional purification or treatment performed.",
+                                        "example": "Triple distilled"
+                                      }
+                                    },
+                                    "title": "Purity"
+                                  },
+                                  "partialPressure": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Partial pressure of a gaseous / volatile component.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "proportion": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Proportion of the component (e.g., volume percent, mole fraction).",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "flow": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Flow rate for gaseous components.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "comment": {
+                                    "type": "string",
+                                    "description": "Additional notes or observations about this component.",
+                                    "example": "Freshly prepared solution"
+                                  },
+                                  "pressure": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Pressure for gaseous components.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type"
+                                ],
+                                "title": "Component"
+                              }
+                            },
+                            "ph": {
+                              "type": "object",
+                              "title": "Quantity",
+                              "description": "pH value of the electrolyte solution.",
+                              "additionalProperties": false,
+                              "properties": {
+                                "value": {
+                                  "$ref": "#/definitions/Value"
+                                },
+                                "uncertainty": {
+                                  "$ref": "#/definitions/Uncertainty"
+                                },
+                                "unit": {
+                                  "$ref": "#/definitions/Unit"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "description": "Additional notes about the measurement or quantity.",
+                                  "example": "Measured at room temperature"
+                                },
+                                "calculation": {
+                                  "type": "string",
+                                  "description": "Method or formula used to calculate this quantity.",
+                                  "example": "Obtained by multiplying U and I"
+                                }
+                              }
+                            },
+                            "temperature": {
+                              "type": "object",
+                              "title": "Quantity",
+                              "description": "Temperature of the electrolyte during the experiment.",
+                              "additionalProperties": false,
+                              "properties": {
+                                "value": {
+                                  "$ref": "#/definitions/Value"
+                                },
+                                "uncertainty": {
+                                  "$ref": "#/definitions/Uncertainty"
+                                },
+                                "unit": {
+                                  "$ref": "#/definitions/Unit"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "description": "Additional notes about the measurement or quantity.",
+                                  "example": "Measured at room temperature"
+                                },
+                                "calculation": {
+                                  "type": "string",
+                                  "description": "Method or formula used to calculate this quantity.",
+                                  "example": "Obtained by multiplying U and I"
+                                }
+                              }
+                            },
+                            "comment": {
+                              "type": "string",
+                              "description": "Additional notes or observations about the electrolyte.",
+                              "example": "Electrolyte was not replaced between measurements."
+                            }
+                          }
+                        },
+                        "electrodes": {
+                          "type": "array",
+                          "description": "List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes).",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "title": "Electrode",
+                            "description": "An electrode used in the electrochemical cell, auch as working, reference, counter, or collector electrode.",
+                            "required": [
+                              "name",
+                              "function"
+                            ],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Name or identifier for the electrode.",
+                                "example": "WE1"
+                              },
+                              "function": {
+                                "description": "Role of the electrode in the electrochemical cell.",
+                                "example": "working electrode",
+                                "anyOf": [
+                                  {
+                                    "const": "working electrode",
+                                    "description": "Electrode where the reaction of interest occurs."
+                                  },
+                                  {
+                                    "const": "counter electrode",
+                                    "description": "Electrode that completes the circuit."
+                                  },
+                                  {
+                                    "const": "reference electrode",
+                                    "description": "Electrode providing a stable reference potential."
+                                  },
+                                  {
+                                    "type": "string",
+                                    "description": "Other electrode function not listed above."
+                                  }
+                                ]
+                              },
+                              "redoxSystem": {
+                                "type": "string",
+                                "description": "Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).",
+                                "example": "RHE"
+                              },
+                              "description": {
+                                "type": "string",
+                                "description": "Detailed description of the electrode (especially for custom-made electrodes).",
+                                "example": "Home-made Pt wire electrode, flame-annealed before use"
+                              },
+                              "geometricElectrolyteContactArea": {
+                                "type": "object",
+                                "title": "Quantity",
+                                "description": "Geometric surface area of electrode in contact with electrolyte.",
+                                "additionalProperties": false,
+                                "properties": {
+                                  "value": {
+                                    "$ref": "#/definitions/Value"
+                                  },
+                                  "uncertainty": {
+                                    "$ref": "#/definitions/Uncertainty"
+                                  },
+                                  "unit": {
+                                    "$ref": "#/definitions/Unit"
+                                  },
+                                  "comment": {
+                                    "type": "string",
+                                    "description": "Additional notes about the measurement or quantity.",
+                                    "example": "Measured at room temperature"
+                                  },
+                                  "calculation": {
+                                    "type": "string",
+                                    "description": "Method or formula used to calculate this quantity.",
+                                    "example": "Obtained by multiplying U and I"
+                                  }
+                                }
+                              },
+                              "purity": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "description": "Purity specifications of the electrode material.",
+                                "properties": {
+                                  "grade": {
+                                    "type": "string",
+                                    "description": "Quality grade designation.",
+                                    "example": "ACS reagent"
+                                  },
+                                  "totalOrganicCarbon": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Value for the total organic carbon content measurement.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "totalIonConductivity": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Value for the total ionic conductivity measurement.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "value": {
+                                    "type": "number",
+                                    "description": "Purity value as a number.",
+                                    "example": 99.9
+                                  },
+                                  "unit": {
+                                    "type": "string",
+                                    "description": "Unit for purity value.",
+                                    "example": "%"
+                                  },
+                                  "container": {
+                                    "type": "string",
+                                    "description": "Name or identifier of the container in which the chemical is stored.",
+                                    "example": "Glass bottle, amber"
+                                  },
+                                  "internalLot": {
+                                    "type": "string",
+                                    "description": "Internal LOT or batch number.",
+                                    "example": "LOT-2024-001"
+                                  },
+                                  "url": {
+                                    "type": "string",
+                                    "format": "uri",
+                                    "pattern": "^https?://.*$",
+                                    "default": "https://",
+                                    "description": "URL with further details on the purity or container.",
+                                    "example": "https://example.org"
+                                  },
+                                  "refinement": {
+                                    "type": "string",
+                                    "description": "Description of additional purification or treatment performed.",
+                                    "example": "Triple distilled"
+                                  }
+                                },
+                                "title": "Purity"
+                              },
+                              "preparationProcedure": {
+                                "description": "Procedures used to prepare the electrode before measurement.",
+                                "$ref": "#/definitions/ElectrodePreparation"
+                              },
+                              "shape": {
+                                "description": "Physical shape and dimensions of the electrode.",
+                                "$ref": "#/definitions/Shape"
+                              },
+                              "source": {
+                                "type": "object",
+                                "description": "Source and supplier information for the electrode.",
+                                "$ref": "#/definitions/ElectrodeSource"
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.",
+                                "example": "single crystal"
+                              },
+                              "material": {
+                                "type": "string",
+                                "description": "Chemical symbol or abbreviation of the electrode material.",
+                                "example": "Pt"
+                              },
+                              "crystallographicOrientation": {
+                                "type": "string",
+                                "description": "Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.",
+                                "example": "(1 1 1)"
+                              }
+                            }
+                          }
+                        },
+                        "electrochemicalCell": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "title": "ElectrochemicalCell",
+                          "description": "Description of the electrochemical cell and its configuration.",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "description": "Type of electrochemical cell, such as H-cell, beaker glass, flow cell.",
+                              "example": "H-cell"
+                            },
+                            "components": {
+                              "type": "array",
+                              "description": "Physical components and parts of the cell that are in contact with the electrolyte.",
+                              "items": {
+                                "$ref": "#/definitions/ElectrochemicalCellComponent"
+                              }
+                            },
+                            "cellDescription": {
+                              "type": "string",
+                              "description": "Detailed description of the cell configuration.",
+                              "example": "Three-electrode setup with glass cell and Teflon cap"
+                            },
+                            "cleaningProcedure": {
+                              "type": "string",
+                              "description": "Procedure used to clean the cell before experiments.",
+                              "example": "Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream"
+                            },
+                            "source": {
+                              "description": "Source and supplier information for the cell.",
+                              "$ref": "#/definitions/ElectrochemicalCellSource"
+                            }
+                          }
+                        },
+                        "atmosphere": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "description": "Atmospheric conditions during the experiment.",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "description": "Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ultra high vacuum).",
+                              "example": "inert"
+                            },
+                            "totalOrganicCarbon": {
+                              "type": "object",
+                              "title": "Quantity",
+                              "description": "Total organic carbon content measurement in the atmosphere.",
+                              "additionalProperties": false,
+                              "properties": {
+                                "value": {
+                                  "$ref": "#/definitions/Value"
+                                },
+                                "uncertainty": {
+                                  "$ref": "#/definitions/Uncertainty"
+                                },
+                                "unit": {
+                                  "$ref": "#/definitions/Unit"
+                                },
+                                "comment": {
+                                  "type": "string",
+                                  "description": "Additional notes about the measurement or quantity.",
+                                  "example": "Measured at room temperature"
+                                },
+                                "calculation": {
+                                  "type": "string",
+                                  "description": "Method or formula used to calculate this quantity.",
+                                  "example": "Obtained by multiplying U and I"
+                                }
+                              }
+                            },
+                            "components": {
+                              "type": "array",
+                              "description": "Gas components present in the atmosphere.",
+                              "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "description": "A chemical component of the electrolyte solution.",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Name or identifier of the chemical component (trivial name, formula, or IUPAC name).",
+                                    "example": "H2SO4"
+                                  },
+                                  "chemicalIdentifiers": {
+                                    "type": "object",
+                                    "additionalProperties": true,
+                                    "description": "Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.",
+                                    "properties": {
+                                      "cas": {
+                                        "type": "string",
+                                        "description": "CAS Registry Number (Chemical Abstracts Service identifier).",
+                                        "example": "7664-93-9"
+                                      },
+                                      "inchi": {
+                                        "type": "string",
+                                        "description": "InChI (International Chemical Identifier) string.",
+                                        "example": "InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)"
+                                      },
+                                      "inchikey": {
+                                        "type": "string",
+                                        "description": "InChIKey (hashed InChI for easier searching).",
+                                        "example": "QAOWNCQODCNURD-UHFFFAOYSA-N"
+                                      }
+                                    }
+                                  },
+                                  "concentration": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Concentration of the component in the electrolyte.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "type": {
+                                    "description": "Role or function of the component in the electrolyte.",
+                                    "example": "acid",
+                                    "anyOf": [
+                                      {
+                                        "const": "solvent",
+                                        "description": "The solvent."
+                                      },
+                                      {
+                                        "const": "salt",
+                                        "description": "A salt added the solvent"
+                                      },
+                                      {
+                                        "const": "acid",
+                                        "description": "An acid added to the solvent."
+                                      },
+                                      {
+                                        "const": "base",
+                                        "description": "A base added to the solvent."
+                                      },
+                                      {
+                                        "const": "gas",
+                                        "description": "A gas passed through the solvent."
+                                      },
+                                      {
+                                        "const": "solute",
+                                        "description": "A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water."
+                                      }
+                                    ]
+                                  },
+                                  "source": {
+                                    "description": "Information about the supplier and supplied quality of the chemical.",
+                                    "$ref": "#/definitions/ComponentSource"
+                                  },
+                                  "purity": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "description": "Purity level of the chemical component after the purification process.",
+                                    "properties": {
+                                      "grade": {
+                                        "type": "string",
+                                        "description": "Quality grade designation.",
+                                        "example": "ACS reagent"
+                                      },
+                                      "totalOrganicCarbon": {
+                                        "type": "object",
+                                        "title": "Quantity",
+                                        "description": "Value for the total organic carbon content measurement.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "$ref": "#/definitions/Value"
+                                          },
+                                          "uncertainty": {
+                                            "$ref": "#/definitions/Uncertainty"
+                                          },
+                                          "unit": {
+                                            "$ref": "#/definitions/Unit"
+                                          },
+                                          "comment": {
+                                            "type": "string",
+                                            "description": "Additional notes about the measurement or quantity.",
+                                            "example": "Measured at room temperature"
+                                          },
+                                          "calculation": {
+                                            "type": "string",
+                                            "description": "Method or formula used to calculate this quantity.",
+                                            "example": "Obtained by multiplying U and I"
+                                          }
+                                        }
+                                      },
+                                      "totalIonConductivity": {
+                                        "type": "object",
+                                        "title": "Quantity",
+                                        "description": "Value for the total ionic conductivity measurement.",
+                                        "additionalProperties": false,
+                                        "properties": {
+                                          "value": {
+                                            "$ref": "#/definitions/Value"
+                                          },
+                                          "uncertainty": {
+                                            "$ref": "#/definitions/Uncertainty"
+                                          },
+                                          "unit": {
+                                            "$ref": "#/definitions/Unit"
+                                          },
+                                          "comment": {
+                                            "type": "string",
+                                            "description": "Additional notes about the measurement or quantity.",
+                                            "example": "Measured at room temperature"
+                                          },
+                                          "calculation": {
+                                            "type": "string",
+                                            "description": "Method or formula used to calculate this quantity.",
+                                            "example": "Obtained by multiplying U and I"
+                                          }
+                                        }
+                                      },
+                                      "value": {
+                                        "type": "number",
+                                        "description": "Purity value as a number.",
+                                        "example": 99.9
+                                      },
+                                      "unit": {
+                                        "type": "string",
+                                        "description": "Unit for purity value.",
+                                        "example": "%"
+                                      },
+                                      "container": {
+                                        "type": "string",
+                                        "description": "Name or identifier of the container in which the chemical is stored.",
+                                        "example": "Glass bottle, amber"
+                                      },
+                                      "internalLot": {
+                                        "type": "string",
+                                        "description": "Internal LOT or batch number.",
+                                        "example": "LOT-2024-001"
+                                      },
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^https?://.*$",
+                                        "default": "https://",
+                                        "description": "URL with further details on the purity or container.",
+                                        "example": "https://example.org"
+                                      },
+                                      "refinement": {
+                                        "type": "string",
+                                        "description": "Description of additional purification or treatment performed.",
+                                        "example": "Triple distilled"
+                                      }
+                                    },
+                                    "title": "Purity"
+                                  },
+                                  "partialPressure": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Partial pressure of a gaseous / volatile component.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "proportion": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Proportion of the component (e.g., volume percent, mole fraction).",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "flow": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Flow rate for gaseous components.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  },
+                                  "comment": {
+                                    "type": "string",
+                                    "description": "Additional notes or observations about this component.",
+                                    "example": "Freshly prepared solution"
+                                  },
+                                  "pressure": {
+                                    "type": "object",
+                                    "title": "Quantity",
+                                    "description": "Pressure for gaseous components.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                      "value": {
+                                        "$ref": "#/definitions/Value"
+                                      },
+                                      "uncertainty": {
+                                        "$ref": "#/definitions/Uncertainty"
+                                      },
+                                      "unit": {
+                                        "$ref": "#/definitions/Unit"
+                                      },
+                                      "comment": {
+                                        "type": "string",
+                                        "description": "Additional notes about the measurement or quantity.",
+                                        "example": "Measured at room temperature"
+                                      },
+                                      "calculation": {
+                                        "type": "string",
+                                        "description": "Method or formula used to calculate this quantity.",
+                                        "example": "Obtained by multiplying U and I"
+                                      }
+                                    }
+                                  }
+                                },
+                                "required": [
+                                  "name",
+                                  "type"
+                                ],
+                                "title": "Component"
+                              }
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri",
+                              "pattern": "^https?://.*$",
+                              "default": "https://",
+                              "description": "URL with further details on the atmospheric setup or control system.",
+                              "example": "https://example.org"
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Detailed description of the atmospheric conditions.",
+                              "example": "Argon purged for 30 minutes before measurement"
+                            },
+                            "comment": {
+                              "type": "string",
+                              "description": "Additional notes about the atmosphere.",
+                              "example": "Slight overpressure maintained throughout experiment"
+                            }
+                          },
+                          "title": "Atmosphere"
+                        }
+                      },
+                      "required": [
+                        "electrodes",
+                        "electrolyte",
+                        "type"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "source": {
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/source.json",
+                  "allOf": [
+                    {
+                      "$ref": "#/definitions/Source"
+                    }
+                  ],
+                  "definitions": {
+                    "Source": {
+                      "type": "object",
+                      "title": "Source",
+                      "additionalProperties": false,
+                      "description": "Information about the source publication or dataset.",
+                      "required": [
+                        "citationKey",
+                        "url"
+                      ],
+                      "properties": {
+                        "citationKey": {
+                          "type": "string",
+                          "description": "Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.",
+                          "example": "electrobear_2024_electrochemistry_563"
+                        },
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https?://.*$",
+                          "default": "https://",
+                          "description": "DOI (URL) to the publication or dataset.",
+                          "example": "https://example.org"
+                        },
+                        "techniques": {
+                          "type": "array",
+                          "description": "Experimental techniques used in the study.",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "figure": {
+                          "type": "string",
+                          "description": "Figure number or identifier from the source including subfigure label.",
+                          "example": "Figure 2a"
+                        },
+                        "originalFilename": {
+                          "type": "string",
+                          "description": "Original filename of the data file.",
+                          "example": "2023-04-24_cv_data_001.csv"
+                        },
+                        "bibdata": {
+                          "type": "string",
+                          "description": "BibTeX bibliographic data.",
+                          "example": "@article{electrobear_2024_electrochemistry_563, title={...}, ...}"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "Additional notes about the source.",
+                          "example": "The data in the figures of this work are blurry."
+                        },
+                        "curve": {
+                          "type": "string",
+                          "description": "Specific curve or trace identifier within a figure.",
+                          "example": "blue"
+                        }
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "Autotag": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "Autotag",
+      "description": "Complete metadata schema for auto-generated echemdb YAML, combining all metadata sections into a single comprehensive structure.",
+      "properties": {
+        "curation": {
+          "$ref": "curation.json#/definitions/Curation"
+        },
+        "echemdbLoader": {
+          "type": "string",
+          "description": "Loader or importer used to process the data into echemdb format.",
+          "example": "baseloader"
+        },
+        "eln": {
+          "$ref": "eln.json#/definitions/Eln"
+        },
+        "experimental": {
+          "$ref": "experimental.json#/definitions/Experimental"
+        },
+        "figureDescription": {
+          "$ref": "figure_description.json#/definitions/FigureDescription"
+        },
+        "project": {
+          "$ref": "projects.json#/definitions/Projects"
+        },
+        "system": {
+          "$ref": "system.json#/definitions/System"
+        }
+      },
+      "required": [
+        "curation",
+        "eln",
+        "experimental",
+        "figureDescription",
+        "system"
+      ]
+    },
+    "Curation": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "curation",
+      "description": "Details on the curation process of the data.",
+      "required": [
+        "process"
+      ],
+      "properties": {
+        "process": {
+          "type": "array",
+          "description": "List of people involved in creating, recording, or curating this data.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/Process"
+          }
+        }
+      }
+    },
+    "Process": {
+      "type": "object",
+      "required": [
+        "role",
+        "name",
+        "orcid"
+      ],
+      "properties": {
+        "role": {
+          "type": "string",
+          "oneOf": [
+            {
+              "const": "experimentalist",
+              "description": "A person that recorded the (meta)data."
+            },
+            {
+              "const": "curator",
+              "description": "A person that created a (meta)dataset from literature data."
+            },
+            {
+              "const": "reviewer",
+              "description": "A person that verified the (meta)data (usually literature data)."
+            },
+            {
+              "const": "supervisor",
+              "description": "A person that supervised the experimentalist."
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the person.",
+          "example": "Jane Doe"
+        },
+        "orcid": {
+          "description": "An URL containing the ORCID.",
+          "$ref": "./general/url.json#/definitions/Url"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).",
+          "example": "2024-01-15"
+        }
+      }
+    },
+    "Eln": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "eln",
+      "description": "Electronic lab notebook (ELN) reference for the experiment.",
+      "properties": {
+        "url": {
+          "description": "URL to the electronic lab notebook entry.",
+          "$ref": "./general/url.json#/definitions/Url"
+        }
+      },
+      "required": [
+        "url"
+      ]
+    },
+    "Experimental": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "experimental",
+      "description": "Details about the configuration of the experimental set up.",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "description": "Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "description": "URL to related documentation, publication (DOI), or ELN entry.",
+          "$ref": "./general/url.json#/definitions/Url"
+        },
+        "instrumentation": {
+          "type": "array",
+          "description": "Instruments and equipment used in the experiment.",
+          "items": {
+            "$ref": "./experimental/instrumentation.json#/definitions/Instrumentation"
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the experimental setup and conditions.",
+          "example": "Cyclic voltammetry performed at room temperature with 50 mV/s scan rate"
+        }
+      }
+    },
+    "FigureDescription": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "figureDescription",
+      "description": "Description of the data to a figure or plot including data type and measurement details.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Source or origin of the data.",
+          "example": "raw",
+          "anyOf": [
+            {
+              "const": "digitized",
+              "description": "Data extracted from a figure using software (e.g., svgdigitizer)."
+            },
+            {
+              "const": "raw",
+              "description": "Original data as recorded by the instrument."
+            },
+            {
+              "const": "simulated",
+              "description": "Data generated by simulation software."
+            },
+            {
+              "const": "processed",
+              "description": "Data generated by processing raw or simulated data."
+            }
+          ]
+        },
+        "measurementType": {
+          "type": "string",
+          "description": "Acronym type for the measurement performed, such as CV; EIS, XPS, etc.",
+          "example": "CV"
+        },
+        "simultaneousMeasurements": {
+          "type": "array",
+          "description": "Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes about the figure or data.",
+          "example": "Data below 0 V was cut off by the x-axis."
+        },
+        "fields": {
+          "type": "array",
+          "description": "Description of data fields/columns in the figure.",
+          "items": {
+            "$ref": "#/definitions/Field"
+          }
+        },
+        "scanRate": {
+          "description": "Scan rate used in the measurement.",
+          "$ref": "#/definitions/ScanRate"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "Field": {
+      "title": "Field",
+      "description": "Description of a data field (column) following frictionless table-schema with echemdb-specific extensions for physical quantities.",
+      "allOf": [
+        {
+          "$ref": "https://specs.frictionlessdata.io/schemas/table-schema.json#/definitions/field"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.",
+              "example": "E_WE"
+            },
+            "dimension": {
+              "type": "string",
+              "description": "Physical dimension of the field (e.g., 'time', 'potential', 'current density').",
+              "example": "potential"
+            },
+            "description": {
+              "type": "string",
+              "description": "A description of that field.",
+              "example": "The potential measured between the working electrode and reference electrode."
+            },
+            "unit": {
+              "type": "string",
+              "description": "Unit of measurement for this field (SI or conventional electrochemical units), following astropy's string unit notation.",
+              "example": "V"
+            },
+            "reference": {
+              "type": "string",
+              "description": "Reference electrode or reference point for this measurement (electrochemistry-specific).",
+              "example": "RHE"
+            },
+            "orientation": {
+              "type": "string",
+              "description": "Axis orientation in plots (horizontal for x-axis, vertical for y-axis).",
+              "example": "horizontal",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      ]
+    },
+    "ScanRate": {
+      "$ref": "./general/quantity.json#/definitions/Quantity",
+      "title": "scan rate"
+    },
+    "MinimumEchemdb": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "curation": {
+          "$ref": "curation.json#/definitions/Curation"
+        },
+        "system": {
+          "$ref": "system.json#/definitions/System"
+        },
+        "dataDescription": {
+          "$ref": "figure_description.json#/definitions/FigureDescription"
+        },
+        "source": {
+          "$ref": "source.json#/definitions/Source"
+        }
+      },
+      "required": [
+        "curation",
+        "system"
+      ],
+      "title": "MinimumEchemdb",
+      "description": "Minimum set of metadata to describe an electrochemical system for echemdb."
+    },
+    "Projects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Project"
+      }
+    },
+    "Project": {
+      "title": "projects",
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Information about a research project or funding source.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Short name or identifier of the project.",
+          "example": "ERC-2024-STG"
+        },
+        "title": {
+          "type": "string",
+          "description": "Full title of the project.",
+          "example": "Understanding Electrocatalysis at the Molecular Level"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type or category of project.",
+          "example": "ERC Starting Grant"
+        },
+        "url": {
+          "description": "URL to project website or information page.",
+          "$ref": "./general/url.json#/definitions/Url"
+        },
+        "grantNumber": {
+          "type": "string",
+          "description": "Official grant or project number.",
+          "example": "123456"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "Source": {
+      "type": "object",
+      "title": "Source",
+      "additionalProperties": false,
+      "description": "Information about the source publication or dataset.",
+      "required": [
+        "citationKey",
+        "url"
+      ],
+      "properties": {
+        "citationKey": {
+          "type": "string",
+          "description": "Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.",
+          "example": "electrobear_2024_electrochemistry_563"
+        },
+        "url": {
+          "description": "DOI (URL) to the publication or dataset.",
+          "$ref": "./general/url.json#/definitions/Url"
+        },
+        "techniques": {
+          "type": "array",
+          "description": "Experimental techniques used in the study.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "figure": {
+          "type": "string",
+          "description": "Figure number or identifier from the source including subfigure label.",
+          "example": "Figure 2a"
+        },
+        "originalFilename": {
+          "type": "string",
+          "description": "Original filename of the data file.",
+          "example": "2023-04-24_cv_data_001.csv"
+        },
+        "bibdata": {
+          "type": "string",
+          "description": "BibTeX bibliographic data.",
+          "example": "@article{electrobear_2024_electrochemistry_563, title={...}, ...}"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes about the source.",
+          "example": "The data in the figures of this work are blurry."
+        },
+        "curve": {
+          "type": "string",
+          "description": "Specific curve or trace identifier within a figure.",
+          "example": "blue"
+        }
+      }
+    },
+    "Svgdigitizer": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "Svgdigitizer",
+      "description": "Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.",
+      "properties": {
+        "curation": {
+          "$ref": "curation.json#/definitions/Curation"
+        },
+        "eln": {
+          "$ref": "eln.json#/definitions/Eln"
+        },
+        "experimental": {
+          "$ref": "experimental.json#/definitions/Experimental"
+        },
+        "figureDescription": {
+          "$ref": "figure_description.json#/definitions/FigureDescription"
+        },
+        "project": {
+          "$ref": "projects.json#/definitions/Projects"
+        },
+        "source": {
+          "$ref": "source.json#/definitions/Source"
+        },
+        "system": {
+          "$ref": "system.json#/definitions/System"
+        }
+      },
+      "required": [
+        "curation",
+        "source",
+        "system"
+      ]
+    },
+    "svgdigitizer_resource": {
+      "type": "object",
+      "description": "A resource created by svgdigitizer with minimal echemdb metadata.",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "description": "Metadata container for the digitized resource.",
+          "required": [
+            "echemdb"
+          ],
+          "properties": {
+            "echemdb": {
+              "type": "object",
+              "description": "Simplified echemdb metadata for digitized data.",
+              "required": [
+                "figureDescription"
+              ],
+              "properties": {
+                "experimental": {
+                  "type": "object",
+                  "description": "Experimental tags or keywords.",
+                  "properties": {
+                    "tags": {
+                      "type": "array",
+                      "description": "List of tags describing the experiment or measurement.",
+                      "example": [
+                        "CV",
+                        "ORR",
+                        "alkaline"
+                      ],
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "figureDescription": {
+                    "type": "object",
+                    "$ref": "figure_description.json#/definitions/FigureDescription"
+                  },
+                  "source": {
+                    "type": "object",
+                    "description": "Source publication information for digitized data.",
+                    "properties": {
+                      "figure": {
+                        "type": "string",
+                        "description": "Figure identifier in the source publication.",
+                        "example": "2a"
+                      },
+                      "curve": {
+                        "type": "string",
+                        "description": "Specific curve identifier within the figure.",
+                        "example": "blue"
+                      },
+                      "citationKey": {
+                        "type": "string",
+                        "description": "BibTeX citation key for the source following `<FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>` format.",
+                        "example": "doe_2024_electrochemistry_543"
+                      },
+                      "url": {
+                        "description": "URL or DOI of the source publication.",
+                        "$ref": "./general/url.json#/definitions/Url"
+                      },
+                      "techniques": {
+                        "type": "array",
+                        "description": "Techniques used in the source data.",
+                        "example": [
+                          "CV",
+                          "EIS",
+                          "XPS"
+                        ],
+                        "contains": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "System": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "system",
+      "description": "Description of the experimental system including electrodes, electrolyte, and environmental conditions.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of experimental system.",
+          "example": "electrochemical",
+          "oneOf": [
+            {
+              "const": "electrochemical",
+              "description": "An electrochemical system consisting of electrodes, an electrolyte, and an electrochemical cell."
+            }
+          ]
+        },
+        "electrolyte": {
+          "description": "The electrolyte solution used in the experiment.",
+          "$ref": "./system/electrolyte.json#/definitions/Electrolyte"
+        },
+        "electrodes": {
+          "type": "array",
+          "description": "List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes).",
+          "items": {
+            "$ref": "./system/electrode.json#/definitions/Electrode"
+          }
+        },
+        "electrochemicalCell": {
+          "description": "Description of the electrochemical cell and its configuration.",
+          "$ref": "./system/electrochemical_cell.json#/definitions/ElectrochemicalCell"
+        },
+        "atmosphere": {
+          "description": "Atmospheric conditions during the experiment.",
+          "$ref": "./system/atmosphere.json#/definitions/Atmosphere"
+        }
+      },
+      "required": [
+        "electrodes",
+        "electrolyte",
+        "type"
+      ]
+    },
+    "Instrumentation": {
+      "description": "The instruments used to perform the experiment.",
+      "title": "instrumentation",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type or category of instrument.",
+          "example": "potentiostat"
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Manufacturer of the instrument.",
+          "example": "Awesome Supplier Inc."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name or identifier of the instrument.",
+          "example": "Poti05"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model number or designation.",
+          "example": "P302NX5"
+        },
+        "supplier": {
+          "type": "string",
+          "description": "Supplier of the instrument.",
+          "example": "Awesome Supplier Inc."
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "ChemicalIdentifiers": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Standard chemical identifiers for unambiguous identification of compounds.",
+      "properties": {
+        "cas": {
+          "type": "string",
+          "description": "CAS Registry Number (Chemical Abstracts Service identifier).",
+          "example": "7664-93-9"
+        },
+        "inchi": {
+          "type": "string",
+          "description": "InChI (International Chemical Identifier) string.",
+          "example": "InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)"
+        },
+        "inchikey": {
+          "type": "string",
+          "description": "InChIKey (hashed InChI for easier searching).",
+          "example": "QAOWNCQODCNURD-UHFFFAOYSA-N"
+        }
+      }
+    },
+    "Component": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A chemical component of the electrolyte solution.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name or identifier of the chemical component (trivial name, formula, or IUPAC name).",
+          "example": "H2SO4"
+        },
+        "chemicalIdentifiers": {
+          "description": "Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.",
+          "$ref": "../general/chemical_identifiers.json#/definitions/ChemicalIdentifiers"
+        },
+        "concentration": {
+          "description": "Concentration of the component in the electrolyte.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "type": {
+          "description": "Role or function of the component in the electrolyte.",
+          "example": "acid",
+          "anyOf": [
+            {
+              "const": "solvent",
+              "description": "The solvent."
+            },
+            {
+              "const": "salt",
+              "description": "A salt added the solvent"
+            },
+            {
+              "const": "acid",
+              "description": "An acid added to the solvent."
+            },
+            {
+              "const": "base",
+              "description": "A base added to the solvent."
+            },
+            {
+              "const": "gas",
+              "description": "A gas passed through the solvent."
+            },
+            {
+              "const": "solute",
+              "description": "A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water."
+            }
+          ]
+        },
+        "source": {
+          "description": "Information about the supplier and supplied quality of the chemical.",
+          "$ref": "#/definitions/ComponentSource"
+        },
+        "purity": {
+          "description": "Purity level of the chemical component after the purification process.",
+          "$ref": "../general/purity.json#/definitions/Purity"
+        },
+        "partialPressure": {
+          "description": "Partial pressure of a gaseous / volatile component.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "proportion": {
+          "description": "Proportion of the component (e.g., volume percent, mole fraction).",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "flow": {
+          "description": "Flow rate for gaseous components.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes or observations about this component.",
+          "example": "Freshly prepared solution"
+        },
+        "pressure": {
+          "description": "Pressure for gaseous components.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "title": "Component"
+    },
+    "ComponentSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Information about the source and quality of the chemical component.",
+      "properties": {
+        "supplier": {
+          "type": "string",
+          "description": "Name of the company that supplied the chemical.",
+          "example": "Your Chemical Supplier Inc."
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "Name of the company or organization that manufactured the chemical.",
+          "example": "Organic Chemistry II - Bar Group"
+        },
+        "LOT": {
+          "type": "string",
+          "description": "LOT or batch number provided by the manufacturer or supplier for traceability.",
+          "example": "LOT12345"
+        },
+        "purity": {
+          "description": "Stated purity level from the supplier or manufacturer.",
+          "$ref": "../general/purity.json#/definitions/Purity"
+        },
+        "refinement": {
+          "type": "string",
+          "description": "Any additional purification or treatment performed.",
+          "example": "Recrystallized from ethanol"
+        },
+        "quality": {
+          "type": "string",
+          "description": "Quality grade of the chemical.",
+          "example": "ACS reagent grade"
+        }
+      },
+      "title": "ComponentSource"
+    },
+    "Purity": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Purity specifications of a chemical component.",
+      "properties": {
+        "grade": {
+          "type": "string",
+          "description": "Quality grade designation.",
+          "example": "ACS reagent"
+        },
+        "totalOrganicCarbon": {
+          "description": "Value for the total organic carbon content measurement.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "totalIonConductivity": {
+          "description": "Value for the total ionic conductivity measurement.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "value": {
+          "type": "number",
+          "description": "Purity value as a number.",
+          "example": 99.9
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit for purity value.",
+          "example": "%"
+        },
+        "container": {
+          "type": "string",
+          "description": "Name or identifier of the container in which the chemical is stored.",
+          "example": "Glass bottle, amber"
+        },
+        "internalLot": {
+          "type": "string",
+          "description": "Internal LOT or batch number.",
+          "example": "LOT-2024-001"
+        },
+        "url": {
+          "description": "URL with further details on the purity or container.",
+          "$ref": "../general/url.json#/definitions/Url"
+        },
+        "refinement": {
+          "type": "string",
+          "description": "Description of additional purification or treatment performed.",
+          "example": "Triple distilled"
+        }
+      },
+      "title": "Purity"
+    },
+    "Quantity": {
+      "type": "object",
+      "title": "Quantity",
+      "description": "A physical quantity with a value, unit, and optional uncertainty.",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/Value"
+        },
+        "uncertainty": {
+          "$ref": "#/definitions/Uncertainty"
+        },
+        "unit": {
+          "$ref": "#/definitions/Unit"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes about the measurement or quantity.",
+          "example": "Measured at room temperature"
+        },
+        "calculation": {
+          "type": "string",
+          "description": "Method or formula used to calculate this quantity.",
+          "example": "Obtained by multiplying U and I"
+        }
+      }
+    },
+    "Unit": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Unit",
+      "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').",
+      "example": "mol / l"
+    },
+    "Uncertainty": {
+      "type": "object",
+      "title": "Uncertainty",
+      "description": "Uncertainty information for a measured quantity.",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "Symmetric uncertainty value (\u00b1).",
+          "example": 0.01
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of the uncertainty value.",
+          "example": "mol / l"
+        },
+        "positiveValue": {
+          "type": "number",
+          "description": "Upper bound (+) for asymmetric uncertainties.",
+          "example": 0.02
+        },
+        "negativeValue": {
+          "type": "number",
+          "description": "Lower bound (-) for asymmetric uncertainties.",
+          "example": 0.01
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional information about the uncertainty estimation.",
+          "example": "Standard deviation from 3 replicate measurements"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of uncertainty (absolute or relative).",
+          "example": "absolute",
+          "enum": [
+            "absolute",
+            "relative"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "Value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "Value",
+      "description": "Numerical value (can be a number, string, or null).",
+      "example": 0.5
+    },
+    "Url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://.*$",
+      "default": "https://",
+      "description": "A valid HTTP or HTTPS URL, including DOIs.",
+      "example": "https://example.org"
+    },
+    "Atmosphere": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Atmospheric conditions and gas composition during the experiment.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ultra high vacuum).",
+          "example": "inert"
+        },
+        "totalOrganicCarbon": {
+          "description": "Total organic carbon content measurement in the atmosphere.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "components": {
+          "type": "array",
+          "description": "Gas components present in the atmosphere.",
+          "items": {
+            "$ref": "../general/component.json#/definitions/Component"
+          }
+        },
+        "url": {
+          "description": "URL with further details on the atmospheric setup or control system.",
+          "$ref": "../general/url.json#/definitions/Url"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the atmospheric conditions.",
+          "example": "Argon purged for 30 minutes before measurement"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes about the atmosphere.",
+          "example": "Slight overpressure maintained throughout experiment"
+        }
+      },
+      "title": "Atmosphere"
+    },
+    "ElectrochemicalCell": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "ElectrochemicalCell",
+      "description": "Description of the electrochemical cell setup and configuration.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of electrochemical cell, such as H-cell, beaker glass, flow cell.",
+          "example": "H-cell"
+        },
+        "components": {
+          "type": "array",
+          "description": "Physical components and parts of the cell that are in contact with the electrolyte.",
+          "items": {
+            "$ref": "#/definitions/ElectrochemicalCellComponent"
+          }
+        },
+        "cellDescription": {
+          "type": "string",
+          "description": "Detailed description of the cell configuration.",
+          "example": "Three-electrode setup with glass cell and Teflon cap"
+        },
+        "cleaningProcedure": {
+          "type": "string",
+          "description": "Procedure used to clean the cell before experiments.",
+          "example": "Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream"
+        },
+        "source": {
+          "description": "Source and supplier information for the cell.",
+          "$ref": "#/definitions/ElectrochemicalCellSource"
+        }
+      }
+    },
+    "ElectrochemicalCellComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A component or part of the electrochemical cell.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name or identifier of the component.",
+          "example": "Cell body"
+        },
+        "part": {
+          "type": "string",
+          "description": "Part number or designation.",
+          "example": "EC-CELL-100"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the component.",
+          "example": "Borosilicate glass cell with multiple ports"
+        }
+      },
+      "required": [
+        "name",
+        "part"
+      ],
+      "title": "ElectrochemicalCellComponent"
+    },
+    "ElectrochemicalCellSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Source information for the electrochemical cell.",
+      "properties": {
+        "url": {
+          "description": "URL to product page or technical documentation.",
+          "$ref": "../general/url.json#/definitions/Url"
+        }
+      },
+      "title": "ElectrochemicalCellSource"
+    },
+    "Electrode": {
+      "type": "object",
+      "additionalProperties": false,
+      "title": "Electrode",
+      "description": "An electrode used in the electrochemical cell, auch as working, reference, counter, or collector electrode.",
+      "required": [
+        "name",
+        "function"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name or identifier for the electrode.",
+          "example": "WE1"
+        },
+        "function": {
+          "description": "Role of the electrode in the electrochemical cell.",
+          "example": "working electrode",
+          "anyOf": [
+            {
+              "const": "working electrode",
+              "description": "Electrode where the reaction of interest occurs."
+            },
+            {
+              "const": "counter electrode",
+              "description": "Electrode that completes the circuit."
+            },
+            {
+              "const": "reference electrode",
+              "description": "Electrode providing a stable reference potential."
+            },
+            {
+              "type": "string",
+              "description": "Other electrode function not listed above."
+            }
+          ]
+        },
+        "redoxSystem": {
+          "type": "string",
+          "description": "Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).",
+          "example": "RHE"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the electrode (especially for custom-made electrodes).",
+          "example": "Home-made Pt wire electrode, flame-annealed before use"
+        },
+        "geometricElectrolyteContactArea": {
+          "description": "Geometric surface area of electrode in contact with electrolyte.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "purity": {
+          "description": "Purity specifications of the electrode material.",
+          "$ref": "../general/purity.json#/definitions/Purity"
+        },
+        "preparationProcedure": {
+          "description": "Procedures used to prepare the electrode before measurement.",
+          "$ref": "#/definitions/ElectrodePreparation"
+        },
+        "shape": {
+          "description": "Physical shape and dimensions of the electrode.",
+          "$ref": "#/definitions/Shape"
+        },
+        "source": {
+          "type": "object",
+          "description": "Source and supplier information for the electrode.",
+          "$ref": "#/definitions/ElectrodeSource"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.",
+          "example": "single crystal"
+        },
+        "material": {
+          "type": "string",
+          "description": "Chemical symbol or abbreviation of the electrode material.",
+          "example": "Pt"
+        },
+        "crystallographicOrientation": {
+          "type": "string",
+          "description": "Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.",
+          "example": "(1 1 1)"
+        }
+      }
+    },
+    "ElectrodeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Information about the source and supplier of the electrode.",
+      "properties": {
+        "manufacturer": {
+          "type": "string",
+          "description": "Name of the electrode manufacturer.",
+          "example": "Your Favorite Crystals GmbH"
+        },
+        "LOT": {
+          "type": "string",
+          "description": "LOT or batch number.",
+          "example": "LOT-2024-PT111"
+        },
+        "purity": {
+          "description": "Purity specifications from the manufacturer or supplier.",
+          "$ref": "../general/purity.json#/definitions/Purity"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model number or designation.",
+          "example": "PT111-10"
+        },
+        "url": {
+          "description": "URL to product specification or datasheet.",
+          "$ref": "../general/url.json#/definitions/Url"
+        },
+        "supplier": {
+          "type": "string",
+          "description": "Name of the supplier.",
+          "example": "Chemicals & More Inc."
+        }
+      },
+      "title": "ElectrodeSource"
+    },
+    "Shape": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Physical dimensions and shape of the electrode.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type or shape of electrode.",
+          "example": "disc"
+        },
+        "height": {
+          "description": "Height of the electrode.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "diameter": {
+          "description": "Diameter of the electrode (for cylindrical shapes).",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "length": {
+          "description": "Length of the electrode.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the electrode shape.",
+          "example": "Hemispherical tip"
+        }
+      },
+      "title": "Shape"
+    },
+    "ElectrodePreparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Procedures and methods used to prepare the electrode.",
+      "properties": {
+        "url": {
+          "description": "URL to detailed preparation protocol or procedure, such as an article DOI.",
+          "$ref": "../general/url.json#/definitions/Url"
+        },
+        "description": {
+          "type": "array",
+          "description": "Step-by-step description of preparation procedure.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Electrolyte": {
+      "type": "object",
+      "title": "Electrolyte",
+      "description": "The properties and components of the electrolyte solution.",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Type of electrolyte defined by the solvent.",
+          "example": "aqueous",
+          "oneOf": [
+            {
+              "const": "aqueous",
+              "description": "The solvent is water."
+            },
+            {
+              "const": "ionic liquid",
+              "description": "The solvent is an ionic liquid."
+            },
+            {
+              "const": "non-aqueous",
+              "description": "The solvent is non-aqueous other than an ionic liquid, i.e., an organic compound."
+            },
+            {
+              "const": "solid",
+              "description": "A solid electrolyte."
+            }
+          ]
+        },
+        "electrolyteContainer": {
+          "description": "Container used to prepare or store the electrolyte before the measurement.",
+          "$ref": "#/definitions/ElectrolyteContainer"
+        },
+        "components": {
+          "type": "array",
+          "description": "Chemical components of the electrolyte including solvents, salts, acids, bases, and gases.",
+          "items": {
+            "$ref": "../general/component.json#/definitions/Component"
+          }
+        },
+        "ph": {
+          "description": "pH value of the electrolyte solution.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "temperature": {
+          "description": "Temperature of the electrolyte during the experiment.",
+          "$ref": "../general/quantity.json#/definitions/Quantity"
+        },
+        "comment": {
+          "type": "string",
+          "description": "Additional notes or observations about the electrolyte.",
+          "example": "Electrolyte was not replaced between measurements."
+        }
+      }
+    },
+    "ElectrolyteContainer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "The vessel in which the supplying electrolyte as prepared or stored before the measurement."
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ElectrolyteContainerComponent"
+          }
+        }
+      },
+      "title": "ElectrolyteContainer"
+    },
+    "ElectrolyteContainerComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "A unique identifier."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of the container, i.e., a flask."
+        },
+        "comment": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

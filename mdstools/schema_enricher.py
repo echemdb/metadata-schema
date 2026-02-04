@@ -49,25 +49,40 @@ class SchemaEnricher:
         self._load_schemas()
 
     def _load_schemas(self):
-        """Load all JSON schema files, preferring resolved versions."""
+        """Load all JSON schema files from both root (resolved) and schema_pieces (modular)."""
         if not self.schema_dir.exists():
             raise ValueError(f"Schema directory not found: {self.schema_dir}")
 
-        # First try to load resolved schemas
-        resolved_dir = self.schema_dir / "resolved"
-        if resolved_dir.exists():
-            for schema_file in resolved_dir.glob("*_resolved.json"):
+        # Load from schema_pieces for modular access (system.json, curation.json, etc.)
+        schema_pieces = self.schema_dir / "schema_pieces"
+        if schema_pieces.exists():
+            for schema_file in schema_pieces.rglob("*.json"):
                 with open(schema_file, 'r', encoding='utf-8') as f:
-                    # Strip "_resolved" from the name
-                    schema_name = schema_file.stem.replace("_resolved", "")
-                    self.schema_cache[schema_name] = json.load(f)
+                    schema_name = schema_file.stem
+                    # Only load if not already loaded (don't override)
+                    if schema_name not in self.schema_cache:
+                        self.schema_cache[schema_name] = json.load(f)
 
-        # Then load any non-resolved schemas that weren't already loaded
+        # Also load resolved schemas from root for fallback
         for schema_file in self.schema_dir.glob("*.json"):
             with open(schema_file, 'r', encoding='utf-8') as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
                     self.schema_cache[schema_name] = json.load(f)
+
+                    # For combined schemas like autotag/svgdigitizer, also register their sub-definitions
+                    # This allows lookup by top-level keys like "system", "curation", etc.
+                    schema_data = self.schema_cache[schema_name]
+                    if "definitions" in schema_data:
+                        for def_name, def_value in schema_data["definitions"].items():
+                            # Register definitions by their lowercase name for lookup
+                            lowercase_name = def_name.lower()
+                            if lowercase_name not in self.schema_cache:
+                                # Create a minimal schema structure for this definition
+                                self.schema_cache[lowercase_name] = {
+                                    "definitions": {def_name: def_value},
+                                    "$schema": schema_data.get("$schema", "http://json-schema.org/draft-07/schema#")
+                                }
 
     def _resolve_ref(self, ref: str, current_schema: Dict) -> Optional[Dict]:
         """
