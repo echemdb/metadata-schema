@@ -7,26 +7,33 @@
             "type": "object",
             "additionalProperties": false,
             "title": "system",
+            "description": "Description of the experimental system including electrodes, electrolyte, and environmental conditions.",
             "properties": {
                 "type": {
                     "type": "string",
+                    "description": "Type of experimental system.",
+                    "example": "electrochemical",
                     "oneOf": [
-                        {"const": "electrochemical", "description": "An electrochemicalSystem"}
+                        {"const": "electrochemical", "description": "An electrochemical system consisting of electrodes, an electrolyte, and an electrochemical cell."}
                     ]
                 },
                 "electrolyte": {
+                    "description": "The electrolyte solution used in the experiment.",
                     "$ref": "./system/electrolyte.json#/definitions/Electrolyte"
                 },
                 "electrodes": {
                     "type": "array",
+                    "description": "List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes).",
                     "items": {
                         "$ref": "./system/electrode.json#/definitions/Electrode"
                     }
                 },
                 "electrochemicalCell": {
+                    "description": "Description of the electrochemical cell and its configuration.",
                     "$ref": "./system/electrochemical_cell.json#/definitions/ElectrochemicalCell"
                 },
                 "atmosphere": {
+                    "description": "Atmospheric conditions during the experiment.",
                     "$ref": "./system/atmosphere.json#/definitions/Atmosphere"
                 }
             },

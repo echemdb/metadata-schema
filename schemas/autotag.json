@@ -6,12 +6,16 @@
         "Autotag": {
             "type": "object",
             "additionalProperties": true,
+            "title": "Autotag",
+            "description": "Complete metadata schema for auto-generated echemdb YAML, combining all metadata sections into a single comprehensive structure.",
             "properties": {
                 "curation": {
                     "$ref": "curation.json#/definitions/Curation"
                 },
                 "echemdbLoader": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Loader or importer used to process the data into echemdb format.",
+                    "example": "baseloader"
                 },
                 "eln": {
                     "$ref": "eln.json#/definitions/Eln"
@@ -35,8 +39,7 @@
                 "experimental",
                 "figureDescription",
                 "system"
-            ],
-            "title": "Autotag"
+            ]
         }
     }
 }

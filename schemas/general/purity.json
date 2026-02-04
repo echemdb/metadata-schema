@@ -6,35 +6,49 @@
         "Purity": {
             "type": "object",
             "additionalProperties": false,
+            "description": "Purity specifications of a chemical component.",
             "properties": {
                 "grade": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Quality grade designation.",
+                    "example": "ACS reagent"
                 },
                 "totalOrganicCarbon": {
+                    "description": "Value for the total organic carbon content measurement.",
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "totalIonConductivity": {
+                    "description": "Value for the total ionic conductivity measurement.",
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "value": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Purity value as a number.",
+                    "example": 99.9
                 },
                 "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unit for purity value.",
+                    "example": "%"
                 },
                 "container": {
                     "type": "string",
-                    "description": "An unambiguous name for the container."
+                    "description": "Name or identifier of the container in which the chemical is stored.",
+                    "example": "Glass bottle, amber"
                 },
                 "internalLot": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Internal LOT or batch number.",
+                    "example": "LOT-2024-001"
                 },
                 "url": {
-                    "$ref": "../general/url.json#/definitions/Url",
-                    "description": "A url with further details on the electrolyte container."
+                    "description": "URL with further details on the purity or container.",
+                    "$ref": "../general/url.json#/definitions/Url"
                 },
                 "refinement": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of additional purification or treatment performed.",
+                    "example": "Triple distilled"
                 }
             },
             "title": "Purity"

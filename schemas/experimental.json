@@ -11,22 +11,26 @@
             "properties": {
                 "tags": {
                     "type": "array",
+                    "description": "Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.",
                     "items": {
                         "type": "string"
                     }
                 },
                 "url": {
-                    "$ref": "./general/url.json#/definitions/Url",
-                    "description": "A URL to, i.e., a published work (DOI) or an ELN entry."
+                    "description": "URL to related documentation, publication (DOI), or ELN entry.",
+                    "$ref": "./general/url.json#/definitions/Url"
                 },
                 "instrumentation": {
                     "type": "array",
+                    "description": "Instruments and equipment used in the experiment.",
                     "items": {
                         "$ref": "./experimental/instrumentation.json#/definitions/Instrumentation"
                     }
                 },
                 "description":{
-                    "type": "string"
+                    "type": "string",
+                    "description": "Detailed description of the experimental setup and conditions.",
+                    "example": "Cyclic voltammetry performed at room temperature with 50 mV/s scan rate"
                 }
             }
         }

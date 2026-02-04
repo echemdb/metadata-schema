@@ -6,6 +6,7 @@
         "Electrolyte": {
             "type": "object",
             "title": "Electrolyte",
+            "description": "The properties and components of the electrolyte solution.",
             "additionalProperties": false,
             "required": [
                 "type"
@@ -13,6 +14,8 @@
             "properties": {
                 "type": {
                     "type": "string",
+                    "description": "Type of electrolyte defined by the solvent.",
+                    "example": "aqueous",
                     "oneOf": [
                         {"const": "aqueous", "description": "The solvent is water."},
                         {"const": "ionic liquid", "description": "The solvent is an ionic liquid."},
@@ -21,22 +24,28 @@
                     ]
                 },
                 "electrolyteContainer": {
+                    "description": "Container used to prepare or store the electrolyte before the measurement.",
                     "$ref": "#/definitions/ElectrolyteContainer"
                 },
                 "components": {
                     "type": "array",
+                    "description": "Chemical components of the electrolyte including solvents, salts, acids, bases, and gases.",
                     "items": {
                         "$ref": "../general/component.json#/definitions/Component"
                     }
                 },
                 "ph": {
+                    "description": "pH value of the electrolyte solution.",
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "temperature": {
+                    "description": "Temperature of the electrolyte during the experiment.",
                     "$ref": "../general/quantity.json#/definitions/Quantity"
                 },
                 "comment": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Additional notes or observations about the electrolyte.",
+                    "example": "Electrolyte was not replaced between measurements."
                 }
             }
         },

@@ -10,6 +10,7 @@
         "Quantity": {
             "type": "object",
             "title": "Quantity",
+            "description": "A physical quantity with a value, unit, and optional uncertainty.",
             "additionalProperties": false,
             "properties": {
                 "value": {
@@ -22,10 +23,14 @@
                     "$ref": "#/definitions/Unit"
                 },
                 "comment": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Additional notes about the measurement or quantity.",
+                    "example": "Measured at room temperature"
                 },
                 "calculation": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Method or formula used to calculate this quantity.",
+                    "example": "Obtained by multiplying U and I"
                 }
             }
         },
@@ -41,31 +46,44 @@
                     "type": "string"
                 }
             ],
-            "title": "Unit"
+            "title": "Unit",
+            "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').",
+            "example": "mol / l"
         },
         "Uncertainty": {
             "type": "object",
             "title": "Uncertainty",
+            "description": "Uncertainty information for a measured quantity.",
             "properties": {
                 "value": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Symmetric uncertainty value (±).",
+                    "example": 0.01
                 },
                 "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unit of the uncertainty value.",
+                    "example": "mol / l"
                 },
                 "positiveValue": {
                     "type": "number",
-                    "description": "Upper bound (+)"
+                    "description": "Upper bound (+) for asymmetric uncertainties.",
+                    "example": 0.02
                 },
                 "negativeValue": {
                     "type": "number",
-                    "description": "Lower bound (-)"
+                    "description": "Lower bound (-) for asymmetric uncertainties.",
+                    "example": 0.01
                 },
                 "comment": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Additional information about the uncertainty estimation.",
+                    "example": "Standard deviation from 3 replicate measurements"
                 },
                 "type": {
                     "type": "string",
+                    "description": "Type of uncertainty (absolute or relative).",
+                    "example": "absolute",
                     "enum": [
                         "absolute",
                         "relative"
@@ -87,7 +105,9 @@
                     "type": "string"
                 }
             ],
-            "title": "Value"
+            "title": "Value",
+            "description": "Numerical value (can be a number, string, or null).",
+            "example": 0.5
         }
     }
 }

@@ -7,7 +7,9 @@
             "type": "string",
             "format": "uri",
             "pattern": "^https?://.*$",
-            "default": "https://"
+            "default": "https://",
+            "description": "A valid HTTP or HTTPS URL, including DOIs.",
+            "example": "https://example.org"
         }
     }
 }

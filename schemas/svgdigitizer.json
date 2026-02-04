@@ -6,6 +6,8 @@
         "Svgdigitizer": {
             "type": "object",
             "additionalProperties": true,
+            "title": "Svgdigitizer",
+            "description": "Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.",
             "properties": {
                 "curation": {
                     "$ref": "curation.json#/definitions/Curation"
@@ -33,8 +35,7 @@
                 "curation",
                 "source",
                 "system"
-            ],
-            "title": "Svgdigitizer"
+            ]
         }
     }
 }

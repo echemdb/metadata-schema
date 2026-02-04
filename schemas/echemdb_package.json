@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "echemdb Data Package Profile",
+    "description": "Data package schema for echemdb following the Frictionless Data Package specification with echemdb-specific metadata extensions.",
     "type": "object",
     "allOf": [
         { "$ref": "https://datapackage.org/profiles/2.0/datapackage.json" }
@@ -19,13 +20,16 @@
     "definitions": {
         "EchemdbResource": {
             "type": "object",
+            "description": "A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.",
             "properties": {
                 "metadata": {
                     "type": "object",
+                    "description": "Metadata container for the resource.",
                     "required": ["echemdb"],
                     "properties": {
                         "echemdb": {
                             "type": "object",
+                            "description": "echemdb-specific metadata for electrochemical data.",
                             "required": ["curation",
                                         "experimental",
                                         "figureDescription",
