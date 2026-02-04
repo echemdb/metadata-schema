@@ -74,8 +74,9 @@ pytest-remotedata = ">=0.4.1,<0.5"
 
 [tool.pixi.feature.test.tasks]
 doctest = "pytest -n auto --doctest-modules mdstools"
-test-comprehensive = "pytest tests/test_comprehensive.py -v"
-test-all = { depends-on = ["doctest", "test-comprehensive"] }
+test-comprehensive = "pytest mdstools/tests/test_comprehensive.py -v"
+test-resolved-schemas = "pytest mdstools/tests/test_resolved_schemas.py -v"
+test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
 
 [tool.pixi.feature.lint.dependencies]
 black = ">=26.1.0,<27"
@@ -86,6 +87,7 @@ pylint = ">=4.0.4,<5"
 test = "pixi run test-all"
 convert = "python mdstools/cli.py"
 resolve-schemas = "python mdstools/resolve_schemas.py"
+update-expected-schemas = "python mdstools/update_expected_schemas.py"
 
 [tool.pixi.feature.lint.tasks]
 pylint = "pylint mdstools"

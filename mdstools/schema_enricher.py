@@ -33,7 +33,9 @@ class SchemaEnricher:
         Enrich with nested objects::
 
             >>> desc, example = enricher.enrich_row('system.type', 'electrochemical')
-            >>> 'electrochemical' in desc.lower()
+            >>> 'system' in desc.lower()
+            True
+            >>> example == 'electrochemical'
             True
     """
 

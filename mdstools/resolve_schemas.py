@@ -224,8 +224,8 @@ if __name__ == "__main__":
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(resolved, f, indent=2)
 
-            print(f"  ✓ Saved to {output_file}")
+            print(f"  OK - Saved to {output_file}")
         else:
-            print(f"  ⚠ Schema '{schema_name}' not found, skipping")
+            print(f"  WARNING - Schema '{schema_name}' not found, skipping")
 
-    print("\n✓ Done! Resolved schemas saved to schemas/ directory")
+    print("\nOK - Done! Resolved schemas saved to schemas/ directory")
