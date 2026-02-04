@@ -88,6 +88,15 @@ test = "pixi run test-all"
 convert = "python mdstools/cli.py"
 resolve-schemas = "python mdstools/resolve_schemas.py"
 update-expected-schemas = "python mdstools/update_expected_schemas.py"
+diff-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    git diff --no-index schemas/expected/autotag.json schemas/autotag.json &&
+    git diff --no-index schemas/expected/svgdigitizer.json schemas/svgdigitizer.json &&
+    git diff --no-index schemas/expected/echemdb_package.json schemas/echemdb_package.json &&
+    git diff --no-index schemas/expected/svgdigitizer_package.json schemas/svgdigitizer_package.json
+    '''
+]}
 
 [tool.pixi.feature.lint.tasks]
 pylint = "pylint mdstools"
