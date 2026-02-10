@@ -4,7 +4,7 @@ from typing import List
 
 import pandas as pd
 
-from mdstools.flattened_metadata import FlattenedMetadata
+from mdstools.metadata.flattened_metadata import FlattenedMetadata
 from mdstools.schema_enricher import SchemaEnricher
 
 
@@ -18,6 +18,7 @@ class EnrichedFlattenedMetadata:
 
     EXAMPLES::
 
+        >>> from mdstools.metadata import EnrichedFlattenedMetadata
         >>> import os
         >>> os.makedirs('generated/doctests', exist_ok=True)
         >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
@@ -68,6 +69,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> # Create a test CSV with system metadata
@@ -100,6 +102,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> # Create test data
@@ -124,6 +127,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'experiment', '<nested>'],
             ... ['1.1', 'value', 1]]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
@@ -131,8 +135,8 @@ class EnrichedFlattenedMetadata:
             >>> metadata.data
             {'experiment': {'value': 1}}
         """
-        from mdstools.metadata import Metadata
-        from mdstools.tabular_schema import unflatten
+        from mdstools.metadata.metadata import Metadata
+        from mdstools.converters import unflatten
 
         # Unflatten only uses the first 3 columns (Number, Key, Value)
         nested_dict = unflatten(self._base_rows)
@@ -146,6 +150,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> df = enriched.to_pandas()
@@ -168,6 +173,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
@@ -188,6 +194,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
@@ -208,6 +215,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> markdown = enriched.to_markdown()

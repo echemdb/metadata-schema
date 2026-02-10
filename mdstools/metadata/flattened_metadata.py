@@ -5,7 +5,7 @@ from typing import List, Optional
 
 import pandas as pd
 
-from mdstools.tabular_schema import unflatten
+from mdstools.converters import unflatten
 
 
 class FlattenedMetadata:
@@ -17,6 +17,7 @@ class FlattenedMetadata:
 
     EXAMPLES::
 
+        >>> from mdstools.metadata import FlattenedMetadata
         >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
         >>> flattened = FlattenedMetadata(rows)
         >>> len(flattened.rows)
@@ -59,6 +60,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> flattened = FlattenedMetadata.from_csv('generated/doctests/from_csv_example.csv')
             >>> len(flattened.rows)
             5
@@ -109,6 +111,7 @@ class FlattenedMetadata:
 
             Test roundtrip: flattened → Excel → flattened
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> original_rows = [['1', 'experiment', '<nested>'],
@@ -144,6 +147,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> rows = [['1', 'experiment', '<nested>'],
             ... ['1.1', 'value', 1],
             ... ['1.2', 'units', 'mV']]
@@ -152,7 +156,7 @@ class FlattenedMetadata:
             >>> metadata.data
             {'experiment': {'value': 1, 'units': 'mV'}}
         """
-        from mdstools.metadata import Metadata
+        from mdstools.metadata.metadata import Metadata
 
         nested_dict = unflatten(self._rows)
         return Metadata(nested_dict)
@@ -165,6 +169,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
             >>> flattened = FlattenedMetadata(rows)
             >>> df = flattened.to_pandas()
@@ -184,6 +189,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
@@ -204,6 +210,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
@@ -224,6 +231,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import FlattenedMetadata
             >>> rows = [['1', 'name', 'test'], ['2', 'foo', '<nested>'], ['2.a', '', 'bar']]
             >>> flattened = FlattenedMetadata(rows)
             >>> print(flattened.to_markdown()) # doctest: +NORMALIZE_WHITESPACE

@@ -4,7 +4,7 @@ from typing import Optional
 
 import yaml
 
-from mdstools.tabular_schema import flatten
+from mdstools.converters import flatten
 
 
 class Metadata:
@@ -15,6 +15,7 @@ class Metadata:
 
     EXAMPLES::
 
+        >>> from mdstools.metadata import Metadata
         >>> data = {'name': 'test', 'value': 42}
         >>> metadata = Metadata(data)
         >>> isinstance(metadata.data, dict)
@@ -65,6 +66,7 @@ class Metadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import Metadata
             >>> data = {'experiment': {'value': 42, 'units': 'mV'}}
             >>> metadata = Metadata(data)
             >>> flattened = metadata.flatten()
@@ -73,7 +75,7 @@ class Metadata:
              ['1.1', 'value', 42],
              ['1.2', 'units', 'mV']]
         """
-        from mdstools.flattened_metadata import FlattenedMetadata
+        from mdstools.metadata.flattened_metadata import FlattenedMetadata
 
         rows = flatten(self._data)
         return FlattenedMetadata(rows)
@@ -86,6 +88,7 @@ class Metadata:
 
         EXAMPLES::
 
+            >>> from mdstools.metadata import Metadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> data = {'name': 'test', 'value': 42}
