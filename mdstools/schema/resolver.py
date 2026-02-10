@@ -321,7 +321,11 @@ if __name__ == "__main__":
             output_file = output_dir / f"{schema_name_to_resolve}.json"
             with open(output_file, "w", encoding="utf-8") as output_f:
                 json.dump(
-                    resolved_schema_output, output_f, indent=2, ensure_ascii=False
+                    resolved_schema_output,
+                    output_f,
+                    indent=2,
+                    ensure_ascii=False,
+                    sort_keys=True,
                 )
                 # json.dump does not save files with a newline, which compromises the tests
                 # where the output files are compared to an expected json.

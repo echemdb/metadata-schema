@@ -123,6 +123,7 @@ class EnrichedFlattenedMetadata:
             >>> import os
             >>> # Create a test CSV with system metadata
             >>> import csv
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> with open('tests/generated/docstrings/system_example.csv', 'w', newline='') as f:
             ...     writer = csv.writer(f)
             ...     _ = writer.writerow(['Number', 'Key', 'Value'])
