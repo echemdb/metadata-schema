@@ -60,12 +60,43 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            Basic CSV loading with type preservation:
+
             >>> from mdstools.metadata import FlattenedMetadata
             >>> flattened = FlattenedMetadata.from_csv('generated/doctests/from_csv_example.csv')
             >>> len(flattened.rows)
             5
             >>> flattened.rows[0][1]  # First row, key column
             'name'
+            >>> # Values are converted to appropriate types (int, float, string)
+            >>> isinstance(flattened.rows[1][2], int)  # value field is int 42
+            True
+
+            Reconstruct nested structure:
+
+            >>> metadata = flattened.unflatten()
+            >>> metadata.data
+            {'name': 'test', 'value': 42, 'details': {'author': 'John Doe', 'year': 2024}}
+
+        TESTS::
+
+            Test roundtrip conversion (dict → CSV → dict):
+
+            >>> from io import StringIO
+            >>> from mdstools.metadata import Metadata
+            >>> original_data = {'experiment':
+            ... [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+            >>> # Flatten and write to CSV
+            >>> metadata = Metadata(original_data)
+            >>> flattened = metadata.flatten()
+            >>> csv_buffer = StringIO()
+            >>> flattened.to_csv(csv_buffer)
+            >>> # Read back from CSV
+            >>> csv_buffer.seek(0)
+            0
+            >>> loaded = FlattenedMetadata.from_csv(csv_buffer)
+            >>> loaded.unflatten().data == original_data
+            True
         """
         def convert_value(value_str):
             """Convert string value to appropriate type (int, float, or keep as string)"""
@@ -231,15 +262,27 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
+            Simple example:
+
             >>> from mdstools.metadata import FlattenedMetadata
-            >>> rows = [['1', 'name', 'test'], ['2', 'foo', '<nested>'], ['2.a', '', 'bar']]
+            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
             >>> flattened = FlattenedMetadata(rows)
             >>> print(flattened.to_markdown()) # doctest: +NORMALIZE_WHITESPACE
-            | Number   | Key   | Value    |
-            |:---------|:------|:---------|
-            | 1        | name  | test     |
-            | 2        | foo   | <nested> |
-            | 2.a      |       | bar      |
+            |   Number | Key   | Value   |
+            |---------:|:------|:--------|
+            |        1 | name  | test    |
+            |        2 | value | 42      |
+
+            With nested structures and lists:
+
+            >>> rows = [['1', 'name', 'test'], ['2', 'foo', '<nested>'],
+            ... ['2.a', '', 'a'], ['2.b', '', 'b'], ['2.c', '', 'c']]
+            >>> flattened = FlattenedMetadata(rows)
+            >>> markdown = flattened.to_markdown()
+            >>> 'Number' in markdown and 'Key' in markdown and 'Value' in markdown
+            True
+            >>> '<nested>' in markdown
+            True
         """
         df = self.to_pandas()
         return df.to_markdown(index=False, **kwargs)

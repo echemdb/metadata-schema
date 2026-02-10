@@ -66,6 +66,8 @@ class Metadata:
 
         EXAMPLES::
 
+            Nested dictionaries:
+
             >>> from mdstools.metadata import Metadata
             >>> data = {'experiment': {'value': 42, 'units': 'mV'}}
             >>> metadata = Metadata(data)
@@ -74,6 +76,16 @@ class Metadata:
             [['1', 'experiment', '<nested>'],
              ['1.1', 'value', 42],
              ['1.2', 'units', 'mV']]
+
+            Lists of dictionaries:
+
+            >>> data = {'measurements': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
+            >>> metadata = Metadata(data)
+            >>> flattened = metadata.flatten()
+            >>> len(flattened.rows)
+            7
+            >>> flattened.rows[0]
+            ['1', 'measurements', '<nested>']
         """
         from mdstools.metadata.flattened_metadata import FlattenedMetadata
 
@@ -88,13 +100,22 @@ class Metadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import Metadata
+            Basic save:\n\n            >>> from mdstools.metadata import Metadata
             >>> import os
             >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> data = {'name': 'test', 'value': 42}
             >>> metadata = Metadata(data)
             >>> metadata.to_yaml('generated/doctests/test_metadata.yaml')
             >>> os.path.exists('generated/doctests/test_metadata.yaml')
+            True
+
+            Test roundtrip (dict → YAML → dict):
+
+            >>> data = {'experiment': {'value': 42, 'units': 'mV'}, 'author': 'test'}
+            >>> metadata = Metadata(data)
+            >>> metadata.to_yaml('generated/doctests/roundtrip.yaml')
+            >>> loaded = Metadata.from_yaml('generated/doctests/roundtrip.yaml')
+            >>> loaded.data == data
             True
         """
         with open(filepath, 'w', encoding='utf-8') as f:
