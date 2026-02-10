@@ -200,32 +200,82 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
         schema = copy.deepcopy(self.schema_cache[schema_name])
 
-        # Collect ALL definitions from ALL schemas (simpler and more comprehensive)
-        all_definitions = {}
-        for _, cached_schema in self.schema_cache.items():
-            if isinstance(cached_schema, dict) and "definitions" in cached_schema:
-                # Resolve $refs within definitions and remove $id fields
-                for def_name, def_schema in cached_schema["definitions"].items():
-                    # Resolve any $refs in this definition
-                    resolved_def = self._resolve_schema(
-                        def_schema, base_path="", depth=0
-                    )
-                    # Remove $id from definitions to avoid scope issues
-                    clean_def = self._remove_schema_ids(resolved_def)
-                    all_definitions[def_name] = clean_def
+        # Track which definitions are actually used
+        used_definitions = set()
+
+        def collect_refs(obj):
+            """Recursively find all definition references in the schema."""
+            if isinstance(obj, dict):
+                if "$ref" in obj:
+                    ref = obj["$ref"]
+                    # Check if it's a definitions reference
+                    if ref.startswith("#/definitions/"):
+                        def_name = ref.split("/")[-1]
+                        used_definitions.add(def_name)
+                for value in obj.values():
+                    collect_refs(value)
+            elif isinstance(obj, list):
+                for item in obj:
+                    collect_refs(item)
 
         # Now resolve all external $refs in the schema recursively
         # Pass empty base_path since we're starting from schema_pieces/ root
         resolved_schema = self._resolve_schema(schema, base_path="", depth=0)
 
+        # Collect references from the resolved schema
+        collect_refs(resolved_schema)
+
         # Remove $id fields from resolved content to avoid scope issues in validators
         resolved_schema = self._remove_schema_ids(resolved_schema)
+
+        # Collect only the definitions that are actually referenced
+        needed_definitions = {}
+        definitions_to_check = list(used_definitions)
+        checked_definitions = set()
+
+        while definitions_to_check:
+            def_name = definitions_to_check.pop(0)
+            if def_name in checked_definitions:
+                continue
+            checked_definitions.add(def_name)
+
+            # Find this definition in any cached schema
+            found = False
+            for _, cached_schema in self.schema_cache.items():
+                if isinstance(cached_schema, dict) and "definitions" in cached_schema:
+                    if def_name in cached_schema["definitions"]:
+                        # Resolve $refs within this definition
+                        resolved_def = self._resolve_schema(
+                            cached_schema["definitions"][def_name],
+                            base_path="",
+                            depth=0,
+                        )
+                        # Remove $id from definitions to avoid scope issues
+                        clean_def = self._remove_schema_ids(resolved_def)
+                        needed_definitions[def_name] = clean_def
+
+                        # Check if this definition references other definitions
+                        collect_refs(resolved_def)
+                        new_refs = used_definitions - checked_definitions
+                        definitions_to_check.extend(new_refs)
+
+                        found = True
+                        break
+
+            if not found and def_name not in needed_definitions:
+                # Definition might already be in the schema's own definitions
+                if "definitions" in schema and def_name in schema["definitions"]:
+                    resolved_def = self._resolve_schema(
+                        schema["definitions"][def_name], base_path="", depth=0
+                    )
+                    clean_def = self._remove_schema_ids(resolved_def)
+                    needed_definitions[def_name] = clean_def
 
         # Merge collected definitions into the resolved schema
         if "definitions" not in resolved_schema:
             resolved_schema["definitions"] = {}
-        # Add definitions from referenced schemas (but don't override existing ones)
-        for key, value in all_definitions.items():
+        # Add only the definitions that are actually used
+        for key, value in needed_definitions.items():
             if key not in resolved_schema["definitions"]:
                 resolved_schema["definitions"][key] = value
 
