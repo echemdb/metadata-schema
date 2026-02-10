@@ -18,15 +18,35 @@ class EnrichedFlattenedMetadata:
 
     EXAMPLES::
 
-        >>> from mdstools.metadata import EnrichedFlattenedMetadata
-        >>> import os
-        >>> os.makedirs('generated/doctests', exist_ok=True)
-        >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
-        >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
-        >>> len(enriched.rows)  # Returns enriched rows with 5 columns
-        2
-        >>> len(enriched.rows[0])  # Each row has [number, key, value, example, description]
-        5
+        Load from a dictionary and enrich with schema information::
+
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            
+            >>> # Start with nested metadata
+            >>> data = {'curation': {'process': [{'role': 'curator', 'name': 'John Doe'}]}}
+            
+            >>> # Create enriched metadata (flattens and adds schema info)
+            >>> enriched = EnrichedFlattenedMetadata.from_dict(data, schema_dir='schemas')
+            
+            >>> # Base rows have 3 columns: [Number, Key, Value]
+            >>> enriched.base_rows[0]  # Top level
+            ['1', 'curation', '<nested>']
+            >>> enriched.base_rows[3]  # Leaf value
+            ['1.1.a.1', 'role', 'curator']
+            
+            >>> # Enriched rows have 5 columns: [Number, Key, Value, Example, Description]
+            >>> enriched.rows
+            [['1', 'curation', '<nested>', '', ''],
+            ['1.1', 'process', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
+            ['1.1.a', '', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
+            ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.'],
+            ['1.1.a.2', 'name', 'John Doe', 'Jane Doe', 'Full name of the person.']]
+            >>> enriched.rows[3][3]  # Example for 'role' field
+            'experimentalist'
+            >>> 'person' in enriched.rows[3][4].lower()  # Description contains 'person'
+            True
     """
 
     def __init__(self, rows: List[List], schema_dir: str):
@@ -56,6 +76,36 @@ class EnrichedFlattenedMetadata:
     def base_rows(self) -> List[List]:
         """Get the base 3-column rows without enrichment."""
         return self._base_rows
+
+    @classmethod
+    def from_dict(cls, data: dict, schema_dir: str):
+        """
+        Create EnrichedFlattenedMetadata from a nested dictionary.
+
+        :param data: Nested dictionary of metadata
+        :param schema_dir: Path to directory containing JSON Schema files
+        :return: EnrichedFlattenedMetadata instance
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> data = {'system': {'type': 'electrochemical'}}
+            >>> enriched = EnrichedFlattenedMetadata.from_dict(data, schema_dir='schemas')
+            >>> enriched.base_rows[0]
+            ['1', 'system', '<nested>']
+            >>> enriched.base_rows[1]
+            ['1.1', 'type', 'electrochemical']
+            >>> len(enriched.rows[1])  # Enriched row has 5 columns
+            5
+        """
+        from mdstools.metadata.metadata import Metadata
+        
+        # Create Metadata and flatten it
+        metadata = Metadata(data)
+        flattened = metadata.flatten()
+
+        # Create enriched version
+        return cls(flattened.rows, schema_dir)
 
     @classmethod
     def from_csv(cls, filepath, schema_dir: str, **kwargs):
