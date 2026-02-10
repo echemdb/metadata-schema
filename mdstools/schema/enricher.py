@@ -20,6 +20,7 @@ class SchemaEnricher:
 
             >>> import os
             >>> os.makedirs('tests/generated', exist_ok=True)
+            >>> from mdstools.schema.enricher import SchemaEnricher
             >>> enricher = SchemaEnricher('schemas')
             >>> 'curation' in enricher.schema_cache
             True

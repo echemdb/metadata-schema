@@ -86,7 +86,7 @@ pylint = "*"
 [tool.pixi.feature.dev.tasks]
 test = "pixi run test-all"
 convert = "python mdstools/cli.py"
-resolve-schemas = "python mdstools/resolve_schemas.py"
+resolve-schemas = "python mdstools/schema/resolver.py"
 update-expected-schemas = "python mdstools/update_expected_schemas.py"
 diff-schemas = {cmd = [
     "bash", "-c",

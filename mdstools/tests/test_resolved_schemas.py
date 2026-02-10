@@ -21,7 +21,7 @@ def test_resolved_schemas_match_expected():
     # Generate fresh resolved schemas
     print("Generating resolved schemas from schema_pieces...")
     result = subprocess.run(
-        [sys.executable, "mdstools/resolve_schemas.py"], capture_output=True, text=True
+        [sys.executable, "mdstools/schema/resolver.py"], capture_output=True, text=True
     )
 
     if result.returncode != 0:

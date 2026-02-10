@@ -8180,7 +8180,7 @@ packages:
 - pypi: ./
   name: mdstools
   version: 0.3.3
-  sha256: 027e4770996aaa8e84ecea2934786bacf37a4db88541f3897e0261843166314b
+  sha256: 17a1ab0ad3deed5d0d82e16380e27b824039f076821e3b0fb00472ce17a8dea8
   requires_dist:
   - pandas
   - tabulate

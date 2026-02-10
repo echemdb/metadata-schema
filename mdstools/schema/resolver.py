@@ -7,9 +7,9 @@ creating "resolved" versions where all definitions are inlined into a single fil
 This makes schema parsing more reliable and efficient.
 
 Usage:
-    python resolve_schemas.py
+    python mdstools/schema/resolver.py
 
-The resolved schemas are saved to schemas/resolved/ directory.
+The resolved schemas are saved to schemas/ directory.
 
 EXAMPLES::
 
@@ -17,6 +17,7 @@ EXAMPLES::
 
         >>> import os
         >>> os.makedirs('schemas/resolved', exist_ok=True)
+        >>> from mdstools.schema.resolver import SchemaResolver
         >>> resolver = SchemaResolver('schemas')
         >>> 'curation' in resolver.schema_cache
         True
@@ -246,8 +247,8 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
 # Main script
 if __name__ == "__main__":
-    # Adjust path since we're now in mdstools/
-    project_root = Path(__file__).parent.parent
+    # Adjust path since we're now in mdstools/schema/
+    project_root = Path(__file__).parent.parent.parent
     resolver = SchemaResolver(str(project_root / "schemas"))
 
     # Resolve the main combined schemas that users will work with

@@ -5,7 +5,7 @@ from typing import List
 import pandas as pd
 
 from mdstools.metadata.flattened_metadata import FlattenedMetadata
-from mdstools.schema_enricher import SchemaEnricher
+from mdstools.schema.enricher import SchemaEnricher
 
 
 class EnrichedFlattenedMetadata:
