@@ -1,5 +1,6 @@
 """Tools for converting between YAML and tabular representations with schema enrichment."""
 
+import csv
 import string
 from typing import Optional
 
@@ -152,18 +153,112 @@ def flatten_yaml(d, prefix="", parent_key=None):
     return rows
 
 
-def unflatten_yaml(rows):
+def unflatten_tabular(rows):
     """
     Reconstruct a nested dictionary from flattened rows.
 
     :param rows: List of [number, key, value] rows
     :return: Reconstructed nested dictionary
 
-    NOTE: This is a placeholder for the reverse conversion.
-    Implementation will be added in a future iteration.
+    >>> flattened_metadata = [['number', 'key', 'value'],
+    ... ['1', 'experiment', '<nested>'],
+    ... ['1.a', '', '<nested>'],
+    ... ['1.a.1', 'A', '<nested>'],
+    ... ['1.a.1.1', 'value', 1],
+    ... ['1.a.1.2', 'units', 'mV'],
+    ... ['1.a.2', 'B', 2],
+    ... ['1.b', '', '<nested>'],
+    ... ['1.b.1', 'A', 3],
+    ... ['1.b.2', 'B', 4]]
+    >>> unflatten_tabular(flattened_metadata) # doctest: +ELLIPSIS
+    {'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+
     """
-    # TODO: Implement the reverse logic
-    raise NotImplementedError("Unflattening logic not yet implemented")
+    if not rows:
+        return {}
+
+    # Skip header row if present (check if first row is ['number', 'key', 'value'] or similar)
+    if rows and len(rows[0]) >= 2:
+        first_row_lower = [str(x).lower() for x in rows[0]]
+        if 'number' in first_row_lower and 'key' in first_row_lower:
+            rows = rows[1:]
+    
+    if not rows:
+        return {}
+
+    result = {}
+    
+    # Build a tree structure from the rows
+    tree = {}
+    for number, key, value in rows:
+        # Ensure number is a string (pandas may read as float)
+        number = str(number)
+        tree[number] = {'key': key, 'value': value, 'children': {}}
+    
+    # Link parent-child relationships
+    for number in tree:
+        parts = number.split('.')
+        if len(parts) > 1:
+            parent_number = '.'.join(parts[:-1])
+            if parent_number in tree:
+                tree[parent_number]['children'][number] = tree[number]
+    
+    # Find root entries (no parent or parent not in tree)
+    roots = []
+    for number in tree:
+        parts = number.split('.')
+        if len(parts) == 1 or '.'.join(parts[:-1]) not in tree:
+            roots.append(number)
+    
+    def is_list_index(s):
+        """Check if string is a single letter (a-z)"""
+        return len(s) == 1 and s.isalpha()
+    
+    def build_structure(number):
+        """Recursively build the nested structure"""
+        node = tree[number]
+        key = node['key']
+        value = node['value']
+        children = node['children']
+        
+        if not children:
+            # Leaf node - return the value
+            return value
+        
+        # Check if children are list items (have letter suffixes)
+        child_numbers = sorted(children.keys(), key=lambda x: x.split('.')[-1])
+        child_suffixes = [num.split('.')[-1] for num in child_numbers]
+        
+        if all(is_list_index(suffix) for suffix in child_suffixes):
+            # This is a list
+            result_list = []
+            for child_num in child_numbers:
+                child_result = build_structure(child_num)
+                result_list.append(child_result)
+            return result_list
+        else:
+            # This is a dict
+            result_dict = {}
+            for child_num in child_numbers:
+                child_node = tree[child_num]
+                child_key = child_node['key']
+                child_result = build_structure(child_num)
+                
+                if child_key:  # Non-empty key
+                    result_dict[child_key] = child_result
+                else:  # Empty key means inherit from parent or it's a list item
+                    # This shouldn't happen at dict level, but handle it
+                    result_dict = child_result if isinstance(child_result, dict) else result_dict
+            return result_dict
+    
+    # Build the root result
+    for root_number in roots:
+        root_node = tree[root_number]
+        root_key = root_node['key']
+        if root_key:
+            result[root_key] = build_structure(root_number)
+    
+    return result
 
 
 class MetadataConverter:
@@ -257,12 +352,73 @@ class MetadataConverter:
         """
         Create a converter from a flattened CSV file.
 
-        :param filepath: Path to the CSV file
-        :param kwargs: Additional arguments passed to pandas.read_csv
+        :param filepath: Path to the CSV file or file-like object (e.g., StringIO)
+        :param kwargs: Additional arguments (currently unused, for future compatibility)
         :return: MetadataConverter instance
+
+        EXAMPLES::
+
+            >>> converter = MetadataConverter.from_csv('generated/doctests/from_csv_example.csv')
+            >>> converter.df.columns.tolist()
+            ['Number', 'Key', 'Value']
+            >>> len(converter.df)
+            5
+            >>> converter.df['Key'].tolist()
+            ['name', 'value', 'details', 'author', 'year']
+
+            >>> converter.nested_dict
+            {'name': 'test', 'value': 42, 'details': {'author': 'John Doe', 'year': 2024}}
+
+        TESTS::
+
+            Test the roundtrip conversion from dict to CSV and back to dict:
+
+            >>> from io import StringIO
+            >>> original_data = {'experiment':
+            ... [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+            >>> converter = MetadataConverter.from_dict(original_data)
+            >>> # Write to StringIO buffer
+            >>> csv_buffer = StringIO()
+            >>> converter.to_csv(csv_buffer)
+            >>> # Read back from the buffer
+            >>> csv_buffer.seek(0)
+            0
+            >>> converter_from_csv = MetadataConverter.from_csv(csv_buffer)
+            >>> converter_from_csv.nested_dict == original_data
+            True
+
         """
-        df = pd.read_csv(filepath, **kwargs)
-        return cls(df, source_type="flattened")
+        # Read CSV manually to preserve types better than pandas
+        def convert_value(value_str):
+            """Convert string value to appropriate type (int, float, or keep as string)"""
+            if value_str == '<nested>':
+                return value_str
+            try:
+                # Try int first
+                if '.' not in value_str:
+                    return int(value_str)
+                # Try float
+                return float(value_str)
+            except (ValueError, AttributeError):
+                return value_str
+        
+        # Handle both file path and file-like objects
+        if isinstance(filepath, str):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                rows = list(reader)
+        else:
+            reader = csv.reader(filepath)
+            rows = list(reader)
+        
+        # Convert values to appropriate types (skip header if present)
+        if rows and rows[0] and str(rows[0][0]).lower() in ['number', 'num']:
+            # Has header, process data rows
+            data_rows = [[row[0], row[1], convert_value(row[2])] for row in rows[1:]]
+        else:
+            data_rows = [[row[0], row[1], convert_value(row[2])] for row in rows]
+        
+        return cls(data_rows, source_type="flattened")
 
     @classmethod
     def from_dataframe(cls, df):
@@ -314,7 +470,7 @@ class MetadataConverter:
             if self._source_type == "dict":
                 self._nested = self._source_data
             else:  # source_type == 'flattened'
-                self._nested = unflatten_yaml(self.flattened)
+                self._nested = unflatten_tabular(self.flattened)
         return self._nested
 
     @property
