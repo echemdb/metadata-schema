@@ -43,16 +43,16 @@ def load_excel_all_sheets(filepath: str, **kwargs) -> pd.DataFrame:
     if len(sheet_names) == 1:
         # Single sheet - read normally
         return pd.read_excel(filepath, **kwargs)
-    else:
-        # Multiple sheets - read and concatenate all
-        dfs = []
-        for sheet_name in sheet_names:
-            df = pd.read_excel(filepath, sheet_name=sheet_name, **kwargs)
-            dfs.append(df)
 
-        # Concatenate all sheets into a single DataFrame
-        combined_df = pd.concat(dfs, ignore_index=True)
-        return combined_df
+    # Multiple sheets - read and concatenate all
+    dfs = []
+    for sheet_name in sheet_names:
+        df = pd.read_excel(filepath, sheet_name=sheet_name, **kwargs)
+        dfs.append(df)
+
+    # Concatenate all sheets into a single DataFrame
+    combined_df = pd.concat(dfs, ignore_index=True)
+    return combined_df
 
 
 def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[str]):
@@ -115,3 +115,44 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
 
             # Write to sheet
             sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+
+def save_csv_with_path_creation(
+    df: pd.DataFrame, filepath: str, **kwargs
+) -> None:
+    """
+    Save a DataFrame to CSV with automatic parent directory creation.
+
+    :param df: DataFrame to save
+    :param filepath: Path to save CSV file
+    :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
+    """
+    if isinstance(filepath, str):
+        os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+    df.to_csv(filepath, index=False, **kwargs)
+
+
+def save_excel_with_optional_sheets(
+    df: pd.DataFrame,
+    filepath: str,
+    column_order: list[str],
+    separate_sheets: bool = False,
+    **kwargs,
+) -> None:
+    """
+    Save a DataFrame to Excel, optionally with separate sheets per top-level key.
+
+    :param df: DataFrame to save
+    :param filepath: Path to save Excel file
+    :param column_order: List of column names in desired order
+    :param separate_sheets: If True, create separate sheets for each top-level key
+    :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
+    """
+    if not separate_sheets:
+        # Single sheet export
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+        df.to_excel(filepath, index=False, **kwargs)
+    else:
+        # Multi-sheet export: one sheet per top-level key
+        save_excel_multi_sheet(df, filepath, column_order)

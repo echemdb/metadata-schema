@@ -1,6 +1,5 @@
 """EnrichedFlattenedMetadata class for handling schema-enriched tabular metadata."""
 
-import os
 from typing import List
 
 import pandas as pd
@@ -21,7 +20,7 @@ class EnrichedFlattenedMetadata:
 
         Load from a dictionary and enrich with schema information::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> import os
 
             >>> # Start with nested metadata
@@ -88,7 +87,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> data = {'system': {'type': 'electrochemical'}}
             >>> enriched = EnrichedFlattenedMetadata.from_dict(data, schema_dir='schemas')
             >>> enriched.base_rows[0]
@@ -119,7 +118,8 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> # Create a test CSV with system metadata
             >>> import csv
@@ -151,7 +151,8 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> # Create test data
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
@@ -187,7 +188,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'experiment', '<nested>'],
             ... ['1.1', 'value', 1]]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
@@ -196,7 +197,7 @@ class EnrichedFlattenedMetadata:
             {'experiment': {'value': 1}}
         """
         from mdstools.metadata.metadata import Metadata
-        from mdstools.converters import unflatten
+        from mdstools.converters.unflatten import unflatten
 
         # Unflatten only uses the first 3 columns (Number, Key, Value)
         nested_dict = unflatten(self._base_rows)
@@ -210,7 +211,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> df = enriched.to_pandas()
@@ -233,7 +234,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> import os
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
@@ -241,10 +242,10 @@ class EnrichedFlattenedMetadata:
             >>> os.path.exists('tests/generated/docstrings/enriched_test.csv')
             True
         """
-        if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+        from mdstools.metadata.local import save_csv_with_path_creation
+
         df = self.to_pandas()
-        df.to_csv(filepath, index=False, **kwargs)
+        save_csv_with_path_creation(df, filepath, **kwargs)
 
     def to_excel(self, filepath, separate_sheets=False, **kwargs):
         """
@@ -261,7 +262,7 @@ class EnrichedFlattenedMetadata:
 
             Single sheet export:
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> import os
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
@@ -278,20 +279,16 @@ class EnrichedFlattenedMetadata:
             >>> os.path.exists('tests/generated/docstrings/enriched_multi.xlsx')
             True
         """
+        from mdstools.metadata.local import save_excel_with_optional_sheets
+
         df = self.to_pandas()
-
-        if not separate_sheets:
-            # Single sheet export
-            if isinstance(filepath, str):
-                os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
-            df.to_excel(filepath, index=False, **kwargs)
-        else:
-            # Multi-sheet export: one sheet per top-level key
-            from mdstools.metadata.local import save_excel_multi_sheet
-
-            save_excel_multi_sheet(
-                df, filepath, ["Number", "Key", "Value", "Example", "Description"]
-            )
+        save_excel_with_optional_sheets(
+            df,
+            filepath,
+            ["Number", "Key", "Value", "Example", "Description"],
+            separate_sheets,
+            **kwargs,
+        )
 
     def to_markdown(self, **kwargs) -> str:
         """
@@ -302,7 +299,7 @@ class EnrichedFlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import EnrichedFlattenedMetadata
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> markdown = enriched.to_markdown()

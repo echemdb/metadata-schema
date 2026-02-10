@@ -44,12 +44,12 @@ def unflatten(rows):
         tree[number] = {"key": key, "value": value, "children": {}}
 
     # Link parent-child relationships
-    for number in tree:
+    for number, node in tree.items():
         parts = number.split(".")
         if len(parts) > 1:
             parent_number = ".".join(parts[:-1])
             if parent_number in tree:
-                tree[parent_number]["children"][number] = tree[number]
+                tree[parent_number]["children"][number] = node
 
     # Find root entries (no parent or parent not in tree)
     roots = []
@@ -65,7 +65,7 @@ def unflatten(rows):
     def build_structure(number):
         """Recursively build the nested structure"""
         node = tree[number]
-        key = node["key"]
+        _key = node["key"]  # Extracted but not used in this function
         value = node["value"]
         children = node["children"]
 
@@ -84,22 +84,22 @@ def unflatten(rows):
                 child_result = build_structure(child_num)
                 result_list.append(child_result)
             return result_list
-        else:
-            # This is a dict
-            result_dict = {}
-            for child_num in child_numbers:
-                child_node = tree[child_num]
-                child_key = child_node["key"]
-                child_result = build_structure(child_num)
 
-                if child_key:  # Non-empty key
-                    result_dict[child_key] = child_result
-                else:  # Empty key means inherit from parent or it's a list item
-                    # This shouldn't happen at dict level, but handle it
-                    result_dict = (
-                        child_result if isinstance(child_result, dict) else result_dict
-                    )
-            return result_dict
+        # This is a dict
+        result_dict = {}
+        for child_num in child_numbers:
+            child_node = tree[child_num]
+            child_key = child_node["key"]
+            child_result = build_structure(child_num)
+
+            if child_key:  # Non-empty key
+                result_dict[child_key] = child_result
+            else:  # Empty key means inherit from parent or it's a list item
+                # This shouldn't happen at dict level, but handle it
+                result_dict = (
+                    child_result if isinstance(child_result, dict) else result_dict
+                )
+        return result_dict
 
     # Build the root result
     for root_number in roots:

@@ -1,12 +1,11 @@
 """FlattenedMetadata class for handling tabular representations of metadata."""
 
 import csv
-import os
-from typing import List, Optional
+from typing import List
 
 import pandas as pd
 
-from mdstools.converters import unflatten
+from mdstools.converters.unflatten import unflatten
 
 
 class FlattenedMetadata:
@@ -18,7 +17,7 @@ class FlattenedMetadata:
 
     EXAMPLES::
 
-        >>> from mdstools.metadata import FlattenedMetadata
+        >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
         >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
         >>> flattened = FlattenedMetadata(rows)
         >>> len(flattened.rows)
@@ -53,19 +52,19 @@ class FlattenedMetadata:
         return self._rows
 
     @classmethod
-    def from_csv(cls, filepath: str, **kwargs):
+    def from_csv(cls, filepath: str, **_kwargs):
         """
         Load flattened metadata from a CSV file.
 
         :param filepath: Path to CSV file
-        :param kwargs: Additional arguments (currently unused, for future compatibility)
+        :param _kwargs: Additional arguments (currently unused, for future compatibility)
         :return: FlattenedMetadata instance
 
         EXAMPLES::
 
             Basic CSV loading with type preservation:
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> flattened = FlattenedMetadata.from_csv('tests/from_csv_example.csv')
             >>> len(flattened.rows)
             5
@@ -85,7 +84,7 @@ class FlattenedMetadata:
 
             Test roundtrip conversion with strings containing commas:
 
-            >>> from mdstools.metadata import Metadata
+            >>> from mdstools.metadata.metadata import Metadata
             >>> import os
             >>> # Create data with comma in string value
             >>> original_data = {'description': 'test, with comma', 'value': 42, 'title': 'A, B, C'}
@@ -148,7 +147,7 @@ class FlattenedMetadata:
 
             Test roundtrip: flattened → Excel → flattened
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> original_rows = [['1', 'experiment', '<nested>'],
             ... ['1.a', '', '<nested>'],
@@ -207,7 +206,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> rows = [['1', 'experiment', '<nested>'],
             ... ['1.1', 'value', 1],
             ... ['1.2', 'units', 'mV']]
@@ -229,7 +228,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
             >>> flattened = FlattenedMetadata(rows)
             >>> df = flattened.to_pandas()
@@ -249,7 +248,7 @@ class FlattenedMetadata:
 
         EXAMPLES::
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
@@ -257,10 +256,10 @@ class FlattenedMetadata:
             >>> os.path.exists('tests/generated/docstrings/test_flat.csv')
             True
         """
-        if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+        from mdstools.metadata.local import save_csv_with_path_creation
+
         df = self.to_pandas()
-        df.to_csv(filepath, index=False, **kwargs)
+        save_csv_with_path_creation(df, filepath, **kwargs)
 
     def to_excel(self, filepath, separate_sheets=False, **kwargs):
         """
@@ -277,7 +276,7 @@ class FlattenedMetadata:
 
             Single sheet export:
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
@@ -294,18 +293,12 @@ class FlattenedMetadata:
             >>> os.path.exists('tests/generated/docstrings/test_flat_multi.xlsx')
             True
         """
+        from mdstools.metadata.local import save_excel_with_optional_sheets
+
         df = self.to_pandas()
-
-        if not separate_sheets:
-            # Single sheet export
-            if isinstance(filepath, str):
-                os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
-            df.to_excel(filepath, index=False, **kwargs)
-        else:
-            # Multi-sheet export: one sheet per top-level key
-            from mdstools.metadata.local import save_excel_multi_sheet
-
-            save_excel_multi_sheet(df, filepath, ["Number", "Key", "Value"])
+        save_excel_with_optional_sheets(
+            df, filepath, ["Number", "Key", "Value"], separate_sheets, **kwargs
+        )
 
     def to_markdown(self, **kwargs) -> str:
         """
@@ -318,7 +311,7 @@ class FlattenedMetadata:
 
             Simple example:
 
-            >>> from mdstools.metadata import FlattenedMetadata
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
             >>> flattened = FlattenedMetadata(rows)
             >>> print(flattened.to_markdown()) # doctest: +NORMALIZE_WHITESPACE

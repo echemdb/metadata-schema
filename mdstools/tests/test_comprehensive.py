@@ -8,7 +8,9 @@ This demonstrates the complete workflow from YAML to enriched Excel/CSV files.
 import os
 from pathlib import Path
 
-from mdstools.metadata import Metadata, FlattenedMetadata, EnrichedFlattenedMetadata
+from mdstools.metadata.metadata import Metadata
+from mdstools.metadata.flattened_metadata import FlattenedMetadata
+from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
 
 
 def test_basic_flattening():

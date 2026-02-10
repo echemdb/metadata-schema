@@ -1,11 +1,10 @@
 """Metadata class for handling nested dictionary/YAML metadata structures."""
 
 import os
-from typing import Optional
 
 import yaml
 
-from mdstools.converters import flatten
+from mdstools.converters.flatten import flatten
 
 
 class Metadata:
@@ -16,7 +15,7 @@ class Metadata:
 
     EXAMPLES::
 
-        >>> from mdstools.metadata import Metadata
+        >>> from mdstools.metadata.metadata import Metadata
         >>> data = {'name': 'test', 'value': 42}
         >>> metadata = Metadata(data)
         >>> isinstance(metadata.data, dict)
@@ -69,7 +68,7 @@ class Metadata:
 
             Nested dictionaries:
 
-            >>> from mdstools.metadata import Metadata
+            >>> from mdstools.metadata.metadata import Metadata
             >>> data = {'experiment': {'value': 42, 'units': 'mV'}}
             >>> metadata = Metadata(data)
             >>> flattened = metadata.flatten()
@@ -101,7 +100,7 @@ class Metadata:
 
         EXAMPLES::
 
-            Basic save:\n\n            >>> from mdstools.metadata import Metadata
+            Basic save:\n\n            >>> from mdstools.metadata.metadata import Metadata
             >>> import os
             >>> data = {'name': 'test', 'value': 42}
             >>> metadata = Metadata(data)

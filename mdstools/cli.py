@@ -6,8 +6,6 @@ Command-line interface for mdstools metadata conversion.
 import argparse
 from pathlib import Path
 
-import yaml
-
 from mdstools.metadata.metadata import Metadata
 from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
 
