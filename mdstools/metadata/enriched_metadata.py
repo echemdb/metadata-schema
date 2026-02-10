@@ -221,7 +221,7 @@ class EnrichedFlattenedMetadata:
         """
         return pd.DataFrame(
             self._enriched_rows,
-            columns=["Number", "Key", "Value", "Example", "Description"]
+            columns=["Number", "Key", "Value", "Example", "Description"],
         )
 
     def to_csv(self, filepath, **kwargs):
@@ -242,7 +242,7 @@ class EnrichedFlattenedMetadata:
             True
         """
         if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
@@ -283,12 +283,15 @@ class EnrichedFlattenedMetadata:
         if not separate_sheets:
             # Single sheet export
             if isinstance(filepath, str):
-                os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+                os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
             df.to_excel(filepath, index=False, **kwargs)
         else:
             # Multi-sheet export: one sheet per top-level key
             from mdstools.metadata.local import save_excel_multi_sheet
-            save_excel_multi_sheet(df, filepath, ['Number', 'Key', 'Value', 'Example', 'Description'])
+
+            save_excel_multi_sheet(
+                df, filepath, ["Number", "Key", "Value", "Example", "Description"]
+            )
 
     def to_markdown(self, **kwargs) -> str:
         """

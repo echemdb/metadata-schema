@@ -3,4 +3,4 @@
 from mdstools.converters.flatten import flatten
 from mdstools.converters.unflatten import unflatten
 
-__all__ = ['flatten', 'unflatten']
+__all__ = ["flatten", "unflatten"]

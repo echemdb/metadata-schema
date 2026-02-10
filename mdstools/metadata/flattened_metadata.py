@@ -41,7 +41,9 @@ class FlattenedMetadata:
 
         # Validate structure
         if rows and len(rows[0]) != 3:
-            raise ValueError(f"Each row must have exactly 3 elements [number, key, value], got {len(rows[0])}")
+            raise ValueError(
+                f"Each row must have exactly 3 elements [number, key, value], got {len(rows[0])}"
+            )
 
         self._rows = rows
 
@@ -99,6 +101,7 @@ class FlattenedMetadata:
             >>> loaded.rows[0][2]  # First value should contain comma
             'test, with comma'
         """
+
         def convert_value(value_str):
             """
             Convert string value to appropriate type (int, float, or keep as string).
@@ -108,23 +111,23 @@ class FlattenedMetadata:
             breaking roundtrip equality (e.g., {'value': 42} != {'value': "42"}).
             This ensures that CSV roundtrips preserve the original data types.
             """
-            if value_str == '<nested>':
+            if value_str == "<nested>":
                 return value_str
             try:
                 # Try int first
-                if '.' not in value_str:
+                if "." not in value_str:
                     return int(value_str)
                 # Try float
                 return float(value_str)
             except (ValueError, AttributeError):
                 return value_str
 
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             reader = csv.reader(f)
             rows = list(reader)
 
         # Skip header if present and convert values to appropriate types
-        if rows and rows[0] and str(rows[0][0]).lower() in ['number', 'num']:
+        if rows and rows[0] and str(rows[0][0]).lower() in ["number", "num"]:
             # Has header, process data rows
             data_rows = [[row[0], row[1], convert_value(row[2])] for row in rows[1:]]
         else:
@@ -176,21 +179,22 @@ class FlattenedMetadata:
         """
         # Read Excel file (handles both single and multi-sheet files)
         from mdstools.metadata.local import load_excel_all_sheets
+
         df = load_excel_all_sheets(filepath, **kwargs)
 
         # Convert to list of lists (Excel preserves numeric types)
         # Ensure Number column is string for consistency
-        df['Number'] = df['Number'].astype(str)
-        
+        df["Number"] = df["Number"].astype(str)
+
         # Only use first 3 columns (Number, Key, Value)
         # This allows loading enriched files that have Example/Description columns
         if len(df.columns) >= 3:
             df = df.iloc[:, :3]
-            df.columns = ['Number', 'Key', 'Value']  # Ensure consistent names
-        
+            df.columns = ["Number", "Key", "Value"]  # Ensure consistent names
+
         # Fill NaN in Key column with empty string (Excel treats empty strings as NaN)
-        df['Key'] = df['Key'].fillna('')
-        
+        df["Key"] = df["Key"].fillna("")
+
         data_rows = df.values.tolist()
 
         return cls(data_rows)
@@ -254,7 +258,7 @@ class FlattenedMetadata:
             True
         """
         if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
@@ -295,12 +299,13 @@ class FlattenedMetadata:
         if not separate_sheets:
             # Single sheet export
             if isinstance(filepath, str):
-                os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+                os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
             df.to_excel(filepath, index=False, **kwargs)
         else:
             # Multi-sheet export: one sheet per top-level key
             from mdstools.metadata.local import save_excel_multi_sheet
-            save_excel_multi_sheet(df, filepath, ['Number', 'Key', 'Value'])
+
+            save_excel_multi_sheet(df, filepath, ["Number", "Key", "Value"])
 
     def to_markdown(self, **kwargs) -> str:
         """

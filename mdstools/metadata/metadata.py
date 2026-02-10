@@ -55,7 +55,7 @@ class Metadata:
             >>> # True
             >>> pass  # Placeholder for file-based test
         """
-        with open(filepath, 'r', encoding='utf-8') as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
         return cls(data)
 
@@ -119,6 +119,6 @@ class Metadata:
             True
         """
         if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
-        with open(filepath, 'w', encoding='utf-8') as f:
+            os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+        with open(filepath, "w", encoding="utf-8") as f:
             yaml.safe_dump(self._data, f, default_flow_style=False, sort_keys=False)

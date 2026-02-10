@@ -49,7 +49,7 @@ def load_excel_all_sheets(filepath: str, **kwargs) -> pd.DataFrame:
         for sheet_name in sheet_names:
             df = pd.read_excel(filepath, sheet_name=sheet_name, **kwargs)
             dfs.append(df)
-        
+
         # Concatenate all sheets into a single DataFrame
         combined_df = pd.concat(dfs, ignore_index=True)
         return combined_df
@@ -85,7 +85,7 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
     """
     # Create parent directory if needed
     if isinstance(filepath, str):
-        os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+        os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
 
     with pd.ExcelWriter(filepath, engine="openpyxl") as writer:
         # Extract top-level number (e.g., "1" from "1.2.a")

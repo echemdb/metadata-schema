@@ -108,6 +108,7 @@ def test_multi_sheet_export():
 
     # Load and verify the multi-sheet file has multiple sheets
     import openpyxl
+
     wb = openpyxl.load_workbook(output_multi)
     sheet_count = len(wb.sheetnames)
     print(f"✓ Multi-sheet Excel has {sheet_count} sheet(s): {wb.sheetnames}")

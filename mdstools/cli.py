@@ -92,7 +92,9 @@ def main():
         # TODO: Implement separate_sheets in EnrichedFlattenedMetadata.to_excel()
         # For now, use single sheet
         enriched_metadata.to_excel(str(excel_multi_path))
-        print(f"  ✓ {excel_multi_path.name} (Note: separate_sheets not yet implemented)")
+        print(
+            f"  ✓ {excel_multi_path.name} (Note: separate_sheets not yet implemented)"
+        )
     else:
         flattened.to_csv(str(csv_path))
         print(f"  ✓ {csv_path.name}")
