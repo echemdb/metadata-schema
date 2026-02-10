@@ -1,6 +1,7 @@
 """FlattenedMetadata class for handling tabular representations of metadata."""
 
 import csv
+import os
 from typing import List, Optional
 
 import pandas as pd
@@ -84,15 +85,14 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import Metadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> # Create data with comma in string value
             >>> original_data = {'description': 'test, with comma', 'value': 42, 'title': 'A, B, C'}
             >>> metadata = Metadata(original_data)
             >>> flattened = metadata.flatten()
             >>> # Save to CSV
-            >>> flattened.to_csv('generated/doctests/test_comma.csv')
+            >>> flattened.to_csv('tests/generated/docstrings/test_comma.csv')
             >>> # Load back from CSV
-            >>> loaded = FlattenedMetadata.from_csv('generated/doctests/test_comma.csv')
+            >>> loaded = FlattenedMetadata.from_csv('tests/generated/docstrings/test_comma.csv')
             >>> # Verify commas in strings are preserved
             >>> loaded.unflatten().data == original_data
             True
@@ -147,7 +147,6 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> original_rows = [['1', 'experiment', '<nested>'],
             ... ['1.a', '', '<nested>'],
             ... ['1.a.1', 'A', '<nested>'],
@@ -225,13 +224,14 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
             >>> flattened.to_csv('tests/generated/docstrings/test_flat.csv')
             >>> os.path.exists('tests/generated/docstrings/test_flat.csv')
             True
         """
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
@@ -246,13 +246,14 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
             >>> flattened.to_excel('tests/generated/docstrings/test_flat.xlsx')
             >>> os.path.exists('tests/generated/docstrings/test_flat.xlsx')
             True
         """
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
         df.to_excel(filepath, index=False, **kwargs)
 

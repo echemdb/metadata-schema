@@ -1,5 +1,6 @@
 """EnrichedFlattenedMetadata class for handling schema-enriched tabular metadata."""
 
+import os
 from typing import List
 
 import pandas as pd
@@ -22,7 +23,6 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             
             >>> # Start with nested metadata
             >>> data = {'curation': {'process': [{'role': 'curator', 'name': 'John Doe'}]}}
@@ -121,7 +121,6 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> # Create a test CSV with system metadata
             >>> import csv
             >>> with open('tests/generated/docstrings/system_example.csv', 'w', newline='') as f:
@@ -154,7 +153,6 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> # Create test data
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> flattened = FlattenedMetadata(rows)
@@ -225,13 +223,14 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> enriched.to_csv('tests/generated/docstrings/enriched_test.csv')
             >>> os.path.exists('tests/generated/docstrings/enriched_test.csv')
             True
         """
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
@@ -246,13 +245,14 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
             >>> enriched.to_excel('tests/generated/docstrings/enriched_test.xlsx')
             >>> os.path.exists('tests/generated/docstrings/enriched_test.xlsx')
             True
         """
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
         df.to_excel(filepath, index=False, **kwargs)
 

@@ -1,5 +1,6 @@
 """Metadata class for handling nested dictionary/YAML metadata structures."""
 
+import os
 from typing import Optional
 
 import yaml
@@ -102,11 +103,10 @@ class Metadata:
 
             Basic save:\n\n            >>> from mdstools.metadata import Metadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
             >>> data = {'name': 'test', 'value': 42}
             >>> metadata = Metadata(data)
-            >>> metadata.to_yaml('generated/doctests/test_metadata.yaml')
-            >>> os.path.exists('generated/doctests/test_metadata.yaml')
+            >>> metadata.to_yaml('tests/generated/docstrings/test_metadata.yaml')
+            >>> os.path.exists('tests/generated/docstrings/test_metadata.yaml')
             True
 
             Test roundtrip (dict → YAML → dict):
@@ -118,5 +118,7 @@ class Metadata:
             >>> loaded.data == data
             True
         """
+        if isinstance(filepath, str):
+            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         with open(filepath, 'w', encoding='utf-8') as f:
             yaml.safe_dump(self._data, f, default_flow_style=False, sort_keys=False)
