@@ -5,6 +5,7 @@ import string
 from typing import Optional
 
 import pandas as pd
+import yaml
 
 
 # Helper to check if a list contains only primitive values
@@ -69,7 +70,7 @@ def _process_list(lst, prefix, parent_key, rows):
             rows.append([list_prefix, "", item])
 
 
-def flatten_yaml(d, prefix="", parent_key=None):
+def flatten(d, prefix="", parent_key=None):
     """
     Flatten a nested YAML structure into a tabular format with numbered rows.
 
@@ -84,13 +85,13 @@ def flatten_yaml(d, prefix="", parent_key=None):
 
         >>> data = {
         ...     'experiment': 'abc'}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', 'abc']]
 
         >>> data = {
         ...     'experiment': 'abc',
         ...     'details': 'foo'}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', 'abc'],
          ['2', 'details', 'foo']]
 
@@ -98,7 +99,7 @@ def flatten_yaml(d, prefix="", parent_key=None):
 
         >>> data = {
         ...     'experiment': {'value': 42, 'units': 'mV'}}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
          ['1.1', 'value', 42],
          ['1.2', 'units', 'mV']]
@@ -107,7 +108,7 @@ def flatten_yaml(d, prefix="", parent_key=None):
 
         >>> data = {
         ...     'experiment': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
          ['1.a', '', '<nested>'],
          ['1.a.1', 'A', 1],
@@ -120,7 +121,7 @@ def flatten_yaml(d, prefix="", parent_key=None):
 
         >>> data = {
         ...     'measurements': ['A', 'B', 'C']}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'measurements', '<nested>'],
          ['1.a', '', 'A'],
          ['1.b', '', 'B'],
@@ -130,7 +131,7 @@ def flatten_yaml(d, prefix="", parent_key=None):
 
         >>> data = {
         ...     'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
-        >>> flatten_yaml(data) # doctest: +NORMALIZE_WHITESPACE
+        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
          ['1.a', '', '<nested>'],
          ['1.a.1', 'A', '<nested>'],
@@ -153,7 +154,7 @@ def flatten_yaml(d, prefix="", parent_key=None):
     return rows
 
 
-def unflatten_tabular(rows):
+def unflatten(rows):
     """
     Reconstruct a nested dictionary from flattened rows.
 
@@ -170,7 +171,7 @@ def unflatten_tabular(rows):
     ... ['1.b', '', '<nested>'],
     ... ['1.b.1', 'A', 3],
     ... ['1.b.2', 'B', 4]]
-    >>> unflatten_tabular(flattened_metadata) # doctest: +ELLIPSIS
+    >>> unflatten(flattened_metadata) # doctest: +ELLIPSIS
     {'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
 
     """
@@ -182,19 +183,19 @@ def unflatten_tabular(rows):
         first_row_lower = [str(x).lower() for x in rows[0]]
         if 'number' in first_row_lower and 'key' in first_row_lower:
             rows = rows[1:]
-    
+
     if not rows:
         return {}
 
     result = {}
-    
+
     # Build a tree structure from the rows
     tree = {}
     for number, key, value in rows:
         # Ensure number is a string (pandas may read as float)
         number = str(number)
         tree[number] = {'key': key, 'value': value, 'children': {}}
-    
+
     # Link parent-child relationships
     for number in tree:
         parts = number.split('.')
@@ -202,33 +203,33 @@ def unflatten_tabular(rows):
             parent_number = '.'.join(parts[:-1])
             if parent_number in tree:
                 tree[parent_number]['children'][number] = tree[number]
-    
+
     # Find root entries (no parent or parent not in tree)
     roots = []
     for number in tree:
         parts = number.split('.')
         if len(parts) == 1 or '.'.join(parts[:-1]) not in tree:
             roots.append(number)
-    
+
     def is_list_index(s):
         """Check if string is a single letter (a-z)"""
         return len(s) == 1 and s.isalpha()
-    
+
     def build_structure(number):
         """Recursively build the nested structure"""
         node = tree[number]
         key = node['key']
         value = node['value']
         children = node['children']
-        
+
         if not children:
             # Leaf node - return the value
             return value
-        
+
         # Check if children are list items (have letter suffixes)
         child_numbers = sorted(children.keys(), key=lambda x: x.split('.')[-1])
         child_suffixes = [num.split('.')[-1] for num in child_numbers]
-        
+
         if all(is_list_index(suffix) for suffix in child_suffixes):
             # This is a list
             result_list = []
@@ -243,21 +244,21 @@ def unflatten_tabular(rows):
                 child_node = tree[child_num]
                 child_key = child_node['key']
                 child_result = build_structure(child_num)
-                
+
                 if child_key:  # Non-empty key
                     result_dict[child_key] = child_result
                 else:  # Empty key means inherit from parent or it's a list item
                     # This shouldn't happen at dict level, but handle it
                     result_dict = child_result if isinstance(child_result, dict) else result_dict
             return result_dict
-    
+
     # Build the root result
     for root_number in roots:
         root_node = tree[root_number]
         root_key = root_node['key']
         if root_key:
             result[root_key] = build_structure(root_number)
-    
+
     return result
 
 
@@ -338,14 +339,40 @@ class MetadataConverter:
 
         EXAMPLES::
 
-            >>> # Assuming 'metadata.xlsx' exists with proper format
-            >>> # converter = MetadataConverter.from_excel('metadata.xlsx')
-            >>> # isinstance(converter, MetadataConverter)
-            >>> # True
-            >>> pass  # Placeholder for file-based test
+            Test roundtrip conversion: flattened data → Excel → dict
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> # Create converter from complex flattened data
+            >>> flattened_data = [['number', 'key', 'value'],
+            ... ['1', 'experiment', '<nested>'],
+            ... ['1.a', '', '<nested>'],
+            ... ['1.a.1', 'A', '<nested>'],
+            ... ['1.a.1.1', 'value', 1],
+            ... ['1.a.1.2', 'units', 'mV'],
+            ... ['1.a.2', 'B', 2],
+            ... ['1.b', '', '<nested>'],
+            ... ['1.b.1', 'A', 3],
+            ... ['1.b.2', 'B', 4]]
+            >>> converter = MetadataConverter(flattened_data[1:], source_type='flattened')
+            >>> expected_dict = converter.nested_dict
+
+            >>> # Export to Excel
+            >>> converter.to_excel('generated/doctests/roundtrip.xlsx')
+
+            >>> # Read back from Excel
+            >>> converter_from_excel = MetadataConverter.from_excel('generated/doctests/roundtrip.xlsx')
+            >>> converter_from_excel.nested_dict == expected_dict
+            True
         """
+        # Read Excel file with pandas
         df = pd.read_excel(filepath, **kwargs)
-        return cls(df, source_type="flattened")
+
+        # Convert to list of lists with type preservation
+        # Excel preserves numeric types, so we don't need convert_value
+        data_rows = df.values.tolist()
+
+        return cls(data_rows, source_type="flattened")
 
     @classmethod
     def from_csv(cls, filepath, **kwargs):
@@ -401,7 +428,7 @@ class MetadataConverter:
                 return float(value_str)
             except (ValueError, AttributeError):
                 return value_str
-        
+
         # Handle both file path and file-like objects
         if isinstance(filepath, str):
             with open(filepath, 'r', encoding='utf-8') as f:
@@ -410,14 +437,14 @@ class MetadataConverter:
         else:
             reader = csv.reader(filepath)
             rows = list(reader)
-        
+
         # Convert values to appropriate types (skip header if present)
         if rows and rows[0] and str(rows[0][0]).lower() in ['number', 'num']:
             # Has header, process data rows
             data_rows = [[row[0], row[1], convert_value(row[2])] for row in rows[1:]]
         else:
             data_rows = [[row[0], row[1], convert_value(row[2])] for row in rows]
-        
+
         return cls(data_rows, source_type="flattened")
 
     @classmethod
@@ -448,7 +475,7 @@ class MetadataConverter:
         """
         if self._flattened is None:
             if self._source_type == "dict":
-                self._flattened = flatten_yaml(self._source_data)
+                self._flattened = flatten(self._source_data)
             else:  # source_type == 'flattened'
                 # Convert DataFrame to list of lists if needed
                 if isinstance(self._source_data, pd.DataFrame):
@@ -470,7 +497,7 @@ class MetadataConverter:
             if self._source_type == "dict":
                 self._nested = self._source_data
             else:  # source_type == 'flattened'
-                self._nested = unflatten_tabular(self.flattened)
+                self._nested = unflatten(self.flattened)
         return self._nested
 
     @property

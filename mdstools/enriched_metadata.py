@@ -1,0 +1,218 @@
+"""EnrichedFlattenedMetadata class for handling schema-enriched tabular metadata."""
+
+from typing import List
+
+import pandas as pd
+
+from mdstools.flattened_metadata import FlattenedMetadata
+from mdstools.schema_enricher import SchemaEnricher
+
+
+class EnrichedFlattenedMetadata:
+    """
+    Schema-enriched wrapper for flattened tabular metadata structures.
+
+    Extends FlattenedMetadata by adding Example and Description columns
+    from JSON Schema files. This provides documentation and reference values
+    alongside the actual metadata.
+
+    EXAMPLES::
+
+        >>> import os
+        >>> os.makedirs('generated/doctests', exist_ok=True)
+        >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+        >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+        >>> len(enriched.rows)  # Returns enriched rows with 5 columns
+        2
+        >>> len(enriched.rows[0])  # Each row has [number, key, value, example, description]
+        5
+    """
+
+    def __init__(self, rows: List[List], schema_dir: str):
+        """
+        Initialize with flattened data rows and schema directory.
+
+        :param rows: List of rows, each containing [number, key, value]
+        :param schema_dir: Path to directory containing JSON Schema files
+        """
+        # Store base flattened data (3 columns)
+        # Ensure all numbers are strings
+        self._base_rows = [[str(row[0]), row[1], row[2]] for row in rows]
+        self._schema_dir = schema_dir
+
+        # Initialize schema enricher
+        self._enricher = SchemaEnricher(schema_dir)
+
+        # Enrich the rows (adds Example and Description columns)
+        self._enriched_rows = self._enricher.enrich_flattened_data(self._base_rows)
+
+    @property
+    def rows(self) -> List[List]:
+        """Get the enriched data rows with Example and Description columns."""
+        return self._enriched_rows
+
+    @property
+    def base_rows(self) -> List[List]:
+        """Get the base 3-column rows without enrichment."""
+        return self._base_rows
+
+    @classmethod
+    def from_csv(cls, filepath, schema_dir: str, **kwargs):
+        """
+        Load flattened metadata from a CSV file and enrich with schema information.
+
+        :param filepath: Path to CSV file
+        :param schema_dir: Path to directory containing JSON Schema files
+        :param kwargs: Additional arguments passed to FlattenedMetadata.from_csv
+        :return: EnrichedFlattenedMetadata instance
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> # Create a test CSV with system metadata
+            >>> import csv
+            >>> with open('generated/doctests/system_example.csv', 'w', newline='') as f:
+            ...     writer = csv.writer(f)
+            ...     _ = writer.writerow(['Number', 'Key', 'Value'])
+            ...     _ = writer.writerow(['1', 'system', '<nested>'])
+            ...     _ = writer.writerow(['1.1', 'type', 'electrochemical'])
+            >>> enriched = EnrichedFlattenedMetadata.from_csv('generated/doctests/system_example.csv',
+            ...                                                schema_dir='schemas')
+            >>> len(enriched.rows)
+            2
+            >>> len(enriched.rows[0])  # Has 5 columns
+            5
+        """
+        # Load base data via FlattenedMetadata
+        base_flattened = FlattenedMetadata.from_csv(filepath, **kwargs)
+        return cls(base_flattened.rows, schema_dir)
+
+    @classmethod
+    def from_excel(cls, filepath, schema_dir: str, **kwargs):
+        """
+        Load flattened metadata from an Excel file and enrich with schema information.
+
+        :param filepath: Path to Excel file
+        :param schema_dir: Path to directory containing JSON Schema files
+        :param kwargs: Additional arguments passed to FlattenedMetadata.from_excel
+        :return: EnrichedFlattenedMetadata instance
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> # Create test data
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> flattened = FlattenedMetadata(rows)
+            >>> flattened.to_excel('generated/doctests/system_excel_example.xlsx')
+            >>> # Load with enrichment
+            >>> enriched = EnrichedFlattenedMetadata.from_excel('generated/doctests/system_excel_example.xlsx',
+            ...                                                  schema_dir='schemas')
+            >>> len(enriched.rows[0])  # Has 5 columns
+            5
+        """
+        # Load base data via FlattenedMetadata
+        base_flattened = FlattenedMetadata.from_excel(filepath, **kwargs)
+        return cls(base_flattened.rows, schema_dir)
+
+    def unflatten(self):
+        """
+        Convert back to nested metadata structure (ignores enrichment columns).
+
+        :return: Metadata instance
+
+        EXAMPLES::
+
+            >>> rows = [['1', 'experiment', '<nested>'],
+            ... ['1.1', 'value', 1]]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> metadata = enriched.unflatten()
+            >>> metadata.data
+            {'experiment': {'value': 1}}
+        """
+        from mdstools.metadata import Metadata
+        from mdstools.tabular_schema import unflatten
+
+        # Unflatten only uses the first 3 columns (Number, Key, Value)
+        nested_dict = unflatten(self._base_rows)
+        return Metadata(nested_dict)
+
+    def to_pandas(self) -> pd.DataFrame:
+        """
+        Convert to pandas DataFrame with enrichment columns.
+
+        :return: DataFrame with columns ['Number', 'Key', 'Value', 'Example', 'Description']
+
+        EXAMPLES::
+
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> df = enriched.to_pandas()
+            >>> df.columns.tolist()
+            ['Number', 'Key', 'Value', 'Example', 'Description']
+            >>> '<nested>' in df['Value'].tolist()
+            True
+        """
+        return pd.DataFrame(
+            self._enriched_rows,
+            columns=["Number", "Key", "Value", "Example", "Description"]
+        )
+
+    def to_csv(self, filepath, **kwargs):
+        """
+        Save enriched metadata to a CSV file.
+
+        :param filepath: Path to save CSV file
+        :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched.to_csv('generated/doctests/enriched_test.csv')
+            >>> os.path.exists('generated/doctests/enriched_test.csv')
+            True
+        """
+        df = self.to_pandas()
+        df.to_csv(filepath, index=False, **kwargs)
+
+    def to_excel(self, filepath, **kwargs):
+        """
+        Save enriched metadata to an Excel file.
+
+        :param filepath: Path to save Excel file
+        :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
+
+        EXAMPLES::
+
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched.to_excel('generated/doctests/enriched_test.xlsx')
+            >>> os.path.exists('generated/doctests/enriched_test.xlsx')
+            True
+        """
+        df = self.to_pandas()
+        df.to_excel(filepath, index=False, **kwargs)
+
+    def to_markdown(self, **kwargs) -> str:
+        """
+        Convert to Markdown table format with enrichment columns.
+
+        :param kwargs: Additional arguments passed to pandas.DataFrame.to_markdown
+        :return: Markdown-formatted string
+
+        EXAMPLES::
+
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> markdown = enriched.to_markdown()
+            >>> 'Example' in markdown and 'Description' in markdown
+            True
+        """
+        df = self.to_pandas()
+        return df.to_markdown(index=False, **kwargs)
