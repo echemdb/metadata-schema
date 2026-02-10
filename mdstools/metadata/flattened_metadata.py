@@ -50,11 +50,11 @@ class FlattenedMetadata:
         return self._rows
 
     @classmethod
-    def from_csv(cls, filepath, **kwargs):
+    def from_csv(cls, filepath: str, **kwargs):
         """
         Load flattened metadata from a CSV file.
 
-        :param filepath: Path to CSV file or file-like object (e.g., StringIO)
+        :param filepath: Path to CSV file
         :param kwargs: Additional arguments (currently unused, for future compatibility)
         :return: FlattenedMetadata instance
 
@@ -80,26 +80,34 @@ class FlattenedMetadata:
 
         TESTS::
 
-            Test roundtrip conversion (dict → CSV → dict):
+            Test roundtrip conversion with strings containing commas:
 
-            >>> from io import StringIO
             >>> from mdstools.metadata import Metadata
-            >>> original_data = {'experiment':
-            ... [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
-            >>> # Flatten and write to CSV
+            >>> import os
+            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> # Create data with comma in string value
+            >>> original_data = {'description': 'test, with comma', 'value': 42, 'title': 'A, B, C'}
             >>> metadata = Metadata(original_data)
             >>> flattened = metadata.flatten()
-            >>> csv_buffer = StringIO()
-            >>> flattened.to_csv(csv_buffer)
-            >>> # Read back from CSV
-            >>> csv_buffer.seek(0)
-            0
-            >>> loaded = FlattenedMetadata.from_csv(csv_buffer)
+            >>> # Save to CSV
+            >>> flattened.to_csv('generated/doctests/test_comma.csv')
+            >>> # Load back from CSV
+            >>> loaded = FlattenedMetadata.from_csv('generated/doctests/test_comma.csv')
+            >>> # Verify commas in strings are preserved
             >>> loaded.unflatten().data == original_data
             True
+            >>> loaded.rows[0][2]  # First value should contain comma
+            'test, with comma'
         """
         def convert_value(value_str):
-            """Convert string value to appropriate type (int, float, or keep as string)"""
+            """
+            Convert string value to appropriate type (int, float, or keep as string).
+
+            NOTE: This is necessary because CSV files store all values as strings.
+            Without type conversion, numeric values would remain strings after loading,
+            breaking roundtrip equality (e.g., {'value': 42} != {'value': "42"}).
+            This ensures that CSV roundtrips preserve the original data types.
+            """
             if value_str == '<nested>':
                 return value_str
             try:
@@ -111,13 +119,8 @@ class FlattenedMetadata:
             except (ValueError, AttributeError):
                 return value_str
 
-        # Handle both file path and file-like objects
-        if isinstance(filepath, str):
-            with open(filepath, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                rows = list(reader)
-        else:
-            reader = csv.reader(filepath)
+        with open(filepath, 'r', encoding='utf-8') as f:
+            reader = csv.reader(f)
             rows = list(reader)
 
         # Skip header if present and convert values to appropriate types
@@ -211,11 +214,11 @@ class FlattenedMetadata:
         """
         return pd.DataFrame(self._rows, columns=["Number", "Key", "Value"])
 
-    def to_csv(self, filepath, **kwargs):
+    def to_csv(self, filepath: str, **kwargs):
         """
         Save flattened metadata to a CSV file.
 
-        :param filepath: Path to save CSV file or file-like object
+        :param filepath: Path to save CSV file
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
 
         EXAMPLES::

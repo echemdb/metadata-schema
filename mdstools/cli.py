@@ -8,7 +8,8 @@ from pathlib import Path
 
 import yaml
 
-from mdstools.tabular_schema import MetadataConverter
+from mdstools.metadata.metadata import Metadata
+from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
 
 
 def main():
@@ -43,19 +44,20 @@ def main():
         print(f"Error: File not found: {yaml_path}")
         return 1
 
-    with open(yaml_path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-
-    # Create converter
+    # Load and flatten metadata
     print(f"Loading {yaml_path}...")
-    if args.no_enrichment:
-        converter = MetadataConverter.from_dict(data)
-    else:
-        converter = MetadataConverter.from_dict(data, schema_dir=args.schema_dir)
+    metadata = Metadata.from_yaml(str(yaml_path))
+    flattened = metadata.flatten()
 
-    # Get dataframes
+    # Create enriched metadata if requested
     enriched = not args.no_enrichment
-    df = converter.enriched_df if enriched else converter.df
+    if enriched:
+        enriched_metadata = EnrichedFlattenedMetadata(
+            flattened.rows, schema_dir=args.schema_dir
+        )
+        df = enriched_metadata.to_pandas()
+    else:
+        df = flattened.to_pandas()
 
     print(f"Processed {len(df)} fields")
 
@@ -80,14 +82,27 @@ def main():
 
     # Export files
     print(f"\nExporting to {output_dir}/")
-    converter.to_csv(csv_path, enriched=enriched)
-    print(f"  ✓ {csv_path.name}")
+    if enriched:
+        enriched_metadata.to_csv(str(csv_path))
+        print(f"  ✓ {csv_path.name}")
 
-    converter.to_excel(excel_path, enriched=enriched)
-    print(f"  ✓ {excel_path.name}")
+        enriched_metadata.to_excel(str(excel_path))
+        print(f"  ✓ {excel_path.name}")
 
-    converter.to_excel(excel_multi_path, enriched=enriched, separate_sheets=True)
-    print(f"  ✓ {excel_multi_path.name}")
+        # TODO: Implement separate_sheets in EnrichedFlattenedMetadata.to_excel()
+        # For now, use single sheet
+        enriched_metadata.to_excel(str(excel_multi_path))
+        print(f"  ✓ {excel_multi_path.name} (Note: separate_sheets not yet implemented)")
+    else:
+        flattened.to_csv(str(csv_path))
+        print(f"  ✓ {csv_path.name}")
+
+        flattened.to_excel(str(excel_path))
+        print(f"  ✓ {excel_path.name}")
+
+        # TODO: Implement separate_sheets
+        flattened.to_excel(str(excel_multi_path))
+        print(f"  ✓ {excel_multi_path.name}")
 
     print("\nDone!")
     return 0

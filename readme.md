@@ -62,23 +62,25 @@ pixi run test-comprehensive # Run integration tests only
 The `mdstools` package can also be used programmatically:
 
 ```python
-import yaml
-from mdstools.tabular_schema import MetadataConverter
+from mdstools.metadata.metadata import Metadata
+from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
 
 # Load YAML metadata
-with open('metadata.yaml') as f:
-    data = yaml.safe_load(f)
+metadata = Metadata.from_yaml('metadata.yaml')
 
-# Create converter with schema enrichment
-converter = MetadataConverter.from_dict(data, schema_dir='schemas')
+# Flatten to tabular format
+flattened = metadata.flatten()
+
+# Add schema enrichment (descriptions and examples)
+enriched = EnrichedFlattenedMetadata(flattened.rows, schema_dir='schemas')
 
 # Get enriched DataFrame
-df = converter.enriched_df
+df = enriched.to_pandas()
 
 # Export to various formats
-converter.to_csv('output.csv', enriched=True)
-converter.to_excel('output.xlsx', enriched=True)
-converter.to_excel('output_sheets.xlsx', enriched=True, separate_sheets=True)
+enriched.to_csv('output.csv')
+enriched.to_excel('output.xlsx')
+enriched.to_markdown('output.md')
 ```
 
 See [mdstools/README.md](mdstools/README.md) for detailed API documentation
