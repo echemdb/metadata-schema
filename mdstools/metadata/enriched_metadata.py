@@ -22,7 +22,7 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             
             >>> # Start with nested metadata
             >>> data = {'curation': {'process': [{'role': 'curator', 'name': 'John Doe'}]}}
@@ -121,15 +121,15 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> # Create a test CSV with system metadata
             >>> import csv
-            >>> with open('generated/doctests/system_example.csv', 'w', newline='') as f:
+            >>> with open('tests/generated/docstrings/system_example.csv', 'w', newline='') as f:
             ...     writer = csv.writer(f)
             ...     _ = writer.writerow(['Number', 'Key', 'Value'])
             ...     _ = writer.writerow(['1', 'system', '<nested>'])
             ...     _ = writer.writerow(['1.1', 'type', 'electrochemical'])
-            >>> enriched = EnrichedFlattenedMetadata.from_csv('generated/doctests/system_example.csv',
+            >>> enriched = EnrichedFlattenedMetadata.from_csv('tests/generated/docstrings/system_example.csv',
             ...                                                schema_dir='schemas')
             >>> len(enriched.rows)
             2
@@ -154,13 +154,13 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata, FlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> # Create test data
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> flattened = FlattenedMetadata(rows)
-            >>> flattened.to_excel('generated/doctests/system_excel_example.xlsx')
+            >>> flattened.to_excel('tests/generated/docstrings/system_excel_example.xlsx')
             >>> # Load with enrichment
-            >>> enriched = EnrichedFlattenedMetadata.from_excel('generated/doctests/system_excel_example.xlsx',
+            >>> enriched = EnrichedFlattenedMetadata.from_excel('tests/generated/docstrings/system_excel_example.xlsx',
             ...                                                  schema_dir='schemas')
             >>> len(enriched.rows[0])  # Has 5 columns
             5
@@ -225,11 +225,11 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
-            >>> enriched.to_csv('generated/doctests/enriched_test.csv')
-            >>> os.path.exists('generated/doctests/enriched_test.csv')
+            >>> enriched.to_csv('tests/generated/docstrings/enriched_test.csv')
+            >>> os.path.exists('tests/generated/docstrings/enriched_test.csv')
             True
         """
         df = self.to_pandas()
@@ -246,11 +246,11 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
             >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
             >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
-            >>> enriched.to_excel('generated/doctests/enriched_test.xlsx')
-            >>> os.path.exists('generated/doctests/enriched_test.xlsx')
+            >>> enriched.to_excel('tests/generated/docstrings/enriched_test.xlsx')
+            >>> os.path.exists('tests/generated/docstrings/enriched_test.xlsx')
             True
         """
         df = self.to_pandas()

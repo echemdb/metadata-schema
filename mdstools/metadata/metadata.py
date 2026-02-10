@@ -113,8 +113,8 @@ class Metadata:
 
             >>> data = {'experiment': {'value': 42, 'units': 'mV'}, 'author': 'test'}
             >>> metadata = Metadata(data)
-            >>> metadata.to_yaml('generated/doctests/roundtrip.yaml')
-            >>> loaded = Metadata.from_yaml('generated/doctests/roundtrip.yaml')
+            >>> metadata.to_yaml('tests/generated/docstrings/roundtrip.yaml')
+            >>> loaded = Metadata.from_yaml('tests/generated/docstrings/roundtrip.yaml')
             >>> loaded.data == data
             True
         """

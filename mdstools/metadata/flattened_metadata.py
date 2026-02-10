@@ -63,7 +63,7 @@ class FlattenedMetadata:
             Basic CSV loading with type preservation:
 
             >>> from mdstools.metadata import FlattenedMetadata
-            >>> flattened = FlattenedMetadata.from_csv('generated/doctests/from_csv_example.csv')
+            >>> flattened = FlattenedMetadata.from_csv('tests/from_csv_example.csv')
             >>> len(flattened.rows)
             5
             >>> flattened.rows[0][1]  # First row, key column
@@ -225,11 +225,11 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
-            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
+            >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
-            >>> flattened.to_csv('generated/doctests/test_flat.csv')
-            >>> os.path.exists('generated/doctests/test_flat.csv')
+            >>> flattened.to_csv('tests/generated/docstrings/test_flat.csv')
+            >>> os.path.exists('tests/generated/docstrings/test_flat.csv')
             True
         """
         df = self.to_pandas()
@@ -246,11 +246,11 @@ class FlattenedMetadata:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
-            >>> os.makedirs('generated/doctests', exist_ok=True)
-            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
+            >>> os.makedirs('tests/generated/docstrings', exist_ok=True)
+            >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1]]
             >>> flattened = FlattenedMetadata(rows)
-            >>> flattened.to_excel('generated/doctests/test_flat.xlsx')
-            >>> os.path.exists('generated/doctests/test_flat.xlsx')
+            >>> flattened.to_excel('tests/generated/docstrings/test_flat.xlsx')
+            >>> os.path.exists('tests/generated/docstrings/test_flat.xlsx')
             True
         """
         df = self.to_pandas()
