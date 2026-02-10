@@ -196,8 +196,8 @@ class EnrichedFlattenedMetadata:
             >>> metadata.data
             {'experiment': {'value': 1}}
         """
-        from mdstools.metadata.metadata import Metadata
         from mdstools.converters.unflatten import unflatten
+        from mdstools.metadata.metadata import Metadata
 
         # Unflatten only uses the first 3 columns (Number, Key, Value)
         nested_dict = unflatten(self._base_rows)

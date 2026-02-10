@@ -1,6 +1,7 @@
 """Shared utilities for loading and saving metadata to local files."""
 
 import os
+
 import pandas as pd
 
 
@@ -117,9 +118,7 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
             sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
 
-def save_csv_with_path_creation(
-    df: pd.DataFrame, filepath: str, **kwargs
-) -> None:
+def save_csv_with_path_creation(df: pd.DataFrame, filepath: str, **kwargs) -> None:
     """
     Save a DataFrame to CSV with automatic parent directory creation.
 
