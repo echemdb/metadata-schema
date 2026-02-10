@@ -162,8 +162,20 @@ class EnrichedFlattenedMetadata:
             ...                                                  schema_dir='schemas')
             >>> len(enriched.rows[0])  # Has 5 columns
             5
+
+            Load multi-sheet enriched Excel file:
+
+            >>> # Can load enriched files saved with separate_sheets=True
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical'],
+            ...         ['2', 'curation', '<nested>'], ['2.1', 'process', '<nested>']]
+            >>> enriched_multi = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched_multi.to_excel('tests/generated/docstrings/enriched_multi_ex.xlsx', separate_sheets=True)
+            >>> loaded = EnrichedFlattenedMetadata.from_excel('tests/generated/docstrings/enriched_multi_ex.xlsx',
+            ...                                                schema_dir='schemas')
+            >>> len(loaded.base_rows)
+            4
         """
-        # Load base data via FlattenedMetadata
+        # Load base data via FlattenedMetadata (which handles multi-sheet files)
         base_flattened = FlattenedMetadata.from_excel(filepath, **kwargs)
         return cls(base_flattened.rows, schema_dir)
 

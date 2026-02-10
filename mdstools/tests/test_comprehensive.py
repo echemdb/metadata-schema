@@ -114,6 +114,24 @@ def test_multi_sheet_export():
 
     assert sheet_count > 0, "Excel file should have at least one sheet"
 
+    # Test roundtrip: save multi-sheet → load → verify data matches
+    print("\n" + "Testing multi-sheet roundtrip...")
+    loaded_enriched = EnrichedFlattenedMetadata.from_excel(
+        str(output_multi), schema_dir="schemas"
+    )
+    loaded_flattened = FlattenedMetadata.from_excel(str(output_flat_multi))
+
+    # Verify loaded data matches original (compare base rows, not enrichment)
+    assert len(loaded_enriched.base_rows) == len(enriched.base_rows)
+    assert len(loaded_flattened.rows) == len(flattened.rows)
+    print("✓ Multi-sheet roundtrip successful - data preserved")
+
+    # Verify unflattening still works correctly
+    original_data = metadata.data
+    loaded_data = loaded_flattened.unflatten().data
+    assert loaded_data == original_data
+    print("✓ Multi-sheet data correctly unflattens to original structure")
+
 
 def test_specific_field_enrichment():
     """Test that specific fields get correct enrichment."""

@@ -4,6 +4,57 @@ import os
 import pandas as pd
 
 
+def load_excel_all_sheets(filepath: str, **kwargs) -> pd.DataFrame:
+    """
+    Load an Excel file, automatically handling both single-sheet and multi-sheet files.
+
+    If the file has multiple sheets, reads all sheets and concatenates them into
+    a single DataFrame. All sheets must have the same column structure.
+
+    :param filepath: Path to Excel file
+    :param kwargs: Additional arguments passed to pandas.read_excel
+    :return: DataFrame with all data (single sheet or concatenated from multiple sheets)
+
+    EXAMPLES::
+
+        >>> import pandas as pd
+        >>> from mdstools.metadata.local import load_excel_all_sheets, save_excel_multi_sheet
+        >>> import os
+        >>> # Create and save multi-sheet Excel file
+        >>> data = {
+        ...     'Number': ['1', '1.1', '2', '2.1', '2.2'],
+        ...     'Key': ['experiment', 'value', 'source', 'author', 'year'],
+        ...     'Value': ['<nested>', 42, '<nested>', 'John', 2024]
+        ... }
+        >>> df = pd.DataFrame(data)
+        >>> save_excel_multi_sheet(df, 'tests/generated/docstrings/multi_load_test.xlsx',
+        ...                         ['Number', 'Key', 'Value'])
+        >>> # Load it back (automatically handles multiple sheets)
+        >>> loaded_df = load_excel_all_sheets('tests/generated/docstrings/multi_load_test.xlsx')
+        >>> len(loaded_df) == len(df)
+        True
+        >>> list(loaded_df.columns) == ['Number', 'Key', 'Value']
+        True
+    """
+    # Read Excel file to check number of sheets
+    excel_file = pd.ExcelFile(filepath)
+    sheet_names = excel_file.sheet_names
+
+    if len(sheet_names) == 1:
+        # Single sheet - read normally
+        return pd.read_excel(filepath, **kwargs)
+    else:
+        # Multiple sheets - read and concatenate all
+        dfs = []
+        for sheet_name in sheet_names:
+            df = pd.read_excel(filepath, sheet_name=sheet_name, **kwargs)
+            dfs.append(df)
+        
+        # Concatenate all sheets into a single DataFrame
+        combined_df = pd.concat(dfs, ignore_index=True)
+        return combined_df
+
+
 def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[str]):
     """
     Save a DataFrame to Excel with separate sheets for each top-level key.
@@ -27,9 +78,9 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
         ...     'Value': ['<nested>', 42, '<nested>', 'John', 2024]
         ... }
         >>> df = pd.DataFrame(data)
-        >>> save_excel_multi_sheet(df, 'tests/generated/docstrings/multi_sheet_test.xlsx',
+        >>> save_excel_multi_sheet(df, 'tests/generated/docstrings/multi_sheet_save.xlsx',
         ...                         ['Number', 'Key', 'Value'])
-        >>> os.path.exists('tests/generated/docstrings/multi_sheet_test.xlsx')
+        >>> os.path.exists('tests/generated/docstrings/multi_sheet_save.xlsx')
         True
     """
     # Create parent directory if needed

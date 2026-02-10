@@ -161,13 +161,36 @@ class FlattenedMetadata:
             >>> loaded = FlattenedMetadata.from_excel('generated/doctests/test_flattened.xlsx')
             >>> loaded.unflatten().data == flattened.unflatten().data
             True
+
+            Multi-sheet roundtrip: save with separate_sheets, load automatically merges:
+
+            >>> # Save as multi-sheet Excel
+            >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1],
+            ...         ['2', 'source', '<nested>'], ['2.1', 'author', 'test']]
+            >>> flattened_multi = FlattenedMetadata(rows)
+            >>> flattened_multi.to_excel('tests/generated/docstrings/multi_roundtrip.xlsx', separate_sheets=True)
+            >>> # Load back - automatically handles multiple sheets
+            >>> loaded_multi = FlattenedMetadata.from_excel('tests/generated/docstrings/multi_roundtrip.xlsx')
+            >>> len(loaded_multi.rows) == len(rows)
+            True
         """
-        # Read Excel file with pandas
-        df = pd.read_excel(filepath, **kwargs)
+        # Read Excel file (handles both single and multi-sheet files)
+        from mdstools.metadata.local import load_excel_all_sheets
+        df = load_excel_all_sheets(filepath, **kwargs)
 
         # Convert to list of lists (Excel preserves numeric types)
         # Ensure Number column is string for consistency
         df['Number'] = df['Number'].astype(str)
+        
+        # Only use first 3 columns (Number, Key, Value)
+        # This allows loading enriched files that have Example/Description columns
+        if len(df.columns) >= 3:
+            df = df.iloc[:, :3]
+            df.columns = ['Number', 'Key', 'Value']  # Ensure consistent names
+        
+        # Fill NaN in Key column with empty string (Excel treats empty strings as NaN)
+        df['Key'] = df['Key'].fillna('')
+        
         data_rows = df.values.tolist()
 
         return cls(data_rows)
