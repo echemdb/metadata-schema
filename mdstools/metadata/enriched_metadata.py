@@ -23,19 +23,19 @@ class EnrichedFlattenedMetadata:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
-            
+
             >>> # Start with nested metadata
             >>> data = {'curation': {'process': [{'role': 'curator', 'name': 'John Doe'}]}}
-            
+
             >>> # Create enriched metadata (flattens and adds schema info)
             >>> enriched = EnrichedFlattenedMetadata.from_dict(data, schema_dir='schemas')
-            
+
             >>> # Base rows have 3 columns: [Number, Key, Value]
             >>> enriched.base_rows[0]  # Top level
             ['1', 'curation', '<nested>']
             >>> enriched.base_rows[3]  # Leaf value
             ['1.1.a.1', 'role', 'curator']
-            
+
             >>> # Enriched rows have 5 columns: [Number, Key, Value, Example, Description]
             >>> enriched.rows
             [['1', 'curation', '<nested>', '', ''],
@@ -99,7 +99,7 @@ class EnrichedFlattenedMetadata:
             5
         """
         from mdstools.metadata.metadata import Metadata
-        
+
         # Create Metadata and flatten it
         metadata = Metadata(data)
         flattened = metadata.flatten()
@@ -234,14 +234,20 @@ class EnrichedFlattenedMetadata:
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
-    def to_excel(self, filepath, **kwargs):
+    def to_excel(self, filepath, separate_sheets=False, **kwargs):
         """
         Save enriched metadata to an Excel file.
 
         :param filepath: Path to save Excel file
+        :param separate_sheets: If True, create separate sheets for each top-level key
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
 
+        When separate_sheets=True, the Excel file will have one sheet per top-level
+        key in the nested structure, making it easier to navigate large metadata files.
+
         EXAMPLES::
+
+            Single sheet export:
 
             >>> from mdstools.metadata import EnrichedFlattenedMetadata
             >>> import os
@@ -250,11 +256,27 @@ class EnrichedFlattenedMetadata:
             >>> enriched.to_excel('tests/generated/docstrings/enriched_test.xlsx')
             >>> os.path.exists('tests/generated/docstrings/enriched_test.xlsx')
             True
+
+            Multi-sheet export:
+
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical'],
+            ...         ['2', 'source', '<nested>'], ['2.1', 'author', 'test']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched.to_excel('tests/generated/docstrings/enriched_multi.xlsx', separate_sheets=True)
+            >>> os.path.exists('tests/generated/docstrings/enriched_multi.xlsx')
+            True
         """
-        if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
-        df.to_excel(filepath, index=False, **kwargs)
+
+        if not separate_sheets:
+            # Single sheet export
+            if isinstance(filepath, str):
+                os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+            df.to_excel(filepath, index=False, **kwargs)
+        else:
+            # Multi-sheet export: one sheet per top-level key
+            from mdstools.metadata.local import save_excel_multi_sheet
+            save_excel_multi_sheet(df, filepath, ['Number', 'Key', 'Value', 'Example', 'Description'])
 
     def to_markdown(self, **kwargs) -> str:
         """

@@ -80,6 +80,7 @@ df = enriched.to_pandas()
 # Export to various formats
 enriched.to_csv('output.csv')
 enriched.to_excel('output.xlsx')
+enriched.to_excel('output_multi.xlsx', separate_sheets=True)  # One sheet per top-level key
 enriched.to_markdown('output.md')
 ```
 

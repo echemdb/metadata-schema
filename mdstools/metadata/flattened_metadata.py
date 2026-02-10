@@ -235,14 +235,20 @@ class FlattenedMetadata:
         df = self.to_pandas()
         df.to_csv(filepath, index=False, **kwargs)
 
-    def to_excel(self, filepath, **kwargs):
+    def to_excel(self, filepath, separate_sheets=False, **kwargs):
         """
         Save flattened metadata to an Excel file.
 
         :param filepath: Path to save Excel file
+        :param separate_sheets: If True, create separate sheets for each top-level key
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
 
+        When separate_sheets=True, the Excel file will have one sheet per top-level
+        key in the nested structure, making it easier to navigate large metadata files.
+
         EXAMPLES::
+
+            Single sheet export:
 
             >>> from mdstools.metadata import FlattenedMetadata
             >>> import os
@@ -251,11 +257,27 @@ class FlattenedMetadata:
             >>> flattened.to_excel('tests/generated/docstrings/test_flat.xlsx')
             >>> os.path.exists('tests/generated/docstrings/test_flat.xlsx')
             True
+
+            Multi-sheet export:
+
+            >>> rows = [['1', 'experiment', '<nested>'], ['1.1', 'value', 1],
+            ...         ['2', 'source', '<nested>'], ['2.1', 'author', 'test']]
+            >>> flattened = FlattenedMetadata(rows)
+            >>> flattened.to_excel('tests/generated/docstrings/test_flat_multi.xlsx', separate_sheets=True)
+            >>> os.path.exists('tests/generated/docstrings/test_flat_multi.xlsx')
+            True
         """
-        if isinstance(filepath, str):
-            os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
         df = self.to_pandas()
-        df.to_excel(filepath, index=False, **kwargs)
+
+        if not separate_sheets:
+            # Single sheet export
+            if isinstance(filepath, str):
+                os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+            df.to_excel(filepath, index=False, **kwargs)
+        else:
+            # Multi-sheet export: one sheet per top-level key
+            from mdstools.metadata.local import save_excel_multi_sheet
+            save_excel_multi_sheet(df, filepath, ['Number', 'Key', 'Value'])
 
     def to_markdown(self, **kwargs) -> str:
         """

@@ -84,10 +84,35 @@ def test_multi_sheet_export():
     print("\n" + "=" * 80)
     print("TEST 3: Multi-Sheet Excel Export")
     print("=" * 80)
-    print("⚠ Multi-sheet export feature not yet implemented in new classes")
-    print("  (This feature needs to be ported from MetadataConverter)")
-    # TODO: Implement separate_sheets feature in EnrichedFlattenedMetadata.to_excel()
-    # For now, this test is skipped
+
+    # Load test data from YAML
+    metadata = Metadata.from_yaml("tests/simple_test.yaml")
+
+    # Flatten and enrich
+    flattened = metadata.flatten()
+    enriched = EnrichedFlattenedMetadata(flattened.rows, schema_dir="schemas")
+
+    # Export to multi-sheet Excel
+    output_multi = Path("tests/generated/enriched_multi_sheet.xlsx")
+    enriched.to_excel(str(output_multi), separate_sheets=True)
+    print(f"✓ Exported multi-sheet Excel to {output_multi}")
+
+    # Also test with FlattenedMetadata
+    output_flat_multi = Path("tests/generated/flattened_multi_sheet.xlsx")
+    flattened.to_excel(str(output_flat_multi), separate_sheets=True)
+    print(f"✓ Exported multi-sheet Excel (flattened) to {output_flat_multi}")
+
+    # Verify files exist
+    assert output_multi.exists()
+    assert output_flat_multi.exists()
+
+    # Load and verify the multi-sheet file has multiple sheets
+    import openpyxl
+    wb = openpyxl.load_workbook(output_multi)
+    sheet_count = len(wb.sheetnames)
+    print(f"✓ Multi-sheet Excel has {sheet_count} sheet(s): {wb.sheetnames}")
+
+    assert sheet_count > 0, "Excel file should have at least one sheet"
 
 
 def test_specific_field_enrichment():
