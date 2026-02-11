@@ -3,29 +3,53 @@ requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "metadata-schema"
+name = "mdstools"
 version = "0.3.3"
-license = "GPL-3.0-or-later"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
 requires-python = ">=3.10"
+dependencies = [
+    "pandas",
+    "tabulate",
+    "openpyxl",
+    "jsonschema",
+]
+
+[tool.setuptools]
+packages = [
+    "mdstools",
+]
+
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "win-64"]
 
 [tool.pixi.environments]
-python-310 = ["python-310"]
-python-311 = ["python-311"]
-python-312 = ["python-312"]
-python-313 = ["python-313"]
-python-314 = ["python-314"]
+python-310 = ["test", "python-310"]
+python-311 = ["test", "python-311"]
+python-312 = ["test", "python-312"]
+python-313 = ["test", "python-313"]
+python-314 = ["test", "python-314"]
+dev = ["dev", "test", "lint", "validate"] #, "doc"
 release = ["release"]
 
 [tool.pixi.dependencies]
-python = "*"
-pip = ">=25.0,<26"
-check-jsonschema = "*"
+pixi-kernel = ">=0.7.1,<0.8"
+ipykernel = ">=7.1.0,<8"
+pip = ">=26.0,<27"
+jupyterlab = ">=4.5.3,<5"
+jupytext = ">=1.19.1,<2"
+pandas = ">=2.3.3,<4"
+tabulate = ">=0.9.0,<0.10"
+check-jsonschema = ">=0.36.1,<0.37"
+pyyaml = ">=6.0.3,<7"
+jsonschema = ">=4.23.0,<5"
+
+
+[tool.pixi.pypi-dependencies]
+mdstools = { path = ".", editable = true }
 
 [tool.pixi.feature.python-310.dependencies]
 python = "3.10.*"
@@ -42,49 +66,89 @@ python = "3.13.*"
 [tool.pixi.feature.python-314.dependencies]
 python = "3.14.*"
 
-[tool.pixi.tasks]
+
+[tool.pixi.feature.test.dependencies]
+check-jsonschema = ">=0.36.1,<0.37"
+pytest = ">=9.0.2,<10"
+pytest-xdist = ">=3.8.0,<4"
+pytest-doctestplus = ">=1.7.1,<2"
+pytest-remotedata = ">=0.4.1,<0.5"
+
+[tool.pixi.feature.test.tasks]
+doctest = "pytest -n auto --doctest-modules mdstools"
+test-comprehensive = "pytest mdstools/tests/test_comprehensive.py -v"
+test-resolved-schemas = "pytest mdstools/tests/test_resolved_schemas.py -v"
+test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
+
+[tool.pixi.feature.lint.dependencies]
+black = "*"
+isort = "*"
+pylint = "*"
+
+[tool.pixi.feature.dev.tasks]
+test = "pixi run test-all"
+convert = "python mdstools/cli.py"
+unflatten = "python mdstools/cli.py unflatten"
+resolve-schemas = "python mdstools/schema/resolver.py"
+update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
+diff-schemas = {cmd = [
+    "bash", "-c",
+    '''
+    git diff --no-index schemas/expected/autotag.json schemas/autotag.json &&
+    git diff --no-index schemas/expected/svgdigitizer.json schemas/svgdigitizer.json &&
+    git diff --no-index schemas/expected/echemdb_package.json schemas/echemdb_package.json &&
+    git diff --no-index schemas/expected/svgdigitizer_package.json schemas/svgdigitizer_package.json
+    '''
+]}
+
+[tool.pixi.feature.lint.tasks]
+pylint = "pylint mdstools"
+black = "black mdstools"
+isort = "isort --profile black mdstools"
+lint = { depends-on = ["pylint", "black", "isort"] }
+
+[tool.pixi.feature.validate.tasks]
 validate-objects = {cmd = [
     "bash", "-c",
     '''
-    cd schemas
+    cd schemas/schema_pieces
     for file in curation eln experimental figure_description projects source system; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/objects/${file}.yaml
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/objects/${file}.yaml
     done
     '''
 ]}
 validate-file-schemas = {cmd = [
     "bash", "-c",
     '''
-    cd schemas
+    cd schemas/schema_pieces
     for file in autotag svgdigitizer; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../examples/file_schemas/${file}.yaml
+        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/file_schemas/${file}.yaml
     done
     '''
 ]}
 validate-package-schemas = {cmd = [
     "bash", "-c",
     '''
-    cd schemas
-    check-jsonschema --base-uri . --schemafile ./echemdb_package.json ../examples/file_schemas/echemdb_package.json
-    check-jsonschema --base-uri . --schemafile ./svgdigitizer_package.json ../examples/file_schemas/svgdigitizer_package.json
+    check-jsonschema --schemafile schemas/echemdb_package.json examples/file_schemas/echemdb_package.json 2>&1 | grep -E "(ok -- validation|error)" || true
+    check-jsonschema --schemafile schemas/svgdigitizer_package.json examples/file_schemas/svgdigitizer_package.json 2>&1 | grep -E "(ok -- validation|error)" || true
     '''
 ]}
 validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
 
+
 [tool.pixi.target.win-64.dependencies]
-m2-bash = "*"
+m2-bash = ">=5.2.37.2,<6"
 
 [tool.pixi.feature.release.tasks]
 # To create a new release, run `pixi run rever X.Y.Z`
 rever = { args = [ { "arg" = "version", "default" = "--help" } ],cmd = "rever {{ version }}" }
 
 [tool.pixi.feature.release.dependencies]
-twine = "*"
-rever = "*"
-make = "*"
-setuptools = "*"
+twine = ">=6.2.0,<7"
+rever = ">=0.5.1,<0.6"
+make = ">=4.4.1,<5"
+setuptools = ">=80.10.2,<81"
 python = "*"
 
 [tool.pixi.feature.release.pypi-dependencies]
-build = "*"
-
+build = ">=1.4.0, <2"

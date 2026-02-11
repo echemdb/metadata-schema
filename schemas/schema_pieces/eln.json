@@ -1,0 +1,22 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/eln.json",
+    "allOf": [{ "$ref": "#/definitions/Eln" }],
+    "definitions": {
+        "Eln": {
+            "type": "object",
+            "additionalProperties": false,
+            "title": "eln",
+            "description": "Electronic lab notebook (ELN) reference for the experiment.",
+            "properties": {
+                "url": {
+                    "description": "URL to the electronic lab notebook entry.",
+                    "$ref": "./general/url.json#/definitions/Url"
+                }
+            },
+            "required": [
+                "url"
+            ]
+        }
+    }
+}

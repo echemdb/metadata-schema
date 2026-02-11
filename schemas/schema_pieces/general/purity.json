@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/purity.json",
+    "allOf": [{ "$ref": "#/definitions/Purity" }],
+    "definitions": {
+        "Purity": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Purity specifications of a chemical component.",
+            "properties": {
+                "grade": {
+                    "type": "string",
+                    "description": "Quality grade designation.",
+                    "example": "ACS reagent"
+                },
+                "totalOrganicCarbon": {
+                    "description": "Value for the total organic carbon content measurement.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "totalIonConductivity": {
+                    "description": "Value for the total ionic conductivity measurement.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "value": {
+                    "type": "number",
+                    "description": "Purity value as a number.",
+                    "example": 99.9
+                },
+                "unit": {
+                    "type": "string",
+                    "description": "Unit for purity value.",
+                    "example": "%"
+                },
+                "container": {
+                    "type": "string",
+                    "description": "Name or identifier of the container in which the chemical is stored.",
+                    "example": "Glass bottle, amber"
+                },
+                "internalLot": {
+                    "type": "string",
+                    "description": "Internal LOT or batch number.",
+                    "example": "LOT-2024-001"
+                },
+                "url": {
+                    "description": "URL with further details on the purity or container.",
+                    "$ref": "../general/url.json#/definitions/Url"
+                },
+                "refinement": {
+                    "type": "string",
+                    "description": "Description of additional purification or treatment performed.",
+                    "example": "Triple distilled"
+                }
+            },
+            "title": "Purity"
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/general/component.json",
+    "allOf": [{ "$ref": "#/definitions/Component" }],
+    "definitions": {
+        "Component": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "A chemical component of the electrolyte solution.",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name or identifier of the chemical component (trivial name, formula, or IUPAC name).",
+                    "example": "H2SO4"
+                },
+                "chemicalIdentifiers": {
+                    "description": "Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.",
+                    "$ref": "../general/chemical_identifiers.json#/definitions/ChemicalIdentifiers"
+                },
+                "concentration": {
+                    "description": "Concentration of the component in the electrolyte.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "type": {
+                    "description": "Role or function of the component in the electrolyte.",
+                    "example": "acid",
+                    "anyOf": [
+                        {"const": "solvent", "description": "The solvent."},
+                        {"const": "salt", "description": "A salt added the solvent"},
+                        {"const": "acid", "description": "An acid added to the solvent."},
+                        {"const": "base", "description": "A base added to the solvent."},
+                        {"const": "gas", "description": "A gas passed through the solvent."},
+                        {"const": "solute", "description": "A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water."}
+                    ]
+                },
+                "source": {
+                    "description": "Information about the supplier and supplied quality of the chemical.",
+                    "$ref": "#/definitions/ComponentSource"
+                },
+                "purity": {
+                    "description": "Purity level of the chemical component after the purification process.",
+                    "$ref": "../general/purity.json#/definitions/Purity"
+                },
+                "partialPressure": {
+                    "description": "Partial pressure of a gaseous / volatile component.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "proportion": {
+                    "description": "Proportion of the component (e.g., volume percent, mole fraction).",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "flow": {
+                    "description": "Flow rate for gaseous components.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                },
+                "comment": {
+                    "type": "string",
+                    "description": "Additional notes or observations about this component.",
+                    "example": "Freshly prepared solution"
+                },
+                "pressure": {
+                    "description": "Pressure for gaseous components.",
+                    "$ref": "../general/quantity.json#/definitions/Quantity"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "title": "Component"
+        },
+        "ComponentSource": {
+            "type": "object",
+            "additionalProperties": false,
+            "description": "Information about the source and quality of the chemical component.",
+            "properties": {
+                "supplier": {
+                    "type": "string",
+                    "description": "Name of the company that supplied the chemical.",
+                    "example": "Your Chemical Supplier Inc."
+                },
+                "manufacturer": {
+                    "type": "string",
+                    "description": "Name of the company or organization that manufactured the chemical.",
+                    "example": "Organic Chemistry II - Bar Group"
+                },
+                "LOT": {
+                    "type": "string",
+                    "description": "LOT or batch number provided by the manufacturer or supplier for traceability.",
+                    "example": "LOT12345"
+                },
+                "purity": {
+                    "description": "Stated purity level from the supplier or manufacturer.",
+                    "$ref": "../general/purity.json#/definitions/Purity"
+                },
+                "refinement": {
+                    "type": "string",
+                    "description": "Any additional purification or treatment performed.",
+                    "example": "Recrystallized from ethanol"
+                },
+                "quality": {
+                    "type": "string",
+                    "description": "Quality grade of the chemical.",
+                    "example": "ACS reagent grade"
+                }
+            },
+            "title": "ComponentSource"
+        }
+    }
+}
