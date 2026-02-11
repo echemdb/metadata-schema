@@ -36,6 +36,5 @@ def validate_metadata(data: Any, schema_path: str) -> None:
             details.append(f"- {error.message} (at {path})")
         detail_text = "\n".join(details)
         raise ValueError(
-            "Schema validation failed with "
-            f"{len(errors)} error(s):\n{detail_text}"
+            "Schema validation failed with " f"{len(errors)} error(s):\n{detail_text}"
         )

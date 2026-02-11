@@ -97,9 +97,7 @@ def test_multi_sheet_export():
     enriched = EnrichedFlattenedMetadata(flattened.rows, schema_dir="schemas")
 
     # Export to multi-sheet Excel
-    output_multi = Path(
-        f"tests/generated/enriched_multi_sheet_{uuid4().hex}.xlsx"
-    )
+    output_multi = Path(f"tests/generated/enriched_multi_sheet_{uuid4().hex}.xlsx")
     enriched.to_excel(str(output_multi), separate_sheets=True)
     print(f"✓ Exported multi-sheet Excel to {output_multi}")
 
@@ -215,14 +213,10 @@ def test_unflatten_validation_and_cli():
     metadata = Metadata.from_yaml("tests/simple_test.yaml")
     flattened = metadata.flatten()
 
-    output_xlsx = Path(
-        f"tests/generated/unflatten_validation_{uuid4().hex}.xlsx"
-    )
+    output_xlsx = Path(f"tests/generated/unflatten_validation_{uuid4().hex}.xlsx")
     flattened.to_excel(str(output_xlsx))
 
-    schema_file = Path(
-        f"tests/generated/unflatten_schema_{uuid4().hex}.json"
-    )
+    schema_file = Path(f"tests/generated/unflatten_schema_{uuid4().hex}.json")
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",

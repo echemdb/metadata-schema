@@ -2,6 +2,7 @@
 """Command-line interface for mdstools metadata conversion."""
 
 import argparse
+import sys
 from pathlib import Path
 
 from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
@@ -191,8 +192,6 @@ def _run_unflatten(args: argparse.Namespace) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     """Convert metadata between YAML and tabular formats."""
-    import sys
-
     if argv is None:
         argv = sys.argv[1:]
 
@@ -213,6 +212,4 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    import sys
-
     sys.exit(main())
