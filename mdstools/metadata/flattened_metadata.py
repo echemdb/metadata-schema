@@ -143,6 +143,8 @@ class FlattenedMetadata:
         :param kwargs: Additional arguments passed to pandas.read_excel
         :return: FlattenedMetadata instance
 
+        NOTE: The Excel file must include columns named Number, Key, and Value.
+
         EXAMPLES::
 
             Test roundtrip: flattened → Excel → flattened
@@ -185,11 +187,24 @@ class FlattenedMetadata:
         # Ensure Number column is string for consistency
         df["Number"] = df["Number"].astype(str)
 
-        # Only use first 3 columns (Number, Key, Value)
-        # This allows loading enriched files that have Example/Description columns
-        if len(df.columns) >= 3:
-            df = df.iloc[:, :3]
-            df.columns = ["Number", "Key", "Value"]  # Ensure consistent names
+        # Use named columns and reject unexpected structures
+        required = ["Number", "Key", "Value"]
+        normalized = {str(col).strip().lower(): col for col in df.columns}
+        missing = [name for name in required if name.lower() not in normalized]
+        if missing:
+            raise ValueError(
+                "Excel file must contain columns: Number, Key, Value. "
+                f"Missing: {', '.join(missing)}"
+            )
+
+        df = df[
+            [
+                normalized["number"],
+                normalized["key"],
+                normalized["value"],
+            ]
+        ]
+        df.columns = required  # Ensure consistent names
 
         # Fill NaN in Key column with empty string (Excel treats empty strings as NaN)
         df["Key"] = df["Key"].fillna("")
