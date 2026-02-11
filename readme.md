@@ -2,10 +2,9 @@
 
 Development of a metadata schema for experimental data, specifically electrochemical and electrocatalytic data.
 
-## Install with pixi for development
+## Install
 
-If you want to work on the metadata-schema itself, install [pixi](https://pixi.sh)
-and get a copy of the latest unreleased version of the metadata-schema:
+Install [pixi](https://pixi.sh) and get a copy of the metadata-schema:
 
 ```sh
 git clone https://github.com/echemdb/metadata-schema.git
@@ -13,14 +12,6 @@ cd metadata-schema
 ```
 
 ## Usage
-
-### Validate schema files
-
-To validate the example files against the JSON schemas:
-
-```sh
-pixi run validate
-```
 
 ### Convert metadata to Excel/CSV
 
@@ -49,14 +40,6 @@ pixi run convert <yaml_file> [--schema-dir DIR] [--output-dir DIR] [--no-enrichm
 - `--output-dir` - Output directory (default: `generated`)
 - `--no-enrichment` - Disable enrichment (no Description/Example columns)
 
-### Run tests
-
-```sh
-pixi run test              # Run all tests
-pixi run doctest           # Run doctests only
-pixi run test-comprehensive # Run integration tests only
-```
-
 ## Python API
 
 The `mdstools` package can also be used programmatically:
@@ -84,4 +67,35 @@ enriched.to_excel('output_multi.xlsx', separate_sheets=True)  # One sheet per to
 enriched.to_markdown('output.md')
 ```
 
-See [mdstools/README.md](mdstools/README.md) for detailed API documentation
+You can also load a flat Excel/CSV file, reconstruct the nested dict, and
+optionally write YAML. This workflow expects columns named `Number`, `Key`,
+and `Value` and is intended for unflattening back to dict/YAML.
+An enriched Excel can also be loaded.
+
+```python
+from mdstools.metadata.flattened_metadata import FlattenedMetadata
+
+flattened = FlattenedMetadata.from_excel("generated/example_metadata.xlsx")
+metadata = flattened.unflatten()
+
+data = metadata.data  # Nested dict
+metadata.to_yaml("generated/example_metadata.yaml")
+```
+
+## Developer
+
+### Run tests
+
+```sh
+pixi run test              # Run all tests
+pixi run doctest           # Run doctests only
+pixi run test-comprehensive # Run integration tests only
+```
+
+### Validate schema files
+
+To validate the example files against the JSON schemas:
+
+```sh
+pixi run validate
+```
