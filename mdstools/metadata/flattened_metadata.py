@@ -213,10 +213,11 @@ class FlattenedMetadata:
 
         return cls(data_rows)
 
-    def unflatten(self):
+    def unflatten(self, schema_path: str | None = None):
         """
         Convert back to nested metadata structure.
 
+        :param schema_path: Optional JSON schema file path for validation
         :return: Metadata instance
 
         EXAMPLES::
@@ -233,7 +234,14 @@ class FlattenedMetadata:
         from mdstools.metadata.metadata import Metadata
 
         nested_dict = unflatten(self._rows)
-        return Metadata(nested_dict)
+        metadata = Metadata(nested_dict)
+
+        if schema_path:
+            from mdstools.schema.validator import validate_metadata
+
+            validate_metadata(metadata.data, schema_path)
+
+        return metadata
 
     def to_pandas(self) -> pd.DataFrame:
         """

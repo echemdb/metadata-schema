@@ -40,6 +40,12 @@ pixi run convert <yaml_file> [--schema-dir DIR] [--output-dir DIR] [--no-enrichm
 - `--output-dir` - Output directory (default: `generated`)
 - `--no-enrichment` - Disable enrichment (no Description/Example columns)
 
+### Convert Excel/CSV back to YAML (CLI)
+
+```sh
+pixi run unflatten generated/example_metadata.xlsx --schema-file schemas/schema_pieces/minimum_echemdb.json
+```
+
 ## Python API
 
 The `mdstools` package can also be used programmatically:
@@ -90,6 +96,12 @@ metadata.to_yaml("generated/example_metadata.yaml")
 pixi run test              # Run all tests
 pixi run doctest           # Run doctests only
 pixi run test-comprehensive # Run integration tests only
+```
+
+or all
+
+```sh
+pixi run -e dev test-all
 ```
 
 ### Validate schema files

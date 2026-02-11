@@ -13,6 +13,7 @@ dependencies = [
     "pandas",
     "tabulate",
     "openpyxl",
+    "jsonschema",
 ]
 
 [tool.setuptools]
@@ -44,6 +45,7 @@ pandas = ">=2.3.3,<4"
 tabulate = ">=0.9.0,<0.10"
 check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
+jsonschema = ">=4.23.0,<5"
 
 
 [tool.pixi.pypi-dependencies]
@@ -86,6 +88,7 @@ pylint = "*"
 [tool.pixi.feature.dev.tasks]
 test = "pixi run test-all"
 convert = "python mdstools/cli.py"
+unflatten = "python mdstools/cli.py unflatten"
 resolve-schemas = "python mdstools/schema/resolver.py"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
 diff-schemas = {cmd = [

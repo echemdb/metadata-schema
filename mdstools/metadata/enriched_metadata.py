@@ -181,10 +181,11 @@ class EnrichedFlattenedMetadata:
         base_flattened = FlattenedMetadata.from_excel(filepath, **kwargs)
         return cls(base_flattened.rows, schema_dir)
 
-    def unflatten(self):
+    def unflatten(self, schema_path: str | None = None):
         """
         Convert back to nested metadata structure (ignores enrichment columns).
 
+        :param schema_path: Optional JSON schema file path for validation
         :return: Metadata instance
 
         EXAMPLES::
@@ -202,7 +203,14 @@ class EnrichedFlattenedMetadata:
 
         # Unflatten only uses the first 3 columns (Number, Key, Value)
         nested_dict = unflatten(self._base_rows)
-        return Metadata(nested_dict)
+        metadata = Metadata(nested_dict)
+
+        if schema_path:
+            from mdstools.schema.validator import validate_metadata
+
+            validate_metadata(metadata.data, schema_path)
+
+        return metadata
 
     def to_pandas(self) -> pd.DataFrame:
         """
