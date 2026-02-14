@@ -8179,8 +8179,8 @@ packages:
   timestamp: 1754946862113
 - pypi: ./
   name: mdstools
-  version: 0.3.3
-  sha256: 5f9681f254110bbaa51c91d8ea16df6b763f101616fb4cf2988de37374a0f700
+  version: 0.4.0
+  sha256: 09563808f0ce24c4d546a51ac304ecf63423d5f7c6c09262190582c774d429f7
   requires_dist:
   - pandas
   - tabulate
