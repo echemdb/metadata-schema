@@ -95,6 +95,7 @@ diff-schemas = {cmd = [
     "bash", "-c",
     '''
     git diff --no-index schemas/expected/autotag.json schemas/autotag.json &&
+    git diff --no-index schemas/expected/minimum_echemdb.json schemas/minimum_echemdb.json &&
     git diff --no-index schemas/expected/source_data.json schemas/source_data.json &&
     git diff --no-index schemas/expected/svgdigitizer.json schemas/svgdigitizer.json &&
     git diff --no-index schemas/expected/echemdb_package.json schemas/echemdb_package.json &&

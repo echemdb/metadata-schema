@@ -969,14 +969,6 @@
                               "description": "Type of electrochemical cell, such as H-cell, beaker glass, flow cell.",
                               "example": "H-cell",
                               "type": "string"
-                            },
-                            "url": {
-                              "default": "https://",
-                              "description": "URL to a publication or documentation describing the cell setup.",
-                              "example": "https://example.org",
-                              "format": "uri",
-                              "pattern": "^https?://.*$",
-                              "type": "string"
                             }
                           },
                           "title": "ElectrochemicalCell",
@@ -2709,14 +2701,6 @@
             "type": {
               "description": "Type of electrochemical cell, such as H-cell, beaker glass, flow cell.",
               "example": "H-cell",
-              "type": "string"
-            },
-            "url": {
-              "default": "https://",
-              "description": "URL to a publication or documentation describing the cell setup.",
-              "example": "https://example.org",
-              "format": "uri",
-              "pattern": "^https?://.*$",
               "type": "string"
             }
           },
