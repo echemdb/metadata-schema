@@ -13,8 +13,11 @@
                 "system": {
                     "$ref": "system.json#/definitions/System"
                 },
-                "dataDescription": {
+                "figureDescription": {
                     "$ref": "figure_description.json#/definitions/FigureDescription"
+                },
+                "experimental": {
+                    "$ref": "experimental.json#/definitions/Experimental"
                 },
                 "source": {
                     "$ref": "source.json#/definitions/Source"
@@ -22,7 +25,10 @@
             },
             "required": [
                 "curation",
-                "system"
+                "system",
+                "figureDescription",
+                "experimental",
+                "source"
             ],
             "title": "MinimumEchemdb",
             "description": "Minimum set of metadata to describe an electrochemical system for echemdb."

@@ -104,6 +104,22 @@ or all
 pixi run -e dev test-all
 ```
 
+### Resolve schemas
+
+Generate resolved (single-file) JSON schemas from the modular schema pieces:
+
+```sh
+pixi run resolve-schemas
+```
+
+This resolves all `$ref` references and writes the combined schemas to `schemas/`.
+
+After intentional changes to schema pieces, update the expected baseline files:
+
+```sh
+pixi run update-expected-schemas
+```
+
 ### Validate schema files
 
 To validate the example files against the JSON schemas:

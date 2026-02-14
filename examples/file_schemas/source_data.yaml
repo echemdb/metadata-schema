@@ -62,7 +62,8 @@ system:
         unit: cm-2
   electrochemicalCell:
     type: flow cell attached to UHV system
-    url: https://doi.org/10.1002/chem.201803418 (source describing the setup)
+    source:
+      url: https://doi.org/10.1002/chem.201803418 # source describing the setup
 source:
   citationKey: engstfeld_2018_polycrystalline_17743
   url: https://doi.org/10.1002/chem.201803418
@@ -78,8 +79,7 @@ experimental:
     - COOR
     - NRR
 figureDescription: # optional but recommended
-  description: Description of the figure, e.g., what is plotted, which curves are shown, etc.
-  type: raw, processed, digitized (whichever is most fitting
+  type: raw
   simultaneousMeasurements:
     - ring current # List of operando methods shown in the same plot, which is linked to the data.
     - FTIR

@@ -20,6 +20,8 @@ def main():
     # List of schemas to update
     schemas_to_update = [
         "autotag.json",
+        "minimum_echemdb.json",
+        "source_data.json",
         "svgdigitizer.json",
         "echemdb_package.json",
         "svgdigitizer_package.json",

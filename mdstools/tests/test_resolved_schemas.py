@@ -34,6 +34,8 @@ def test_resolved_schemas_match_expected():
     # List of schemas to check
     schemas_to_check = [
         "autotag.json",
+        "minimum_echemdb.json",
+        "source_data.json",
         "svgdigitizer.json",
         "echemdb_package.json",
         "svgdigitizer_package.json",
