@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mdstools"
-version = "0.3.3"
+version = "0.4.0"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
