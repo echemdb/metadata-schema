@@ -69,6 +69,7 @@ source:
   url: https://doi.org/10.1002/chem.201803418
   figure: 4b (include subfigure)
   curve: blue (a unique identifier of the curve within the figure, e.g., color, symbol, etc)
+  originalFilename: original_data.csv (optional but recommended, especially when the data is extracted from a plot)
   techniques:
   - XPS
   - STM
