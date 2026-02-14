@@ -25,6 +25,8 @@ We've successfully implemented **Option 3**: Using JSON Schema files to enrich f
 #### `schema/` Package
 - **enricher.py**: `SchemaEnricher` class for adding descriptions and examples from JSON Schema files
 - **resolver.py**: `SchemaResolver` class for pre-resolving all $ref references in schemas
+- **validator.py**: Schema validation utilities
+- **update_expected_schemas.py**: Script to update expected schema snapshots
 
 **Key Features**:
 - Load and cache JSON schemas
@@ -34,7 +36,7 @@ We've successfully implemented **Option 3**: Using JSON Schema files to enrich f
 
 **Note**: Schema resolution not needed at runtime (enricher handles $ref on-the-fly), but useful for creating single-file schemas for releases.
 
-**Usage**: `python mdstools/schema/resolver.py` (generates resolved schemas in `schemas/` folder)
+**Usage**: `pixi run resolve-schemas` (generates resolved schemas in `schemas/` folder)
 
 ### 2. Utilities
 
@@ -98,11 +100,26 @@ However, `mdstools/schema/resolver.py` is kept for:
 
 To generate resolved schemas:
 ```bash
-python mdstools/schema/resolver.py
+pixi run resolve-schemas
 ```
 
 This updates the resolved JSON schemas under `schemas/`, which are validated against
 `schemas/expected/` in CI.
+
+After intentional schema changes, update the expected baselines:
+```bash
+pixi run update-expected-schemas
+```
+
+### Resolved Schemas
+
+The following schemas are resolved from `schema_pieces/` into `schemas/`:
+- **autotag.json** - Complete echemdb metadata for auto-generated YAML
+- **minimum_echemdb.json** - Minimum metadata for echemdb
+- **source_data.json** - Source data with data description (dialect, field mapping, field units)
+- **svgdigitizer.json** - Digitizer output metadata
+- **echemdb_package.json** - Data package for echemdb
+- **svgdigitizer_package.json** - Data package for svgdigitizer
 
 ## Key Design Decisions
 
@@ -125,9 +142,10 @@ This updates the resolved JSON schemas under `schemas/`, which are validated aga
 ## File Structure
 
 ```
-metadata-schema-min-echemdb-yaml/
+metadata-schema/
 ├── mdstools/                      # Main package
 │   ├── __init__.py
+│   ├── cli.py                    # Command-line interface
 │   ├── metadata/                 # Metadata classes
 │   │   ├── metadata.py           # Nested dict/YAML wrapper
 │   │   ├── flattened_metadata.py # Tabular format wrapper
@@ -137,22 +155,46 @@ metadata-schema-min-echemdb-yaml/
 │   │   └── unflatten.py          # Tabular → nested
 │   ├── schema/                   # Schema utilities
 │   │   ├── enricher.py           # Schema-based enrichment
-│   │   └── resolver.py           # Schema resolution (for releases)
-│   ├── cli.py                    # Command-line interface
-│   └── README.md                 # Package documentation
+│   │   ├── resolver.py           # Schema resolution (for releases)
+│   │   ├── validator.py          # Schema validation
+│   │   └── update_expected_schemas.py  # Update expected snapshots
+│   └── tests/                    # Test files
+│       ├── test_comprehensive.py # Full test suite
+│       └── test_resolved_schemas.py  # Snapshot tests for resolved schemas
 │
-├── schemas/                       # JSON Schema files
-│   └── *.json                    # Schema definitions
+├── schemas/                       # Resolved JSON Schema files
+│   ├── autotag.json
+│   ├── minimum_echemdb.json
+│   ├── source_data.json
+│   ├── svgdigitizer.json
+│   ├── echemdb_package.json
+│   ├── svgdigitizer_package.json
+│   ├── expected/                 # Expected baselines for snapshot testing
+│   │   └── *.json
+│   └── schema_pieces/            # Modular schema definitions
+│       ├── autotag.json
+│       ├── curation.json
+│       ├── data_description.json  # CSV dialect, field mapping, field units
+│       ├── figure_description.json
+│       ├── minimum_echemdb.json
+│       ├── source.json
+│       ├── source_data.json       # Combines all pieces for source data files
+│       ├── system.json
+│       ├── experimental/
+│       ├── general/              # Reusable types (quantity, url, etc.)
+│       └── system/               # Electrolyte, electrode, cell schemas
 │
 ├── examples/                      # Example YAML files
-│   ├── file_schemas/
-│   └── objects/
+│   ├── file_schemas/             # Examples per schema type
+│   │   ├── autotag.yaml
+│   │   ├── minimum_echemebd.yaml
+│   │   └── source_data.yaml
+│   └── objects/                  # Examples of individual objects
 │
-├── tests/                         # Test files
-│   ├── simple_test.yaml          # Simple test data
-│   ├── example_metadata.yaml     # Comprehensive example
-│   ├── test_comprehensive.py     # Full test suite
-│   └── generated/                # Test outputs (gitignored)
+├── tests/                         # Test data
+│   ├── simple_test.yaml
+│   ├── example_metadata.yaml
+│   └── from_csv_example.csv
 │
 └── generated/                     # Project outputs (gitignored)
 ```
@@ -192,9 +234,18 @@ pixi run convert tests/example_metadata.yaml --output-dir generated
 
 ### Run All Tests
 ```bash
-pixi run test              # Run all tests (doctests + comprehensive)
-pixi run doctest           # Run doctests only
-pixi run test-comprehensive # Run integration tests only
+pixi run test                # Run all tests (doctests + comprehensive + resolved schemas)
+pixi run doctest             # Run doctests only
+pixi run test-comprehensive  # Run integration tests only
+pixi run test-resolved-schemas  # Run resolved schema snapshot tests
+```
+
+### Resolve & Validate Schemas
+```bash
+pixi run resolve-schemas         # Resolve $refs into single-file schemas
+pixi run update-expected-schemas # Update expected baselines after intentional changes
+pixi run validate                # Validate example YAMLs against schemas
+pixi run diff-schemas            # Show diffs between expected and resolved schemas
 ```
 
 ### Run Conversion
@@ -204,13 +255,9 @@ pixi run convert tests/example_metadata.yaml
 
 ## Future Enhancements
 
-### High Priority (Implemented)
-- **Unflatten + Validation**: Convert flat tables back to nested YAML with optional schema validation
-- **CLI Import**: Convert Excel/CSV metadata back to YAML via CLI
-
 ### Schema Resolution Strategy
 - **Current**: Code handles `$ref` resolution on-the-fly (no pre-resolved schemas needed)
-- **For Releases**: Use `mdstools/schema/resolver.py` to create a single distributable schema file when creating GitHub releases/tags
+- **For Releases**: Use `pixi run resolve-schemas` to create single distributable schema files when creating GitHub releases/tags
   - This will make it easier for end users to have a single, self-contained schema file
   - The resolved schema should be included in the release assets
 
@@ -238,9 +285,10 @@ To improve enrichment coverage beyond current ~14%:
 ## Testing & Maintenance Notes
 
 ### Test Structure
-- `pixi run test` - Runs all tests (doctests + comprehensive suite)
-- `pixi run doctest` - Runs doctests in mdstools modules (12 tests)
-- `pixi run test-comprehensive` - Runs integration tests (5 tests)
+- `pixi run test` - Runs all tests (doctests + comprehensive + resolved schema snapshots)
+- `pixi run doctest` - Runs doctests in mdstools modules
+- `pixi run test-comprehensive` - Runs integration tests (6 tests)
+- `pixi run test-resolved-schemas` - Snapshot tests comparing resolved schemas against `schemas/expected/`
 - Test outputs go to `tests/generated/` (gitignored)
 
 ### CLI Usage
@@ -258,6 +306,8 @@ To improve enrichment coverage beyond current ~14%:
   - `tests/example_metadata.yaml` - Comprehensive example for demos
 - **Resolved schemas**: Generated into `schemas/` and checked against `schemas/expected/` in CI
   - `mdstools/schema/resolver.py` kept for release and validation workflows
+  - `mdstools/schema/update_expected_schemas.py` updates expected baselines
+  - Schemas resolved: autotag, minimum_echemdb, source_data, svgdigitizer, echemdb_package, svgdigitizer_package
 
 ## Known Limitations
 
@@ -280,18 +330,23 @@ This implementation successfully provides:
 1. ✅ Robust YAML ↔ Tabular conversion
 2. ✅ Schema-based enrichment with descriptions/examples
 3. ✅ Multiple export formats (CSV, Excel single/multi-sheet, Markdown)
-4. ✅ Comprehensive test coverage (17 tests total)
+4. ✅ Comprehensive test coverage (41 tests total: 34 doctests + 6 comprehensive + 1 snapshot)
 5. ✅ Clean, documented, maintainable code
 6. ✅ CLI interface via pixi tasks
 7. ✅ Proper file organization and gitignore setup
+8. ✅ Unflatten + validation (Excel/CSV → YAML with schema validation)
+9. ✅ Schema snapshot testing (resolved schemas vs expected baselines)
+10. ✅ Data description schema (dialect, field mapping, field units) for source data files
 
 The system is ready for users to:
 - Generate Excel templates from YAML examples
 - Fill out metadata with helpful descriptions and examples
-- Convert completed Excel sheets back to YAML (TODO: implement unflattening)
+- Convert completed Excel sheets back to YAML
+- Validate metadata against JSON schemas
 
-Next steps for production use:
-- Add more descriptions/examples to JSON schemas to improve enrichment coverage
-- Implement unflattening logic for round-trip conversion
-- Consider adding validation when converting Excel back to YAML
-- Create resolved schema file in release process
+Schema types supported:
+- **autotag** - Complete auto-generated echemdb metadata
+- **minimum_echemdb** - Minimum set for electrochemical data
+- **source_data** - Source data files with data description (dialect, field mapping, units)
+- **svgdigitizer** - Digitizer output metadata
+- **echemdb_package / svgdigitizer_package** - Data packages
