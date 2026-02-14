@@ -305,6 +305,7 @@ if __name__ == "__main__":
     # These are the "combined" schemas that reference multiple pieces
     schemas_to_resolve = [
         "autotag",  # Complete echemdb metadata
+        "source_data",  # Source data with data description
         "svgdigitizer",  # Digitizer output metadata
         "echemdb_package",  # Data package for echemdb
         "svgdigitizer_package",  # Data package for svgdigitizer

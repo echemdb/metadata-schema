@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "allOf": [
     {
-      "$ref": "#/definitions/Svgdigitizer"
+      "$ref": "#/definitions/SourceData"
     }
   ],
   "definitions": {
@@ -138,6 +138,47 @@
       },
       "title": "ComponentSource",
       "type": "object"
+    },
+    "Dialect": {
+      "oneOf": [
+        {
+          "description": "No dialect specification (use defaults or auto-detect).",
+          "type": "null"
+        },
+        {
+          "additionalProperties": false,
+          "description": "CSV dialect specification describing the format of the source data file.",
+          "properties": {
+            "columnHeaderLines": {
+              "description": "Number of lines that make up the column headers. If more than one, header parts are joined with ' / '.",
+              "example": 2,
+              "type": "integer"
+            },
+            "decimal": {
+              "description": "Character used as decimal separator.",
+              "example": ".",
+              "type": "string"
+            },
+            "delimiters": {
+              "description": "Column delimiter character(s) used in the data file.",
+              "example": ",",
+              "type": "string"
+            },
+            "encoding": {
+              "description": "Character encoding of the data file.",
+              "example": "utf-8",
+              "type": "string"
+            },
+            "headerLines": {
+              "description": "Number of header lines to skip before the column headers.",
+              "example": 0,
+              "type": "integer"
+            }
+          },
+          "title": "dialect",
+          "type": "object"
+        }
+      ]
     },
     "ElectrochemicalCellComponent": {
       "additionalProperties": false,
@@ -432,6 +473,44 @@
       "title": "Field",
       "type": "object"
     },
+    "FieldMapping": {
+      "additionalProperties": {
+        "description": "Standardized field name.",
+        "type": "string"
+      },
+      "description": "Mapping from original column headers in the data file to standardized field names. Keys are the original headers (use ' / ' to join multi-line headers), values are the standardized names. Also map fields that should be kept unchanged.",
+      "example": {
+        "E / V vs. RHE": "E",
+        "j / mA cm-2": "j"
+      },
+      "type": "object"
+    },
+    "FieldUnit": {
+      "additionalProperties": false,
+      "description": "Unit specification for a data field, following astropy's string unit notation.",
+      "properties": {
+        "name": {
+          "description": "Standardized name of the data field (after mapping).",
+          "example": "E",
+          "type": "string"
+        },
+        "reference": {
+          "description": "Reference electrode or reference point for this field (electrochemistry-specific).",
+          "example": "RHE",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Unit of measurement for this field, using astropy's string representation.",
+          "example": "V",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "unit"
+      ],
+      "type": "object"
+    },
     "Process": {
       "properties": {
         "date": {
@@ -480,45 +559,6 @@
         "name",
         "orcid"
       ],
-      "type": "object"
-    },
-    "Project": {
-      "additionalProperties": false,
-      "description": "Information about a research project or funding source.",
-      "properties": {
-        "grantNumber": {
-          "description": "Official grant or project number.",
-          "example": "123456",
-          "type": "string"
-        },
-        "name": {
-          "description": "Short name or identifier of the project.",
-          "example": "ERC-2024-STG",
-          "type": "string"
-        },
-        "title": {
-          "description": "Full title of the project.",
-          "example": "Understanding Electrocatalysis at the Molecular Level",
-          "type": "string"
-        },
-        "type": {
-          "description": "Type or category of project.",
-          "example": "ERC Starting Grant",
-          "type": "string"
-        },
-        "url": {
-          "default": "https://",
-          "description": "URL to project website or information page.",
-          "example": "https://example.org",
-          "format": "uri",
-          "pattern": "^https?://.*$",
-          "type": "string"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "title": "projects",
       "type": "object"
     },
     "ScanRate": {
@@ -647,9 +687,9 @@
       "title": "Shape",
       "type": "object"
     },
-    "Svgdigitizer": {
+    "SourceData": {
       "additionalProperties": true,
-      "description": "Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.",
+      "description": "Metadata schema for source data files in echemdb, combining system description, curation, source provenance, experimental details, figure description, and data format description.",
       "properties": {
         "curation": {
           "additionalProperties": false,
@@ -670,23 +710,25 @@
           "title": "curation",
           "type": "object"
         },
-        "eln": {
+        "dataDescription": {
           "additionalProperties": false,
-          "description": "Electronic lab notebook (ELN) reference for the experiment.",
+          "description": "Description of the raw data file format, including CSV dialect, field mapping from original headers to standardized names, and units for each field.",
           "properties": {
-            "url": {
-              "default": "https://",
-              "description": "URL to the electronic lab notebook entry.",
-              "example": "https://example.org",
-              "format": "uri",
-              "pattern": "^https?://.*$",
-              "type": "string"
+            "dialect": {
+              "$ref": "#/definitions/Dialect"
+            },
+            "fieldMapping": {
+              "$ref": "#/definitions/FieldMapping"
+            },
+            "fieldUnits": {
+              "description": "List of fields with their units and optional reference electrodes. Describes the physical units of each data column after mapping.",
+              "items": {
+                "$ref": "#/definitions/FieldUnit"
+              },
+              "type": "array"
             }
           },
-          "required": [
-            "url"
-          ],
-          "title": "eln",
+          "title": "dataDescription",
           "type": "object"
         },
         "experimental": {
@@ -818,12 +860,6 @@
           ],
           "title": "figureDescription",
           "type": "object"
-        },
-        "project": {
-          "items": {
-            "$ref": "#/definitions/Project"
-          },
-          "type": "array"
         },
         "source": {
           "additionalProperties": false,
@@ -1289,14 +1325,6 @@
                 "type": {
                   "description": "Type of electrochemical cell, such as H-cell, beaker glass, flow cell.",
                   "example": "H-cell",
-                  "type": "string"
-                },
-                "url": {
-                  "default": "https://",
-                  "description": "URL to a publication or documentation describing the cell setup.",
-                  "example": "https://example.org",
-                  "format": "uri",
-                  "pattern": "^https?://.*$",
                   "type": "string"
                 }
               },
@@ -1948,10 +1976,13 @@
       },
       "required": [
         "curation",
+        "system",
         "source",
-        "system"
+        "experimental",
+        "figureDescription",
+        "dataDescription"
       ],
-      "title": "Svgdigitizer",
+      "title": "SourceData",
       "type": "object"
     },
     "Uncertainty": {

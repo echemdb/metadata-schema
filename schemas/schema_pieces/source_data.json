@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/echemdb/metadata-schema/main/schemas/source_data.json",
+    "allOf": [{ "$ref": "#/definitions/SourceData" }],
+    "definitions": {
+        "SourceData": {
+            "type": "object",
+            "additionalProperties": true,
+            "title": "SourceData",
+            "description": "Metadata schema for source data files in echemdb, combining system description, curation, source provenance, experimental details, figure description, and data format description.",
+            "properties": {
+                "curation": {
+                    "$ref": "curation.json#/definitions/Curation"
+                },
+                "system": {
+                    "$ref": "system.json#/definitions/System"
+                },
+                "source": {
+                    "$ref": "source.json#/definitions/Source"
+                },
+                "experimental": {
+                    "$ref": "experimental.json#/definitions/Experimental"
+                },
+                "figureDescription": {
+                    "$ref": "figure_description.json#/definitions/FigureDescription"
+                },
+                "dataDescription": {
+                    "$ref": "data_description.json#/definitions/DataDescription"
+                }
+            },
+            "required": [
+                "curation",
+                "system",
+                "source",
+                "experimental",
+                "figureDescription",
+                "dataDescription"
+            ]
+        }
+    }
+}
