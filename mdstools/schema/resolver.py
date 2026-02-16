@@ -64,7 +64,24 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
         self._load_schemas()
 
     def _load_schemas(self):
-        """Load all JSON schema files from schema_pieces subdirectory."""
+        r"""
+        Load all JSON schema files from the ``schema_pieces/`` subdirectory.
+
+        Each file is stored in :attr:`schema_cache` under both its stem
+        (e.g. ``"curation"``) and its relative path (e.g. ``"general/url.json"``).
+
+        :raises FileNotFoundError: If the ``schema_pieces/`` directory does not exist
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.resolver import SchemaResolver
+            >>> resolver = SchemaResolver('schemas')
+            >>> 'curation' in resolver.schema_cache
+            True
+            >>> 'system' in resolver.schema_cache
+            True
+
+        """
         schema_pieces_dir = self.schema_dir / "schema_pieces"
         if not schema_pieces_dir.exists():
             raise FileNotFoundError(
@@ -84,7 +101,40 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
     ) -> (
         Any
     ):  # pylint: disable=unused-argument,too-many-return-statements,too-many-branches
-        """Resolve a $ref reference."""
+        r"""
+        Resolve a single ``$ref`` reference string.
+
+        Handles internal (``#/...``), relative (``./...``, ``../...``), and
+        filename-based (``curation.json#/...``) references.  HTTP(S) URLs are
+        left unresolved.  Returns the original ``{"$ref": ref}`` dict when
+        resolution is not possible.
+
+        :param ref: The ``$ref`` string
+        :param base_schema_path: Base path for relative lookups (currently unused)
+        :return: Resolved schema fragment, or the original ``$ref`` dict
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.resolver import SchemaResolver
+            >>> resolver = SchemaResolver('schemas')
+
+            HTTP URLs are preserved unchanged::
+
+                >>> resolver._resolve_ref('https://example.com/schema.json')
+                {'$ref': 'https://example.com/schema.json'}
+
+            Internal ``#/`` refs are preserved (need context to resolve)::
+
+                >>> resolver._resolve_ref('#/definitions/Foo')
+                {'$ref': '#/definitions/Foo'}
+
+            Relative path references are resolved from the cache::
+
+                >>> result = resolver._resolve_ref('./curation.json#/definitions/Curation')
+                >>> isinstance(result, dict) and '$ref' not in result
+                True
+
+        """
         # Skip external URLs (like frictionless schema)
         if ref.startswith("http://") or ref.startswith("https://"):
             return {"$ref": ref}
@@ -161,7 +211,37 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
     # pylint: disable=too-many-return-statements
     def _resolve_schema(self, schema: Any, base_path: str = "", depth: int = 0) -> Any:
-        """Recursively resolve all $refs in a schema."""
+        r"""
+        Recursively resolve all ``$ref`` entries in a schema tree.
+
+        Walks dicts and lists, replacing every resolvable ``$ref`` with its
+        inlined content.  A *depth* guard prevents infinite recursion.
+
+        :param schema: Schema node (dict, list, or scalar)
+        :param base_path: Base directory for relative ref resolution
+        :param depth: Current recursion depth (max 20)
+        :return: Schema with ``$ref`` entries resolved where possible
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.resolver import SchemaResolver
+            >>> resolver = SchemaResolver('schemas')
+
+            Scalars and plain dicts pass through unchanged::
+
+                >>> resolver._resolve_schema('hello')
+                'hello'
+                >>> resolver._resolve_schema({'type': 'string'})
+                {'type': 'string'}
+
+            A resolvable ``$ref`` is replaced::
+
+                >>> result = resolver._resolve_schema(
+                ...     {'$ref': './curation.json#/definitions/Curation'})
+                >>> '$ref' not in result
+                True
+
+        """
         # Prevent infinite recursion
         if depth > 20:
             return schema
@@ -329,7 +409,43 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
         return resolved_schema
 
     def _remove_schema_ids(self, schema: Any) -> Any:
-        """Recursively remove $id fields to avoid creating new schema scopes."""
+        r"""
+        Recursively remove ``$id`` fields to avoid creating new JSON Schema scopes.
+
+        Validators use ``$id`` to set a new resolution base URI.  Removing them
+        from resolved output prevents scope-related surprises.
+
+        :param schema: Schema node (dict, list, or scalar)
+        :return: Schema with all ``$id`` fields stripped
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.resolver import SchemaResolver
+            >>> resolver = SchemaResolver('schemas')
+
+            ``$id`` is removed from dicts::
+
+                >>> resolver._remove_schema_ids({'$id': 'urn:x', 'type': 'object'})
+                {'type': 'object'}
+
+            Works recursively::
+
+                >>> resolver._remove_schema_ids(
+                ...     {'defs': {'A': {'$id': 'urn:a', 'type': 'string'}}}
+                ... )
+                {'defs': {'A': {'type': 'string'}}}
+
+            Lists are handled too::
+
+                >>> resolver._remove_schema_ids([{'$id': 'x', 'v': 1}, 'plain'])
+                [{'v': 1}, 'plain']
+
+            Scalars pass through::
+
+                >>> resolver._remove_schema_ids(42)
+                42
+
+        """
         if isinstance(schema, dict):
             result = {}
             for k, v in schema.items():

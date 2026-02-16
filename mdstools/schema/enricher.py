@@ -54,7 +54,23 @@ class SchemaEnricher:
         self._load_schemas()
 
     def _load_schemas(self):
-        """Load all JSON schema files from both root (resolved) and schema_pieces (modular)."""
+        r"""
+        Load all JSON schema files from both root (resolved) and schema_pieces (modular).
+
+        Populates :attr:`schema_cache` with schemas keyed by file stem.
+        Pieces are loaded first so that root-level resolved schemas do not
+        overwrite them.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> len(enricher.schema_cache) > 0
+            True
+            >>> 'curation' in enricher.schema_cache
+            True
+
+        """
         if not self.schema_dir.exists():
             raise ValueError(f"Schema directory not found: {self.schema_dir}")
 
@@ -63,7 +79,23 @@ class SchemaEnricher:
         self._register_schemas_by_title()
 
     def _load_schema_pieces(self):
-        """Load modular schemas from schema_pieces/ directory."""
+        r"""
+        Load modular schemas from the ``schema_pieces/`` directory.
+
+        Each ``.json`` file found (recursively) is stored in
+        :attr:`schema_cache` under its file stem.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # schema_pieces contains individual schema definitions
+            >>> 'system' in enricher.schema_cache
+            True
+            >>> 'source' in enricher.schema_cache
+            True
+
+        """
         schema_pieces = self.schema_dir / "schema_pieces"
         if not schema_pieces.exists():
             return
@@ -74,7 +106,22 @@ class SchemaEnricher:
                     self.schema_cache[schema_name] = json.load(f)
 
     def _load_root_schemas(self):
-        """Load resolved schemas from root directory and register sub-definitions."""
+        r"""
+        Load resolved schemas from the root directory and register sub-definitions.
+
+        Root-level ``.json`` files (e.g. ``schemas/autotag.json``) that are not
+        already cached are loaded and any ``definitions`` block they contain is
+        registered via :meth:`_register_definitions`.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # Root schemas like 'autotag' are loaded from schemas/
+            >>> 'autotag' in enricher.schema_cache
+            True
+
+        """
         for schema_file in self.schema_dir.glob("*.json"):
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
@@ -86,7 +133,24 @@ class SchemaEnricher:
                         self._register_definitions(schema_data)
 
     def _register_definitions(self, schema_data):
-        """Register sub-definitions from a schema by lowercase name."""
+        r"""
+        Register sub-definitions from a schema by lowercase name.
+
+        For each entry in the ``definitions`` block, a standalone schema
+        wrapper is stored in :attr:`schema_cache` under the lowercased
+        definition name, making look-ups case-insensitive.
+
+        :param schema_data: A loaded JSON schema dict with a ``definitions`` key
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # Definitions from resolved schemas are registered in lowercase
+            >>> 'atmosphere' in enricher.schema_cache
+            True
+
+        """
         for def_name, def_value in schema_data["definitions"].items():
             lowercase_name = def_name.lower()
             if lowercase_name not in self.schema_cache:
@@ -99,7 +163,21 @@ class SchemaEnricher:
                 }
 
     def _register_schemas_by_title(self):
-        """Register schemas by definition title for camelCase key lookup."""
+        r"""
+        Register schemas by definition ``title`` for camelCase key lookup.
+
+        Some schema definitions use a ``title`` field (e.g. ``"curation"``).
+        This step ensures the schema can be found by that title as well.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # The curation schema has title 'curation' on its definition
+            >>> 'curation' in enricher.schema_cache
+            True
+
+        """
         for schema_name in list(self.schema_cache.keys()):
             schema_data = self.schema_cache[schema_name]
             if "definitions" in schema_data:
@@ -111,13 +189,42 @@ class SchemaEnricher:
     def _resolve_ref(
         self, ref: str, current_schema: Dict
     ) -> Tuple[Optional[Dict], Optional[Dict]]:
-        """
-        Resolve a $ref reference to its definition.
+        r"""
+        Resolve a ``$ref`` reference to its definition.
 
-        :param ref: The $ref string (e.g., "#/definitions/Process")
-        :param current_schema: The current schema dict
-        :return: Tuple of (resolved definition, root schema for further resolution)
-                 or (None, None) if unresolvable
+        Handles both internal references (``#/definitions/Foo``) and relative
+        external references (``./general/url.json#/definitions/Url``).
+
+        :param ref: The $ref string (e.g., ``"#/definitions/Process"``)
+        :param current_schema: The current schema dict used for internal refs
+        :return: Tuple of ``(resolved_definition, root_schema)``
+                 or ``(None, None)`` if the reference cannot be resolved
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Resolve an internal ``#/definitions/...`` reference::
+
+                >>> schema = {'definitions': {'Foo': {'type': 'string'}}}
+                >>> resolved, root = enricher._resolve_ref('#/definitions/Foo', schema)
+                >>> resolved
+                {'type': 'string'}
+
+            Unresolvable references return ``(None, None)``::
+
+                >>> enricher._resolve_ref('#/definitions/Missing', schema)
+                (None, None)
+
+            External relative references are resolved from the cache::
+
+                >>> resolved, _ = enricher._resolve_ref(
+                ...     './curation.json#/definitions/Curation',
+                ...     {})
+                >>> resolved is not None
+                True
+
         """
         if ref.startswith("#/"):
             # Internal reference - resolve against current schema
@@ -241,7 +348,33 @@ class SchemaEnricher:
         return None, None
 
     def _follow_refs(self, current, root_schema):
-        """Follow $ref chains in a schema node, returning resolved node and root schema."""
+        r"""
+        Follow ``$ref`` chains in a schema node until a concrete node is reached.
+
+        :param current: Schema node (may contain a ``$ref``)
+        :param root_schema: Root schema dict for resolving internal refs
+        :return: Tuple of ``(resolved_node, root_schema)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Nodes without ``$ref`` are returned unchanged::
+
+                >>> node = {'type': 'string', 'description': 'A name'}
+                >>> enricher._follow_refs(node, {})
+                ({'type': 'string', 'description': 'A name'}, {})
+
+            A ``$ref`` chain is resolved::
+
+                >>> schema = {'definitions': {'Foo': {'type': 'integer'}}}
+                >>> ref_node = {'$ref': '#/definitions/Foo'}
+                >>> resolved, _ = enricher._follow_refs(ref_node, schema)
+                >>> resolved
+                {'type': 'integer'}
+
+        """
         while isinstance(current, dict) and "$ref" in current:
             resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
             if resolved:
@@ -252,14 +385,73 @@ class SchemaEnricher:
         return current, root_schema
 
     def _resolve_array_items(self, current, root_schema):
-        """If current is an array schema, resolve and return its items schema."""
+        r"""
+        If *current* is an array schema, resolve and return its ``items`` schema.
+
+        Non-array schemas are returned unchanged.
+
+        :param current: Schema node dict
+        :param root_schema: Root schema for resolving refs
+        :return: Tuple of ``(items_or_current, root_schema)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Array schema — returns the items definition::
+
+                >>> arr = {'type': 'array', 'items': {'type': 'string'}}
+                >>> enricher._resolve_array_items(arr, {})
+                ({'type': 'string'}, {})
+
+            Non-array schema — returned as-is::
+
+                >>> obj = {'type': 'object', 'properties': {}}
+                >>> enricher._resolve_array_items(obj, {})
+                ({'type': 'object', 'properties': {}}, {})
+
+        """
         if current.get("type") == "array" and "items" in current:
             items, root_schema = self._follow_refs(current["items"], root_schema)
             return items, root_schema
         return current, root_schema
 
     def _extract_leaf_metadata(self, current, prop_description):
-        """Extract description and example from a leaf schema node."""
+        r"""
+        Extract description and example from a leaf schema node.
+
+        Uses the property-level description as a fallback and tries
+        :meth:`_extract_example` followed by :meth:`_extract_from_oneof_anyof`.
+
+        :param current: Resolved schema node
+        :param prop_description: Description set on the property reference (may be ``None``)
+        :return: Tuple of ``(description, example)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Schema with description and examples list::
+
+                >>> node = {'description': 'A voltage', 'examples': ['1.23']}
+                >>> enricher._extract_leaf_metadata(node, None)
+                ('A voltage', '1.23')
+
+            Falls back to *prop_description* when node has no description::
+
+                >>> node = {'examples': ['mV']}
+                >>> enricher._extract_leaf_metadata(node, 'The unit')
+                ('The unit', 'mV')
+
+            ``oneOf`` const values used as example::
+
+                >>> node = {'oneOf': [{'const': 'A', 'description': 'Option A'}]}
+                >>> enricher._extract_leaf_metadata(node, None)
+                ('Option A', 'A')
+
+        """
         description = current.get("description") or prop_description
 
         example = self._extract_example(current)
@@ -273,13 +465,43 @@ class SchemaEnricher:
     def _get_field_metadata(
         self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
     ) -> Tuple[Optional[str], Optional[str]]:
-        """
-        Extract description and example from schema for a given field path.
+        r"""
+        Extract description and example from a schema for a given field path.
+
+        Walks the ``properties`` tree of *schema* following each element in
+        *field_path*, resolving ``$ref`` and array ``items`` along the way.
 
         :param schema: The schema definition to search within
         :param field_path: List of field names representing the path
-        :param root_schema: The root schema containing all definitions (for resolving $refs)
-        :return: Tuple of (description, example) or (None, None)
+        :param root_schema: The root schema containing all definitions
+        :return: Tuple of ``(description, example)`` or ``(None, None)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Look up a property in a simple schema::
+
+                >>> schema = {
+                ...     'properties': {
+                ...         'name': {'type': 'string', 'description': 'Full name',
+                ...                  'examples': ['Jane']}
+                ...     }
+                ... }
+                >>> enricher._get_field_metadata(schema, ['name'])
+                ('Full name', 'Jane')
+
+            Empty field path returns ``(None, None)``::
+
+                >>> enricher._get_field_metadata(schema, [])
+                (None, None)
+
+            Missing property returns ``(None, None)``::
+
+                >>> enricher._get_field_metadata(schema, ['nonexistent'])
+                (None, None)
+
         """
         if not field_path:
             return None, None

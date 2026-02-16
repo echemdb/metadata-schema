@@ -41,13 +41,43 @@ def is_primitive_list(lst):
 
 
 def _process_dict(d, prefix, parent_key, rows):
-    """
+    r"""
     Process a dictionary and add rows for its key-value pairs.
+
+    Appends ``[prefix, parent_key, '<nested>']`` for the dict itself (when
+    *parent_key* is set), then recurses into each key-value pair.
 
     :param d: The dictionary to process
     :param prefix: The current numbering prefix (e.g., "1.2")
     :param parent_key: The parent key name (if nested)
     :param rows: The list to append rows to
+
+    EXAMPLES::
+
+        Top-level dict (no parent_key) — only children are emitted::
+
+            >>> from mdstools.converters.flatten import _process_dict
+            >>> rows = []
+            >>> _process_dict({'a': 1, 'b': 2}, '', None, rows)
+            >>> rows
+            [['1', 'a', 1], ['2', 'b', 2]]
+
+        Nested dict — a ``<nested>`` marker row is emitted first::
+
+            >>> rows = []
+            >>> _process_dict({'x': 10}, '3', 'parent', rows)
+            >>> rows
+            [['3', 'parent', '<nested>'], ['3.1', 'x', 10]]
+
+        Dict containing another dict::
+
+            >>> rows = []
+            >>> _process_dict({'inner': {'v': 42}}, '1', 'outer', rows)
+            >>> rows  # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'outer', '<nested>'],
+             ['1.1', 'inner', '<nested>'],
+             ['1.1.1', 'v', 42]]
+
     """
     if parent_key:
         rows.append([prefix, parent_key, "<nested>"])
@@ -64,13 +94,47 @@ def _process_dict(d, prefix, parent_key, rows):
 
 
 def _process_list(lst, prefix, parent_key, rows):
-    """
+    r"""
     Process a list and add rows for its items.
+
+    Emits a ``<nested>`` marker row for the list, then processes each item
+    with a letter suffix (``a``, ``b``, ``c``, …).
 
     :param lst: The list to process
     :param prefix: The current numbering prefix (e.g., "1")
     :param parent_key: The parent key name
     :param rows: The list to append rows to
+
+    EXAMPLES::
+
+        Primitive list::
+
+            >>> from mdstools.converters.flatten import _process_list
+            >>> rows = []
+            >>> _process_list(['x', 'y'], '1', 'tags', rows)
+            >>> rows  # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'tags', '<nested>'],
+             ['1.a', '', 'x'],
+             ['1.b', '', 'y']]
+
+        List of dicts::
+
+            >>> rows = []
+            >>> _process_list([{'k': 1}, {'k': 2}], '2', 'items', rows)
+            >>> rows  # doctest: +NORMALIZE_WHITESPACE
+            [['2', 'items', '<nested>'],
+             ['2.a', '', '<nested>'],
+             ['2.a.1', 'k', 1],
+             ['2.b', '', '<nested>'],
+             ['2.b.1', 'k', 2]]
+
+        Single-element list::
+
+            >>> rows = []
+            >>> _process_list([42], '5', 'single', rows)
+            >>> rows
+            [['5', 'single', '<nested>'], ['5.a', '', 42]]
+
     """
     # All lists get the parent row with <nested>
     rows.append([prefix, parent_key, "<nested>"])
