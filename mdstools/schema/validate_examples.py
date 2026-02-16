@@ -74,8 +74,9 @@ def build_registry(schema_dir: Path):
     strings (``./``, ``../``) resolve correctly regardless of the referencing
     schema's location.
     """
-    from referencing import Registry, Resource
     import posixpath
+
+    from referencing import Registry, Resource
 
     registry = Registry()
     all_schemas = {}

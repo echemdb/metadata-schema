@@ -29,7 +29,6 @@ EXAMPLES::
 
 """
 
-import json
 import re
 import sys
 from pathlib import Path
@@ -102,6 +101,25 @@ def collect_definition_names(schema):
                 yield (def_name,)
 
 
+def _check_property_key(path, dotted_path, key, prefix=""):
+    """Return a violation tuple if *key* is not camelCase, else None."""
+    if key in PROPERTY_EXCEPTIONS:
+        return None
+    if CAMEL_CASE.match(key):
+        return None
+    location = f"{prefix}{dotted_path}" if prefix else dotted_path
+    return (str(path), f"Property '{key}' (at {location}) is not camelCase")
+
+
+def _check_definition_name(path, def_name):
+    """Return a violation tuple if *def_name* is not PascalCase, else None."""
+    if def_name in DEFINITION_EXCEPTIONS:
+        return None
+    if PASCAL_CASE.match(def_name):
+        return None
+    return (str(path), f"Definition '{def_name}' is not PascalCase")
+
+
 def check_file(filepath):
     r"""
     Check a single schema file for naming violations.
@@ -144,42 +162,26 @@ def check_file(filepath):
     if "definitions" not in schema and "properties" not in schema:
         # Flat YAML format: top-level keys are definitions
         for def_name, def_value in schema.items():
-            if def_name in DEFINITION_EXCEPTIONS:
-                continue
-            if not PASCAL_CASE.match(def_name):
-                violations.append((str(path), f"Definition '{def_name}' is not PascalCase"))
+            v = _check_definition_name(path, def_name)
+            if v:
+                violations.append(v)
             # Check property names within each definition
             if isinstance(def_value, dict):
                 for dotted_path, key in collect_property_names(def_value):
-                    if key in PROPERTY_EXCEPTIONS:
-                        continue
-                    if not CAMEL_CASE.match(key):
-                        violations.append(
-                            (
-                                str(path),
-                                f"Property '{key}' (at {def_name}.{dotted_path}) is not camelCase",
-                            )
-                        )
+                    v = _check_property_key(path, dotted_path, key, f"{def_name}.")
+                    if v:
+                        violations.append(v)
     else:
         # Standard JSON Schema structure with 'definitions' or 'properties'
-        # Check property names (should be camelCase or single lowercase word)
         for dotted_path, key in collect_property_names(schema):
-            if key in PROPERTY_EXCEPTIONS:
-                continue
-            if not CAMEL_CASE.match(key):
-                violations.append(
-                    (
-                        str(path),
-                        f"Property '{key}' (at {dotted_path}) is not camelCase",
-                    )
-                )
+            v = _check_property_key(path, dotted_path, key)
+            if v:
+                violations.append(v)
 
-        # Check definition names (should be PascalCase)
         for (def_name,) in collect_definition_names(schema):
-            if def_name in DEFINITION_EXCEPTIONS:
-                continue
-            if not PASCAL_CASE.match(def_name):
-                violations.append((str(path), f"Definition '{def_name}' is not PascalCase"))
+            v = _check_definition_name(path, def_name)
+            if v:
+                violations.append(v)
 
     return violations
 

@@ -129,9 +129,7 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
                     }
                     # Add allOf entry point if the inferred definition exists
                     if main_def in raw:
-                        schema_data["allOf"] = [
-                            {"$ref": f"#/definitions/{main_def}"}
-                        ]
+                        schema_data["allOf"] = [{"$ref": f"#/definitions/{main_def}"}]
                 self.schema_cache[schema_stem] = schema_data
                 self.schema_cache[str(relative_path)] = self.schema_cache[schema_stem]
 
@@ -183,7 +181,12 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
             return {"$ref": ref}
 
         # Handle references with filename and fragment (e.g., "curation.yaml#/definitions/Curation")
-        if ".yaml#" in ref or ref.endswith(".yaml") or ".json#" in ref or ref.endswith(".json"):
+        if (
+            ".yaml#" in ref
+            or ref.endswith(".yaml")
+            or ".json#" in ref
+            or ref.endswith(".json")
+        ):
             ref_path = ref.split("#")[0]
             ref_fragment = "#" + ref.split("#")[1] if "#" in ref else ""
 

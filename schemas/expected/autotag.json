@@ -60,7 +60,7 @@
     },
     "Autotag": {
       "additionalProperties": false,
-      "description": "Complete metadata schema for auto-generated echemdb YAML, combining all metadata sections into a single comprehensive structure.",
+      "description": "Complete metadata schema for YAML templates used by autotag, combining all metadata sections into a single comprehensive structure.",
       "properties": {
         "curation": {
           "$ref": "#/$defs/Curation",
@@ -1404,7 +1404,7 @@
   "$id": "https://echemdb.github.io/metadata-schema/autotag",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
-  "description": "Complete metadata schema for auto-generated echemdb YAML, combining all metadata sections into a single comprehensive structure.",
+  "description": "Complete metadata schema for YAML templates used by autotag, combining all metadata sections into a single comprehensive structure.",
   "metamodel_version": "1.7.0",
   "properties": {
     "curation": {

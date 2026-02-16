@@ -47,6 +47,7 @@ def generate_json_schemas():
             ["gen-json-schema", str(linkml_file)],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if result.returncode != 0:
@@ -135,6 +136,7 @@ def generate_pydantic_models():
             ["gen-pydantic", str(linkml_file)],
             capture_output=True,
             text=True,
+            check=False,
         )
 
         if result.returncode != 0:

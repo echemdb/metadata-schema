@@ -26,7 +26,10 @@ PYDANTIC_MODELS = {
     "source_data": ("mdstools.models.source_data", "SourceData"),
     "svgdigitizer": ("mdstools.models.svgdigitizer", "Svgdigitizer"),
     "echemdb_package": ("mdstools.models.echemdb_package", "EchemdbPackage"),
-    "svgdigitizer_package": ("mdstools.models.svgdigitizer_package", "SvgdigitizerPackage"),
+    "svgdigitizer_package": (
+        "mdstools.models.svgdigitizer_package",
+        "SvgdigitizerPackage",
+    ),
 }
 
 
