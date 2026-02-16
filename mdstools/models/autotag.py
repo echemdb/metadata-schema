@@ -47,7 +47,7 @@ linkml_meta = LinkMLMeta(
     {
         "default_prefix": "https://echemdb.github.io/metadata-schema/autotag/",
         "default_range": "string",
-        "description": "Complete metadata schema for auto-generated echemdb YAML.",
+        "description": "Complete metadata schema for YAML templates used by autotag.",
         "id": "https://echemdb.github.io/metadata-schema/autotag",
         "imports": [
             "linkml:types",
@@ -505,7 +505,7 @@ class Quantity(ConfiguredBaseModel):
 
     value: Optional[str] = Field(
         default=None,
-        description="""Numerical value (can be a number, string, or null).""",
+        description="""Numerical value of the quantity.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "value",
@@ -516,7 +516,7 @@ class Quantity(ConfiguredBaseModel):
     )
     unit: Optional[str] = Field(
         default=None,
-        description="""Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2'). Can also be an integer (e.g., 1 for dimensionless).""",
+        description="""Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "unit",
@@ -586,7 +586,7 @@ class Uncertainty(ConfiguredBaseModel):
     )
     unit: Optional[str] = Field(
         default=None,
-        description="""Unit of the uncertainty value.""",
+        description="""Unit of the uncertainty value, following astropy's string notation. Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
                 "alias": "unit",
@@ -2351,7 +2351,7 @@ class System(ConfiguredBaseModel):
 
 class Autotag(ConfiguredBaseModel):
     """
-    Complete metadata schema for auto-generated echemdb YAML, combining all metadata sections into a single comprehensive structure.
+    Complete metadata schema for YAML templates used by autotag, combining all metadata sections into a single comprehensive structure.
     """
 
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(

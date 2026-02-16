@@ -102,7 +102,7 @@ flatten = "mdstools flatten"
 unflatten = "mdstools unflatten"
 resolve-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
 generate-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
-generate-models = "python mdstools/schema/generate_from_linkml.py --pydantic"
+generate-models = "python mdstools/schema/generate_from_linkml.py --pydantic && black mdstools"
 generate-all = "python mdstools/schema/generate_from_linkml.py --all"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
 diff-schemas = {cmd = [

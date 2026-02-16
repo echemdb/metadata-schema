@@ -27,14 +27,15 @@ classes:
       value:
         range: string
         description: >-
-          Numerical value (can be a number, string, or null).
+          Numerical value of the quantity.
         examples:
           - value: "0.5"
       unit:
         range: string
         description: >-
-          Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').
-          Can also be an integer (e.g., 1 for dimensionless).
+          Unit of measurement following astropy's string notation
+          (e.g., 'mol / l', 'V', 'mA / cm2').
+          Use an empty string for dimensionless quantities.
         examples:
           - value: "mol / l"
       uncertainty:
@@ -62,7 +63,9 @@ classes:
           - value: "0.01"
       unit:
         range: string
-        description: Unit of the uncertainty value.
+        description: >-
+          Unit of the uncertainty value, following astropy's string notation.
+          Use an empty string for dimensionless quantities.
         examples:
           - value: "mol / l"
       positiveValue:

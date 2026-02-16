@@ -11258,7 +11258,7 @@ packages:
 - pypi: ./
   name: mdstools
   version: 0.4.0
-  sha256: bec7df065c6f149dacc5bd0d63d441695894fd2b0f3b4b38665e5fa598a420bc
+  sha256: bdecead3822b96f2102e17511d8d7eb1fd0943e4f081b89fcbaf02e8c21e6a50
   requires_dist:
   - click>=8,<9
   - pandas

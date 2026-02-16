@@ -1135,7 +1135,7 @@
           "description": "Uncertainty information for a measured quantity."
         },
         "unit": {
-          "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2'). Can also be an integer (e.g., 1 for dimensionless).",
+          "description": "Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.",
           "type": [
             "string",
             "number",
@@ -1143,7 +1143,7 @@
           ]
         },
         "value": {
-          "description": "Numerical value (can be a number, string, or null).",
+          "description": "Numerical value of the quantity.",
           "type": [
             "string",
             "number",
@@ -1363,7 +1363,7 @@
           "description": "Type of uncertainty (absolute or relative)."
         },
         "unit": {
-          "description": "Unit of the uncertainty value.",
+          "description": "Unit of the uncertainty value, following astropy's string notation. Use an empty string for dimensionless quantities.",
           "type": [
             "string",
             "null"

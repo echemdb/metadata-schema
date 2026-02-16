@@ -35,8 +35,8 @@ electrolyte:
         internalLot: Number # Flask in which some of the chemicals were transferred
         url: http://wiki.url.to.a.html # details on the wiki
       partialPressure: # If type gas. refers to pressure in the electrolyte.
-        unit: 1
-        value: bar # use 1 bar for saturated solutions
+        value: 1
+        unit: bar # use 1 bar for saturated solutions
       proportion: # if type solvent
         value: 100
         unit: volume percent
@@ -86,8 +86,8 @@ electrolyte:
       purity:
         grade: N5.0 # some generic name
       partialPressure:
-        unit: 1
-        value: bar # use 1 bar for saturated solutions
+        value: 1
+        unit: bar # use 1 bar for saturated solutions
       proportion:
         value: 100
       flow:

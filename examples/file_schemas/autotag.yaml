@@ -93,8 +93,8 @@ system:
           internalLot: Number # Flask in which some of the chemicals were transferred
           url: https://some.url # details on the wiki
         partialPressure: # if type gas
-          unit: 1
-          value: bar # use 1 bar for saturated solutions
+          value: 1
+          unit: bar # use 1 bar for saturated solutions
         proportion: # if type solvent
           value: 100
           unit: volume percent
@@ -144,8 +144,8 @@ system:
         purity:
           grade: N5.0 # some genereic name
         partialPressure:
-          unit: 1
-          value: bar # use 1 bar for saturated solutions
+          value: 1
+          unit: bar # use 1 bar for saturated solutions
         proportion:
           value: 100
         flow:
