@@ -244,7 +244,7 @@ def test_unflatten_validation_and_cli():
         [
             "unflatten",
             str(output_xlsx),
-            "--output-dir",
+            "--out-dir",
             str(output_dir),
             "--schema-file",
             str(schema_file),

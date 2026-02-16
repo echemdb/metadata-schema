@@ -104,30 +104,33 @@ class SchemaEnricher:
                     if title and title not in self.schema_cache:
                         self.schema_cache[title] = schema_data
 
-    def _resolve_ref(self, ref: str, current_schema: Dict) -> Optional[Dict]:
+    def _resolve_ref(
+        self, ref: str, current_schema: Dict
+    ) -> Tuple[Optional[Dict], Optional[Dict]]:
         """
         Resolve a $ref reference to its definition.
 
         :param ref: The $ref string (e.g., "#/definitions/Process")
         :param current_schema: The current schema dict
-        :return: The resolved schema definition or None
+        :return: Tuple of (resolved definition, root schema for further resolution)
+                 or (None, None) if unresolvable
         """
         if ref.startswith("#/"):
-            # Internal reference
+            # Internal reference - resolve against current schema
             parts = ref[2:].split("/")
             result = current_schema
             for part in parts:
                 if isinstance(result, dict) and part in result:
                     result = result[part]
                 else:
-                    return None
-            return result
-        if ref.startswith("./"):
-            # External reference
+                    return None, None
+            return result, current_schema
+        if ref.startswith("."):
+            # Relative external reference (handles both ./ and ../)
             ref_path = ref.split("#")[0]
             ref_fragment = ref.split("#")[1] if "#" in ref else ""
 
-            # Load the referenced schema
+            # Load the referenced schema by filename stem
             ref_file = ref_path.lstrip("./").replace("/", os.sep)
             ref_schema_name = Path(ref_file).stem
 
@@ -141,11 +144,12 @@ class SchemaEnricher:
                         if isinstance(result, dict) and part in result:
                             result = result[part]
                         else:
-                            return None
-                    return result
-                return ref_schema
+                            return None, None
+                    # Return resolved def + the external schema as new root
+                    return result, ref_schema
+                return ref_schema, ref_schema
 
-        return None
+        return None, None
 
     def _get_field_metadata(  # pylint: disable=too-many-nested-blocks,too-many-branches
         self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
@@ -172,9 +176,10 @@ class SchemaEnricher:
 
             # Follow $ref if present at current level
             while "$ref" in current:
-                resolved = self._resolve_ref(current["$ref"], root_schema)
+                resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
                 if resolved:
                     current = resolved
+                    root_schema = new_root
                 else:
                     break
 
@@ -182,17 +187,24 @@ class SchemaEnricher:
             if "properties" in current and field in current["properties"]:
                 current = current["properties"][field]
 
+                # Capture description from the property before following $ref,
+                # since the ref target may not repeat the contextual description
+                prop_description = current.get("description")
+
                 # Follow any $refs in the property definition
                 while "$ref" in current:
-                    resolved = self._resolve_ref(current["$ref"], root_schema)
+                    resolved, new_root = self._resolve_ref(
+                        current["$ref"], root_schema
+                    )
                     if resolved:
                         current = resolved
+                        root_schema = new_root
                     else:
                         break
 
                 # If this is the last field in the path, extract metadata
                 if i == len(field_path) - 1:
-                    description = current.get("description")
+                    description = current.get("description") or prop_description
 
                     # Check for examples in different places
                     example = None
@@ -231,9 +243,12 @@ class SchemaEnricher:
 
                     # Resolve $ref in items if present
                     while "$ref" in items:
-                        resolved = self._resolve_ref(items["$ref"], root_schema)
+                        resolved, new_root = self._resolve_ref(
+                            items["$ref"], root_schema
+                        )
                         if resolved:
                             items = resolved
+                            root_schema = new_root
                         else:
                             break
 

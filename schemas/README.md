@@ -73,7 +73,7 @@ pixi run resolve-schemas
 Schemas include human-readable descriptions and examples to aid in documentation and user guidance. Use the enrichment tools to add descriptions to Excel exports:
 
 ```bash
-pixi run convert
+pixi run flatten
 ```
 
 ## Contributing

@@ -87,7 +87,7 @@ pylint = "*"
 
 [tool.pixi.feature.dev.tasks]
 test = "pixi run test-all"
-convert = "python mdstools/cli.py"
+flatten = "python mdstools/cli.py"
 unflatten = "python mdstools/cli.py unflatten"
 resolve-schemas = "python mdstools/schema/resolver.py"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"

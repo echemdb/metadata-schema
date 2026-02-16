@@ -42,7 +42,7 @@ We've successfully implemented **Option 3**: Using JSON Schema files to enrich f
 
 #### `cli.py`
 - **Purpose**: Command-line interface for YAML to Excel/CSV conversion
-- **Usage**: `pixi run convert <yaml_file> [options]`
+- **Usage**: `pixi run flatten <yaml_file> [options]`
 - **Features**: Schema enrichment, multiple output formats, configurable paths
 
 ### 3. Testing
@@ -56,7 +56,7 @@ We've successfully implemented **Option 3**: Using JSON Schema files to enrich f
 
 #### `mdstools/cli.py`
 - Replaced demo script with proper command-line interface
-- Integrates with pixi: `pixi run convert <yaml_file>`
+- Integrates with pixi: `pixi run flatten <yaml_file>`
 - Provides user-friendly output and statistics
 - Supports all export formats and options
 
@@ -227,7 +227,7 @@ enriched.to_excel('output.xlsx', separate_sheets=True)
 
 ### Using CLI
 ```bash
-pixi run convert tests/example_metadata.yaml --output-dir generated
+pixi run flatten tests/example_metadata.yaml --out-dir generated
 ```
 
 ## Testing
@@ -250,7 +250,7 @@ pixi run diff-schemas            # Show diffs between expected and resolved sche
 
 ### Run Conversion
 ```bash
-pixi run convert tests/example_metadata.yaml
+pixi run flatten tests/example_metadata.yaml
 ```
 
 ## Future Enhancements
@@ -292,7 +292,7 @@ To improve enrichment coverage beyond current ~14%:
 - Test outputs go to `tests/generated/` (gitignored)
 
 ### CLI Usage
-- `pixi run convert <yaml_file>` - Main conversion command
+- `pixi run flatten <yaml_file>` - Main flatten command
 - Replaces the old demo script approach with proper CLI interface
 - Outputs to `generated/` directory by default
 
