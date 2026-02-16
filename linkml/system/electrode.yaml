@@ -1,0 +1,158 @@
+id: https://echemdb.github.io/metadata-schema/system/electrode
+name: electrode
+description: Electrode definitions for electrochemical cells.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ../general/quantity
+  - ../general/purity
+  - ../general/url
+
+default_range: string
+
+enums:
+  ElectrodeFunction:
+    description: Role of the electrode in the electrochemical cell.
+    permissible_values:
+      working electrode:
+        description: Electrode where the reaction of interest occurs.
+      counter electrode:
+        description: Electrode that completes the circuit.
+      reference electrode:
+        description: Electrode providing a stable reference potential.
+
+classes:
+  Electrode:
+    description: An electrode used in the electrochemical cell, such as working, reference, counter, or collector electrode.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Name or identifier for the electrode.
+        examples:
+          - value: "WE1"
+      function:
+        range: string
+        required: true
+        description: >-
+          Role of the electrode in the electrochemical cell.
+          Typical values: working electrode, counter electrode, reference electrode.
+        examples:
+          - value: "working electrode"
+      redoxSystem:
+        range: string
+        description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).
+        examples:
+          - value: "RHE"
+      description:
+        range: string
+        description: Detailed description of the electrode (especially for custom-made electrodes).
+        examples:
+          - value: "Home-made Pt wire electrode, flame-annealed before use"
+      geometricElectrolyteContactArea:
+        range: Quantity
+        description: Geometric surface area of electrode in contact with electrolyte.
+        inlined: true
+      purity:
+        range: Purity
+        description: Purity specifications of the electrode material.
+        inlined: true
+      preparationProcedure:
+        range: ElectrodePreparation
+        description: Procedures used to prepare the electrode before measurement.
+        inlined: true
+      shape:
+        range: Shape
+        description: Physical shape and dimensions of the electrode.
+        inlined: true
+      source:
+        range: ElectrodeSource
+        description: Source and supplier information for the electrode.
+        inlined: true
+      type:
+        range: string
+        description: Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.
+        examples:
+          - value: "single crystal"
+      material:
+        range: string
+        description: Chemical symbol or abbreviation of the electrode material.
+        examples:
+          - value: "Pt"
+      crystallographicOrientation:
+        range: string
+        description: Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.
+        examples:
+          - value: "(1 1 1)"
+
+  ElectrodeSource:
+    description: Information about the source and supplier of the electrode.
+    attributes:
+      manufacturer:
+        range: string
+        description: Name of the electrode manufacturer.
+        examples:
+          - value: "Your Favorite Crystals GmbH"
+      lot:
+        range: string
+        description: LOT or batch number.
+        examples:
+          - value: "LOT-2024-PT111"
+      purity:
+        range: Purity
+        description: Purity specifications from the manufacturer or supplier.
+        inlined: true
+      model:
+        range: string
+        description: Model number or designation.
+        examples:
+          - value: "PT111-10"
+      url:
+        range: HttpUrl
+        description: URL to product specification or datasheet.
+      supplier:
+        range: string
+        description: Name of the supplier.
+        examples:
+          - value: "Chemicals & More Inc."
+
+  Shape:
+    description: Physical dimensions and shape of the electrode.
+    attributes:
+      type:
+        range: string
+        description: Type or shape of electrode.
+        examples:
+          - value: "disc"
+      height:
+        range: Quantity
+        description: Height of the electrode.
+        inlined: true
+      diameter:
+        range: Quantity
+        description: Diameter of the electrode (for cylindrical shapes).
+        inlined: true
+      length:
+        range: Quantity
+        description: Length of the electrode.
+        inlined: true
+      description:
+        range: string
+        description: Detailed description of the electrode shape.
+        examples:
+          - value: "Hemispherical tip"
+
+  ElectrodePreparation:
+    description: Procedures and methods used to prepare the electrode.
+    attributes:
+      url:
+        range: HttpUrl
+        description: URL to detailed preparation protocol or procedure, such as an article DOI.
+      description:
+        range: string
+        description: Step-by-step description of preparation procedure.
+        multivalued: true

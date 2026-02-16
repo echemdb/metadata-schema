@@ -1,0 +1,59 @@
+id: https://echemdb.github.io/metadata-schema/svgdigitizer
+name: svgdigitizer
+description: Metadata schema for the input YAML file used by svgdigitizer.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./curation
+  - ./eln
+  - ./experimental
+  - ./figure_description
+  - ./projects
+  - ./source
+  - ./system
+
+default_range: string
+
+classes:
+  Svgdigitizer:
+    tree_root: true
+    description: >-
+      Metadata schema for the input YAML file used by svgdigitizer
+      to create echemdb compatible data packages.
+    attributes:
+      curation:
+        range: Curation
+        required: true
+        description: Details on the curation process of the data.
+        inlined: true
+      eln:
+        range: Eln
+        description: Electronic lab notebook reference.
+        inlined: true
+      experimental:
+        range: Experimental
+        description: Details about the experimental setup.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        description: Description of the data to a figure or plot.
+        inlined: true
+      projects:
+        range: Project
+        description: Research projects or funding sources.
+        multivalued: true
+        inlined_as_list: true
+      source:
+        range: Source
+        required: true
+        description: Information about the source publication or dataset.
+        inlined: true
+      system:
+        range: System
+        required: true
+        description: Description of the experimental system.
+        inlined: true

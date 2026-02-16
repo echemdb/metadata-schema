@@ -1,0 +1,53 @@
+id: https://echemdb.github.io/metadata-schema/system
+name: system
+description: Description of the experimental system including electrodes, electrolyte, and environmental conditions.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./system/electrode
+  - ./system/electrolyte
+  - ./system/electrochemical_cell
+  - ./system/atmosphere
+
+default_range: string
+
+enums:
+  SystemType:
+    description: Type of experimental system.
+    permissible_values:
+      electrochemical:
+        description: An electrochemical system consisting of electrodes, an electrolyte, and an electrochemical cell.
+
+classes:
+  System:
+    description: Description of the experimental system including electrodes, electrolyte, and environmental conditions.
+    attributes:
+      type:
+        range: SystemType
+        required: true
+        description: Type of experimental system.
+        examples:
+          - value: "electrochemical"
+      electrolyte:
+        range: Electrolyte
+        required: true
+        description: The electrolyte solution used in the experiment.
+        inlined: true
+      electrodes:
+        range: Electrode
+        required: true
+        description: List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes).
+        multivalued: true
+        inlined_as_list: true
+      electrochemicalCell:
+        range: ElectrochemicalCell
+        description: Description of the electrochemical cell and its configuration.
+        inlined: true
+      atmosphere:
+        range: Atmosphere
+        description: Atmospheric conditions during the experiment.
+        inlined: true

@@ -1,0 +1,76 @@
+id: https://echemdb.github.io/metadata-schema/echemdb_package
+name: echemdb_package
+description: Data package schema for echemdb following the Frictionless Data Package specification.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./curation
+  - ./experimental
+  - ./figure_description
+  - ./system
+  - ./source
+
+default_range: string
+
+classes:
+  EchemdbPackage:
+    tree_root: true
+    description: >-
+      Data package schema for echemdb following the Frictionless Data Package specification
+      with echemdb-specific metadata extensions.
+    attributes:
+      resources:
+        range: EchemdbResource
+        description: Data resources within the package.
+        multivalued: true
+        inlined_as_list: true
+
+  EchemdbResource:
+    description: A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.
+    attributes:
+      metadata:
+        range: EchemdbResourceMetadata
+        description: Metadata container for the resource.
+        inlined: true
+
+  EchemdbResourceMetadata:
+    description: Metadata container wrapping echemdb-specific metadata.
+    attributes:
+      echemdb:
+        range: EchemdbMetadata
+        required: true
+        description: echemdb-specific metadata for electrochemical data.
+        inlined: true
+
+  EchemdbMetadata:
+    description: echemdb-specific metadata for electrochemical data.
+    attributes:
+      curation:
+        range: Curation
+        required: true
+        description: Details on the curation process.
+        inlined: true
+      experimental:
+        range: Experimental
+        required: true
+        description: Details about the experimental setup.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        required: true
+        description: Description of the data to a figure or plot.
+        inlined: true
+      system:
+        range: System
+        required: true
+        description: Description of the experimental system.
+        inlined: true
+      source:
+        range: Source
+        required: true
+        description: Information about the source publication or dataset.
+        inlined: true

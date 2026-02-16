@@ -16,6 +16,8 @@ dependencies = [
     "openpyxl",
     "jsonschema",
     "referencing",
+    "linkml",
+    "linkml-runtime",
 ]
 
 [project.scripts]
@@ -26,6 +28,7 @@ packages = [
     "mdstools",
     "mdstools.converters",
     "mdstools.metadata",
+    "mdstools.models",
     "mdstools.schema",
     "mdstools.test",
 ]
@@ -56,6 +59,8 @@ check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
+linkml = ">=1.9,<2"
+linkml-runtime = ">=1.9,<2"
 
 
 [tool.pixi.pypi-dependencies]
@@ -99,7 +104,10 @@ pylint = "*"
 test = "pixi run test-all"
 flatten = "mdstools flatten"
 unflatten = "mdstools unflatten"
-resolve-schemas = "python mdstools/schema/resolver.py"
+resolve-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
+generate-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
+generate-models = "python mdstools/schema/generate_from_linkml.py --pydantic"
+generate-all = "python mdstools/schema/generate_from_linkml.py --all"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
 diff-schemas = {cmd = [
     "bash", "-c",

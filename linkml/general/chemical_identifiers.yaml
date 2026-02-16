@@ -1,0 +1,32 @@
+id: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+name: chemical_identifiers
+description: Standard chemical identifiers for unambiguous identification of compounds.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+
+default_range: string
+
+classes:
+  ChemicalIdentifiers:
+    description: Standard chemical identifiers for unambiguous identification of compounds.
+    attributes:
+      cas:
+        range: string
+        description: CAS Registry Number (Chemical Abstracts Service identifier).
+        examples:
+          - value: "7664-93-9"
+      inchi:
+        range: string
+        description: InChI (International Chemical Identifier) string.
+        examples:
+          - value: "InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)"
+      inchikey:
+        range: string
+        description: InChIKey (hashed InChI for easier searching).
+        examples:
+          - value: "QAOWNCQODCNURD-UHFFFAOYSA-N"

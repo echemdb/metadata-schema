@@ -1,335 +1,431 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "allOf": [
-    {
-      "$ref": "https://datapackage.org/profiles/2.0/datapackage.json"
-    }
-  ],
-  "definitions": {
-    "Field": {
+  "$defs": {
+    "DataField": {
+      "additionalProperties": false,
       "description": "Description of a data field (column) compatible with frictionless table-schema and extended with echemdb-specific properties for physical quantities.",
       "properties": {
         "description": {
           "description": "A description of that field.",
-          "example": "The potential measured between the working electrode and reference electrode.",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "dimension": {
           "description": "Physical dimension of the field (e.g., 'time', 'potential', 'current density').",
-          "example": "potential",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "format": {
           "description": "Format specification for the field type (default, email, uri, binary, uuid for strings; default for numbers).",
-          "example": "default",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "name": {
           "description": "Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.",
-          "example": "E_WE",
           "type": "string"
         },
         "orientation": {
-          "description": "Axis orientation in plots (horizontal for x-axis, vertical for y-axis).",
-          "enum": [
-            "horizontal",
-            "vertical"
-          ],
-          "example": "horizontal",
-          "type": "string"
+          "$ref": "#/$defs/FieldOrientation",
+          "description": "Axis orientation in plots (horizontal for x-axis, vertical for y-axis)."
         },
         "reference": {
           "description": "Reference electrode or reference point for this measurement (electrochemistry-specific).",
-          "example": "RHE",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "title": {
           "description": "A human-readable title for this field.",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "type": {
           "description": "Data type of the field (string, number, integer, boolean, object, array, date, time, datetime, year, duration, geopoint, geojson, any).",
-          "example": "number",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "unit": {
           "description": "Unit of measurement for this field (SI or conventional electrochemical units), following astropy's string unit notation.",
-          "example": "V",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "required": [
         "name"
       ],
-      "title": "Field",
+      "title": "DataField",
       "type": "object"
     },
-    "ScanRate": {
+    "FieldOrientation": {
+      "description": "Axis orientation in plots.",
+      "enum": [
+        "horizontal",
+        "vertical"
+      ],
+      "title": "FieldOrientation",
+      "type": "string"
+    },
+    "FigureDescription": {
       "additionalProperties": false,
-      "description": "The rate at which the data has been recorded.",
-      "example": "10 mV / s",
+      "description": "Description of the data to a figure or plot including data type and measurement details.",
+      "properties": {
+        "comment": {
+          "description": "Additional notes about the figure or data.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fields": {
+          "description": "Description of data fields/columns in the figure.",
+          "items": {
+            "$ref": "#/$defs/DataField"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "measurementType": {
+          "description": "Acronym type for the measurement performed, such as CV, EIS, XPS, etc.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "scanRate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The rate at which the data has been recorded."
+        },
+        "simultaneousMeasurements": {
+          "description": "Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "type": {
+          "$ref": "#/$defs/FigureDescriptionType",
+          "description": "Source or origin of the data, such as digitized, raw, simulated, or processed."
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "FigureDescription",
+      "type": "object"
+    },
+    "FigureDescriptionType": {
+      "description": "Source or origin of the data.",
+      "enum": [
+        "digitized",
+        "raw",
+        "simulated",
+        "processed"
+      ],
+      "title": "FigureDescriptionType",
+      "type": "string"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "description": "A physical quantity with a value, unit, and optional uncertainty.",
       "properties": {
         "calculation": {
           "description": "Method or formula used to calculate this quantity.",
-          "example": "Obtained by multiplying U and I",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "comment": {
           "description": "Additional notes about the measurement or quantity.",
-          "example": "Measured at room temperature",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "uncertainty": {
-          "$ref": "#/definitions/Uncertainty"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Uncertainty information for a measured quantity."
         },
         "unit": {
-          "$ref": "#/definitions/Unit"
+          "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2'). Can also be an integer (e.g., 1 for dimensionless).",
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
         },
         "value": {
-          "$ref": "#/definitions/Value"
+          "description": "Numerical value (can be a number, string, or null).",
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
         }
       },
-      "title": "scanRate",
+      "title": "Quantity",
+      "type": "object"
+    },
+    "SvgdigitizerEchemdbMetadata": {
+      "additionalProperties": false,
+      "description": "Simplified echemdb metadata for digitized data.",
+      "properties": {
+        "experimental": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SvgdigitizerExperimental"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Experimental tags or keywords."
+        },
+        "figureDescription": {
+          "$ref": "#/$defs/FigureDescription",
+          "description": "Description of the digitized figure."
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SvgdigitizerSource"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Source publication information for digitized data."
+        }
+      },
+      "required": [
+        "figureDescription"
+      ],
+      "title": "SvgdigitizerEchemdbMetadata",
+      "type": "object"
+    },
+    "SvgdigitizerExperimental": {
+      "additionalProperties": false,
+      "description": "Experimental tags or keywords for svgdigitizer.",
+      "properties": {
+        "tags": {
+          "description": "List of tags describing the experiment or measurement.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "SvgdigitizerExperimental",
+      "type": "object"
+    },
+    "SvgdigitizerPackage": {
+      "additionalProperties": false,
+      "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
+      "properties": {
+        "resources": {
+          "description": "Data resources within the package.",
+          "items": {
+            "$ref": "#/$defs/SvgdigitizerResource"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        }
+      },
+      "title": "SvgdigitizerPackage",
       "type": "object"
     },
     "SvgdigitizerResource": {
+      "additionalProperties": false,
       "description": "A resource created by svgdigitizer with minimal echemdb metadata.",
       "properties": {
         "metadata": {
-          "description": "Metadata container for the digitized resource.",
-          "properties": {
-            "echemdb": {
-              "description": "Simplified echemdb metadata for digitized data.",
-              "properties": {
-                "additionalProperties": true,
-                "experimental": {
-                  "description": "Experimental tags or keywords.",
-                  "figureDescription": {
-                    "additionalProperties": false,
-                    "description": "Description of the data to a figure or plot including data type and measurement details.",
-                    "properties": {
-                      "comment": {
-                        "description": "Additional notes about the figure or data.",
-                        "example": "Data below 0 V was cut off by the x-axis.",
-                        "type": "string"
-                      },
-                      "fields": {
-                        "description": "Description of data fields/columns in the figure.",
-                        "items": {
-                          "$ref": "#/definitions/Field"
-                        },
-                        "type": "array"
-                      },
-                      "measurementType": {
-                        "description": "Acronym type for the measurement performed, such as CV; EIS, XPS, etc.",
-                        "example": "CV",
-                        "type": "string"
-                      },
-                      "scanRate": {
-                        "$ref": "#/definitions/ScanRate",
-                        "description": "Scan rate used in the measurement."
-                      },
-                      "simultaneousMeasurements": {
-                        "description": "Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.",
-                        "items": {
-                          "type": "string"
-                        },
-                        "type": "array"
-                      },
-                      "type": {
-                        "anyOf": [
-                          {
-                            "const": "digitized",
-                            "description": "Data extracted from a figure using software (e.g., svgdigitizer)."
-                          },
-                          {
-                            "const": "raw",
-                            "description": "Original data as recorded by the instrument."
-                          },
-                          {
-                            "const": "simulated",
-                            "description": "Data generated by simulation software."
-                          },
-                          {
-                            "const": "processed",
-                            "description": "Data generated by processing raw or simulated data."
-                          }
-                        ],
-                        "description": "Source or origin of the data, such as digitized, raw, simulated, or processed.",
-                        "example": "raw",
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "type"
-                    ],
-                    "title": "figureDescription",
-                    "type": "object"
-                  },
-                  "properties": {
-                    "tags": {
-                      "description": "List of tags describing the experiment or measurement.",
-                      "example": [
-                        "CV",
-                        "ORR",
-                        "alkaline"
-                      ],
-                      "items": {
-                        "type": "string"
-                      },
-                      "type": "array"
-                    }
-                  },
-                  "source": {
-                    "description": "Source publication information for digitized data.",
-                    "properties": {
-                      "citationKey": {
-                        "description": "BibTeX citation key for the source following `<FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>` format.",
-                        "example": "doe_2024_electrochemistry_543",
-                        "type": "string"
-                      },
-                      "curve": {
-                        "description": "Specific curve identifier within the figure.",
-                        "example": "blue",
-                        "type": "string"
-                      },
-                      "figure": {
-                        "description": "Figure identifier in the source publication.",
-                        "example": "2a",
-                        "type": "string"
-                      },
-                      "techniques": {
-                        "contains": {
-                          "type": "string"
-                        },
-                        "description": "Techniques used in the source data.",
-                        "example": [
-                          "CV",
-                          "EIS",
-                          "XPS"
-                        ],
-                        "type": "array"
-                      },
-                      "url": {
-                        "default": "https://",
-                        "description": "URL or DOI of the source publication.",
-                        "example": "https://example.org",
-                        "format": "uri",
-                        "pattern": "^https?://.*$",
-                        "type": "string"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  "type": "object"
-                }
-              },
-              "required": [
-                "figureDescription"
-              ],
-              "type": "object"
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SvgdigitizerResourceMetadata"
+            },
+            {
+              "type": "null"
             }
-          },
-          "required": [
-            "echemdb"
           ],
-          "type": "object"
+          "description": "Metadata container for the digitized resource."
         }
       },
+      "title": "SvgdigitizerResource",
+      "type": "object"
+    },
+    "SvgdigitizerResourceMetadata": {
+      "additionalProperties": false,
+      "description": "Metadata container for svgdigitizer output.",
+      "properties": {
+        "echemdb": {
+          "$ref": "#/$defs/SvgdigitizerEchemdbMetadata",
+          "description": "Simplified echemdb metadata for digitized data."
+        }
+      },
+      "required": [
+        "echemdb"
+      ],
+      "title": "SvgdigitizerResourceMetadata",
+      "type": "object"
+    },
+    "SvgdigitizerSource": {
+      "additionalProperties": false,
+      "description": "Source publication information for digitized data.",
+      "properties": {
+        "citationKey": {
+          "description": "BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber> format.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "curve": {
+          "description": "Specific curve identifier within the figure.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "figure": {
+          "description": "Figure identifier in the source publication.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "techniques": {
+          "description": "Techniques used in the source data.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "url": {
+          "description": "URL or DOI of the source publication.",
+          "pattern": "^https?://.*$",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "SvgdigitizerSource",
       "type": "object"
     },
     "Uncertainty": {
       "additionalProperties": false,
       "description": "Uncertainty information for a measured quantity.",
-      "minProperties": 1,
       "properties": {
         "comment": {
           "description": "Additional information about the uncertainty estimation.",
-          "example": "Standard deviation from 3 replicate measurements",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "negativeValue": {
           "description": "Lower bound (-) for asymmetric uncertainties.",
-          "example": 0.01,
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "positiveValue": {
           "description": "Upper bound (+) for asymmetric uncertainties.",
-          "example": 0.02,
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         },
         "type": {
-          "description": "Type of uncertainty (absolute or relative).",
-          "enum": [
-            "absolute",
-            "relative"
-          ],
-          "example": "absolute",
-          "type": "string"
+          "$ref": "#/$defs/UncertaintyType",
+          "description": "Type of uncertainty (absolute or relative)."
         },
         "unit": {
           "description": "Unit of the uncertainty value.",
-          "example": "mol / l",
-          "type": "string"
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "value": {
           "description": "Symmetric uncertainty value (±).",
-          "example": 0.01,
-          "type": "number"
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "title": "Uncertainty",
       "type": "object"
     },
-    "Unit": {
-      "anyOf": [
-        {
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        },
-        {
-          "type": "string"
-        }
+    "UncertaintyType": {
+      "description": "Type of uncertainty measurement.",
+      "enum": [
+        "absolute",
+        "relative"
       ],
-      "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').",
-      "example": "mol / l",
-      "title": "Unit"
-    },
-    "Value": {
-      "anyOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "null"
-        },
-        {
-          "type": "string"
-        }
-      ],
-      "description": "Numerical value (can be a number, string, or null).",
-      "example": 0.5,
-      "title": "Value"
+      "title": "UncertaintyType",
+      "type": "string"
     }
   },
+  "$id": "https://echemdb.github.io/metadata-schema/svgdigitizer_package",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": true,
   "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
+  "metamodel_version": "1.7.0",
   "properties": {
     "resources": {
+      "description": "Data resources within the package.",
       "items": {
-        "allOf": [
-          {
-            "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
-          },
-          {
-            "$ref": "#/definitions/SvgdigitizerResource"
-          }
-        ]
+        "$ref": "#/$defs/SvgdigitizerResource"
       },
-      "type": "array"
+      "type": [
+        "array",
+        "null"
+      ]
     }
   },
-  "title": "svgdigitizer Data Package Profile",
-  "type": "object"
+  "title": "svgdigitizer_package",
+  "type": "object",
+  "version": null
 }

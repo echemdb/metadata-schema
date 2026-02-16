@@ -1,0 +1,87 @@
+id: https://echemdb.github.io/metadata-schema/data_description
+name: data_description
+description: Description of the raw data file format, including CSV dialect, field mapping, and units.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+
+default_range: string
+
+classes:
+  DataDescription:
+    description: >-
+      Description of the raw data file format, including CSV dialect,
+      field mapping from original headers to standardized names, and units for each field.
+    attributes:
+      dialect:
+        range: Dialect
+        description: CSV dialect specification describing the format of the source data file.
+        inlined: true
+      fieldUnits:
+        range: FieldUnit
+        description: >-
+          List of fields with their units and optional reference electrodes.
+          Describes the physical units of each data column after mapping.
+        multivalued: true
+        inlined_as_list: true
+
+  Dialect:
+    description: CSV dialect specification describing the format of the source data file.
+    attributes:
+      delimiters:
+        range: string
+        description: Column delimiter character(s) used in the data file.
+        examples:
+          - value: ","
+      decimal:
+        range: string
+        description: Character used as decimal separator.
+        examples:
+          - value: "."
+      encoding:
+        range: string
+        description: Character encoding of the data file.
+        examples:
+          - value: "utf-8"
+      headerLines:
+        range: integer
+        description: Number of header lines to skip before the column headers.
+        examples:
+          - value: "5"
+      columnHeaderLines:
+        range: integer
+        description: >-
+          Number of lines that make up the column headers.
+          If more than one, header parts are joined with ' / '.
+        examples:
+          - value: "2"
+
+  FieldUnit:
+    description: Unit specification for a data field, following astropy's string unit notation.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Standardized name of the data field (after mapping).
+        examples:
+          - value: "E"
+      unit:
+        range: string
+        required: true
+        description: Unit of measurement for this field, using astropy's string representation.
+        examples:
+          - value: "V"
+      reference:
+        range: string
+        description: Reference electrode or reference point for this field (electrochemistry-specific).
+        examples:
+          - value: "RHE"
+      description:
+        range: string
+        description: Optional detailed description of the field and its physical meaning.
+        examples:
+          - value: "Electrode potential vs. reversible hydrogen electrode"

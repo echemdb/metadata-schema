@@ -1,0 +1,43 @@
+id: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+name: instrumentation
+description: The instruments used to perform the experiment.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+
+default_range: string
+
+classes:
+  Instrumentation:
+    description: The instruments used to perform the experiment.
+    attributes:
+      type:
+        range: string
+        description: Type or category of instrument.
+        examples:
+          - value: "potentiostat"
+      manufacturer:
+        range: string
+        description: Manufacturer of the instrument.
+        examples:
+          - value: "Awesome Supplier Inc."
+      name:
+        range: string
+        required: true
+        description: Name or identifier of the instrument.
+        examples:
+          - value: "Poti05"
+      model:
+        range: string
+        description: Model number or designation.
+        examples:
+          - value: "P302NX5"
+      supplier:
+        range: string
+        description: Supplier of the instrument.
+        examples:
+          - value: "Awesome Supplier Inc."

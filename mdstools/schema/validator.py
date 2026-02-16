@@ -1,5 +1,16 @@
-"""Schema validation utilities for checking metadata against JSON Schema files."""
+"""Schema validation utilities for checking metadata against JSON Schema files
+or Pydantic models generated from LinkML.
 
+Two validation approaches are available:
+
+1. **JSON Schema validation** via ``validate_metadata()`` – uses jsonschema
+   library against resolved JSON Schema files.  Works with any schema.
+2. **Pydantic validation** via ``validate_with_pydantic()`` – uses
+   auto-generated Pydantic models from LinkML.  Provides richer error
+   messages and type coercion.
+"""
+
+import importlib
 import json
 from pathlib import Path
 from typing import Any
@@ -7,6 +18,16 @@ from typing import Any
 import jsonschema
 import yaml
 from referencing import Registry, Resource
+
+# Map schema names to their (module, class) for Pydantic validation
+PYDANTIC_MODELS = {
+    "minimum_echemdb": ("mdstools.models.minimum_echemdb", "MinimumEchemdb"),
+    "autotag": ("mdstools.models.autotag", "Autotag"),
+    "source_data": ("mdstools.models.source_data", "SourceData"),
+    "svgdigitizer": ("mdstools.models.svgdigitizer", "Svgdigitizer"),
+    "echemdb_package": ("mdstools.models.echemdb_package", "EchemdbPackage"),
+    "svgdigitizer_package": ("mdstools.models.svgdigitizer_package", "SvgdigitizerPackage"),
+}
 
 
 def _load_schema(schema_file: Path) -> dict:
@@ -97,3 +118,60 @@ def validate_metadata(data: Any, schema_path: str) -> None:
         raise ValueError(
             "Schema validation failed with " f"{len(errors)} error(s):\n{detail_text}"
         )
+
+
+def validate_with_pydantic(data: Any, schema_name: str) -> Any:
+    r"""
+    Validate metadata using auto-generated Pydantic models from LinkML.
+
+    Returns the validated Pydantic model instance on success.  Raises
+    ``ValueError`` on validation failure with detailed error messages.
+
+    :param data: Metadata dict to validate
+    :param schema_name: Schema name (e.g. 'minimum_echemdb', 'autotag')
+    :returns: Validated Pydantic model instance
+    :raises ValueError: If validation fails or schema_name is unknown
+
+    EXAMPLES::
+
+        Validating correct metadata returns a Pydantic model::
+
+            >>> import yaml
+            >>> from mdstools.schema.validator import validate_with_pydantic
+            >>> with open('examples/file_schemas/minimum_echemebd.yaml') as f:
+            ...     data = yaml.safe_load(f)
+            >>> model = validate_with_pydantic(data, 'minimum_echemdb')
+            >>> model.source.citationKey
+            'engstfeld_2018_polycrystalline_17743'
+
+        Validation errors raise ``ValueError``::
+
+            >>> try:
+            ...     validate_with_pydantic({'curation': 'not a dict'}, 'minimum_echemdb')
+            ... except ValueError as e:
+            ...     'validation failed' in str(e).lower()
+            True
+
+        Unknown schema name raises ``ValueError``::
+
+            >>> try:
+            ...     validate_with_pydantic({}, 'nonexistent')
+            ... except ValueError as e:
+            ...     print('Unknown schema')
+            Unknown schema
+
+    """
+    if schema_name not in PYDANTIC_MODELS:
+        raise ValueError(
+            f"Unknown schema '{schema_name}'. "
+            f"Available: {', '.join(sorted(PYDANTIC_MODELS.keys()))}"
+        )
+
+    module_path, class_name = PYDANTIC_MODELS[schema_name]
+    mod = importlib.import_module(module_path)
+    model_cls = getattr(mod, class_name)
+
+    try:
+        return model_cls.model_validate(data)
+    except Exception as exc:
+        raise ValueError(f"Pydantic validation failed: {exc}") from exc

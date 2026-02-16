@@ -1,0 +1,97 @@
+id: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+name: svgdigitizer_package
+description: Data package schema for svgdigitizer output.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./figure_description
+  - ./general/url
+
+default_range: string
+
+classes:
+  SvgdigitizerPackage:
+    tree_root: true
+    description: >-
+      Data package schema for svgdigitizer output following the Frictionless Data Package
+      specification with simplified echemdb metadata.
+    attributes:
+      resources:
+        range: SvgdigitizerResource
+        description: Data resources within the package.
+        multivalued: true
+        inlined_as_list: true
+
+  SvgdigitizerResource:
+    description: A resource created by svgdigitizer with minimal echemdb metadata.
+    attributes:
+      metadata:
+        range: SvgdigitizerResourceMetadata
+        description: Metadata container for the digitized resource.
+        inlined: true
+
+  SvgdigitizerResourceMetadata:
+    description: Metadata container for svgdigitizer output.
+    attributes:
+      echemdb:
+        range: SvgdigitizerEchemdbMetadata
+        required: true
+        description: Simplified echemdb metadata for digitized data.
+        inlined: true
+
+  SvgdigitizerEchemdbMetadata:
+    description: Simplified echemdb metadata for digitized data.
+    attributes:
+      experimental:
+        range: SvgdigitizerExperimental
+        description: Experimental tags or keywords.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        required: true
+        description: Description of the digitized figure.
+        inlined: true
+      source:
+        range: SvgdigitizerSource
+        description: Source publication information for digitized data.
+        inlined: true
+
+  SvgdigitizerExperimental:
+    description: Experimental tags or keywords for svgdigitizer.
+    attributes:
+      tags:
+        range: string
+        description: List of tags describing the experiment or measurement.
+        multivalued: true
+
+  SvgdigitizerSource:
+    description: Source publication information for digitized data.
+    attributes:
+      figure:
+        range: string
+        description: Figure identifier in the source publication.
+        examples:
+          - value: "2a"
+      curve:
+        range: string
+        description: Specific curve identifier within the figure.
+        examples:
+          - value: "blue"
+      citationKey:
+        range: string
+        description: >-
+          BibTeX citation key for the source following
+          <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber> format.
+        examples:
+          - value: "doe_2024_electrochemistry_543"
+      url:
+        range: HttpUrl
+        description: URL or DOI of the source publication.
+      techniques:
+        range: string
+        description: Techniques used in the source data.
+        multivalued: true

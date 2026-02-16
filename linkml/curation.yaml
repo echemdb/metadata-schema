@@ -1,0 +1,60 @@
+id: https://echemdb.github.io/metadata-schema/curation
+name: curation
+description: Details on the curation process of the data.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./general/url
+
+default_range: string
+
+enums:
+  CurationRole:
+    description: Role of a person in the data curation process.
+    permissible_values:
+      experimentalist:
+        description: A person that recorded the (meta)data.
+      curator:
+        description: A person that created a (meta)dataset from literature data.
+      reviewer:
+        description: A person that verified the (meta)data (usually literature data).
+      supervisor:
+        description: A person that supervised the experimentalist.
+
+classes:
+  Curation:
+    description: Details on the curation process of the data.
+    attributes:
+      process:
+        range: Process
+        required: true
+        description: List of people involved in creating, recording, or curating this data.
+        multivalued: true
+        inlined_as_list: true
+
+  Process:
+    description: A person involved in the data curation process.
+    attributes:
+      role:
+        range: CurationRole
+        required: true
+        description: Role of the person in the data curation process.
+      name:
+        range: string
+        required: true
+        description: Full name of the person.
+        examples:
+          - value: "Jane Doe"
+      orcid:
+        range: HttpUrl
+        required: true
+        description: An URL containing the ORCID.
+      date:
+        range: date
+        description: "Date when the person performed their role (ISO 8601 format: YYYY-MM-DD)."
+        examples:
+          - value: "2024-01-15"

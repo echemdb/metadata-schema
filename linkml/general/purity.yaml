@@ -1,0 +1,60 @@
+id: https://echemdb.github.io/metadata-schema/general/purity
+name: purity
+description: Purity specifications of a chemical component.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./quantity
+  - ./url
+
+default_range: string
+
+classes:
+  Purity:
+    description: Purity specifications of a chemical component.
+    attributes:
+      grade:
+        range: string
+        description: Quality grade designation.
+        examples:
+          - value: "ACS reagent"
+      totalOrganicCarbon:
+        range: Quantity
+        description: Value for the total organic carbon content measurement.
+        inlined: true
+      totalIonConductivity:
+        range: Quantity
+        description: Value for the total ionic conductivity measurement.
+        inlined: true
+      value:
+        range: string
+        description: Purity value as a number.
+        examples:
+          - value: "99.9"
+      unit:
+        range: string
+        description: Unit for purity value.
+        examples:
+          - value: "%"
+      container:
+        range: string
+        description: Name or identifier of the container in which the chemical is stored.
+        examples:
+          - value: "Glass bottle, amber"
+      internalLot:
+        range: string
+        description: Internal LOT or batch number.
+        examples:
+          - value: "LOT-2024-001"
+      url:
+        range: HttpUrl
+        description: URL with further details on the purity or container.
+      refinement:
+        range: string
+        description: Description of additional purification or treatment performed.
+        examples:
+          - value: "Triple distilled"

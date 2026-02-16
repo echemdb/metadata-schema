@@ -1,0 +1,47 @@
+id: https://echemdb.github.io/metadata-schema/system/atmosphere
+name: atmosphere
+description: Atmospheric conditions and gas composition during the experiment.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ../general/quantity
+  - ../general/component
+  - ../general/url
+
+default_range: string
+
+classes:
+  Atmosphere:
+    description: Atmospheric conditions and gas composition during the experiment.
+    attributes:
+      type:
+        range: string
+        description: Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ultra high vacuum).
+        examples:
+          - value: "inert"
+      totalOrganicCarbon:
+        range: Quantity
+        description: Total organic carbon content measurement in the atmosphere.
+        inlined: true
+      components:
+        range: Component
+        description: Gas components present in the atmosphere.
+        multivalued: true
+        inlined_as_list: true
+      url:
+        range: HttpUrl
+        description: URL with further details on the atmospheric setup or control system.
+      description:
+        range: string
+        description: Detailed description of the atmospheric conditions.
+        examples:
+          - value: "Argon purged for 30 minutes before measurement"
+      comment:
+        range: string
+        description: Additional notes about the atmosphere.
+        examples:
+          - value: "Slight overpressure maintained throughout experiment"

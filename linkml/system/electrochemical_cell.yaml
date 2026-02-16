@@ -1,0 +1,70 @@
+id: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+name: electrochemical_cell
+description: Description of the electrochemical cell setup and configuration.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ../general/url
+
+default_range: string
+
+classes:
+  ElectrochemicalCell:
+    description: Description of the electrochemical cell setup and configuration.
+    attributes:
+      type:
+        range: string
+        description: Type of electrochemical cell, such as H-cell, beaker glass, flow cell.
+        examples:
+          - value: "H-cell"
+      components:
+        range: ElectrochemicalCellComponent
+        description: Physical components and parts of the cell that are in contact with the electrolyte.
+        multivalued: true
+        inlined_as_list: true
+      cellDescription:
+        range: string
+        description: Detailed description of the cell configuration.
+        examples:
+          - value: "Three-electrode setup with glass cell and Teflon cap"
+      cleaningProcedure:
+        range: string
+        description: Procedure used to clean the cell before experiments.
+        examples:
+          - value: "Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream"
+      source:
+        range: ElectrochemicalCellSource
+        description: Source and supplier information for the cell.
+        inlined: true
+
+  ElectrochemicalCellComponent:
+    description: A component or part of the electrochemical cell.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Name or identifier of the component.
+        examples:
+          - value: "Cell body"
+      part:
+        range: string
+        required: true
+        description: Part number or designation.
+        examples:
+          - value: "EC-CELL-100"
+      description:
+        range: string
+        description: Detailed description of the component.
+        examples:
+          - value: "Borosilicate glass cell with multiple ports"
+
+  ElectrochemicalCellSource:
+    description: Source information for the electrochemical cell.
+    attributes:
+      url:
+        range: HttpUrl
+        description: URL to product page or technical documentation.

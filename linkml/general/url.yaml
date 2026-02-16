@@ -1,0 +1,20 @@
+id: https://echemdb.github.io/metadata-schema/general/url
+name: url
+description: Reusable URL type definition.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+
+default_range: string
+
+types:
+  HttpUrl:
+    typeof: uri
+    description: A valid HTTP or HTTPS URL, including DOIs.
+    pattern: "^https?://.*$"
+    examples:
+      - value: "https://example.org"
