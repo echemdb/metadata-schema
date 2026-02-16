@@ -141,7 +141,7 @@ def validate_with_pydantic(data: Any, schema_name: str) -> Any:
 
             >>> import yaml
             >>> from mdstools.schema.validator import validate_with_pydantic
-            >>> with open('examples/file_schemas/minimum_echemebd.yaml') as f:
+            >>> with open('examples/file_schemas/minimum_echemdb.yaml') as f:
             ...     data = yaml.safe_load(f)
             >>> model = validate_with_pydantic(data, 'minimum_echemdb')
             >>> model.source.citationKey

@@ -168,12 +168,21 @@ def validate_file_schemas():
     examples_dir = Path("examples/file_schemas")
     registry = build_registry(schema_dir)
 
-    files = ["autotag", "svgdigitizer"]
+    # Map schema names to their example files.
+    # Package schemas (echemdb_package, svgdigitizer_package) are excluded here
+    # because they reference external $refs (datapackage.org) that require network
+    # access. They are validated separately via the validate-package-schemas task.
+    files = {
+        "autotag": "autotag.yaml",
+        "minimum_echemdb": "minimum_echemdb.yaml",
+        "source_data": "source_data.yaml",
+        "svgdigitizer": "svgdigitizer.yaml",
+    }
 
     ok = True
-    for name in files:
+    for name, example_file in files.items():
         schema_path = schema_dir / f"{name}.yaml"
-        example_path = examples_dir / f"{name}.yaml"
+        example_path = examples_dir / example_file
 
         if not schema_path.exists():
             print(f"  SKIP {name} (schema not found)")

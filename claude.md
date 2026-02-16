@@ -234,7 +234,7 @@ metadata-schema/
 ├── examples/                      # Example YAML files
 │   ├── file_schemas/             # Examples per schema type
 │   │   ├── autotag.yaml
-│   │   ├── minimum_echemebd.yaml
+│   │   ├── minimum_echemdb.yaml
 │   │   └── source_data.yaml
 │   └── objects/                  # Examples of individual objects
 │

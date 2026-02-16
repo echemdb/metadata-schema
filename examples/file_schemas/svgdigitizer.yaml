@@ -6,15 +6,14 @@ curation:
     - role: curator
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2021-07-09 # YYYY-MM-DD
+      date: "2021-07-09" # YYYY-MM-DD
     - role: reviewer
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2022-01-21
+      date: "2022-01-21"
 eln: # not required for svgdigitizer
   url: https://some.url # URL to the ELN describing the data
 experimental:
-  version: 1
   tags:
     - BCV
     - SPST
