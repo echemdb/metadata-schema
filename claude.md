@@ -168,7 +168,7 @@ metadata-schema/
 │   ├── svgdigitizer.yaml
 │   ├── echemdb_package.yaml
 │   ├── svgdigitizer_package.yaml
-│   ├── curation.yaml             # Shared schema pieces
+│   ├── curation.yaml             # Shared schema components
 │   ├── source.yaml
 │   ├── eln.yaml
 │   ├── experimental.yaml
@@ -232,18 +232,6 @@ metadata-schema/
 │   │   └── dataresource.json
 │   ├── expected/                 # Expected baselines for snapshot testing
 │   │   └── *.json
-│   └── schema_pieces/            # Modular schema definitions (legacy reference)
-│       ├── autotag.json
-│       ├── curation.json
-│       ├── data_description.json  # CSV dialect, field mapping, field units
-│       ├── figure_description.json
-│       ├── minimum_echemdb.json
-│       ├── source.json
-│       ├── source_data.json       # Combines all pieces for source data files
-│       ├── system.json
-│       ├── experimental/
-│       ├── general/              # Reusable types (quantity, url, etc.)
-│       └── system/               # Electrolyte, electrode, cell schemas
 │
 ├── examples/                      # Example YAML/JSON files
 │   ├── file_schemas/             # Examples per schema type

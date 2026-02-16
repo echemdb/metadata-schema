@@ -40,8 +40,8 @@ class EnrichedFlattenedMetadata:
             [['1', 'curation', '<nested>', '', ''],
             ['1.1', 'process', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
             ['1.1.a', '', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
-            ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.'],
-            ['1.1.a.2', 'name', 'John Doe', 'Jane Doe', 'Full name of the person.']]
+            ['1.1.a.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.'],
+            ['1.1.a.2', 'name', 'John Doe', '', 'Full name of the person.']]
             >>> enriched.rows[3][3]  # Example for 'role' field
             'experimentalist'
             >>> 'person' in enriched.rows[3][4].lower()  # Description contains 'person'

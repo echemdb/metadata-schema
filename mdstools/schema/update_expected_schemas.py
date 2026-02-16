@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-Update expected resolved schemas after intentional changes to schema_pieces.
+Update expected schemas after intentional changes to LinkML definitions.
 
-Run this after reviewing diffs in resolved schemas to accept the changes.
+Run this after reviewing diffs in generated schemas to accept the changes.
 """
 
 import shutil
