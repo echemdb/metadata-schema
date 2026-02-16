@@ -54,69 +54,196 @@ class SchemaEnricher:
         self._load_schemas()
 
     def _load_schemas(self):
-        """Load all JSON schema files from both root (resolved) and schema_pieces (modular)."""
+        r"""
+        Load all JSON schema files from both root (resolved) and schema_pieces (modular).
+
+        Populates :attr:`schema_cache` with schemas keyed by file stem.
+        Pieces are loaded first so that root-level resolved schemas do not
+        overwrite them.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> len(enricher.schema_cache) > 0
+            True
+            >>> 'curation' in enricher.schema_cache
+            True
+
+        """
         if not self.schema_dir.exists():
             raise ValueError(f"Schema directory not found: {self.schema_dir}")
 
-        # Load from schema_pieces for modular access (system.json, curation.json, etc.)
-        schema_pieces = self.schema_dir / "schema_pieces"
-        if schema_pieces.exists():
-            for schema_file in schema_pieces.rglob("*.json"):
-                with open(schema_file, "r", encoding="utf-8") as f:
-                    schema_name = schema_file.stem
-                    # Only load if not already loaded (don't override)
-                    if schema_name not in self.schema_cache:
-                        self.schema_cache[schema_name] = json.load(f)
+        self._load_schema_pieces()
+        self._load_root_schemas()
+        self._register_schemas_by_title()
 
-        # Also load resolved schemas from root for fallback
+    def _load_schema_pieces(self):
+        r"""
+        Load modular schemas from the ``schema_pieces/`` directory.
+
+        Each ``.json`` file found (recursively) is stored in
+        :attr:`schema_cache` under its file stem.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # schema_pieces contains individual schema definitions
+            >>> 'system' in enricher.schema_cache
+            True
+            >>> 'source' in enricher.schema_cache
+            True
+
+        """
+        schema_pieces = self.schema_dir / "schema_pieces"
+        if not schema_pieces.exists():
+            return
+        for schema_file in schema_pieces.rglob("*.json"):
+            with open(schema_file, "r", encoding="utf-8") as f:
+                schema_name = schema_file.stem
+                if schema_name not in self.schema_cache:
+                    self.schema_cache[schema_name] = json.load(f)
+
+    def _load_root_schemas(self):
+        r"""
+        Load resolved schemas from the root directory and register sub-definitions.
+
+        Root-level ``.json`` files (e.g. ``schemas/autotag.json``) that are not
+        already cached are loaded and any ``definitions`` block they contain is
+        registered via :meth:`_register_definitions`.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # Root schemas like 'autotag' are loaded from schemas/
+            >>> 'autotag' in enricher.schema_cache
+            True
+
+        """
         for schema_file in self.schema_dir.glob("*.json"):
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
                     self.schema_cache[schema_name] = json.load(f)
 
-                    # For combined schemas like autotag/svgdigitizer,
-                    # also register their sub-definitions
-                    # This allows lookup by top-level keys like "system", "curation", etc.
                     schema_data = self.schema_cache[schema_name]
                     if "definitions" in schema_data:
-                        for def_name, def_value in schema_data["definitions"].items():
-                            # Register definitions by their lowercase name for lookup
-                            lowercase_name = def_name.lower()
-                            if lowercase_name not in self.schema_cache:
-                                # Create a minimal schema structure for this definition
-                                self.schema_cache[lowercase_name] = {
-                                    "definitions": {def_name: def_value},
-                                    "$schema": schema_data.get(
-                                        "$schema",
-                                        "http://json-schema.org/draft-07/schema#",
-                                    ),
-                                }
+                        self._register_definitions(schema_data)
 
-    def _resolve_ref(self, ref: str, current_schema: Dict) -> Optional[Dict]:
+    def _register_definitions(self, schema_data):
+        r"""
+        Register sub-definitions from a schema by their definition name.
+
+        For each entry in the ``definitions`` block, a standalone schema
+        wrapper is stored in :attr:`schema_cache` under the definition name.
+
+        :param schema_data: A loaded JSON schema dict with a ``definitions`` key
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # PascalCase definitions are registered directly
+            >>> 'Atmosphere' in enricher.schema_cache
+            True
+
         """
-        Resolve a $ref reference to its definition.
+        for def_name, def_value in schema_data["definitions"].items():
+            if def_name not in self.schema_cache:
+                self.schema_cache[def_name] = {
+                    "definitions": {def_name: def_value},
+                    "$schema": schema_data.get(
+                        "$schema",
+                        "http://json-schema.org/draft-07/schema#",
+                    ),
+                }
 
-        :param ref: The $ref string (e.g., "#/definitions/Process")
-        :param current_schema: The current schema dict
-        :return: The resolved schema definition or None
+    def _register_schemas_by_title(self):
+        r"""
+        Register schemas by definition ``title`` for camelCase key lookup.
+
+        Definitions use a ``title`` field matching the camelCase property key
+        (e.g. ``"figureDescription"``).  This step allows the schema to be
+        found directly by that property key.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> # The curation schema has title 'curation' on its definition
+            >>> 'curation' in enricher.schema_cache
+            True
+            >>> # camelCase titles like 'figureDescription' are also registered
+            >>> 'figureDescription' in enricher.schema_cache
+            True
+
+        """
+        for schema_name in list(self.schema_cache.keys()):
+            schema_data = self.schema_cache[schema_name]
+            if "definitions" in schema_data:
+                for _def_name, def_value in schema_data["definitions"].items():
+                    title = def_value.get("title", "")
+                    if title and title not in self.schema_cache:
+                        self.schema_cache[title] = schema_data
+
+    def _resolve_ref(
+        self, ref: str, current_schema: Dict
+    ) -> Tuple[Optional[Dict], Optional[Dict]]:
+        r"""
+        Resolve a ``$ref`` reference to its definition.
+
+        Handles both internal references (``#/definitions/Foo``) and relative
+        external references (``./general/url.json#/definitions/Url``).
+
+        :param ref: The $ref string (e.g., ``"#/definitions/Process"``)
+        :param current_schema: The current schema dict used for internal refs
+        :return: Tuple of ``(resolved_definition, root_schema)``
+                 or ``(None, None)`` if the reference cannot be resolved
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Resolve an internal ``#/definitions/...`` reference::
+
+                >>> schema = {'definitions': {'Foo': {'type': 'string'}}}
+                >>> resolved, root = enricher._resolve_ref('#/definitions/Foo', schema)
+                >>> resolved
+                {'type': 'string'}
+
+            Unresolvable references return ``(None, None)``::
+
+                >>> enricher._resolve_ref('#/definitions/Missing', schema)
+                (None, None)
+
+            External relative references are resolved from the cache::
+
+                >>> resolved, _ = enricher._resolve_ref(
+                ...     './curation.json#/definitions/Curation',
+                ...     {})
+                >>> resolved is not None
+                True
+
         """
         if ref.startswith("#/"):
-            # Internal reference
+            # Internal reference - resolve against current schema
             parts = ref[2:].split("/")
             result = current_schema
             for part in parts:
                 if isinstance(result, dict) and part in result:
                     result = result[part]
                 else:
-                    return None
-            return result
-        if ref.startswith("./"):
-            # External reference
+                    return None, None
+            return result, current_schema
+        if ref.startswith("."):
+            # Relative external reference (handles both ./ and ../)
             ref_path = ref.split("#")[0]
             ref_fragment = ref.split("#")[1] if "#" in ref else ""
 
-            # Load the referenced schema
+            # Load the referenced schema by filename stem
             ref_file = ref_path.lstrip("./").replace("/", os.sep)
             ref_schema_name = Path(ref_file).stem
 
@@ -130,118 +257,322 @@ class SchemaEnricher:
                         if isinstance(result, dict) and part in result:
                             result = result[part]
                         else:
-                            return None
-                    return result
-                return ref_schema
+                            return None, None
+                    # Return resolved def + the external schema as new root
+                    return result, ref_schema
+                return ref_schema, ref_schema
 
+        return None, None
+
+    def _extract_example(self, current):
+        r"""
+        Extract an example value from a schema node.
+
+        Looks for ``examples`` (list), ``example`` (scalar), or ``const``
+        fields in order and returns the first match.
+
+        :param current: Schema node dict
+        :return: Example value or None
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            From an ``examples`` list (first element is used)::
+
+                >>> enricher._extract_example({'examples': ['mV', 'V', 'A']})
+                'mV'
+
+            From a scalar ``example`` field::
+
+                >>> enricher._extract_example({'example': 42})
+                42
+
+            From a ``const`` value::
+
+                >>> enricher._extract_example({'const': 'fixed'})
+                'fixed'
+
+            Returns None when no example is available::
+
+                >>> enricher._extract_example({'type': 'string'}) is None
+                True
+
+        """
+        if (
+            "examples" in current
+            and isinstance(current["examples"], list)
+            and len(current["examples"]) > 0
+        ):
+            return current["examples"][0]
+        if "example" in current:
+            return current["example"]
+        if "const" in current:
+            return current["const"]
         return None
 
-    def _get_field_metadata(  # pylint: disable=too-many-nested-blocks,too-many-branches
+    def _extract_from_oneof_anyof(self, current):
+        r"""
+        Extract example and description from ``oneOf`` / ``anyOf`` constructs.
+
+        Scans the alternatives for a ``const`` value and returns the first one
+        found, together with its optional description.
+
+        :param current: Schema node dict
+        :return: Tuple of (const_value, description) or (None, None)
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            With ``oneOf`` containing const values::
+
+                >>> schema = {'oneOf': [
+                ...     {'const': 'red', 'description': 'Red colour'},
+                ...     {'const': 'blue', 'description': 'Blue colour'},
+                ... ]}
+                >>> enricher._extract_from_oneof_anyof(schema)
+                ('red', 'Red colour')
+
+            Returns (None, None) when no const is present::
+
+                >>> enricher._extract_from_oneof_anyof({'type': 'string'})
+                (None, None)
+
+        """
+        for keyword in ("anyOf", "oneOf"):
+            if keyword in current and isinstance(current[keyword], list):
+                for option in current[keyword]:
+                    if "const" in option:
+                        return option["const"], option.get("description")
+        return None, None
+
+    def _follow_refs(self, current, root_schema):
+        r"""
+        Follow ``$ref`` chains in a schema node until a concrete node is reached.
+
+        :param current: Schema node (may contain a ``$ref``)
+        :param root_schema: Root schema dict for resolving internal refs
+        :return: Tuple of ``(resolved_node, root_schema)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Nodes without ``$ref`` are returned unchanged::
+
+                >>> node = {'type': 'string', 'description': 'A name'}
+                >>> enricher._follow_refs(node, {})
+                ({'type': 'string', 'description': 'A name'}, {})
+
+            A ``$ref`` chain is resolved::
+
+                >>> schema = {'definitions': {'Foo': {'type': 'integer'}}}
+                >>> ref_node = {'$ref': '#/definitions/Foo'}
+                >>> resolved, _ = enricher._follow_refs(ref_node, schema)
+                >>> resolved
+                {'type': 'integer'}
+
+        """
+        while isinstance(current, dict) and "$ref" in current:
+            resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
+            if resolved:
+                current = resolved
+                root_schema = new_root
+            else:
+                break
+        return current, root_schema
+
+    def _resolve_array_items(self, current, root_schema):
+        r"""
+        If *current* is an array schema, resolve and return its ``items`` schema.
+
+        Non-array schemas are returned unchanged.
+
+        :param current: Schema node dict
+        :param root_schema: Root schema for resolving refs
+        :return: Tuple of ``(items_or_current, root_schema)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Array schema — returns the items definition::
+
+                >>> arr = {'type': 'array', 'items': {'type': 'string'}}
+                >>> enricher._resolve_array_items(arr, {})
+                ({'type': 'string'}, {})
+
+            Non-array schema — returned as-is::
+
+                >>> obj = {'type': 'object', 'properties': {}}
+                >>> enricher._resolve_array_items(obj, {})
+                ({'type': 'object', 'properties': {}}, {})
+
+        """
+        if current.get("type") == "array" and "items" in current:
+            items, root_schema = self._follow_refs(current["items"], root_schema)
+            return items, root_schema
+        return current, root_schema
+
+    def _extract_leaf_metadata(self, current, prop_description):
+        r"""
+        Extract description and example from a leaf schema node.
+
+        Uses the property-level description as a fallback and tries
+        :meth:`_extract_example` followed by :meth:`_extract_from_oneof_anyof`.
+
+        :param current: Resolved schema node
+        :param prop_description: Description set on the property reference (may be ``None``)
+        :return: Tuple of ``(description, example)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Schema with description and examples list::
+
+                >>> node = {'description': 'A voltage', 'examples': ['1.23']}
+                >>> enricher._extract_leaf_metadata(node, None)
+                ('A voltage', '1.23')
+
+            Falls back to *prop_description* when node has no description::
+
+                >>> node = {'examples': ['mV']}
+                >>> enricher._extract_leaf_metadata(node, 'The unit')
+                ('The unit', 'mV')
+
+            ``oneOf`` const values used as example::
+
+                >>> node = {'oneOf': [{'const': 'A', 'description': 'Option A'}]}
+                >>> enricher._extract_leaf_metadata(node, None)
+                ('Option A', 'A')
+
+        """
+        description = current.get("description") or prop_description
+
+        example = self._extract_example(current)
+        if example is None:
+            example, alt_desc = self._extract_from_oneof_anyof(current)
+            if not description and alt_desc:
+                description = alt_desc
+
+        return description, example
+
+    def _get_field_metadata(
         self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
     ) -> Tuple[Optional[str], Optional[str]]:
-        """
-        Extract description and example from schema for a given field path.
+        r"""
+        Extract description and example from a schema for a given field path.
+
+        Walks the ``properties`` tree of *schema* following each element in
+        *field_path*, resolving ``$ref`` and array ``items`` along the way.
 
         :param schema: The schema definition to search within
         :param field_path: List of field names representing the path
-        :param root_schema: The root schema containing all definitions (for resolving $refs)
-        :return: Tuple of (description, example) or (None, None)
+        :param root_schema: The root schema containing all definitions
+        :return: Tuple of ``(description, example)`` or ``(None, None)``
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Look up a property in a simple schema::
+
+                >>> schema = {
+                ...     'properties': {
+                ...         'name': {'type': 'string', 'description': 'Full name',
+                ...                  'examples': ['Jane']}
+                ...     }
+                ... }
+                >>> enricher._get_field_metadata(schema, ['name'])
+                ('Full name', 'Jane')
+
+            Empty field path returns ``(None, None)``::
+
+                >>> enricher._get_field_metadata(schema, [])
+                (None, None)
+
+            Missing property returns ``(None, None)``::
+
+                >>> enricher._get_field_metadata(schema, ['nonexistent'])
+                (None, None)
+
         """
         if not field_path:
             return None, None
 
         current = schema
         if root_schema is None:
-            root_schema = schema  # Keep reference to root for cross-references
+            root_schema = schema
 
-        # Navigate through the schema following the field path
         for i, field in enumerate(field_path):
             if not isinstance(current, dict):
                 return None, None
 
-            # Follow $ref if present at current level
-            while "$ref" in current:
-                resolved = self._resolve_ref(current["$ref"], root_schema)
-                if resolved:
-                    current = resolved
-                else:
-                    break
+            current, root_schema = self._follow_refs(current, root_schema)
 
-            # Check if we're at a property level
-            if "properties" in current and field in current["properties"]:
-                current = current["properties"][field]
-
-                # Follow any $refs in the property definition
-                while "$ref" in current:
-                    resolved = self._resolve_ref(current["$ref"], root_schema)
-                    if resolved:
-                        current = resolved
-                    else:
-                        break
-
-                # If this is the last field in the path, extract metadata
-                if i == len(field_path) - 1:
-                    description = current.get("description")
-
-                    # Check for examples in different places
-                    example = None
-                    if (
-                        "examples" in current
-                        and isinstance(current["examples"], list)
-                        and len(current["examples"]) > 0
-                    ):
-                        example = current["examples"][0]
-                    elif "example" in current:
-                        example = current["example"]
-                    elif "const" in current:
-                        example = current["const"]
-                    elif "anyOf" in current and isinstance(current["anyOf"], list):
-                        # Get the first const as example from anyOf
-                        for option in current["anyOf"]:
-                            if "const" in option:
-                                example = option["const"]
-                                if not description and "description" in option:
-                                    description = option["description"]
-                                break
-                    elif "oneOf" in current and isinstance(current["oneOf"], list):
-                        # Get the first const as example from oneOf
-                        for option in current["oneOf"]:
-                            if "const" in option:
-                                example = option["const"]
-                                if not description and "description" in option:
-                                    description = option["description"]
-                                break
-
-                    return description, example
-
-                # Not the last field - if this is an array, resolve its items
-                if current.get("type") == "array" and "items" in current:
-                    items = current["items"]
-
-                    # Resolve $ref in items if present
-                    while "$ref" in items:
-                        resolved = self._resolve_ref(items["$ref"], root_schema)
-                        if resolved:
-                            items = resolved
-                        else:
-                            break
-
-                    current = items
-            else:
-                # Can't navigate further with this field
+            if "properties" not in current or field not in current["properties"]:
                 return None, None
+
+            current = current["properties"][field]
+            prop_description = current.get("description")
+            current, root_schema = self._follow_refs(current, root_schema)
+
+            if i == len(field_path) - 1:
+                return self._extract_leaf_metadata(current, prop_description)
+
+            current, root_schema = self._resolve_array_items(current, root_schema)
 
         return None, None
 
     def enrich_row(  # pylint: disable=unused-argument
         self, key_path: str, current_value: Any
     ) -> Tuple[Optional[str], Optional[str]]:
-        """
+        r"""
         Get description and example for a specific field path.
+
+        Splits the dot-separated path, locates the matching top-level schema
+        and walks down the definition tree to find the leaf metadata.
 
         :param key_path: Dot-separated path of keys (e.g., "curation.process.role")
         :param current_value: The current value in the YAML
         :return: Tuple of (description, example) or (None, None)
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Look up a deeply nested field::
+
+                >>> desc, example = enricher.enrich_row('curation.process.role', 'curator')
+                >>> 'person' in desc.lower()
+                True
+                >>> example in ['experimentalist', 'curator', 'reviewer', 'supervisor']
+                True
+
+            Top-level key without remaining path returns (None, None)::
+
+                >>> enricher.enrich_row('curation', '<nested>')
+                (None, None)
+
+            Unknown field returns (None, None)::
+
+                >>> enricher.enrich_row('nonexistent.field', 'value')
+                (None, None)
+
+            Empty or missing path::
+
+                >>> enricher.enrich_row('', 'value')
+                (None, None)
+
         """
         if not key_path:
             return None, None
@@ -260,10 +591,15 @@ class SchemaEnricher:
 
             # Look for the definition in the schema
             if "definitions" in schema:
-                # Usually the main definition has the same name as the file (capitalized)
-                main_def_name = top_level.capitalize()
-                if main_def_name in schema["definitions"]:
-                    main_def = schema["definitions"][main_def_name]
+                # With consistent naming conventions, the PascalCase definition
+                # name is obtained by uppercasing the first letter of the
+                # camelCase property key.
+                main_def = None
+                pascal_name = top_level[0].upper() + top_level[1:]
+                if pascal_name in schema["definitions"]:
+                    main_def = schema["definitions"][pascal_name]
+
+                if main_def is not None:
                     # Pass the full schema as root_schema for resolving $refs
                     return self._get_field_metadata(
                         main_def, parts[1:], root_schema=schema
@@ -272,11 +608,53 @@ class SchemaEnricher:
         return None, None
 
     def enrich_flattened_data(self, flattened_rows: list) -> list:
-        """
+        r"""
         Enrich flattened YAML rows with description and example columns.
+
+        Takes a list of ``[number, key, value]`` rows and returns a list of
+        ``[number, key, value, example, description]`` rows by looking up each
+        field in the loaded JSON schemas.
 
         :param flattened_rows: List of [level, key, value] rows
         :return: List of [level, key, value, example, description] rows
+
+        EXAMPLES::
+
+            Enriching curation metadata::
+
+                >>> from mdstools.schema.enricher import SchemaEnricher
+                >>> enricher = SchemaEnricher('schemas')
+                >>> rows = [
+                ...     ['1', 'curation', '<nested>'],
+                ...     ['1.1', 'process', '<nested>'],
+                ...     ['1.1.a', '', '<nested>'],
+                ...     ['1.1.a.1', 'role', 'curator'],
+                ...     ['1.1.a.2', 'name', 'Jane Doe'],
+                ... ]
+                >>> enriched = enricher.enrich_flattened_data(rows)
+
+            Each enriched row has 5 elements: [number, key, value, example, description]::
+
+                >>> len(enriched[0])
+                5
+
+            Leaf fields get descriptions and examples from the schema::
+
+                >>> enriched[3]  # 'role' field
+                ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.']
+
+            Non-leaf ``<nested>`` rows may get descriptions too::
+
+                >>> enriched[1][4]  # 'process' description
+                'List of people involved in creating, recording, or curating this data.'
+
+            Fields without schema information get empty strings::
+
+                >>> rows_unknown = [['1', 'unknown_field', 'value']]
+                >>> enriched_unknown = enricher.enrich_flattened_data(rows_unknown)
+                >>> enriched_unknown[0][3:5]
+                ['', '']
+
         """
         enriched = []
         path_stack = []  # Stack of (level_depth, key) tuples

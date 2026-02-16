@@ -2,24 +2,87 @@
 
 
 def unflatten(rows):
-    """
+    r"""
     Reconstruct a nested dictionary from flattened rows.
+
+    Takes a list of ``[number, key, value]`` rows produced by
+    :func:`~mdstools.converters.flatten.flatten` and rebuilds the original
+    nested dictionary.  Header rows (``['number', 'key', 'value']``) are
+    automatically detected and skipped.
 
     :param rows: List of [number, key, value] rows
     :return: Reconstructed nested dictionary
 
-    >>> flattened_metadata = [['number', 'key', 'value'],
-    ... ['1', 'experiment', '<nested>'],
-    ... ['1.a', '', '<nested>'],
-    ... ['1.a.1', 'A', '<nested>'],
-    ... ['1.a.1.1', 'value', 1],
-    ... ['1.a.1.2', 'units', 'mV'],
-    ... ['1.a.2', 'B', 2],
-    ... ['1.b', '', '<nested>'],
-    ... ['1.b.1', 'A', 3],
-    ... ['1.b.2', 'B', 4]]
-    >>> unflatten(flattened_metadata) # doctest: +ELLIPSIS
-    {'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+    EXAMPLES::
+
+        Simple key-value pairs::
+
+            >>> from mdstools.converters.unflatten import unflatten
+            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
+            >>> unflatten(rows)
+            {'name': 'test', 'value': 42}
+
+        Nested dictionaries::
+
+            >>> rows = [['1', 'experiment', '<nested>'],
+            ...         ['1.1', 'value', 42],
+            ...         ['1.2', 'units', 'mV']]
+            >>> unflatten(rows)
+            {'experiment': {'value': 42, 'units': 'mV'}}
+
+        Lists of dictionaries (letter-indexed items)::
+
+            >>> rows = [['1', 'people', '<nested>'],
+            ...         ['1.a', '', '<nested>'],
+            ...         ['1.a.1', 'name', 'Alice'],
+            ...         ['1.a.2', 'role', 'curator'],
+            ...         ['1.b', '', '<nested>'],
+            ...         ['1.b.1', 'name', 'Bob'],
+            ...         ['1.b.2', 'role', 'reviewer']]
+            >>> unflatten(rows)
+            {'people': [{'name': 'Alice', 'role': 'curator'}, {'name': 'Bob', 'role': 'reviewer'}]}
+
+        Primitive lists::
+
+            >>> rows = [['1', 'tags', '<nested>'],
+            ...         ['1.a', '', 'alpha'],
+            ...         ['1.b', '', 'beta'],
+            ...         ['1.c', '', 'gamma']]
+            >>> unflatten(rows)
+            {'tags': ['alpha', 'beta', 'gamma']}
+
+        Mixed nested structures (dicts inside lists inside dicts)::
+
+            >>> rows = [['1', 'experiment', '<nested>'],
+            ...         ['1.a', '', '<nested>'],
+            ...         ['1.a.1', 'A', '<nested>'],
+            ...         ['1.a.1.1', 'value', 1],
+            ...         ['1.a.1.2', 'units', 'mV'],
+            ...         ['1.a.2', 'B', 2],
+            ...         ['1.b', '', '<nested>'],
+            ...         ['1.b.1', 'A', 3],
+            ...         ['1.b.2', 'B', 4]]
+            >>> unflatten(rows)
+            {'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+
+        Header rows are automatically skipped::
+
+            >>> rows = [['number', 'key', 'value'],
+            ...         ['1', 'name', 'test']]
+            >>> unflatten(rows)
+            {'name': 'test'}
+
+        Empty input returns an empty dict::
+
+            >>> unflatten([])
+            {}
+
+        Roundtrip with :func:`~mdstools.converters.flatten.flatten`::
+
+            >>> from mdstools.converters.flatten import flatten
+            >>> original = {'curation': {'process': [{'role': 'curator', 'name': 'Jane'}]}}
+            >>> unflatten(flatten(original)) == original
+            True
 
     """
     if not rows:

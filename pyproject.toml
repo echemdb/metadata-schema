@@ -10,15 +10,24 @@ description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "click>=8,<9",
     "pandas",
     "tabulate",
     "openpyxl",
     "jsonschema",
+    "referencing",
 ]
+
+[project.scripts]
+mdstools = "mdstools.entrypoint:cli"
 
 [tool.setuptools]
 packages = [
     "mdstools",
+    "mdstools.converters",
+    "mdstools.metadata",
+    "mdstools.schema",
+    "mdstools.test",
 ]
 
 
@@ -46,6 +55,7 @@ tabulate = ">=0.9.0,<0.10"
 check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
+click = ">=8,<9"
 
 
 [tool.pixi.pypi-dependencies]
@@ -76,8 +86,8 @@ pytest-remotedata = ">=0.4.1,<0.5"
 
 [tool.pixi.feature.test.tasks]
 doctest = "pytest -n auto --doctest-modules mdstools"
-test-comprehensive = "pytest mdstools/tests/test_comprehensive.py -v"
-test-resolved-schemas = "pytest mdstools/tests/test_resolved_schemas.py -v"
+test-comprehensive = "pytest mdstools/test/test_comprehensive.py -v"
+test-resolved-schemas = "pytest mdstools/test/test_resolved_schemas.py -v"
 test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
 
 [tool.pixi.feature.lint.dependencies]
@@ -87,8 +97,8 @@ pylint = "*"
 
 [tool.pixi.feature.dev.tasks]
 test = "pixi run test-all"
-convert = "python mdstools/cli.py"
-unflatten = "python mdstools/cli.py unflatten"
+flatten = "mdstools flatten"
+unflatten = "mdstools unflatten"
 resolve-schemas = "python mdstools/schema/resolver.py"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
 diff-schemas = {cmd = [
@@ -135,7 +145,8 @@ validate-package-schemas = {cmd = [
     check-jsonschema --schemafile schemas/svgdigitizer_package.json examples/file_schemas/svgdigitizer_package.json 2>&1 | grep -E "(ok -- validation|error)" || true
     '''
 ]}
-validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas"] }
+check-naming = "python mdstools/schema/check_naming.py"
+validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas", "check-naming"] }
 
 
 [tool.pixi.target.win-64.dependencies]

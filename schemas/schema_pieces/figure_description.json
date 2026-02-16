@@ -11,7 +11,7 @@
             "properties": {
                 "type":
                     { "type": "string",
-                        "description": "Source or origin of the data.",
+                        "description": "Source or origin of the data, such as digitized, raw, simulated, or processed.",
                         "example": "raw",
                         "anyOf": [
                             {"const": "digitized", "description": "Data extracted from a figure using software (e.g., svgdigitizer)."},
@@ -108,7 +108,9 @@
         },
         "ScanRate": {
             "$ref": "./general/quantity.json#/definitions/Quantity",
-            "title": "scan rate"
+            "description": "The rate at which the data has been recorded.",
+            "example": "10 mV / s",
+            "title": "scanRate"
         }
     }
 }

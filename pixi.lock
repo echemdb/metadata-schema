@@ -8180,12 +8180,14 @@ packages:
 - pypi: ./
   name: mdstools
   version: 0.4.0
-  sha256: 09563808f0ce24c4d546a51ac304ecf63423d5f7c6c09262190582c774d429f7
+  sha256: e1379b3309cd3d4cd5a6352d029d0b348b75e4e6a281c244f08cd8db43a3c1bf
   requires_dist:
+  - click>=8,<9
   - pandas
   - tabulate
   - openpyxl
   - jsonschema
+  - referencing
   requires_python: '>=3.10'
 - conda: https://conda.anaconda.org/conda-forge/noarch/mdurl-0.1.2-pyhd8ed1ab_1.conda
   sha256: 78c1bbe1723449c52b7a9df1af2ee5f005209f67e40b6e1d3c7619127c43b1c7

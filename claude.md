@@ -38,27 +38,30 @@ We've successfully implemented **Option 3**: Using JSON Schema files to enrich f
 
 **Usage**: `pixi run resolve-schemas` (generates resolved schemas in `schemas/` folder)
 
-### 2. Utilities
+### 2. CLI Interface
 
-#### `cli.py`
-- **Purpose**: Command-line interface for YAML to Excel/CSV conversion
-- **Usage**: `pixi run convert <yaml_file> [options]`
+#### `entrypoint.py`
+- **Purpose**: Click-based command-line interface for YAML to Excel/CSV conversion and back
+- **Entry point**: Registered as `mdstools` via `[project.scripts]` in `pyproject.toml`
+- **Commands**: `flatten` and `unflatten`
+- **Usage**: `mdstools flatten <yaml_file> [options]` or `pixi run flatten <yaml_file> [options]`
 - **Features**: Schema enrichment, multiple output formats, configurable paths
+- **Pattern**: Follows the same structure as `unitpackage/entrypoint.py` — `@click.group` with `@click.command` subcommands added via `cli.add_command()`
+- **Doctest support**: `__test__` dict re-exports command docstrings for pytest-doctestplus discovery
 
 ### 3. Testing
 
-#### `tests/test_comprehensive.py`
+#### `test/cli.py`
+- `invoke()` helper wrapping Click's `CliRunner` for clean doctest usage
+- Adapted from `unitpackage/test/cli.py`
+
+#### `test/test_comprehensive.py`
 - Complete test suite covering all functionality
 - Tests: basic flattening, enrichment, multi-sheet export, field-specific enrichment, markdown export
 - Generates test outputs in `tests/generated/`
 
-### 4. CLI Interface
-
-#### `mdstools/cli.py`
-- Replaced demo script with proper command-line interface
-- Integrates with pixi: `pixi run convert <yaml_file>`
-- Provides user-friendly output and statistics
-- Supports all export formats and options
+#### `test/test_resolved_schemas.py`
+- Snapshot tests comparing resolved schemas against `schemas/expected/`
 
 ## How It Works
 
@@ -145,7 +148,7 @@ The following schemas are resolved from `schema_pieces/` into `schemas/`:
 metadata-schema/
 ├── mdstools/                      # Main package
 │   ├── __init__.py
-│   ├── cli.py                    # Command-line interface
+│   ├── entrypoint.py             # Click-based CLI (entry point: mdstools)
 │   ├── metadata/                 # Metadata classes
 │   │   ├── metadata.py           # Nested dict/YAML wrapper
 │   │   ├── flattened_metadata.py # Tabular format wrapper
@@ -158,7 +161,8 @@ metadata-schema/
 │   │   ├── resolver.py           # Schema resolution (for releases)
 │   │   ├── validator.py          # Schema validation
 │   │   └── update_expected_schemas.py  # Update expected snapshots
-│   └── tests/                    # Test files
+│   └── test/                     # Test files and helpers
+│       ├── cli.py                # Click CliRunner helper (invoke())
 │       ├── test_comprehensive.py # Full test suite
 │       └── test_resolved_schemas.py  # Snapshot tests for resolved schemas
 │
@@ -227,7 +231,9 @@ enriched.to_excel('output.xlsx', separate_sheets=True)
 
 ### Using CLI
 ```bash
-pixi run convert tests/example_metadata.yaml --output-dir generated
+mdstools flatten tests/example_metadata.yaml --output-dir generated
+# or via pixi:
+pixi run flatten tests/example_metadata.yaml --output-dir generated
 ```
 
 ## Testing
@@ -250,7 +256,9 @@ pixi run diff-schemas            # Show diffs between expected and resolved sche
 
 ### Run Conversion
 ```bash
-pixi run convert tests/example_metadata.yaml
+mdstools flatten tests/example_metadata.yaml
+# or via pixi:
+pixi run flatten tests/example_metadata.yaml
 ```
 
 ## Future Enhancements
@@ -273,7 +281,6 @@ pixi run convert tests/example_metadata.yaml
 ## Backlog Ideas
 
 - Clarify which columns are required when loading enriched Excel (Number/Key/Value)
-- Add a CLI subcommand for Excel/CSV -> YAML conversion
 
 ### Schema Enhancement
 To improve enrichment coverage beyond current ~14%:
@@ -292,8 +299,11 @@ To improve enrichment coverage beyond current ~14%:
 - Test outputs go to `tests/generated/` (gitignored)
 
 ### CLI Usage
-- `pixi run convert <yaml_file>` - Main conversion command
-- Replaces the old demo script approach with proper CLI interface
+- `mdstools flatten <yaml_file>` / `pixi run flatten <yaml_file>` - Flatten YAML to Excel/CSV
+- `mdstools unflatten <file>` / `pixi run unflatten <file>` - Unflatten Excel/CSV back to YAML
+- Click-based CLI registered as `mdstools` entry point via `[project.scripts]`
+- Follows unitpackage's entrypoint pattern (`@click.group` + `@click.command` + `cli.add_command()`)
+- Doctests in command docstrings discovered via `__test__` dict and pytest-doctestplus
 - Outputs to `generated/` directory by default
 
 ### File Organization Decisions

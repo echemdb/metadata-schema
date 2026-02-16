@@ -73,8 +73,25 @@ pixi run resolve-schemas
 Schemas include human-readable descriptions and examples to aid in documentation and user guidance. Use the enrichment tools to add descriptions to Excel exports:
 
 ```bash
-pixi run convert
+pixi run flatten
 ```
+
+## Naming Conventions
+
+| Layer | Convention | Examples |
+|---|---|---|
+| **File names** | `snake_case.json` | `figure_description.json`, `source_data.json` |
+| **Definition names** (`definitions`) | `PascalCase` | `FigureDescription`, `ElectrochemicalCell`, `ScanRate` |
+| **Property keys** (YAML dict keys) | `camelCase` | `figureDescription`, `scanRate`, `measurementType` |
+
+**Rules:**
+
+- **Property keys**: Start lowercase, no underscores, no spaces → `^[a-z][a-zA-Z0-9]*$`
+- **Definition names**: Start uppercase, no underscores, no spaces → `^[A-Z][a-zA-Z0-9]*$`
+- **File names**: All lowercase with underscores → `^[a-z][a-z0-9_]*\.json$`
+- Single-word names (e.g., `curation`, `source`) satisfy all conventions naturally
+
+Enforced by `pixi run check-naming` (runs as part of `pixi run validate`).
 
 ## Contributing
 
@@ -82,6 +99,8 @@ When modifying schemas:
 
 1. Edit schemas in `schema_pieces/` directory only
 2. Add descriptions and examples to all new fields
-3. Run `pixi run resolve-schemas` to update resolved versions
-4. Run `pixi run validate` to ensure all validations pass
-5. Run `pixi run test-comprehensive` to verify enrichment still works
+3. Follow the [naming conventions](#naming-conventions) above
+4. Run `pixi run check-naming` to verify naming rules
+5. Run `pixi run resolve-schemas` to update resolved versions
+6. Run `pixi run validate` to ensure all validations pass
+7. Run `pixi run test-comprehensive` to verify enrichment still works
