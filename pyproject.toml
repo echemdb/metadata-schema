@@ -15,6 +15,7 @@ dependencies = [
     "tabulate",
     "openpyxl",
     "jsonschema",
+    "referencing",
 ]
 
 [project.scripts]

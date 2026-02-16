@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import jsonschema
+from referencing import Registry, Resource
 
 
 def validate_metadata(data: Any, schema_path: str) -> None:
@@ -55,9 +56,11 @@ def validate_metadata(data: Any, schema_path: str) -> None:
         schema = json.load(f)
 
     base_uri = schema_file.resolve().as_uri()
-    resolver = jsonschema.RefResolver(base_uri=base_uri, referrer=schema)
+    resource = Resource.from_contents(schema)
+    registry = Registry().with_resource(base_uri, resource)
+
     validator_cls = jsonschema.validators.validator_for(schema)
-    validator = validator_cls(schema, resolver=resolver)
+    validator = validator_cls(schema, registry=registry)
 
     errors = sorted(validator.iter_errors(data), key=lambda err: err.path)
     if errors:
