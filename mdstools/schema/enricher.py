@@ -156,7 +156,41 @@ class SchemaEnricher:
         return None, None
 
     def _extract_example(self, current):
-        """Extract an example value from a schema node."""
+        r"""
+        Extract an example value from a schema node.
+
+        Looks for ``examples`` (list), ``example`` (scalar), or ``const``
+        fields in order and returns the first match.
+
+        :param current: Schema node dict
+        :return: Example value or None
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            From an ``examples`` list (first element is used)::
+
+                >>> enricher._extract_example({'examples': ['mV', 'V', 'A']})
+                'mV'
+
+            From a scalar ``example`` field::
+
+                >>> enricher._extract_example({'example': 42})
+                42
+
+            From a ``const`` value::
+
+                >>> enricher._extract_example({'const': 'fixed'})
+                'fixed'
+
+            Returns None when no example is available::
+
+                >>> enricher._extract_example({'type': 'string'}) is None
+                True
+
+        """
         if (
             "examples" in current
             and isinstance(current["examples"], list)
@@ -170,7 +204,35 @@ class SchemaEnricher:
         return None
 
     def _extract_from_oneof_anyof(self, current):
-        """Extract example and description from oneOf/anyOf constructs."""
+        r"""
+        Extract example and description from ``oneOf`` / ``anyOf`` constructs.
+
+        Scans the alternatives for a ``const`` value and returns the first one
+        found, together with its optional description.
+
+        :param current: Schema node dict
+        :return: Tuple of (const_value, description) or (None, None)
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            With ``oneOf`` containing const values::
+
+                >>> schema = {'oneOf': [
+                ...     {'const': 'red', 'description': 'Red colour'},
+                ...     {'const': 'blue', 'description': 'Blue colour'},
+                ... ]}
+                >>> enricher._extract_from_oneof_anyof(schema)
+                ('red', 'Red colour')
+
+            Returns (None, None) when no const is present::
+
+                >>> enricher._extract_from_oneof_anyof({'type': 'string'})
+                (None, None)
+
+        """
         for keyword in ("anyOf", "oneOf"):
             if keyword in current and isinstance(current[keyword], list):
                 for option in current[keyword]:
@@ -249,12 +311,44 @@ class SchemaEnricher:
     def enrich_row(  # pylint: disable=unused-argument
         self, key_path: str, current_value: Any
     ) -> Tuple[Optional[str], Optional[str]]:
-        """
+        r"""
         Get description and example for a specific field path.
+
+        Splits the dot-separated path, locates the matching top-level schema
+        and walks down the definition tree to find the leaf metadata.
 
         :param key_path: Dot-separated path of keys (e.g., "curation.process.role")
         :param current_value: The current value in the YAML
         :return: Tuple of (description, example) or (None, None)
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+
+            Look up a deeply nested field::
+
+                >>> desc, example = enricher.enrich_row('curation.process.role', 'curator')
+                >>> 'person' in desc.lower()
+                True
+                >>> example in ['experimentalist', 'curator', 'reviewer', 'supervisor']
+                True
+
+            Top-level key without remaining path returns (None, None)::
+
+                >>> enricher.enrich_row('curation', '<nested>')
+                (None, None)
+
+            Unknown field returns (None, None)::
+
+                >>> enricher.enrich_row('nonexistent.field', 'value')
+                (None, None)
+
+            Empty or missing path::
+
+                >>> enricher.enrich_row('', 'value')
+                (None, None)
+
         """
         if not key_path:
             return None, None
@@ -299,11 +393,53 @@ class SchemaEnricher:
         return None, None
 
     def enrich_flattened_data(self, flattened_rows: list) -> list:
-        """
+        r"""
         Enrich flattened YAML rows with description and example columns.
+
+        Takes a list of ``[number, key, value]`` rows and returns a list of
+        ``[number, key, value, example, description]`` rows by looking up each
+        field in the loaded JSON schemas.
 
         :param flattened_rows: List of [level, key, value] rows
         :return: List of [level, key, value, example, description] rows
+
+        EXAMPLES::
+
+            Enriching curation metadata::
+
+                >>> from mdstools.schema.enricher import SchemaEnricher
+                >>> enricher = SchemaEnricher('schemas')
+                >>> rows = [
+                ...     ['1', 'curation', '<nested>'],
+                ...     ['1.1', 'process', '<nested>'],
+                ...     ['1.1.a', '', '<nested>'],
+                ...     ['1.1.a.1', 'role', 'curator'],
+                ...     ['1.1.a.2', 'name', 'Jane Doe'],
+                ... ]
+                >>> enriched = enricher.enrich_flattened_data(rows)
+
+            Each enriched row has 5 elements: [number, key, value, example, description]::
+
+                >>> len(enriched[0])
+                5
+
+            Leaf fields get descriptions and examples from the schema::
+
+                >>> enriched[3]  # 'role' field
+                ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.']
+
+            Non-leaf ``<nested>`` rows may get descriptions too::
+
+                >>> enriched[1][4]  # 'process' description
+                'List of people involved in creating, recording, or curating this data.'
+
+            Fields without schema information get empty strings::
+
+                >>> rows_unknown = [['1', 'unknown_field', 'value']]
+                >>> enriched_unknown = enricher.enrich_flattened_data(rows_unknown)
+                >>> enriched_unknown[0][3:5]
+                ['', '']
+
         """
         enriched = []
         path_stack = []  # Stack of (level_depth, key) tuples

@@ -41,7 +41,7 @@ class Metadata:
 
     @classmethod
     def from_yaml(cls, filepath: str):
-        """
+        r"""
         Load metadata from a YAML file.
 
         :param filepath: Path to YAML file
@@ -49,10 +49,17 @@ class Metadata:
 
         EXAMPLES::
 
-            >>> # metadata = Metadata.from_yaml('examples/objects/system.yaml')
-            >>> # isinstance(metadata, Metadata)
-            >>> # True
-            >>> pass  # Placeholder for file-based test
+            Load from a YAML file::
+
+                >>> from mdstools.metadata.metadata import Metadata
+                >>> metadata = Metadata.from_yaml('tests/simple_test.yaml')
+                >>> isinstance(metadata, Metadata)
+                True
+                >>> 'curation' in metadata.data
+                True
+                >>> metadata.data['system']['type']
+                'electrochemical'
+
         """
         with open(filepath, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)

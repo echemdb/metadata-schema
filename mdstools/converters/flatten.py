@@ -5,7 +5,38 @@ import string
 
 # Helper to check if a list contains only primitive values
 def is_primitive_list(lst):
-    """Check if a list contains only primitive values (no dicts or lists)."""
+    r"""
+    Check if a list contains only primitive values (no dicts or lists).
+
+    Returns True if every element is a simple scalar (str, int, float, bool, None),
+    and False if any element is a dict or list.
+
+    EXAMPLES::
+
+        Primitive lists::
+
+            >>> from mdstools.converters.flatten import is_primitive_list
+            >>> is_primitive_list(['a', 'b', 'c'])
+            True
+            >>> is_primitive_list([1, 2, 3])
+            True
+            >>> is_primitive_list([1, 'mixed', 3.14, True, None])
+            True
+
+        Non-primitive lists::
+
+            >>> is_primitive_list([{'key': 'value'}])
+            False
+            >>> is_primitive_list([[1, 2], [3, 4]])
+            False
+            >>> is_primitive_list([1, {'nested': True}])
+            False
+
+        Edge case - empty list::
+
+            >>> is_primitive_list([])
+            True
+    """
     return all(not isinstance(x, (dict, list)) for x in lst)
 
 

@@ -119,12 +119,28 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
 
 
 def save_csv_with_path_creation(df: pd.DataFrame, filepath: str, **kwargs) -> None:
-    """
+    r"""
     Save a DataFrame to CSV with automatic parent directory creation.
+
+    Creates any missing directories in *filepath* before writing.
 
     :param df: DataFrame to save
     :param filepath: Path to save CSV file
     :param kwargs: Additional arguments passed to pandas.DataFrame.to_csv
+
+    EXAMPLES::
+
+        >>> import pandas as pd
+        >>> from mdstools.metadata.local import save_csv_with_path_creation
+        >>> import os
+        >>> df = pd.DataFrame({'Number': ['1', '2'], 'Key': ['a', 'b'], 'Value': [1, 2]})
+        >>> save_csv_with_path_creation(df, 'tests/generated/docstrings/local_csv_test.csv')
+        >>> os.path.exists('tests/generated/docstrings/local_csv_test.csv')
+        True
+        >>> loaded = pd.read_csv('tests/generated/docstrings/local_csv_test.csv')
+        >>> loaded['Key'].tolist()
+        ['a', 'b']
+
     """
     if isinstance(filepath, str):
         os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
@@ -138,14 +154,46 @@ def save_excel_with_optional_sheets(
     separate_sheets: bool = False,
     **kwargs,
 ) -> None:
-    """
+    r"""
     Save a DataFrame to Excel, optionally with separate sheets per top-level key.
+
+    When *separate_sheets* is ``False``, writes the entire DataFrame to a
+    single sheet.  When ``True``, delegates to
+    :func:`save_excel_multi_sheet` to create one sheet per top-level number.
 
     :param df: DataFrame to save
     :param filepath: Path to save Excel file
     :param column_order: List of column names in desired order
     :param separate_sheets: If True, create separate sheets for each top-level key
     :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
+
+    EXAMPLES::
+
+        Single-sheet export::
+
+            >>> import pandas as pd
+            >>> from mdstools.metadata.local import save_excel_with_optional_sheets
+            >>> import os
+            >>> df = pd.DataFrame({
+            ...     'Number': ['1', '1.1', '2', '2.1'],
+            ...     'Key': ['experiment', 'value', 'source', 'author'],
+            ...     'Value': ['<nested>', 42, '<nested>', 'John']
+            ... })
+            >>> save_excel_with_optional_sheets(
+            ...     df, 'tests/generated/docstrings/local_single.xlsx',
+            ...     ['Number', 'Key', 'Value'], separate_sheets=False)
+            >>> os.path.exists('tests/generated/docstrings/local_single.xlsx')
+            True
+
+        Multi-sheet export::
+
+            >>> save_excel_with_optional_sheets(
+            ...     df, 'tests/generated/docstrings/local_multi.xlsx',
+            ...     ['Number', 'Key', 'Value'], separate_sheets=True)
+            >>> xlsx = pd.ExcelFile('tests/generated/docstrings/local_multi.xlsx')
+            >>> len(xlsx.sheet_names) == 2  # One sheet per top-level key
+            True
+
     """
     if not separate_sheets:
         # Single sheet export

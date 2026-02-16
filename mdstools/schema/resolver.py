@@ -40,7 +40,23 @@ from typing import Any, Dict
 
 
 class SchemaResolver:  # pylint: disable=too-few-public-methods
-    """Resolves all $ref references in JSON schemas."""
+    r"""
+    Resolves all ``$ref`` references in JSON schemas.
+
+    Loads all modular schema pieces from ``schema_dir/schema_pieces/`` and
+    provides :meth:`resolve_all_refs` to produce single-file resolved schemas
+    with all external references inlined.
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.resolver import SchemaResolver
+        >>> resolver = SchemaResolver('schemas')
+        >>> 'curation' in resolver.schema_cache
+        True
+        >>> 'system' in resolver.schema_cache
+        True
+
+    """
 
     def __init__(self, schema_dir: str):
         self.schema_dir = Path(schema_dir)
@@ -189,11 +205,42 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
     def resolve_all_refs(
         self, schema_name: str
     ) -> Dict:  # pylint: disable=too-many-locals
-        """
-        Resolve all external $refs in a schema, keeping internal refs.
+        r"""
+        Resolve all external ``$ref`` references in a schema, keeping internal refs.
+
+        Loads the named schema from the cache, resolves every external
+        ``$ref`` (relative file paths), strips ``$id`` fields, and collects
+        only the definitions that are actually referenced.
 
         :param schema_name: Name of the schema file (without .json)
         :return: Resolved schema with all definitions inlined
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.resolver import SchemaResolver
+            >>> resolver = SchemaResolver('schemas')
+
+            Resolve a schema and check the result is valid JSON Schema::
+
+                >>> resolved = resolver.resolve_all_refs('curation')
+                >>> '$schema' in resolved
+                True
+                >>> 'definitions' in resolved
+                True
+
+            The resolved schema contains inlined definitions::
+
+                >>> 'Curation' in resolved['definitions'] or 'Process' in resolved['definitions']
+                True
+
+            Unknown schema names raise ``ValueError``::
+
+                >>> try:
+                ...     resolver.resolve_all_refs('nonexistent')
+                ... except ValueError as e:
+                ...     'not found' in str(e).lower()
+                True
+
         """
         if schema_name not in self.schema_cache:
             raise ValueError(f"Schema '{schema_name}' not found")
