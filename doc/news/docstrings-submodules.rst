@@ -1,6 +1,6 @@
 **Added:**
 
-* Added ``mdstools/schema/check_naming.py`` to validate naming conventions across all JSON Schema files (camelCase properties, PascalCase definitions, snake_case file names).
+* Added ``mdstools/schema/check_naming.py`` to validate naming conventions across all schema files (camelCase properties, PascalCase definitions, snake_case file names).
 * Added ``check-naming`` pixi task, included in ``pixi run validate``.
 * Added naming conventions section to ``schemas/README.md``.
 * Added ``referencing`` as an explicit dependency.
