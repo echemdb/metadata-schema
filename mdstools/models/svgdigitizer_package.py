@@ -128,7 +128,7 @@ class Quantity(ConfiguredBaseModel):
         {"from_schema": "https://echemdb.github.io/metadata-schema/general/quantity"}
     )
 
-    value: Optional[str] = Field(
+    value: Optional[float] = Field(
         default=None,
         description="""Numerical value of the quantity.""",
         json_schema_extra={
@@ -610,6 +610,22 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""URL or DOI of the source publication.""",
         json_schema_extra={
             "linkml_meta": {"alias": "url", "domain_of": ["SvgdigitizerSource"]}
+        },
+    )
+    bibdata: Optional[str] = Field(
+        default=None,
+        description="""BibTeX bibliographic data.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "bibdata",
+                "domain_of": ["SvgdigitizerSource"],
+                "examples": [
+                    {
+                        "value": "@article{electrobear_2024_electrochemistry_563, "
+                        "title={...}, ...}"
+                    }
+                ],
+            }
         },
     )
     techniques: Optional[list[str]] = Field(

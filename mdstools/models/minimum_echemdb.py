@@ -312,7 +312,7 @@ class Quantity(ConfiguredBaseModel):
         {"from_schema": "https://echemdb.github.io/metadata-schema/general/quantity"}
     )
 
-    value: Optional[str] = Field(
+    value: Optional[float] = Field(
         default=None,
         description="""Numerical value of the quantity.""",
         json_schema_extra={
@@ -511,7 +511,7 @@ class Purity(ConfiguredBaseModel):
             "linkml_meta": {"alias": "totalIonConductivity", "domain_of": ["Purity"]}
         },
     )
-    value: Optional[str] = Field(
+    value: Optional[float] = Field(
         default=None,
         description="""Purity value as a number.""",
         json_schema_extra={
@@ -529,7 +529,7 @@ class Purity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "Purity", "DataField"],
-                "examples": [{"value": "%"}],
+                "examples": [{"value": "pct"}],
             }
         },
     )

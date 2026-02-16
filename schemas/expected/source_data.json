@@ -1175,7 +1175,7 @@
         "value": {
           "description": "Purity value as a number.",
           "type": [
-            "string",
+            "number",
             "null"
           ]
         }

@@ -91,6 +91,11 @@ classes:
       url:
         range: HttpUrl
         description: URL or DOI of the source publication.
+      bibdata:
+        range: string
+        description: BibTeX bibliographic data.
+        examples:
+          - value: "@article{electrobear_2024_electrochemistry_563, title={...}, ...}"
       techniques:
         range: string
         description: Techniques used in the source data.

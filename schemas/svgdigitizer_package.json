@@ -253,13 +253,20 @@
       "type": "object"
     },
     "SvgdigitizerPackage": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
       "properties": {
         "resources": {
           "description": "Data resources within the package.",
           "items": {
-            "$ref": "#/$defs/SvgdigitizerResource"
+            "allOf": [
+              {
+                "$ref": "frictionless/dataresource.json"
+              },
+              {
+                "$ref": "#/$defs/SvgdigitizerResource"
+              }
+            ]
           },
           "type": [
             "array",
@@ -271,7 +278,7 @@
       "type": "object"
     },
     "SvgdigitizerResource": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "description": "A resource created by svgdigitizer with minimal echemdb metadata.",
       "properties": {
         "metadata": {
@@ -308,6 +315,13 @@
       "additionalProperties": false,
       "description": "Source publication information for digitized data.",
       "properties": {
+        "bibdata": {
+          "description": "BibTeX bibliographic data.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "citationKey": {
           "description": "BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber> format.",
           "type": [
@@ -417,7 +431,14 @@
     "resources": {
       "description": "Data resources within the package.",
       "items": {
-        "$ref": "#/$defs/SvgdigitizerResource"
+        "allOf": [
+          {
+            "$ref": "frictionless/dataresource.json"
+          },
+          {
+            "$ref": "#/$defs/SvgdigitizerResource"
+          }
+        ]
       },
       "type": [
         "array",

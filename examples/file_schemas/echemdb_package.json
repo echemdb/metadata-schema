@@ -153,11 +153,6 @@
                             "value": 0.05,
                             "unit": "V / s"
                         }
-                    },
-                    "dataDescription": {
-                        "version": 1,
-                        "type": "digitized",
-                        "measurementType": "CV"
                     }
                 }
             }

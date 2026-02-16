@@ -402,13 +402,20 @@
       "type": "object"
     },
     "EchemdbPackage": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "description": "Data package schema for echemdb following the Frictionless Data Package specification with echemdb-specific metadata extensions.",
       "properties": {
         "resources": {
           "description": "Data resources within the package.",
           "items": {
-            "$ref": "#/$defs/EchemdbResource"
+            "allOf": [
+              {
+                "$ref": "frictionless/dataresource.json"
+              },
+              {
+                "$ref": "#/$defs/EchemdbResource"
+              }
+            ]
           },
           "type": [
             "array",
@@ -420,7 +427,7 @@
       "type": "object"
     },
     "EchemdbResource": {
-      "additionalProperties": false,
+      "additionalProperties": true,
       "description": "A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.",
       "properties": {
         "metadata": {
@@ -1149,7 +1156,7 @@
         "value": {
           "description": "Purity value as a number.",
           "type": [
-            "string",
+            "number",
             "null"
           ]
         }
@@ -1451,7 +1458,14 @@
     "resources": {
       "description": "Data resources within the package.",
       "items": {
-        "$ref": "#/$defs/EchemdbResource"
+        "allOf": [
+          {
+            "$ref": "frictionless/dataresource.json"
+          },
+          {
+            "$ref": "#/$defs/EchemdbResource"
+          }
+        ]
       },
       "type": [
         "array",

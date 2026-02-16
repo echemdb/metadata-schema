@@ -31,7 +31,7 @@ classes:
         description: Value for the total ionic conductivity measurement.
         inlined: true
       value:
-        range: string
+        range: float
         description: Purity value as a number.
         examples:
           - value: "99.9"
@@ -39,7 +39,7 @@ classes:
         range: string
         description: Unit for purity value.
         examples:
-          - value: "%"
+          - value: "pct"
       container:
         range: string
         description: Name or identifier of the container in which the chemical is stored.

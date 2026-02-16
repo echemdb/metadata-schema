@@ -11,6 +11,7 @@ Usage:
 import json
 import subprocess
 import sys
+import urllib.request
 from pathlib import Path
 
 # Paths
@@ -18,6 +19,38 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 LINKML_DIR = REPO_ROOT / "linkml"
 SCHEMAS_DIR = REPO_ROOT / "schemas"
 MODELS_DIR = REPO_ROOT / "mdstools" / "models"
+
+# Frictionless schemas to download on demand
+FRICTIONLESS_SCHEMAS = {
+    "datapackage.json": "https://datapackage.org/profiles/2.0/datapackage.json",
+    "dataresource.json": "https://datapackage.org/profiles/2.0/dataresource.json",
+}
+
+
+def ensure_frictionless_schemas(schemas_dir: Path = None):
+    """Download Frictionless Data Package schemas if not already present.
+
+    The schemas are stored in ``schemas/frictionless/`` and are gitignored.
+    They are only downloaded when missing, so subsequent runs are offline.
+    """
+    if schemas_dir is None:
+        schemas_dir = SCHEMAS_DIR
+    frictionless_dir = schemas_dir / "frictionless"
+    frictionless_dir.mkdir(parents=True, exist_ok=True)
+
+    for filename, url in FRICTIONLESS_SCHEMAS.items():
+        dest = frictionless_dir / filename
+        if dest.exists():
+            continue
+        print(f"  Downloading {url} -> {dest} ...")
+        req = urllib.request.Request(url, headers={"User-Agent": "mdstools"})
+        with urllib.request.urlopen(req) as resp:
+            dest.write_bytes(resp.read())
+        # Validate it's proper JSON
+        with open(dest, "r", encoding="utf-8") as f:
+            json.load(f)
+        print(f"  OK {filename}")
+
 
 # Main models to generate
 MAIN_MODELS = [
@@ -30,9 +63,66 @@ MAIN_MODELS = [
 ]
 
 
+# Package schemas that need Frictionless Data Package composition
+PACKAGE_SCHEMAS = {
+    "echemdb_package": {
+        "package_class": "EchemdbPackage",
+        "resource_class": "EchemdbResource",
+    },
+    "svgdigitizer_package": {
+        "package_class": "SvgdigitizerPackage",
+        "resource_class": "SvgdigitizerResource",
+    },
+}
+
+# Relative path from schemas/ to the local Frictionless dataresource schema
+FRICTIONLESS_RESOURCE_REF = "frictionless/dataresource.json"
+
+
+def _postprocess_package_schema(schema: dict, defs: dict, model_name: str):
+    """Compose package schemas with Frictionless Data Package standard.
+
+    For package schemas (echemdb_package, svgdigitizer_package), modify the
+    resource items to use ``allOf`` combining the local Frictionless data
+    resource schema with the LinkML-generated resource definition.  This
+    allows Frictionless properties (name, path, format, encoding, …) to pass
+    validation alongside our custom ``metadata`` property.
+    """
+    if model_name not in PACKAGE_SCHEMAS:
+        return
+
+    info = PACKAGE_SCHEMAS[model_name]
+    resource_class = info["resource_class"]
+    package_class = info["package_class"]
+
+    # Allow additional (Frictionless) properties on Package and Resource defs
+    if package_class in defs:
+        defs[package_class]["additionalProperties"] = True
+    if resource_class in defs:
+        defs[resource_class]["additionalProperties"] = True
+
+    # Wrap resource items with allOf: [Frictionless, ours]
+    def _wrap_resource_items(props: dict):
+        res = props.get("resources", {})
+        items = res.get("items")
+        if isinstance(items, dict) and "$ref" in items:
+            res["items"] = {
+                "allOf": [
+                    {"$ref": FRICTIONLESS_RESOURCE_REF},
+                    items,
+                ]
+            }
+
+    # Update both root-level properties and $defs entry
+    _wrap_resource_items(schema.get("properties", {}))
+    if package_class in defs:
+        _wrap_resource_items(defs[package_class].get("properties", {}))
+
+
 def generate_json_schemas():
     """Generate JSON Schema files from LinkML models."""
     SCHEMAS_DIR.mkdir(parents=True, exist_ok=True)
+    ensure_frictionless_schemas(SCHEMAS_DIR)
 
     for model_name in MAIN_MODELS:
         linkml_file = LINKML_DIR / f"{model_name}.yaml"
@@ -87,6 +177,11 @@ def generate_json_schemas():
                 q_props["value"]["type"] = ["string", "number", "null"]
             if "unit" in q_props:
                 q_props["unit"]["type"] = ["string", "number", "null"]
+
+        # Post-process: compose package schemas with Frictionless Data Package
+        # schemas so that standard resource properties (name, path, format, etc.)
+        # are accepted during validation.
+        _postprocess_package_schema(schema, defs, model_name)
 
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(schema, f, indent=2, ensure_ascii=False)

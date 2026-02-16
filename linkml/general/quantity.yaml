@@ -25,7 +25,7 @@ classes:
     description: A physical quantity with a value, unit, and optional uncertainty.
     attributes:
       value:
-        range: string
+        range: float
         description: >-
           Numerical value of the quantity.
         examples:
