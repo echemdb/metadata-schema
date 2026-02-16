@@ -149,7 +149,6 @@ metadata-schema/
 ├── mdstools/                      # Main package
 │   ├── __init__.py
 │   ├── entrypoint.py             # Click-based CLI (entry point: mdstools)
-│   ├── cli.py                    # Legacy argparse CLI (deprecated)
 │   ├── metadata/                 # Metadata classes
 │   │   ├── metadata.py           # Nested dict/YAML wrapper
 │   │   ├── flattened_metadata.py # Tabular format wrapper
@@ -282,7 +281,6 @@ pixi run flatten tests/example_metadata.yaml
 ## Backlog Ideas
 
 - Clarify which columns are required when loading enriched Excel (Number/Key/Value)
-- Remove legacy `mdstools/cli.py` (argparse-based, replaced by `entrypoint.py`)
 
 ### Schema Enhancement
 To improve enrichment coverage beyond current ~14%:
