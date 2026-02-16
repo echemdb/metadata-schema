@@ -11,59 +11,52 @@ import subprocess
 import sys
 from pathlib import Path
 
+from mdstools.schema import RESOLVED_SCHEMA_FILES
 
-def test_resolved_schemas_match_expected():
-    """Test that generated resolved schemas match the expected versions."""
-    print("\n" + "=" * 80)
-    print("TEST: Resolved Schema Snapshot Testing")
-    print("=" * 80)
 
-    # Generate fresh resolved schemas
-    print("Generating resolved schemas from schema_pieces...")
+def _generate_resolved_schemas():
+    """Run the resolver and return True on success."""
     result = subprocess.run(
-        [sys.executable, "mdstools/schema/resolver.py"], capture_output=True, text=True
+        [sys.executable, "mdstools/schema/resolver.py"],
+        capture_output=True,
+        text=True,
+        check=False,
     )
 
     if result.returncode != 0:
-        print(f"✗ Schema resolution failed:")
+        print("✗ Schema resolution failed:")
         print(result.stderr)
-        assert False, "Failed to generate resolved schemas"
+        return False
 
     print(result.stdout)
+    return True
 
-    # List of schemas to check
-    schemas_to_check = [
-        "autotag.json",
-        "minimum_echemdb.json",
-        "source_data.json",
-        "svgdigitizer.json",
-        "echemdb_package.json",
-        "svgdigitizer_package.json",
-    ]
 
-    schemas_dir = Path("schemas")
-    expected_dir = Path("schemas/expected")
+def _ensure_expected_dir(expected_dir, schemas_dir):
+    """Create expected directory and seed baseline files if missing. Returns True if seeded."""
+    if expected_dir.exists():
+        return False
 
-    # Ensure expected directory exists
-    if not expected_dir.exists():
-        print(f"\n⚠ Expected directory not found: {expected_dir}")
-        print("Creating expected files from current resolved schemas...")
-        expected_dir.mkdir(parents=True, exist_ok=True)
+    print(f"\n⚠ Expected directory not found: {expected_dir}")
+    print("Creating expected files from current resolved schemas...")
+    expected_dir.mkdir(parents=True, exist_ok=True)
 
-        for schema_name in schemas_to_check:
-            source = schemas_dir / schema_name
-            dest = expected_dir / schema_name
-            if source.exists():
-                dest.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
-                print(f"  Created {dest}")
+    for schema_name in RESOLVED_SCHEMA_FILES:
+        source = schemas_dir / schema_name
+        dest = expected_dir / schema_name
+        if source.exists():
+            dest.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+            print(f"  Created {dest}")
 
-        print("\n✓ Expected files created. Commit them to establish baseline.")
-        return  # Don't fail on first run
+    print("\n✓ Expected files created. Commit them to establish baseline.")
+    return True
 
-    # Compare each resolved schema with expected (following svgdigitizer pattern)
+
+def _compare_schemas(schemas_dir, expected_dir):
+    """Compare resolved schemas against expected baselines. Returns list of mismatches."""
     mismatches = []
 
-    for schema_name in schemas_to_check:
+    for schema_name in RESOLVED_SCHEMA_FILES:
         generated_file = schemas_dir / schema_name
         expected_file = expected_dir / schema_name
 
@@ -75,22 +68,40 @@ def test_resolved_schemas_match_expected():
             mismatches.append(f"Expected schema not found: {expected_file}")
             continue
 
-        # Load and compare JSON (normalized by json.load, like svgdigitizer does)
         with open(generated_file, "r", encoding="utf-8") as f:
             generated_data = json.load(f)
 
         with open(expected_file, "r", encoding="utf-8") as f:
             expected_data = json.load(f)
 
-        # Direct comparison
         if generated_data != expected_data:
             mismatches.append(
                 f"\n{schema_name} differs from expected.\n"
-                f"Run 'pixi run update-expected-schemas' if changes are intentional."
+                "Run 'pixi run update-expected-schemas' if changes are intentional."
             )
             print(f"✗ {schema_name} differs from expected")
         else:
             print(f"✓ {schema_name} matches expected")
+
+    return mismatches
+
+
+def test_resolved_schemas_match_expected():
+    """Test that generated resolved schemas match the expected versions."""
+    print("\n" + "=" * 80)
+    print("TEST: Resolved Schema Snapshot Testing")
+    print("=" * 80)
+
+    print("Generating resolved schemas from schema_pieces...")
+    assert _generate_resolved_schemas(), "Failed to generate resolved schemas"
+
+    schemas_dir = Path("schemas")
+    expected_dir = Path("schemas/expected")
+
+    if _ensure_expected_dir(expected_dir, schemas_dir):
+        return  # Don't fail on first run
+
+    mismatches = _compare_schemas(schemas_dir, expected_dir)
 
     if mismatches:
         error_msg = "\n" + "=" * 80 + "\n"

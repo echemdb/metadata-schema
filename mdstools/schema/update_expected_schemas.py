@@ -8,6 +8,8 @@ Run this after reviewing diffs in resolved schemas to accept the changes.
 import shutil
 from pathlib import Path
 
+from mdstools.schema import RESOLVED_SCHEMA_FILES
+
 
 def main():
     """Update expected baseline schemas from current resolved schemas."""
@@ -18,14 +20,7 @@ def main():
     expected_dir.mkdir(parents=True, exist_ok=True)
 
     # List of schemas to update
-    schemas_to_update = [
-        "autotag.json",
-        "minimum_echemdb.json",
-        "source_data.json",
-        "svgdigitizer.json",
-        "echemdb_package.json",
-        "svgdigitizer_package.json",
-    ]
+    schemas_to_update = RESOLVED_SCHEMA_FILES
 
     print("Updating expected resolved schemas...")
     print("=" * 60)

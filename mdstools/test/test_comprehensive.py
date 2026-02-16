@@ -165,7 +165,7 @@ def test_specific_field_enrichment():
         ("type", "system.type"),
     ]
 
-    for key, expected_path in test_cases:
+    for key, _expected_path in test_cases:
         rows = df[df["Key"] == key]
         if not rows.empty:
             first_match = rows.iloc[0]

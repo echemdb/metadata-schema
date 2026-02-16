@@ -58,48 +58,52 @@ class SchemaEnricher:
         if not self.schema_dir.exists():
             raise ValueError(f"Schema directory not found: {self.schema_dir}")
 
-        # Load from schema_pieces for modular access (system.json, curation.json, etc.)
-        schema_pieces = self.schema_dir / "schema_pieces"
-        if schema_pieces.exists():
-            for schema_file in schema_pieces.rglob("*.json"):
-                with open(schema_file, "r", encoding="utf-8") as f:
-                    schema_name = schema_file.stem
-                    # Only load if not already loaded (don't override)
-                    if schema_name not in self.schema_cache:
-                        self.schema_cache[schema_name] = json.load(f)
+        self._load_schema_pieces()
+        self._load_root_schemas()
+        self._register_schemas_by_title()
 
-        # Also load resolved schemas from root for fallback
+    def _load_schema_pieces(self):
+        """Load modular schemas from schema_pieces/ directory."""
+        schema_pieces = self.schema_dir / "schema_pieces"
+        if not schema_pieces.exists():
+            return
+        for schema_file in schema_pieces.rglob("*.json"):
+            with open(schema_file, "r", encoding="utf-8") as f:
+                schema_name = schema_file.stem
+                if schema_name not in self.schema_cache:
+                    self.schema_cache[schema_name] = json.load(f)
+
+    def _load_root_schemas(self):
+        """Load resolved schemas from root directory and register sub-definitions."""
         for schema_file in self.schema_dir.glob("*.json"):
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
                     self.schema_cache[schema_name] = json.load(f)
 
-                    # For combined schemas like autotag/svgdigitizer,
-                    # also register their sub-definitions
-                    # This allows lookup by top-level keys like "system", "curation", etc.
                     schema_data = self.schema_cache[schema_name]
                     if "definitions" in schema_data:
-                        for def_name, def_value in schema_data["definitions"].items():
-                            # Register definitions by their lowercase name for lookup
-                            lowercase_name = def_name.lower()
-                            if lowercase_name not in self.schema_cache:
-                                # Create a minimal schema structure for this definition
-                                self.schema_cache[lowercase_name] = {
-                                    "definitions": {def_name: def_value},
-                                    "$schema": schema_data.get(
-                                        "$schema",
-                                        "http://json-schema.org/draft-07/schema#",
-                                    ),
-                                }
+                        self._register_definitions(schema_data)
 
-        # Register schemas by the definition's "title" field as well.
-        # This handles camelCase YAML keys (e.g., "figureDescription") that map to
-        # snake_case schema filenames (e.g., "figure_description.json").
+    def _register_definitions(self, schema_data):
+        """Register sub-definitions from a schema by lowercase name."""
+        for def_name, def_value in schema_data["definitions"].items():
+            lowercase_name = def_name.lower()
+            if lowercase_name not in self.schema_cache:
+                self.schema_cache[lowercase_name] = {
+                    "definitions": {def_name: def_value},
+                    "$schema": schema_data.get(
+                        "$schema",
+                        "http://json-schema.org/draft-07/schema#",
+                    ),
+                }
+
+    def _register_schemas_by_title(self):
+        """Register schemas by definition title for camelCase key lookup."""
         for schema_name in list(self.schema_cache.keys()):
             schema_data = self.schema_cache[schema_name]
             if "definitions" in schema_data:
-                for def_name, def_value in schema_data["definitions"].items():
+                for _def_name, def_value in schema_data["definitions"].items():
                     title = def_value.get("title", "")
                     if title and title not in self.schema_cache:
                         self.schema_cache[title] = schema_data
@@ -151,7 +155,60 @@ class SchemaEnricher:
 
         return None, None
 
-    def _get_field_metadata(  # pylint: disable=too-many-nested-blocks,too-many-branches
+    def _extract_example(self, current):
+        """Extract an example value from a schema node."""
+        if (
+            "examples" in current
+            and isinstance(current["examples"], list)
+            and len(current["examples"]) > 0
+        ):
+            return current["examples"][0]
+        if "example" in current:
+            return current["example"]
+        if "const" in current:
+            return current["const"]
+        return None
+
+    def _extract_from_oneof_anyof(self, current):
+        """Extract example and description from oneOf/anyOf constructs."""
+        for keyword in ("anyOf", "oneOf"):
+            if keyword in current and isinstance(current[keyword], list):
+                for option in current[keyword]:
+                    if "const" in option:
+                        return option["const"], option.get("description")
+        return None, None
+
+    def _follow_refs(self, current, root_schema):
+        """Follow $ref chains in a schema node, returning resolved node and root schema."""
+        while isinstance(current, dict) and "$ref" in current:
+            resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
+            if resolved:
+                current = resolved
+                root_schema = new_root
+            else:
+                break
+        return current, root_schema
+
+    def _resolve_array_items(self, current, root_schema):
+        """If current is an array schema, resolve and return its items schema."""
+        if current.get("type") == "array" and "items" in current:
+            items, root_schema = self._follow_refs(current["items"], root_schema)
+            return items, root_schema
+        return current, root_schema
+
+    def _extract_leaf_metadata(self, current, prop_description):
+        """Extract description and example from a leaf schema node."""
+        description = current.get("description") or prop_description
+
+        example = self._extract_example(current)
+        if example is None:
+            example, alt_desc = self._extract_from_oneof_anyof(current)
+            if not description and alt_desc:
+                description = alt_desc
+
+        return description, example
+
+    def _get_field_metadata(
         self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
     ) -> Tuple[Optional[str], Optional[str]]:
         """
@@ -167,95 +224,25 @@ class SchemaEnricher:
 
         current = schema
         if root_schema is None:
-            root_schema = schema  # Keep reference to root for cross-references
+            root_schema = schema
 
-        # Navigate through the schema following the field path
         for i, field in enumerate(field_path):
             if not isinstance(current, dict):
                 return None, None
 
-            # Follow $ref if present at current level
-            while "$ref" in current:
-                resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
-                if resolved:
-                    current = resolved
-                    root_schema = new_root
-                else:
-                    break
+            current, root_schema = self._follow_refs(current, root_schema)
 
-            # Check if we're at a property level
-            if "properties" in current and field in current["properties"]:
-                current = current["properties"][field]
-
-                # Capture description from the property before following $ref,
-                # since the ref target may not repeat the contextual description
-                prop_description = current.get("description")
-
-                # Follow any $refs in the property definition
-                while "$ref" in current:
-                    resolved, new_root = self._resolve_ref(
-                        current["$ref"], root_schema
-                    )
-                    if resolved:
-                        current = resolved
-                        root_schema = new_root
-                    else:
-                        break
-
-                # If this is the last field in the path, extract metadata
-                if i == len(field_path) - 1:
-                    description = current.get("description") or prop_description
-
-                    # Check for examples in different places
-                    example = None
-                    if (
-                        "examples" in current
-                        and isinstance(current["examples"], list)
-                        and len(current["examples"]) > 0
-                    ):
-                        example = current["examples"][0]
-                    elif "example" in current:
-                        example = current["example"]
-                    elif "const" in current:
-                        example = current["const"]
-                    elif "anyOf" in current and isinstance(current["anyOf"], list):
-                        # Get the first const as example from anyOf
-                        for option in current["anyOf"]:
-                            if "const" in option:
-                                example = option["const"]
-                                if not description and "description" in option:
-                                    description = option["description"]
-                                break
-                    elif "oneOf" in current and isinstance(current["oneOf"], list):
-                        # Get the first const as example from oneOf
-                        for option in current["oneOf"]:
-                            if "const" in option:
-                                example = option["const"]
-                                if not description and "description" in option:
-                                    description = option["description"]
-                                break
-
-                    return description, example
-
-                # Not the last field - if this is an array, resolve its items
-                if current.get("type") == "array" and "items" in current:
-                    items = current["items"]
-
-                    # Resolve $ref in items if present
-                    while "$ref" in items:
-                        resolved, new_root = self._resolve_ref(
-                            items["$ref"], root_schema
-                        )
-                        if resolved:
-                            items = resolved
-                            root_schema = new_root
-                        else:
-                            break
-
-                    current = items
-            else:
-                # Can't navigate further with this field
+            if "properties" not in current or field not in current["properties"]:
                 return None, None
+
+            current = current["properties"][field]
+            prop_description = current.get("description")
+            current, root_schema = self._follow_refs(current, root_schema)
+
+            if i == len(field_path) - 1:
+                return self._extract_leaf_metadata(current, prop_description)
+
+            current, root_schema = self._resolve_array_items(current, root_schema)
 
         return None, None
 
