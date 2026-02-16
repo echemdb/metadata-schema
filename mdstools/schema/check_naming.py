@@ -29,15 +29,16 @@ EXAMPLES::
 
 """
 
-import json
 import re
 import sys
 from pathlib import Path
 
+import yaml
+
 # Patterns
 CAMEL_CASE = re.compile(r"^[a-z][a-zA-Z0-9]*$")
 PASCAL_CASE = re.compile(r"^[A-Z][a-zA-Z0-9]*$")
-SNAKE_CASE_FILE = re.compile(r"^[a-z][a-z0-9_]*\.json$")
+SNAKE_CASE_FILE = re.compile(r"^[a-z][a-z0-9_]*\.yaml$")
 
 # Known exceptions: keys that come from external standards (e.g., JSON Schema
 # itself or Frictionless Data) and are not under our control.
@@ -100,6 +101,25 @@ def collect_definition_names(schema):
                 yield (def_name,)
 
 
+def _check_property_key(path, dotted_path, key, prefix=""):
+    """Return a violation tuple if *key* is not camelCase, else None."""
+    if key in PROPERTY_EXCEPTIONS:
+        return None
+    if CAMEL_CASE.match(key):
+        return None
+    location = f"{prefix}{dotted_path}" if prefix else dotted_path
+    return (str(path), f"Property '{key}' (at {location}) is not camelCase")
+
+
+def _check_definition_name(path, def_name):
+    """Return a violation tuple if *def_name* is not PascalCase, else None."""
+    if def_name in DEFINITION_EXCEPTIONS:
+        return None
+    if PASCAL_CASE.match(def_name):
+        return None
+    return (str(path), f"Definition '{def_name}' is not PascalCase")
+
+
 def check_file(filepath):
     r"""
     Check a single schema file for naming violations.
@@ -112,8 +132,9 @@ def check_file(filepath):
         >>> schema = {"properties": {"bad_key": {"type": "string"}},
         ...           "definitions": {"bad_def": {"type": "object"}}}
         >>> with tempfile.NamedTemporaryFile(
-        ...     mode='w', suffix='.json', delete=False) as f:
-        ...     json.dump(schema, f)
+        ...     mode='w', suffix='.yaml', delete=False) as f:
+        ...     import yaml as _yaml
+        ...     _yaml.dump(schema, f)
         ...     tmppath = f.name
         >>> violations = check_file(Path(tmppath))
         >>> any('bad_key' in v for _, v in violations)
@@ -129,30 +150,38 @@ def check_file(filepath):
     # Check file name
     if not SNAKE_CASE_FILE.match(path.name):
         violations.append(
-            (str(path), f"File name '{path.name}' is not snake_case.json")
+            (str(path), f"File name '{path.name}' is not snake_case.yaml")
         )
 
     with open(path, "r", encoding="utf-8") as f:
-        schema = json.load(f)
+        schema = yaml.safe_load(f)
 
-    # Check property names (should be camelCase or single lowercase word)
-    for dotted_path, key in collect_property_names(schema):
-        if key in PROPERTY_EXCEPTIONS:
-            continue
-        if not CAMEL_CASE.match(key):
-            violations.append(
-                (
-                    str(path),
-                    f"Property '{key}' (at {dotted_path}) is not camelCase",
-                )
-            )
+    # For YAML schema pieces without a 'definitions' wrapper,
+    # top-level keys are definition names (PascalCase) that also contain
+    # property definitions. We need to check both levels.
+    if "definitions" not in schema and "properties" not in schema:
+        # Flat YAML format: top-level keys are definitions
+        for def_name, def_value in schema.items():
+            v = _check_definition_name(path, def_name)
+            if v:
+                violations.append(v)
+            # Check property names within each definition
+            if isinstance(def_value, dict):
+                for dotted_path, key in collect_property_names(def_value):
+                    v = _check_property_key(path, dotted_path, key, f"{def_name}.")
+                    if v:
+                        violations.append(v)
+    else:
+        # Standard JSON Schema structure with 'definitions' or 'properties'
+        for dotted_path, key in collect_property_names(schema):
+            v = _check_property_key(path, dotted_path, key)
+            if v:
+                violations.append(v)
 
-    # Check definition names (should be PascalCase)
-    for (def_name,) in collect_definition_names(schema):
-        if def_name in DEFINITION_EXCEPTIONS:
-            continue
-        if not PASCAL_CASE.match(def_name):
-            violations.append((str(path), f"Definition '{def_name}' is not PascalCase"))
+        for (def_name,) in collect_definition_names(schema):
+            v = _check_definition_name(path, def_name)
+            if v:
+                violations.append(v)
 
     return violations
 
@@ -164,7 +193,7 @@ def main():
         sys.exit(1)
 
     all_violations = []
-    files = sorted(SCHEMA_DIR.rglob("*.json"))
+    files = sorted(SCHEMA_DIR.rglob("*.yaml"))
 
     for filepath in files:
         all_violations.extend(check_file(filepath))
@@ -180,7 +209,7 @@ def main():
             print(f"  {rel}: {msg}")
         print(
             "\nConventions: property keys = camelCase, "
-            "definitions = PascalCase, file names = snake_case.json"
+            "definitions = PascalCase, file names = snake_case.yaml"
         )
         sys.exit(1)
     else:

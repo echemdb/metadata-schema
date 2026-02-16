@@ -1,0 +1,24 @@
+Svgdigitizer:
+  type: object
+  additionalProperties: true
+  title: Svgdigitizer
+  description: Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.
+  properties:
+    curation:
+      $ref: curation.yaml#/definitions/Curation
+    eln:
+      $ref: eln.yaml#/definitions/Eln
+    experimental:
+      $ref: experimental.yaml#/definitions/Experimental
+    figureDescription:
+      $ref: figure_description.yaml#/definitions/FigureDescription
+    project:
+      $ref: projects.yaml#/definitions/Projects
+    source:
+      $ref: source.yaml#/definitions/Source
+    system:
+      $ref: system.yaml#/definitions/System
+  required:
+  - curation
+  - source
+  - system

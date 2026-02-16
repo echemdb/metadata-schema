@@ -1,0 +1,23 @@
+Experimental:
+  type: object
+  additionalProperties: true
+  title: experimental
+  description: Details about the configuration of the experimental set up.
+  properties:
+    tags:
+      type: array
+      description: Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.
+      items:
+        type: string
+    url:
+      description: URL to related documentation, publication (DOI), or ELN entry.
+      $ref: ./general/url.yaml#/definitions/Url
+    instrumentation:
+      type: array
+      description: Instruments and equipment used in the experiment.
+      items:
+        $ref: ./experimental/instrumentation.yaml#/definitions/Instrumentation
+    description:
+      type: string
+      description: Detailed description of the experimental setup and conditions.
+      example: Cyclic voltammetry performed at room temperature with 50 mV/s scan rate

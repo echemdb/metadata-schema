@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
+import yaml
+
 
 class SchemaEnricher:
     """
@@ -53,6 +55,37 @@ class SchemaEnricher:
         self.schema_cache = {}
         self._load_schemas()
 
+    @staticmethod
+    def _normalize_defs(schema):
+        r"""
+        Ensure both ``definitions`` and ``$defs`` keys exist in a schema.
+
+        Modern JSON Schema (2020-12 / LinkML output) uses ``$defs`` while
+        older drafts (draft-07) use ``definitions``.  This helper bridges
+        the two by making both keys available, pointing at the same dict.
+
+        :param schema: A loaded JSON schema dict
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> s = {"$defs": {"Foo": {"type": "string"}}}
+            >>> SchemaEnricher._normalize_defs(s)
+            >>> "definitions" in s and "$defs" in s
+            True
+            >>> s["definitions"] is s["$defs"]
+            True
+            >>> s2 = {"definitions": {"Bar": {"type": "integer"}}}
+            >>> SchemaEnricher._normalize_defs(s2)
+            >>> "$defs" in s2
+            True
+
+        """
+        if "$defs" in schema and "definitions" not in schema:
+            schema["definitions"] = schema["$defs"]
+        elif "definitions" in schema and "$defs" not in schema:
+            schema["$defs"] = schema["definitions"]
+
     def _load_schemas(self):
         r"""
         Load all JSON schema files from both root (resolved) and schema_pieces (modular).
@@ -82,8 +115,9 @@ class SchemaEnricher:
         r"""
         Load modular schemas from the ``schema_pieces/`` directory.
 
-        Each ``.json`` file found (recursively) is stored in
-        :attr:`schema_cache` under its file stem.
+        Each ``.yaml`` file found (recursively) is stored in
+        :attr:`schema_cache` under its file stem.  YAML schemas are wrapped
+        in a ``{"definitions": ...}`` structure when needed.
 
         EXAMPLES::
 
@@ -99,11 +133,41 @@ class SchemaEnricher:
         schema_pieces = self.schema_dir / "schema_pieces"
         if not schema_pieces.exists():
             return
-        for schema_file in schema_pieces.rglob("*.json"):
+        for schema_file in schema_pieces.rglob("*.yaml"):
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
-                    self.schema_cache[schema_name] = json.load(f)
+                    raw = yaml.safe_load(f)
+                    if "definitions" in raw or "$defs" in raw:
+                        self.schema_cache[schema_name] = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            **raw,
+                        }
+                    elif "type" in raw or "properties" in raw:
+                        # Standard schema (e.g. schema.yaml)
+                        main_def = "".join(
+                            part.capitalize() for part in schema_name.split("_")
+                        )
+                        self.schema_cache[schema_name] = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "definitions": {main_def: raw},
+                            "allOf": [{"$ref": f"#/definitions/{main_def}"}],
+                        }
+                    else:
+                        # Flat YAML: top-level keys are PascalCase definitions
+                        main_def = "".join(
+                            part.capitalize() for part in schema_name.split("_")
+                        )
+                        schema_data = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "definitions": raw,
+                        }
+                        if main_def in raw:
+                            schema_data["allOf"] = [
+                                {"$ref": f"#/definitions/{main_def}"}
+                            ]
+                        self.schema_cache[schema_name] = schema_data
+                    self._normalize_defs(self.schema_cache[schema_name])
 
     def _load_root_schemas(self):
         r"""
@@ -127,6 +191,7 @@ class SchemaEnricher:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
                     self.schema_cache[schema_name] = json.load(f)
+                    self._normalize_defs(self.schema_cache[schema_name])
 
                     schema_data = self.schema_cache[schema_name]
                     if "definitions" in schema_data:
@@ -152,13 +217,15 @@ class SchemaEnricher:
         """
         for def_name, def_value in schema_data["definitions"].items():
             if def_name not in self.schema_cache:
-                self.schema_cache[def_name] = {
+                wrapper = {
                     "definitions": {def_name: def_value},
                     "$schema": schema_data.get(
                         "$schema",
                         "http://json-schema.org/draft-07/schema#",
                     ),
                 }
+                self._normalize_defs(wrapper)
+                self.schema_cache[def_name] = wrapper
 
     def _register_schemas_by_title(self):
         r"""
@@ -184,9 +251,18 @@ class SchemaEnricher:
             schema_data = self.schema_cache[schema_name]
             if "definitions" in schema_data:
                 for _def_name, def_value in schema_data["definitions"].items():
+                    if not isinstance(def_value, dict):
+                        continue
                     title = def_value.get("title", "")
                     if title and title not in self.schema_cache:
                         self.schema_cache[title] = schema_data
+                    # Also register a camelCase variant so that PascalCase
+                    # titles (e.g. "FigureDescription") are reachable via
+                    # property keys (e.g. "figureDescription").
+                    if title:
+                        camel = title[0].lower() + title[1:]
+                        if camel != title and camel not in self.schema_cache:
+                            self.schema_cache[camel] = schema_data
 
     def _resolve_ref(
         self, ref: str, current_schema: Dict
@@ -222,7 +298,7 @@ class SchemaEnricher:
             External relative references are resolved from the cache::
 
                 >>> resolved, _ = enricher._resolve_ref(
-                ...     './curation.json#/definitions/Curation',
+                ...     './curation.yaml#/definitions/Curation',
                 ...     {})
                 >>> resolved is not None
                 True
@@ -268,8 +344,8 @@ class SchemaEnricher:
         r"""
         Extract an example value from a schema node.
 
-        Looks for ``examples`` (list), ``example`` (scalar), or ``const``
-        fields in order and returns the first match.
+        Looks for ``examples`` (list), ``example`` (scalar), ``const``,
+        or ``enum`` fields in order and returns the first match.
 
         :param current: Schema node dict
         :return: Example value or None
@@ -294,6 +370,11 @@ class SchemaEnricher:
                 >>> enricher._extract_example({'const': 'fixed'})
                 'fixed'
 
+            From an ``enum`` list (first element is used)::
+
+                >>> enricher._extract_example({'enum': ['red', 'green', 'blue']})
+                'red'
+
             Returns None when no example is available::
 
                 >>> enricher._extract_example({'type': 'string'}) is None
@@ -310,6 +391,12 @@ class SchemaEnricher:
             return current["example"]
         if "const" in current:
             return current["const"]
+        if (
+            "enum" in current
+            and isinstance(current["enum"], list)
+            and len(current["enum"]) > 0
+        ):
+            return current["enum"][0]
         return None
 
     def _extract_from_oneof_anyof(self, current):

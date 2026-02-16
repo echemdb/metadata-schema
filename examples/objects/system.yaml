@@ -16,7 +16,7 @@ electrolyte:
       type: salt # salt, base, acid, solvent, gas, ...
       source:
         supplier: Company name # Company name, organic chemistry III - Uni Ulm
-        LOT: ABC123 # LOT number
+        lot: ABC123 # LOT number
         purity:
           grade: 5N # analytical grade, 5N, etc
           totalOrganicCarbon:
@@ -35,8 +35,8 @@ electrolyte:
         internalLot: Number # Flask in which some of the chemicals were transferred
         url: http://wiki.url.to.a.html # details on the wiki
       partialPressure: # If type gas. refers to pressure in the electrolyte.
-        unit: 1
-        value: bar # use 1 bar for saturated solutions
+        value: 1
+        unit: bar # use 1 bar for saturated solutions
       proportion: # if type solvent
         value: 100
         unit: volume percent
@@ -51,7 +51,7 @@ electrolyte:
       type: salt #
       source:
         supplier: Company name.
-        LOT: ABC123
+        lot: ABC123
       purity:
         grade: 5N
     - name: water
@@ -77,7 +77,7 @@ electrolyte:
       type: acid
       source:
         supplier: Company name
-        LOT: ABC123
+        lot: ABC123
       concentration:
         value: 0.1
         unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the astropy string representation of units. https://docs.astropy.org/en/stable/units/index.html
@@ -86,8 +86,8 @@ electrolyte:
       purity:
         grade: N5.0 # some generic name
       partialPressure:
-        unit: 1
-        value: bar # use 1 bar for saturated solutions
+        value: 1
+        unit: bar # use 1 bar for saturated solutions
       proportion:
         value: 100
       flow:
@@ -138,7 +138,7 @@ electrodes:
     crystallographicOrientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
     source:
       manufacturer: Company name
-      LOT: 145823A # LOT number
+      lot: 145823A # LOT number
       purity:
         grade: 5N
     shape: # optional

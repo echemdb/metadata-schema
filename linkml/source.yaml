@@ -1,0 +1,59 @@
+id: https://echemdb.github.io/metadata-schema/source
+name: source
+description: Information about the source publication or dataset.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./general/url
+
+default_range: string
+
+classes:
+  Source:
+    description: Information about the source publication or dataset.
+    attributes:
+      citationKey:
+        range: string
+        required: true
+        description: >-
+          Unique citation key for bibliographic reference,
+          usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.
+        examples:
+          - value: "electrobear_2024_electrochemistry_563"
+      url:
+        range: HttpUrl
+        required: true
+        description: DOI (URL) to the publication or dataset.
+      techniques:
+        range: string
+        description: Experimental techniques used in the study.
+        multivalued: true
+      figure:
+        range: string
+        description: Figure number or identifier from the source including subfigure label.
+        examples:
+          - value: "Figure 2a"
+      originalFilename:
+        range: string
+        description: Original filename of the data file.
+        examples:
+          - value: "2023-04-24_cv_data_001.csv"
+      bibdata:
+        range: string
+        description: BibTeX bibliographic data.
+        examples:
+          - value: "@article{electrobear_2024_electrochemistry_563, title={...}, ...}"
+      comment:
+        range: string
+        description: Additional notes about the source.
+        examples:
+          - value: "The data in the figures of this work are blurry."
+      curve:
+        range: string
+        description: Specific curve or trace identifier within a figure.
+        examples:
+          - value: "blue"

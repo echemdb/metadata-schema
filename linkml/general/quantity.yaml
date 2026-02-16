@@ -1,0 +1,88 @@
+id: https://echemdb.github.io/metadata-schema/general/quantity
+name: quantity
+description: Physical quantity with value, unit, and optional uncertainty.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+
+default_range: string
+
+enums:
+  UncertaintyType:
+    description: Type of uncertainty measurement.
+    permissible_values:
+      absolute:
+        description: Absolute uncertainty value.
+      relative:
+        description: Relative uncertainty value.
+
+classes:
+  Quantity:
+    description: A physical quantity with a value, unit, and optional uncertainty.
+    attributes:
+      value:
+        range: float
+        description: >-
+          Numerical value of the quantity.
+        examples:
+          - value: "0.5"
+      unit:
+        range: string
+        description: >-
+          Unit of measurement following astropy's string notation
+          (e.g., 'mol / l', 'V', 'mA / cm2').
+          Use an empty string for dimensionless quantities.
+        examples:
+          - value: "mol / l"
+      uncertainty:
+        range: Uncertainty
+        description: Uncertainty information for a measured quantity.
+        inlined: true
+      comment:
+        range: string
+        description: Additional notes about the measurement or quantity.
+        examples:
+          - value: "Measured at room temperature"
+      calculation:
+        range: string
+        description: Method or formula used to calculate this quantity.
+        examples:
+          - value: "Obtained by multiplying U and I"
+
+  Uncertainty:
+    description: Uncertainty information for a measured quantity.
+    attributes:
+      value:
+        range: float
+        description: Symmetric uncertainty value (±).
+        examples:
+          - value: "0.01"
+      unit:
+        range: string
+        description: >-
+          Unit of the uncertainty value, following astropy's string notation.
+          Use an empty string for dimensionless quantities.
+        examples:
+          - value: "mol / l"
+      positiveValue:
+        range: float
+        description: Upper bound (+) for asymmetric uncertainties.
+        examples:
+          - value: "0.02"
+      negativeValue:
+        range: float
+        description: Lower bound (-) for asymmetric uncertainties.
+        examples:
+          - value: "0.01"
+      comment:
+        range: string
+        description: Additional information about the uncertainty estimation.
+        examples:
+          - value: "Standard deviation from 3 replicate measurements"
+      type:
+        range: UncertaintyType
+        description: Type of uncertainty (absolute or relative).

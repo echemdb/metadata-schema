@@ -1,0 +1,22 @@
+MinimumEchemdb:
+  type: object
+  additionalProperties: true
+  properties:
+    curation:
+      $ref: curation.yaml#/definitions/Curation
+    system:
+      $ref: system.yaml#/definitions/System
+    figureDescription:
+      $ref: figure_description.yaml#/definitions/FigureDescription
+    experimental:
+      $ref: experimental.yaml#/definitions/Experimental
+    source:
+      $ref: source.yaml#/definitions/Source
+  required:
+  - curation
+  - system
+  - figureDescription
+  - experimental
+  - source
+  title: MinimumEchemdb
+  description: Minimum set of metadata to describe an electrochemical system for echemdb.

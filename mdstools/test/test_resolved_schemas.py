@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """
-Test that resolved schemas match expected output (snapshot/golden file testing).
+Test that generated schemas match expected output (snapshot/golden file testing).
 
-This ensures that changes to schema_pieces produce predictable changes in resolved schemas.
-During PRs, diffs in resolved schemas can be reviewed to catch unintended changes.
+This ensures that changes to LinkML definitions produce predictable changes in
+generated JSON schemas.  During PRs, diffs in generated schemas can be reviewed
+to catch unintended changes.
 """
 
 import json
@@ -14,17 +15,17 @@ from pathlib import Path
 from mdstools.schema import RESOLVED_SCHEMA_FILES
 
 
-def _generate_resolved_schemas():
-    """Run the resolver and return True on success."""
+def _generate_schemas():
+    """Run the LinkML JSON Schema generator and return True on success."""
     result = subprocess.run(
-        [sys.executable, "mdstools/schema/resolver.py"],
+        [sys.executable, "mdstools/schema/generate_from_linkml.py", "--json-schema"],
         capture_output=True,
         text=True,
         check=False,
     )
 
     if result.returncode != 0:
-        print("✗ Schema resolution failed:")
+        print("✗ Schema generation failed:")
         print(result.stderr)
         return False
 
@@ -89,11 +90,11 @@ def _compare_schemas(schemas_dir, expected_dir):
 def test_resolved_schemas_match_expected():
     """Test that generated resolved schemas match the expected versions."""
     print("\n" + "=" * 80)
-    print("TEST: Resolved Schema Snapshot Testing")
+    print("TEST: Generated Schema Snapshot Testing")
     print("=" * 80)
 
-    print("Generating resolved schemas from schema_pieces...")
-    assert _generate_resolved_schemas(), "Failed to generate resolved schemas"
+    print("Generating schemas from LinkML definitions...")
+    assert _generate_schemas(), "Failed to generate schemas from LinkML"
 
     schemas_dir = Path("schemas")
     expected_dir = Path("schemas/expected")

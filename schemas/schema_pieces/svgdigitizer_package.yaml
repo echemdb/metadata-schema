@@ -1,0 +1,76 @@
+title: svgdigitizer Data Package Profile
+description: Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified
+  echemdb metadata.
+type: object
+allOf:
+- $ref: https://datapackage.org/profiles/2.0/datapackage.json
+properties:
+  resources:
+    type: array
+    items:
+      allOf:
+      - $ref: https://datapackage.org/profiles/2.0/dataresource.json
+      - $ref: '#/definitions/SvgdigitizerResource'
+definitions:
+  SvgdigitizerResource:
+    type: object
+    description: A resource created by svgdigitizer with minimal echemdb metadata.
+    properties:
+      metadata:
+        type: object
+        description: Metadata container for the digitized resource.
+        required:
+        - echemdb
+        properties:
+          echemdb:
+            type: object
+            description: Simplified echemdb metadata for digitized data.
+            required:
+            - figureDescription
+            properties:
+              experimental:
+                type: object
+                description: Experimental tags or keywords.
+                properties:
+                  tags:
+                    type: array
+                    description: List of tags describing the experiment or measurement.
+                    example:
+                    - CV
+                    - ORR
+                    - alkaline
+                    items:
+                      type: string
+                figureDescription:
+                  type: object
+                  $ref: figure_description.yaml#/definitions/FigureDescription
+                source:
+                  type: object
+                  description: Source publication information for digitized data.
+                  properties:
+                    figure:
+                      type: string
+                      description: Figure identifier in the source publication.
+                      example: 2a
+                    curve:
+                      type: string
+                      description: Specific curve identifier within the figure.
+                      example: blue
+                    citationKey:
+                      type: string
+                      description: BibTeX citation key for the source following `<FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>`
+                        format.
+                      example: doe_2024_electrochemistry_543
+                    url:
+                      description: URL or DOI of the source publication.
+                      $ref: ./general/url.yaml#/definitions/Url
+                    techniques:
+                      type: array
+                      description: Techniques used in the source data.
+                      example:
+                      - CV
+                      - EIS
+                      - XPS
+                      contains:
+                        type: string
+              additionalProperties: true

@@ -1,0 +1,42 @@
+id: https://echemdb.github.io/metadata-schema/projects
+name: projects
+description: Information about research projects or funding sources.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./general/url
+
+default_range: string
+
+classes:
+  Project:
+    description: Information about a research project or funding source.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Short name or identifier of the project.
+        examples:
+          - value: "ERC-2024-STG"
+      title:
+        range: string
+        description: Full title of the project.
+        examples:
+          - value: "Understanding Electrocatalysis at the Molecular Level"
+      type:
+        range: string
+        description: Type or category of project.
+        examples:
+          - value: "ERC Starting Grant"
+      url:
+        range: HttpUrl
+        description: URL to project website or information page.
+      grantNumber:
+        range: string
+        description: Official grant or project number.
+        examples:
+          - value: "123456"

@@ -1,0 +1,50 @@
+title: echemdb Data Package Profile
+description: Data package schema for echemdb following the Frictionless Data Package specification with echemdb-specific metadata
+  extensions.
+type: object
+allOf:
+- $ref: https://datapackage.org/profiles/2.0/datapackage.json
+properties:
+  resources:
+    type: array
+    items:
+      allOf:
+      - $ref: https://datapackage.org/profiles/2.0/dataresource.json
+      - $ref: '#/definitions/EchemdbResource'
+definitions:
+  EchemdbResource:
+    type: object
+    description: A data resource within an echemdb package, containing electrochemical data and comprehensive metadata.
+    properties:
+      metadata:
+        type: object
+        description: Metadata container for the resource.
+        required:
+        - echemdb
+        properties:
+          echemdb:
+            type: object
+            description: echemdb-specific metadata for electrochemical data.
+            required:
+            - curation
+            - experimental
+            - figureDescription
+            - system
+            - source
+            properties:
+              curation:
+                type: object
+                $ref: curation.yaml
+              experimental:
+                type: object
+                $ref: experimental.yaml
+              figureDescription:
+                type: object
+                $ref: figure_description.yaml
+              system:
+                type: object
+                $ref: system.yaml
+              source:
+                type: object
+                $ref: source.yaml
+              additionalProperties: true

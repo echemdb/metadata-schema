@@ -1,0 +1,57 @@
+id: https://echemdb.github.io/metadata-schema/source_data
+name: source_data
+description: Metadata schema for source data files in echemdb.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./curation
+  - ./system
+  - ./source
+  - ./experimental
+  - ./figure_description
+  - ./data_description
+
+default_range: string
+
+classes:
+  SourceData:
+    tree_root: true
+    description: >-
+      Metadata schema for source data files in echemdb, combining system description,
+      curation, source provenance, experimental details, figure description,
+      and data format description.
+    attributes:
+      curation:
+        range: Curation
+        required: true
+        description: Details on the curation process of the data.
+        inlined: true
+      system:
+        range: System
+        required: true
+        description: Description of the experimental system.
+        inlined: true
+      source:
+        range: Source
+        required: true
+        description: Information about the source publication or dataset.
+        inlined: true
+      experimental:
+        range: Experimental
+        required: true
+        description: Details about the experimental setup.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        required: true
+        description: Description of the data to a figure or plot.
+        inlined: true
+      dataDescription:
+        range: DataDescription
+        required: true
+        description: Description of the raw data file format.
+        inlined: true

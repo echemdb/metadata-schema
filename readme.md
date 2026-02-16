@@ -106,17 +106,19 @@ or all
 pixi run -e dev test-all
 ```
 
-### Resolve schemas
+### Generate schemas from LinkML
 
-Generate resolved (single-file) JSON schemas from the modular schema pieces:
+Generate JSON schemas and Pydantic models from the LinkML definitions in `linkml/`:
 
 ```sh
-pixi run resolve-schemas
+pixi run generate-schemas        # JSON Schema only
+pixi run generate-models          # Pydantic models only
+pixi run generate-all             # Both
 ```
 
-This resolves all `$ref` references and writes the combined schemas to `schemas/`.
+The generated JSON schemas are written to `schemas/`.
 
-After intentional changes to schema pieces, update the expected baseline files:
+After intentional changes to LinkML files, update the expected baseline files:
 
 ```sh
 pixi run update-expected-schemas
@@ -127,5 +129,13 @@ pixi run update-expected-schemas
 To validate the example files against the JSON schemas:
 
 ```sh
-pixi run validate
+pixi run validate              # Run all validations
+pixi run validate-objects      # Validate individual object examples
+pixi run validate-file-schemas # Validate file-level YAML examples
+pixi run validate-package-schemas  # Validate package JSON examples
+pixi run check-naming          # Enforce naming conventions
 ```
+
+Package schema validation requires the Frictionless Data Package standard
+schemas.  They are **downloaded automatically on first run** into
+`schemas/frictionless/` (gitignored) and cached for subsequent offline use.

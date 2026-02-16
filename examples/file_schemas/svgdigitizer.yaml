@@ -6,15 +6,14 @@ curation:
     - role: curator
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2021-07-09 # YYYY-MM-DD
+      date: "2021-07-09" # YYYY-MM-DD
     - role: reviewer
       name: Albert Engstfeld
       orcid: https://orcid.org/0000-0002-9686-3948
-      date: 2022-01-21
+      date: "2022-01-21"
 eln: # not required for svgdigitizer
   url: https://some.url # URL to the ELN describing the data
 experimental:
-  version: 1
   tags:
     - BCV
     - SPST
@@ -61,7 +60,7 @@ system:
         type: salt # salt, base, acid, solvent, gas, ...
         source:
           supplier: company name # Company name, organic chemistry III - Uni Ulm
-          LOT: 155464A # LOT number
+          lot: 155464A # LOT number
           purity:
             grade: 5N # analytical grade, 5N, etc
             totalOrganicCarbon:
@@ -80,8 +79,8 @@ system:
           internalLot: Number # Flask in which some of the chemicals were transferred
           url: https://some.url # details on the wiki
         partialPressure: # if type gas
-          unit: 1
-          value: bar # use 1 bar for saturated solutions
+          value: 1
+          unit: bar # use 1 bar for saturated solutions
         proportion: # if type solvent
           value: 100
           unit: volume percent
@@ -96,7 +95,7 @@ system:
         type: salt #
         source:
           supplier: Supplier name
-          LOT: '654654'
+          lot: '654654'
         purity:
           grade: 5N
       - name: water
@@ -137,7 +136,7 @@ system:
         type: acid
         source:
           supplier: Supplier name
-          LOT: C45456
+          lot: C45456
         concentration:
           value: 0.1
           unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
@@ -146,8 +145,8 @@ system:
         purity:
           grade: N5.0 # some genereic name
         partialPressure:
-          unit: 1
-          value: bar # use 1 bar for saturated solutions
+          value: 1
+          unit: bar # use 1 bar for saturated solutions
         proportion:
           value: 100
         flow:
@@ -195,7 +194,7 @@ system:
       crystallographicOrientation: "111" # 'hkl', '100', '110', '11,15,1', 'poly'. Force string with ''. Otherwise leading zeros will be removed and the entry will be understood as an octal number.
       source:
         manufacturer: Company name
-        LOT: 145823A # LOT number
+        lot: 145823A # LOT number
         purity:
           grade: 5N
       shape: # optional

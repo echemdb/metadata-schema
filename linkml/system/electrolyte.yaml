@@ -1,0 +1,85 @@
+id: https://echemdb.github.io/metadata-schema/system/electrolyte
+name: electrolyte
+description: The properties and components of the electrolyte solution.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ../general/quantity
+  - ../general/component
+
+default_range: string
+
+enums:
+  ElectrolyteType:
+    description: Type of electrolyte defined by the solvent.
+    permissible_values:
+      aqueous:
+        description: The solvent is water.
+      ionic liquid:
+        description: The solvent is an ionic liquid.
+      non-aqueous:
+        description: The solvent is non-aqueous other than an ionic liquid, i.e., an organic compound.
+      solid:
+        description: A solid electrolyte.
+
+classes:
+  Electrolyte:
+    description: The properties and components of the electrolyte solution.
+    attributes:
+      type:
+        range: ElectrolyteType
+        required: true
+        description: Type of electrolyte defined by the solvent.
+        examples:
+          - value: "aqueous"
+      electrolyteContainer:
+        range: ElectrolyteContainer
+        description: Container used to prepare or store the electrolyte before the measurement.
+        inlined: true
+      components:
+        range: Component
+        description: Chemical components of the electrolyte including solvents, salts, acids, bases, and gases.
+        multivalued: true
+        inlined_as_list: true
+      ph:
+        range: Quantity
+        description: pH value of the electrolyte solution.
+        inlined: true
+      temperature:
+        range: Quantity
+        description: Temperature of the electrolyte during the experiment.
+        inlined: true
+      comment:
+        range: string
+        description: Additional notes or observations about the electrolyte.
+        examples:
+          - value: "Electrolyte was not replaced between measurements."
+
+  ElectrolyteContainer:
+    description: Container used to prepare or store the electrolyte before the measurement.
+    attributes:
+      description:
+        range: string
+        description: The vessel in which the supplying electrolyte was prepared or stored before the measurement.
+      components:
+        range: ElectrolyteContainerComponent
+        description: Components of the electrolyte container.
+        multivalued: true
+        inlined_as_list: true
+
+  ElectrolyteContainerComponent:
+    description: A component of the electrolyte container.
+    attributes:
+      name:
+        range: string
+        description: A unique identifier.
+      type:
+        range: string
+        description: The type of the container, i.e., a flask.
+      comment:
+        range: string
+        description: Additional notes.

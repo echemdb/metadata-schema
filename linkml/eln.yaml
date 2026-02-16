@@ -1,0 +1,22 @@
+id: https://echemdb.github.io/metadata-schema/eln
+name: eln
+description: Electronic lab notebook (ELN) reference for the experiment.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./general/url
+
+default_range: string
+
+classes:
+  Eln:
+    description: Electronic lab notebook (ELN) reference for the experiment.
+    attributes:
+      url:
+        range: HttpUrl
+        required: true
+        description: URL to the electronic lab notebook entry.

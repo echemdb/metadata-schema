@@ -8,7 +8,7 @@ version = "0.4.0"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "click>=8,<9",
     "pandas",
@@ -16,6 +16,8 @@ dependencies = [
     "openpyxl",
     "jsonschema",
     "referencing",
+    "linkml",
+    "linkml-runtime",
 ]
 
 [project.scripts]
@@ -26,6 +28,7 @@ packages = [
     "mdstools",
     "mdstools.converters",
     "mdstools.metadata",
+    "mdstools.models",
     "mdstools.schema",
     "mdstools.test",
 ]
@@ -36,7 +39,6 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "win-64"]
 
 [tool.pixi.environments]
-python-310 = ["test", "python-310"]
 python-311 = ["test", "python-311"]
 python-312 = ["test", "python-312"]
 python-313 = ["test", "python-313"]
@@ -56,13 +58,12 @@ check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
+linkml = ">=1.9,<2"
+linkml-runtime = ">=1.9,<2"
 
 
 [tool.pixi.pypi-dependencies]
 mdstools = { path = ".", editable = true }
-
-[tool.pixi.feature.python-310.dependencies]
-python = "3.10.*"
 
 [tool.pixi.feature.python-311.dependencies]
 python = "3.11.*"
@@ -99,7 +100,10 @@ pylint = "*"
 test = "pixi run test-all"
 flatten = "mdstools flatten"
 unflatten = "mdstools unflatten"
-resolve-schemas = "python mdstools/schema/resolver.py"
+resolve-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
+generate-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema"
+generate-models = "python mdstools/schema/generate_from_linkml.py --pydantic && black mdstools"
+generate-all = "python mdstools/schema/generate_from_linkml.py --all && black mdstools"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
 diff-schemas = {cmd = [
     "bash", "-c",
@@ -120,31 +124,9 @@ isort = "isort --profile black mdstools"
 lint = { depends-on = ["pylint", "black", "isort"] }
 
 [tool.pixi.feature.validate.tasks]
-validate-objects = {cmd = [
-    "bash", "-c",
-    '''
-    cd schemas/schema_pieces
-    for file in curation eln experimental figure_description projects source system; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/objects/${file}.yaml
-    done
-    '''
-]}
-validate-file-schemas = {cmd = [
-    "bash", "-c",
-    '''
-    cd schemas/schema_pieces
-    for file in autotag svgdigitizer; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/file_schemas/${file}.yaml
-    done
-    '''
-]}
-validate-package-schemas = {cmd = [
-    "bash", "-c",
-    '''
-    check-jsonschema --schemafile schemas/echemdb_package.json examples/file_schemas/echemdb_package.json 2>&1 | grep -E "(ok -- validation|error)" || true
-    check-jsonschema --schemafile schemas/svgdigitizer_package.json examples/file_schemas/svgdigitizer_package.json 2>&1 | grep -E "(ok -- validation|error)" || true
-    '''
-]}
+validate-objects = "python mdstools/schema/validate_examples.py --objects"
+validate-file-schemas = "python mdstools/schema/validate_examples.py --file-schemas"
+validate-package-schemas = "python mdstools/schema/validate_examples.py --package-schemas"
 check-naming = "python mdstools/schema/check_naming.py"
 validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas", "check-naming"] }
 

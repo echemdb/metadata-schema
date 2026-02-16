@@ -7,5 +7,8 @@ extension-pkg-allow-list=lxml.etree
 [DESIGN]
 max-locals=20
 
+[MAIN]
+ignore-paths=mdstools/models
+
 [MESSAGES CONTROL]
-disable=import-outside-toplevel,too-many-arguments,logging-fstring-interpolation,use-maxsplit-arg,fixme,cyclic-import
+disable=import-outside-toplevel,too-many-arguments,logging-fstring-interpolation,use-maxsplit-arg,fixme,cyclic-import,duplicate-code,subprocess-run-check

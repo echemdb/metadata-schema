@@ -1,0 +1,61 @@
+id: https://echemdb.github.io/metadata-schema/autotag
+name: autotag
+description: Complete metadata schema for YAML templates used by autotag.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./curation
+  - ./eln
+  - ./experimental
+  - ./figure_description
+  - ./projects
+  - ./system
+
+default_range: string
+
+classes:
+  Autotag:
+    tree_root: true
+    description: >-
+      Complete metadata schema for YAML templates used by autotag,
+      combining all metadata sections into a single comprehensive structure.
+    attributes:
+      curation:
+        range: Curation
+        required: true
+        description: Details on the curation process of the data.
+        inlined: true
+      echemdbLoader:
+        range: string
+        description: Loader or importer used to process the data into echemdb format.
+        examples:
+          - value: "baseloader"
+      eln:
+        range: Eln
+        required: true
+        description: Electronic lab notebook reference.
+        inlined: true
+      experimental:
+        range: Experimental
+        required: true
+        description: Details about the experimental setup.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        required: true
+        description: Description of the data to a figure or plot.
+        inlined: true
+      projects:
+        range: Project
+        description: Research projects or funding sources.
+        multivalued: true
+        inlined_as_list: true
+      system:
+        range: System
+        required: true
+        description: Description of the experimental system.
+        inlined: true

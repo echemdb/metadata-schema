@@ -1,0 +1,48 @@
+id: https://echemdb.github.io/metadata-schema/minimum_echemdb
+name: minimum_echemdb
+description: Minimum set of metadata to describe an electrochemical system for echemdb.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./curation
+  - ./system
+  - ./source
+  - ./figure_description
+  - ./experimental
+
+default_range: string
+
+classes:
+  MinimumEchemdb:
+    tree_root: true
+    description: Minimum set of metadata to describe an electrochemical system for echemdb.
+    attributes:
+      curation:
+        range: Curation
+        required: true
+        description: Details on the curation process of the data.
+        inlined: true
+      system:
+        range: System
+        required: true
+        description: Description of the experimental system.
+        inlined: true
+      figureDescription:
+        range: FigureDescription
+        required: true
+        description: Description of the data to a figure or plot.
+        inlined: true
+      experimental:
+        range: Experimental
+        required: true
+        description: Details about the experimental setup.
+        inlined: true
+      source:
+        range: Source
+        required: true
+        description: Information about the source publication or dataset.
+        inlined: true

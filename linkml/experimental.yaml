@@ -1,0 +1,36 @@
+id: https://echemdb.github.io/metadata-schema/experimental
+name: experimental
+description: Details about the configuration of the experimental setup.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./general/url
+  - ./experimental/instrumentation
+
+default_range: string
+
+classes:
+  Experimental:
+    description: Details about the configuration of the experimental setup.
+    attributes:
+      tags:
+        range: string
+        description: Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.
+        multivalued: true
+      url:
+        range: HttpUrl
+        description: URL to related documentation, publication (DOI), or ELN entry.
+      instrumentation:
+        range: Instrumentation
+        description: Instruments and equipment used in the experiment.
+        multivalued: true
+        inlined_as_list: true
+      description:
+        range: string
+        description: Detailed description of the experimental setup and conditions.
+        examples:
+          - value: "Cyclic voltammetry performed at room temperature with 50 mV/s scan rate"

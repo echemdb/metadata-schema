@@ -4,68 +4,88 @@ This directory contains JSON Schema files for echemdb metadata validation.
 
 ## Directory Structure
 
+### Source of Truth: `linkml/`
+
+All metadata schemas are defined as **LinkML YAML** files under `linkml/` (project root).
+JSON Schema and Pydantic models are generated from these definitions.
+
 ### `schema_pieces/`
 
-Development schemas with modular structure using `$ref` references. These schemas:
+Legacy modular YAML schema definitions (kept for reference). These are organized into:
+- `general/` - Reusable components (quantity, url, purity, etc.)
+- `system/` - Electrochemical system components (electrode, electrolyte, atmosphere, etc.)
+- `experimental/` - Experimental setup components (instrumentation)
 
-- Reference each other using relative paths (e.g., `curation.json#/definitions/Curation`)
-- Reference external standards (e.g., Frictionless Data Schema)
-- Are organized into subdirectories:
-  - `general/` - Reusable components (quantity, url, purity, etc.)
-  - `system/` - Electrochemical system components (electrode, electrolyte, atmosphere, etc.)
-  - `experimental/` - Experimental setup components (instrumentation)
-- Serve as the single source of truth for schema definitions
+### `frictionless/` (gitignored)
+
+Frictionless Data Package standard schemas (`datapackage.json`, `dataresource.json`),
+downloaded on demand from <https://datapackage.org/profiles/2.0/>.
+
+Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`) compose with
+these via `allOf` references so that standard resource properties (name, path,
+format, encoding, …) are accepted alongside our custom metadata.
+
+The files are **not tracked in version control**.  They are fetched automatically
+by `ensure_frictionless_schemas()` on the first schema generation or package
+validation run and cached locally for all subsequent offline use.
 
 ### Root Directory (this folder)
 
-Resolved/flattened schemas ready for distribution and use. These schemas:
+Generated JSON schemas ready for distribution and use. These schemas:
 
-- Have all external `$ref` references resolved and inlined
-- Contain all definitions in a single `definitions` section
-- Keep only internal references (`#/definitions/...`)
-- Are generated automatically from `schema_pieces/` using `pixi run resolve-schemas`
+- Are self-contained with all definitions in a `$defs` section
+- Keep only internal references (`#/$defs/...`)
+- Are generated automatically from LinkML using `pixi run generate-schemas`
 - **Work for both validation AND enrichment** (descriptions/examples are preserved)
 
 ## Main Combined Schemas
 
 The following combined schemas are available as both development (in `schema_pieces/`) and resolved (in root) versions:
 
+- **`minimum_echemdb.json`** - Minimum metadata set for echemdb entries.
+
 - **`autotag.json`** - Complete metadata schema for auto-generated echemdb YAML files. Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
+
+- **`source_data.json`** - Source data with data description (CSV dialect, field mapping, field units).
 
 - **`svgdigitizer.json`** - Metadata schema for digitized data from figures using svgdigitizer. Similar to autotag but includes `source` instead of `project`.
 
-- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files.
+- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files. Composes with the Frictionless data resource schema via `allOf`.
 
-- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements.
+- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements. Composes with the Frictionless data resource schema via `allOf`.
 
 ## Usage
 
-### For Development
-
-Work with schemas in `schema_pieces/` directory:
+### Validate examples
 
 ```bash
-# Validate against development schemas
-pixi run validate-objects
-pixi run validate-file-schemas
-pixi run validate-package-schemas
+pixi run validate-objects          # Individual object examples
+pixi run validate-file-schemas     # File-level YAML examples
+pixi run validate-package-schemas  # Package JSON examples (auto-downloads Frictionless schemas)
+# or all at once:
+pixi run validate
 ```
 
-### For Distribution
-
-Use resolved schemas in root directory:
+### Validate YAML against a schema
 
 ```bash
-# Validate YAML against resolved schema
 check-jsonschema --schemafile schemas/autotag.json yourfile.yaml
 ```
 
-### Regenerating Resolved Schemas
+> **Note**: Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`)
+> contain `$ref` to `frictionless/dataresource.json` and require the local
+> Frictionless schemas to be present.  Use `pixi run validate-package-schemas`
+> instead of direct `check-jsonschema` for these.
 
-After making changes to schemas in `schema_pieces/`, regenerate resolved versions:
+### Regenerating Schemas from LinkML
+
+After editing LinkML files in `linkml/`, regenerate JSON schemas and Pydantic models:
 
 ```bash
-pixi run resolve-schemas
+pixi run generate-schemas        # JSON Schema only
+pixi run generate-models          # Pydantic models only
+pixi run generate-all             # Both
+pixi run update-expected-schemas  # Update snapshot baselines
 ```
 
 ## Schema Enrichment
@@ -97,10 +117,11 @@ Enforced by `pixi run check-naming` (runs as part of `pixi run validate`).
 
 When modifying schemas:
 
-1. Edit schemas in `schema_pieces/` directory only
+1. Edit LinkML YAML files in `linkml/` directory
 2. Add descriptions and examples to all new fields
 3. Follow the [naming conventions](#naming-conventions) above
-4. Run `pixi run check-naming` to verify naming rules
-5. Run `pixi run resolve-schemas` to update resolved versions
+4. Run `pixi run generate-all` to regenerate JSON schemas and Pydantic models
+5. Run `pixi run check-naming` to verify naming rules
 6. Run `pixi run validate` to ensure all validations pass
-7. Run `pixi run test-comprehensive` to verify enrichment still works
+7. Run `pixi run update-expected-schemas` to update snapshot baselines
+8. Run `pixi run test` to verify everything works

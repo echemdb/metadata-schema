@@ -1,0 +1,117 @@
+id: https://echemdb.github.io/metadata-schema/general/component
+name: component
+description: A chemical component of the electrolyte solution.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ./quantity
+  - ./purity
+  - ./chemical_identifiers
+
+default_range: string
+
+enums:
+  ComponentType:
+    description: Role or function of the component in the electrolyte.
+    permissible_values:
+      solvent:
+        description: The solvent.
+      salt:
+        description: A salt added the solvent.
+      acid:
+        description: An acid added to the solvent.
+      base:
+        description: A base added to the solvent.
+      gas:
+        description: A gas passed through the solvent.
+      solute:
+        description: A solute added to the solvent, which is not a salt, acid, base or a gas, i.e., water.
+
+classes:
+  Component:
+    description: A chemical component of the electrolyte solution.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Name or identifier of the chemical component (trivial name, formula, or IUPAC name).
+        examples:
+          - value: "H2SO4"
+      type:
+        range: ComponentType
+        required: true
+        description: Role or function of the component in the electrolyte.
+      chemicalIdentifiers:
+        range: ChemicalIdentifiers
+        description: Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.
+        inlined: true
+      concentration:
+        range: Quantity
+        description: Concentration of the component in the electrolyte.
+        inlined: true
+      source:
+        range: ComponentSource
+        description: Information about the supplier and supplied quality of the chemical.
+        inlined: true
+      purity:
+        range: Purity
+        description: Purity level of the chemical component after the purification process.
+        inlined: true
+      partialPressure:
+        range: Quantity
+        description: Partial pressure of a gaseous / volatile component.
+        inlined: true
+      proportion:
+        range: Quantity
+        description: Proportion of the component (e.g., volume percent, mole fraction).
+        inlined: true
+      flow:
+        range: Quantity
+        description: Flow rate for gaseous components.
+        inlined: true
+      comment:
+        range: string
+        description: Additional notes or observations about this component.
+        examples:
+          - value: "Freshly prepared solution"
+      pressure:
+        range: Quantity
+        description: Pressure for gaseous components.
+        inlined: true
+
+  ComponentSource:
+    description: Information about the source and quality of the chemical component.
+    attributes:
+      supplier:
+        range: string
+        description: Name of the company that supplied the chemical.
+        examples:
+          - value: "Your Chemical Supplier Inc."
+      manufacturer:
+        range: string
+        description: Name of the company or organization that manufactured the chemical.
+        examples:
+          - value: "Organic Chemistry II - Bar Group"
+      lot:
+        range: string
+        description: LOT or batch number provided by the manufacturer or supplier for traceability.
+        examples:
+          - value: "LOT12345"
+      purity:
+        range: Purity
+        description: Stated purity level from the supplier or manufacturer.
+        inlined: true
+      refinement:
+        range: string
+        description: Any additional purification or treatment performed.
+        examples:
+          - value: "Recrystallized from ethanol"
+      quality:
+        range: string
+        description: Quality grade of the chemical.
+        examples:
+          - value: "ACS reagent grade"

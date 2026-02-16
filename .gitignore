@@ -16,5 +16,8 @@ tests/generated
 # Python
 __pycache__/
 
+# Downloaded external schemas (fetched on demand)
+schemas/frictionless/
+
 # excel files
 *.xlsx
