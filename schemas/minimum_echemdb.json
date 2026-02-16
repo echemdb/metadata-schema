@@ -1783,7 +1783,7 @@
           "$ref": "#/definitions/Value"
         }
       },
-      "title": "scan rate",
+      "title": "scanRate",
       "type": "object"
     },
     "Shape": {

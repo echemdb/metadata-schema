@@ -480,7 +480,7 @@
                           "$ref": "#/definitions/Value"
                         }
                       },
-                      "title": "scan rate",
+                      "title": "scanRate",
                       "type": "object"
                     }
                   },
@@ -2137,7 +2137,7 @@
           "$ref": "#/definitions/Value"
         }
       },
-      "title": "scan rate",
+      "title": "scanRate",
       "type": "object"
     },
     "Shape": {

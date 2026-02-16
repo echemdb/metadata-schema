@@ -110,7 +110,7 @@
             "$ref": "./general/quantity.json#/definitions/Quantity",
             "description": "The rate at which the data has been recorded.",
             "example": "10 mV / s",
-            "title": "scan rate"
+            "title": "scanRate"
         }
     }
 }

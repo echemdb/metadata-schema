@@ -89,85 +89,10 @@
           "$ref": "#/definitions/Value"
         }
       },
-      "title": "scan rate",
+      "title": "scanRate",
       "type": "object"
     },
-    "Uncertainty": {
-      "additionalProperties": false,
-      "description": "Uncertainty information for a measured quantity.",
-      "minProperties": 1,
-      "properties": {
-        "comment": {
-          "description": "Additional information about the uncertainty estimation.",
-          "example": "Standard deviation from 3 replicate measurements",
-          "type": "string"
-        },
-        "negativeValue": {
-          "description": "Lower bound (-) for asymmetric uncertainties.",
-          "example": 0.01,
-          "type": "number"
-        },
-        "positiveValue": {
-          "description": "Upper bound (+) for asymmetric uncertainties.",
-          "example": 0.02,
-          "type": "number"
-        },
-        "type": {
-          "description": "Type of uncertainty (absolute or relative).",
-          "enum": [
-            "absolute",
-            "relative"
-          ],
-          "example": "absolute",
-          "type": "string"
-        },
-        "unit": {
-          "description": "Unit of the uncertainty value.",
-          "example": "mol / l",
-          "type": "string"
-        },
-        "value": {
-          "description": "Symmetric uncertainty value (±).",
-          "example": 0.01,
-          "type": "number"
-        }
-      },
-      "title": "Uncertainty",
-      "type": "object"
-    },
-    "Unit": {
-      "anyOf": [
-        {
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        },
-        {
-          "type": "string"
-        }
-      ],
-      "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').",
-      "example": "mol / l",
-      "title": "Unit"
-    },
-    "Value": {
-      "anyOf": [
-        {
-          "type": "number"
-        },
-        {
-          "type": "null"
-        },
-        {
-          "type": "string"
-        }
-      ],
-      "description": "Numerical value (can be a number, string, or null).",
-      "example": 0.5,
-      "title": "Value"
-    },
-    "svgdigitizer_resource": {
+    "SvgdigitizerResource": {
       "description": "A resource created by svgdigitizer with minimal echemdb metadata.",
       "properties": {
         "metadata": {
@@ -312,6 +237,81 @@
         }
       },
       "type": "object"
+    },
+    "Uncertainty": {
+      "additionalProperties": false,
+      "description": "Uncertainty information for a measured quantity.",
+      "minProperties": 1,
+      "properties": {
+        "comment": {
+          "description": "Additional information about the uncertainty estimation.",
+          "example": "Standard deviation from 3 replicate measurements",
+          "type": "string"
+        },
+        "negativeValue": {
+          "description": "Lower bound (-) for asymmetric uncertainties.",
+          "example": 0.01,
+          "type": "number"
+        },
+        "positiveValue": {
+          "description": "Upper bound (+) for asymmetric uncertainties.",
+          "example": 0.02,
+          "type": "number"
+        },
+        "type": {
+          "description": "Type of uncertainty (absolute or relative).",
+          "enum": [
+            "absolute",
+            "relative"
+          ],
+          "example": "absolute",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Unit of the uncertainty value.",
+          "example": "mol / l",
+          "type": "string"
+        },
+        "value": {
+          "description": "Symmetric uncertainty value (±).",
+          "example": 0.01,
+          "type": "number"
+        }
+      },
+      "title": "Uncertainty",
+      "type": "object"
+    },
+    "Unit": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "Unit of measurement as a string (e.g., 'mol / l', 'V', 'mA / cm2').",
+      "example": "mol / l",
+      "title": "Unit"
+    },
+    "Value": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "Numerical value (can be a number, string, or null).",
+      "example": 0.5,
+      "title": "Value"
     }
   },
   "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
@@ -323,7 +323,7 @@
             "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
           },
           {
-            "$ref": "#/definitions/svgdigitizer_resource"
+            "$ref": "#/definitions/SvgdigitizerResource"
           }
         ]
       },

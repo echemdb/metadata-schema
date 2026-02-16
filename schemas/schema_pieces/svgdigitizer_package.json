@@ -12,13 +12,13 @@
             "items": {
                 "allOf": [
                     { "$ref": "https://datapackage.org/profiles/2.0/dataresource.json" },
-                    { "$ref": "#/definitions/svgdigitizer_resource" }
+                    { "$ref": "#/definitions/SvgdigitizerResource" }
                 ]
             }
         }
     },
     "definitions": {
-        "svgdigitizer_resource": {
+        "SvgdigitizerResource": {
             "type": "object",
             "description": "A resource created by svgdigitizer with minimal echemdb metadata.",
             "properties": {
