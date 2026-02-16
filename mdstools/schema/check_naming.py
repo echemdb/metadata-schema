@@ -152,9 +152,7 @@ def check_file(filepath):
         if def_name in DEFINITION_EXCEPTIONS:
             continue
         if not PASCAL_CASE.match(def_name):
-            violations.append(
-                (str(path), f"Definition '{def_name}' is not PascalCase")
-            )
+            violations.append((str(path), f"Definition '{def_name}' is not PascalCase"))
 
     return violations
 
@@ -174,7 +172,11 @@ def main():
     if all_violations:
         print(f"Found {len(all_violations)} naming convention violation(s):\n")
         for filepath, msg in all_violations:
-            rel = Path(filepath).relative_to(Path.cwd()) if Path(filepath).is_absolute() else filepath
+            rel = (
+                Path(filepath).relative_to(Path.cwd())
+                if Path(filepath).is_absolute()
+                else filepath
+            )
             print(f"  {rel}: {msg}")
         print(
             "\nConventions: property keys = camelCase, "
