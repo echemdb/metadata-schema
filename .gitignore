@@ -15,3 +15,6 @@ tests/generated
 
 # Python
 __pycache__/
+
+# excel files
+*.xlsx
