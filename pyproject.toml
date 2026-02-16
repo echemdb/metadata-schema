@@ -8,7 +8,7 @@ version = "0.4.0"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 description = "Metadata schemas and templates for the echemdb database"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "click>=8,<9",
     "pandas",
@@ -39,7 +39,6 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "osx-64", "win-64"]
 
 [tool.pixi.environments]
-python-310 = ["test", "python-310"]
 python-311 = ["test", "python-311"]
 python-312 = ["test", "python-312"]
 python-313 = ["test", "python-313"]
@@ -65,9 +64,6 @@ linkml-runtime = ">=1.9,<2"
 
 [tool.pixi.pypi-dependencies]
 mdstools = { path = ".", editable = true }
-
-[tool.pixi.feature.python-310.dependencies]
-python = "3.10.*"
 
 [tool.pixi.feature.python-311.dependencies]
 python = "3.11.*"

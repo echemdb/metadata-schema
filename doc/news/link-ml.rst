@@ -20,3 +20,4 @@
 
 * Removed ``mdstools/schema/resolver.py`` legacy schema resolver (replaced by ``generate_from_linkml.py``).
 * Removed JSON schema pieces (replaced by YAML versions and LinkML definitions).
+* Remove support for Python 3.10 in CI testing (minimum supported version is now Python 3.11).
