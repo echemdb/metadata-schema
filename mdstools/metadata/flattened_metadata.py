@@ -161,8 +161,8 @@ class FlattenedMetadata:
             ... ['1.b.1', 'A', 3],
             ... ['1.b.2', 'B', 4]]
             >>> flattened = FlattenedMetadata(original_rows)
-            >>> flattened.to_excel('generated/doctests/test_flattened.xlsx')
-            >>> loaded = FlattenedMetadata.from_excel('generated/doctests/test_flattened.xlsx')
+            >>> flattened.to_excel('tests/generated/docstrings/test_flattened.xlsx')
+            >>> loaded = FlattenedMetadata.from_excel('tests/generated/docstrings/test_flattened.xlsx')
             >>> loaded.unflatten().data == flattened.unflatten().data
             True
 

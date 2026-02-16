@@ -8,7 +8,6 @@ This demonstrates the complete workflow from YAML to enriched Excel/CSV files.
 import json
 import os
 from pathlib import Path
-from uuid import uuid4
 
 from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
 from mdstools.metadata.flattened_metadata import FlattenedMetadata
@@ -33,7 +32,9 @@ def test_basic_flattening():
     print(f"✓ Columns: {list(df.columns)}")
 
     # Export to CSV
-    output = Path("tests/generated/basic_flat.csv")
+    output_dir = Path("tests/generated/test_basic_flattening")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output = output_dir / "basic_flat.csv"
     flattened.to_csv(str(output))
     print(f"✓ Exported to {output}")
 
@@ -68,12 +69,14 @@ def test_schema_enrichment():
     print(f"✓ Found {desc_count} fields with descriptions")
 
     # Export enriched CSV
-    output_csv = Path("tests/generated/enriched.csv")
+    output_dir = Path("tests/generated/test_schema_enrichment")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_csv = output_dir / "enriched.csv"
     enriched.to_csv(str(output_csv))
     print(f"✓ Exported enriched CSV to {output_csv}")
 
     # Export enriched Excel
-    output_xlsx = Path("tests/generated/enriched.xlsx")
+    output_xlsx = output_dir / "enriched.xlsx"
     enriched.to_excel(str(output_xlsx))
     print(f"✓ Exported enriched Excel to {output_xlsx}")
 
@@ -97,14 +100,14 @@ def test_multi_sheet_export():
     enriched = EnrichedFlattenedMetadata(flattened.rows, schema_dir="schemas")
 
     # Export to multi-sheet Excel
-    output_multi = Path(f"tests/generated/enriched_multi_sheet_{uuid4().hex}.xlsx")
+    output_dir = Path("tests/generated/test_multi_sheet_export")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_multi = output_dir / "enriched_multi_sheet.xlsx"
     enriched.to_excel(str(output_multi), separate_sheets=True)
     print(f"✓ Exported multi-sheet Excel to {output_multi}")
 
     # Also test with FlattenedMetadata
-    output_flat_multi = Path(
-        f"tests/generated/flattened_multi_sheet_{uuid4().hex}.xlsx"
-    )
+    output_flat_multi = output_dir / "flattened_multi_sheet.xlsx"
     flattened.to_excel(str(output_flat_multi), separate_sheets=True)
     print(f"✓ Exported multi-sheet Excel (flattened) to {output_flat_multi}")
 
@@ -191,7 +194,9 @@ def test_markdown_export():
     markdown = enriched.to_markdown()
 
     # Save to file
-    output = Path("tests/generated/enriched.md")
+    output_dir = Path("tests/generated/test_markdown_export")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output = output_dir / "enriched.md"
     with open(output, "w", encoding="utf-8") as f:
         f.write(markdown)
 
@@ -210,13 +215,16 @@ def test_unflatten_validation_and_cli():
     print("=" * 80)
 
     # Use the comprehensive example metadata
+    output_dir = Path("tests/generated/test_unflatten_validation_and_cli")
+    output_dir.mkdir(parents=True, exist_ok=True)
+
     metadata = Metadata.from_yaml("tests/simple_test.yaml")
     flattened = metadata.flatten()
 
-    output_xlsx = Path(f"tests/generated/unflatten_validation_{uuid4().hex}.xlsx")
+    output_xlsx = output_dir / "unflatten_validation.xlsx"
     flattened.to_excel(str(output_xlsx))
 
-    schema_file = Path(f"tests/generated/unflatten_schema_{uuid4().hex}.json")
+    schema_file = output_dir / "unflatten_schema.json"
     schema = {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
@@ -227,7 +235,6 @@ def test_unflatten_validation_and_cli():
             "system": {"type": "object", "additionalProperties": True},
         },
     }
-    schema_file.parent.mkdir(parents=True, exist_ok=True)
     with open(schema_file, "w", encoding="utf-8") as f:
         json.dump(schema, f)
 
@@ -239,19 +246,19 @@ def test_unflatten_validation_and_cli():
     # CLI unflatten with validation
     from mdstools import cli as md_cli
 
-    output_dir = Path(f"tests/generated/cli_unflatten_{uuid4().hex}")
+    cli_output_dir = output_dir / "cli_unflatten"
     result = md_cli.main(
         [
             "unflatten",
             str(output_xlsx),
             "--out-dir",
-            str(output_dir),
+            str(cli_output_dir),
             "--schema-file",
             str(schema_file),
         ]
     )
 
-    output_yaml = output_dir / f"{output_xlsx.stem}.yaml"
+    output_yaml = cli_output_dir / f"{output_xlsx.stem}.yaml"
     assert result == 0
     assert output_yaml.exists()
 
