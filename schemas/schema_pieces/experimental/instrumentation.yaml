@@ -1,0 +1,28 @@
+Instrumentation:
+  description: The instruments used to perform the experiment.
+  title: instrumentation
+  type: object
+  additionalProperties: false
+  properties:
+    type:
+      type: string
+      description: Type or category of instrument.
+      example: potentiostat
+    manufacturer:
+      type: string
+      description: Manufacturer of the instrument.
+      example: Awesome Supplier Inc.
+    name:
+      type: string
+      description: Name or identifier of the instrument.
+      example: Poti05
+    model:
+      type: string
+      description: Model number or designation.
+      example: P302NX5
+    supplier:
+      type: string
+      description: Supplier of the instrument.
+      example: Awesome Supplier Inc.
+  required:
+  - name

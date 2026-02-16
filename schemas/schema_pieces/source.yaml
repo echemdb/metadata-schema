@@ -1,0 +1,41 @@
+Source:
+  type: object
+  title: Source
+  additionalProperties: false
+  description: Information about the source publication or dataset.
+  required:
+  - citationKey
+  - url
+  properties:
+    citationKey:
+      type: string
+      description: Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.
+      example: electrobear_2024_electrochemistry_563
+    url:
+      description: DOI (URL) to the publication or dataset.
+      $ref: ./general/url.yaml#/definitions/Url
+    techniques:
+      type: array
+      description: Experimental techniques used in the study.
+      items:
+        type: string
+    figure:
+      type: string
+      description: Figure number or identifier from the source including subfigure label.
+      example: Figure 2a
+    originalFilename:
+      type: string
+      description: Original filename of the data file.
+      example: 2023-04-24_cv_data_001.csv
+    bibdata:
+      type: string
+      description: BibTeX bibliographic data.
+      example: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+    comment:
+      type: string
+      description: Additional notes about the source.
+      example: The data in the figures of this work are blurry.
+    curve:
+      type: string
+      description: Specific curve or trace identifier within a figure.
+      example: blue

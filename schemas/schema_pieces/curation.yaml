@@ -1,0 +1,44 @@
+Curation:
+  type: object
+  additionalProperties: false
+  title: curation
+  description: Details on the curation process of the data.
+  required:
+  - process
+  properties:
+    process:
+      type: array
+      description: List of people involved in creating, recording, or curating this data.
+      minItems: 1
+      items:
+        $ref: '#/definitions/Process'
+Process:
+  type: object
+  required:
+  - role
+  - name
+  - orcid
+  properties:
+    role:
+      type: string
+      oneOf:
+      - const: experimentalist
+        description: A person that recorded the (meta)data.
+      - const: curator
+        description: A person that created a (meta)dataset from literature data.
+      - const: reviewer
+        description: A person that verified the (meta)data (usually literature data).
+      - const: supervisor
+        description: A person that supervised the experimentalist.
+    name:
+      type: string
+      description: Full name of the person.
+      example: Jane Doe
+    orcid:
+      description: An URL containing the ORCID.
+      $ref: ./general/url.yaml#/definitions/Url
+    date:
+      type: string
+      format: date
+      description: 'Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).'
+      example: '2024-01-15'

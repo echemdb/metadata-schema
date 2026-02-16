@@ -1,0 +1,56 @@
+ElectrochemicalCell:
+  type: object
+  additionalProperties: false
+  title: ElectrochemicalCell
+  description: Description of the electrochemical cell setup and configuration.
+  properties:
+    type:
+      type: string
+      description: Type of electrochemical cell, such as H-cell, beaker glass, flow cell.
+      example: H-cell
+    components:
+      type: array
+      description: Physical components and parts of the cell that are in contact with the electrolyte.
+      items:
+        $ref: '#/definitions/ElectrochemicalCellComponent'
+    cellDescription:
+      type: string
+      description: Detailed description of the cell configuration.
+      example: Three-electrode setup with glass cell and Teflon cap
+    cleaningProcedure:
+      type: string
+      description: Procedure used to clean the cell before experiments.
+      example: Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream
+    source:
+      description: Source and supplier information for the cell.
+      $ref: '#/definitions/ElectrochemicalCellSource'
+ElectrochemicalCellComponent:
+  type: object
+  additionalProperties: false
+  description: A component or part of the electrochemical cell.
+  properties:
+    name:
+      type: string
+      description: Name or identifier of the component.
+      example: Cell body
+    part:
+      type: string
+      description: Part number or designation.
+      example: EC-CELL-100
+    description:
+      type: string
+      description: Detailed description of the component.
+      example: Borosilicate glass cell with multiple ports
+  required:
+  - name
+  - part
+  title: ElectrochemicalCellComponent
+ElectrochemicalCellSource:
+  type: object
+  additionalProperties: false
+  description: Source information for the electrochemical cell.
+  properties:
+    url:
+      description: URL to product page or technical documentation.
+      $ref: ../general/url.yaml#/definitions/Url
+  title: ElectrochemicalCellSource

@@ -35,7 +35,7 @@ system:
         type: acid
         source:
           supplier: Supplier name
-          LOT: C45456
+          lot: C45456
         concentration:
           value: 0.1
           unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html

@@ -1,0 +1,125 @@
+Electrode:
+  type: object
+  additionalProperties: false
+  title: Electrode
+  description: An electrode used in the electrochemical cell, auch as working, reference, counter, or collector electrode.
+  required:
+  - name
+  - function
+  properties:
+    name:
+      type: string
+      description: Name or identifier for the electrode.
+      example: WE1
+    function:
+      description: Role of the electrode in the electrochemical cell.
+      example: working electrode
+      anyOf:
+      - const: working electrode
+        description: Electrode where the reaction of interest occurs.
+      - const: counter electrode
+        description: Electrode that completes the circuit.
+      - const: reference electrode
+        description: Electrode providing a stable reference potential.
+      - type: string
+        description: Other electrode function not listed above.
+    redoxSystem:
+      type: string
+      description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).
+      example: RHE
+    description:
+      type: string
+      description: Detailed description of the electrode (especially for custom-made electrodes).
+      example: Home-made Pt wire electrode, flame-annealed before use
+    geometricElectrolyteContactArea:
+      description: Geometric surface area of electrode in contact with electrolyte.
+      $ref: ../general/quantity.yaml#/definitions/Quantity
+    purity:
+      description: Purity specifications of the electrode material.
+      $ref: ../general/purity.yaml#/definitions/Purity
+    preparationProcedure:
+      description: Procedures used to prepare the electrode before measurement.
+      $ref: '#/definitions/ElectrodePreparation'
+    shape:
+      description: Physical shape and dimensions of the electrode.
+      $ref: '#/definitions/Shape'
+    source:
+      type: object
+      description: Source and supplier information for the electrode.
+      $ref: '#/definitions/ElectrodeSource'
+    type:
+      type: string
+      description: Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.
+      example: single crystal
+    material:
+      type: string
+      description: Chemical symbol or abbreviation of the electrode material.
+      example: Pt
+    crystallographicOrientation:
+      type: string
+      description: Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.
+      example: (1 1 1)
+ElectrodeSource:
+  type: object
+  additionalProperties: false
+  description: Information about the source and supplier of the electrode.
+  properties:
+    manufacturer:
+      type: string
+      description: Name of the electrode manufacturer.
+      example: Your Favorite Crystals GmbH
+    lot:
+      type: string
+      description: LOT or batch number.
+      example: LOT-2024-PT111
+    purity:
+      description: Purity specifications from the manufacturer or supplier.
+      $ref: ../general/purity.yaml#/definitions/Purity
+    model:
+      type: string
+      description: Model number or designation.
+      example: PT111-10
+    url:
+      description: URL to product specification or datasheet.
+      $ref: ../general/url.yaml#/definitions/Url
+    supplier:
+      type: string
+      description: Name of the supplier.
+      example: Chemicals & More Inc.
+  title: ElectrodeSource
+Shape:
+  type: object
+  additionalProperties: false
+  description: Physical dimensions and shape of the electrode.
+  properties:
+    type:
+      type: string
+      description: Type or shape of electrode.
+      example: disc
+    height:
+      description: Height of the electrode.
+      $ref: ../general/quantity.yaml#/definitions/Quantity
+    diameter:
+      description: Diameter of the electrode (for cylindrical shapes).
+      $ref: ../general/quantity.yaml#/definitions/Quantity
+    length:
+      description: Length of the electrode.
+      $ref: ../general/quantity.yaml#/definitions/Quantity
+    description:
+      type: string
+      description: Detailed description of the electrode shape.
+      example: Hemispherical tip
+  title: Shape
+ElectrodePreparation:
+  type: object
+  additionalProperties: false
+  description: Procedures and methods used to prepare the electrode.
+  properties:
+    url:
+      description: URL to detailed preparation protocol or procedure, such as an article DOI.
+      $ref: ../general/url.yaml#/definitions/Url
+    description:
+      type: array
+      description: Step-by-step description of preparation procedure.
+      items:
+        type: string

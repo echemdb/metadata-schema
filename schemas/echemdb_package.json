@@ -10,7 +10,7 @@
       "additionalProperties": false,
       "description": "Information about the source and quality of the chemical component.",
       "properties": {
-        "LOT": {
+        "lot": {
           "description": "LOT or batch number provided by the manufacturer or supplier for traceability.",
           "example": "LOT12345",
           "type": "string"
@@ -1708,7 +1708,7 @@
       "additionalProperties": false,
       "description": "Information about the source and supplier of the electrode.",
       "properties": {
-        "LOT": {
+        "lot": {
           "description": "LOT or batch number.",
           "example": "LOT-2024-PT111",
           "type": "string"

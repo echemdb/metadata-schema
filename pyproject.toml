@@ -120,24 +120,8 @@ isort = "isort --profile black mdstools"
 lint = { depends-on = ["pylint", "black", "isort"] }
 
 [tool.pixi.feature.validate.tasks]
-validate-objects = {cmd = [
-    "bash", "-c",
-    '''
-    cd schemas/schema_pieces
-    for file in curation eln experimental figure_description projects source system; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/objects/${file}.yaml
-    done
-    '''
-]}
-validate-file-schemas = {cmd = [
-    "bash", "-c",
-    '''
-    cd schemas/schema_pieces
-    for file in autotag svgdigitizer; do
-        check-jsonschema --base-uri . --schemafile ./${file}.json ../../examples/file_schemas/${file}.yaml
-    done
-    '''
-]}
+validate-objects = "python mdstools/schema/validate_examples.py --objects"
+validate-file-schemas = "python mdstools/schema/validate_examples.py --file-schemas"
 validate-package-schemas = {cmd = [
     "bash", "-c",
     '''

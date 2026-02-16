@@ -5,19 +5,45 @@ from pathlib import Path
 from typing import Any
 
 import jsonschema
+import yaml
 from referencing import Registry, Resource
+
+
+def _load_schema(schema_file: Path) -> dict:
+    """Load a schema from a JSON or YAML file.
+
+    YAML schema pieces that use the flat definition format (no ``definitions``
+    key) are wrapped into a standard JSON Schema structure automatically.
+    """
+    with open(schema_file, "r", encoding="utf-8") as f:
+        if schema_file.suffix in (".yaml", ".yml"):
+            raw = yaml.safe_load(f)
+            if "definitions" in raw:
+                return {"$schema": "http://json-schema.org/draft-07/schema#", **raw}
+            # Flat YAML: wrap with definitions and infer entry point
+            main_def = "".join(
+                part.capitalize() for part in schema_file.stem.split("_")
+            )
+            schema = {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "definitions": raw,
+            }
+            if main_def in raw:
+                schema["allOf"] = [{"$ref": f"#/definitions/{main_def}"}]
+            return schema
+        return json.load(f)
 
 
 def validate_metadata(data: Any, schema_path: str) -> None:
     r"""
-    Validate metadata against a JSON schema.
+    Validate metadata against a JSON or YAML schema.
 
     Loads the schema at *schema_path*, resolves ``$ref`` references relative
     to the file, and validates *data* against it.  Raises on the first batch
     of errors (up to 10 are reported).
 
     :param data: Metadata object to validate
-    :param schema_path: Path to JSON schema file
+    :param schema_path: Path to JSON or YAML schema file
     :raises FileNotFoundError: If the schema file does not exist
     :raises ValueError: If validation fails
 
@@ -52,8 +78,7 @@ def validate_metadata(data: Any, schema_path: str) -> None:
     if not schema_file.exists():
         raise FileNotFoundError(f"Schema file not found: {schema_file}")
 
-    with open(schema_file, "r", encoding="utf-8") as f:
-        schema = json.load(f)
+    schema = _load_schema(schema_file)
 
     base_uri = schema_file.resolve().as_uri()
     resource = Resource.from_contents(schema)

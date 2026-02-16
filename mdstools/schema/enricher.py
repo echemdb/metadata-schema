@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
+import yaml
+
 
 class SchemaEnricher:
     """
@@ -82,8 +84,9 @@ class SchemaEnricher:
         r"""
         Load modular schemas from the ``schema_pieces/`` directory.
 
-        Each ``.json`` file found (recursively) is stored in
-        :attr:`schema_cache` under its file stem.
+        Each ``.yaml`` file found (recursively) is stored in
+        :attr:`schema_cache` under its file stem.  YAML schemas are wrapped
+        in a ``{"definitions": ...}`` structure when needed.
 
         EXAMPLES::
 
@@ -99,11 +102,40 @@ class SchemaEnricher:
         schema_pieces = self.schema_dir / "schema_pieces"
         if not schema_pieces.exists():
             return
-        for schema_file in schema_pieces.rglob("*.json"):
+        for schema_file in schema_pieces.rglob("*.yaml"):
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
-                    self.schema_cache[schema_name] = json.load(f)
+                    raw = yaml.safe_load(f)
+                    if "definitions" in raw:
+                        self.schema_cache[schema_name] = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            **raw,
+                        }
+                    elif "type" in raw or "properties" in raw:
+                        # Standard schema (e.g. schema.yaml)
+                        main_def = "".join(
+                            part.capitalize() for part in schema_name.split("_")
+                        )
+                        self.schema_cache[schema_name] = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "definitions": {main_def: raw},
+                            "allOf": [{"$ref": f"#/definitions/{main_def}"}],
+                        }
+                    else:
+                        # Flat YAML: top-level keys are PascalCase definitions
+                        main_def = "".join(
+                            part.capitalize() for part in schema_name.split("_")
+                        )
+                        schema_data = {
+                            "$schema": "http://json-schema.org/draft-07/schema#",
+                            "definitions": raw,
+                        }
+                        if main_def in raw:
+                            schema_data["allOf"] = [
+                                {"$ref": f"#/definitions/{main_def}"}
+                            ]
+                        self.schema_cache[schema_name] = schema_data
 
     def _load_root_schemas(self):
         r"""
@@ -184,6 +216,8 @@ class SchemaEnricher:
             schema_data = self.schema_cache[schema_name]
             if "definitions" in schema_data:
                 for _def_name, def_value in schema_data["definitions"].items():
+                    if not isinstance(def_value, dict):
+                        continue
                     title = def_value.get("title", "")
                     if title and title not in self.schema_cache:
                         self.schema_cache[title] = schema_data
@@ -222,7 +256,7 @@ class SchemaEnricher:
             External relative references are resolved from the cache::
 
                 >>> resolved, _ = enricher._resolve_ref(
-                ...     './curation.json#/definitions/Curation',
+                ...     './curation.yaml#/definitions/Curation',
                 ...     {})
                 >>> resolved is not None
                 True

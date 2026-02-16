@@ -38,6 +38,8 @@ import os
 from pathlib import Path
 from typing import Any, Dict
 
+import yaml
+
 
 class SchemaResolver:  # pylint: disable=too-few-public-methods
     r"""
@@ -58,6 +60,11 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
     """
 
+    @staticmethod
+    def _snake_to_pascal(name: str) -> str:
+        """Convert a snake_case name to PascalCase."""
+        return "".join(part.capitalize() for part in name.split("_"))
+
     def __init__(self, schema_dir: str):
         self.schema_dir = Path(schema_dir)
         self.schema_cache = {}
@@ -65,10 +72,12 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
     def _load_schemas(self):
         r"""
-        Load all JSON schema files from the ``schema_pieces/`` subdirectory.
+        Load all YAML schema files from the ``schema_pieces/`` subdirectory.
 
         Each file is stored in :attr:`schema_cache` under both its stem
-        (e.g. ``"curation"``) and its relative path (e.g. ``"general/url.json"``).
+        (e.g. ``"curation"``) and its relative path (e.g. ``"general/url.yaml"``).
+        YAML schemas are wrapped in a ``{"definitions": ...}`` structure to
+        match the expected JSON Schema format.
 
         :raises FileNotFoundError: If the ``schema_pieces/`` directory does not exist
 
@@ -88,12 +97,42 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
                 f"Schema pieces directory not found: {schema_pieces_dir}"
             )
 
-        for schema_file in schema_pieces_dir.rglob("*.json"):
+        for schema_file in schema_pieces_dir.rglob("*.yaml"):
             with open(schema_file, "r", encoding="utf-8") as schema_f:
                 schema_stem = schema_file.stem
                 relative_path = schema_file.relative_to(schema_pieces_dir)
-                # Store with both stem and relative path as keys
-                self.schema_cache[schema_stem] = json.load(schema_f)
+                raw = yaml.safe_load(schema_f)
+                # Wrap flat YAML definitions into JSON Schema structure.
+                # Files that already have 'definitions' (e.g. package schemas)
+                # are kept as-is; files with 'type'/'properties' are standard
+                # schemas that get wrapped as a single definition; otherwise
+                # all top-level keys are flat PascalCase definitions.
+                if "definitions" in raw:
+                    schema_data = {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        **raw,
+                    }
+                elif "type" in raw or "properties" in raw:
+                    # Standard schema (e.g. schema.yaml) — wrap as one definition
+                    main_def = self._snake_to_pascal(schema_stem)
+                    schema_data = {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "definitions": {main_def: raw},
+                        "allOf": [{"$ref": f"#/definitions/{main_def}"}],
+                    }
+                else:
+                    # Flat YAML: top-level keys are PascalCase definitions
+                    main_def = self._snake_to_pascal(schema_stem)
+                    schema_data = {
+                        "$schema": "http://json-schema.org/draft-07/schema#",
+                        "definitions": raw,
+                    }
+                    # Add allOf entry point if the inferred definition exists
+                    if main_def in raw:
+                        schema_data["allOf"] = [
+                            {"$ref": f"#/definitions/{main_def}"}
+                        ]
+                self.schema_cache[schema_stem] = schema_data
                 self.schema_cache[str(relative_path)] = self.schema_cache[schema_stem]
 
     def _resolve_ref(
@@ -130,7 +169,7 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
 
             Relative path references are resolved from the cache::
 
-                >>> result = resolver._resolve_ref('./curation.json#/definitions/Curation')
+                >>> result = resolver._resolve_ref('./curation.yaml#/definitions/Curation')
                 >>> isinstance(result, dict) and '$ref' not in result
                 True
 
@@ -143,8 +182,8 @@ class SchemaResolver:  # pylint: disable=too-few-public-methods
             # Internal reference - can't resolve without context
             return {"$ref": ref}
 
-        # Handle references with filename and fragment (e.g., "curation.json#/definitions/Curation")
-        if ".json#" in ref or ref.endswith(".json"):
+        # Handle references with filename and fragment (e.g., "curation.yaml#/definitions/Curation")
+        if ".yaml#" in ref or ref.endswith(".yaml") or ".json#" in ref or ref.endswith(".json"):
             ref_path = ref.split("#")[0]
             ref_fragment = "#" + ref.split("#")[1] if "#" in ref else ""
 
