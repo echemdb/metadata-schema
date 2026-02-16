@@ -16,6 +16,19 @@ Legacy modular YAML schema definitions (kept for reference). These are organized
 - `system/` - Electrochemical system components (electrode, electrolyte, atmosphere, etc.)
 - `experimental/` - Experimental setup components (instrumentation)
 
+### `frictionless/` (gitignored)
+
+Frictionless Data Package standard schemas (`datapackage.json`, `dataresource.json`),
+downloaded on demand from <https://datapackage.org/profiles/2.0/>.
+
+Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`) compose with
+these via `allOf` references so that standard resource properties (name, path,
+format, encoding, …) are accepted alongside our custom metadata.
+
+The files are **not tracked in version control**.  They are fetched automatically
+by `ensure_frictionless_schemas()` on the first schema generation or package
+validation run and cached locally for all subsequent offline use.
+
 ### Root Directory (this folder)
 
 Generated JSON schemas ready for distribution and use. These schemas:
@@ -29,22 +42,26 @@ Generated JSON schemas ready for distribution and use. These schemas:
 
 The following combined schemas are available as both development (in `schema_pieces/`) and resolved (in root) versions:
 
+- **`minimum_echemdb.json`** - Minimum metadata set for echemdb entries.
+
 - **`autotag.json`** - Complete metadata schema for auto-generated echemdb YAML files. Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
+
+- **`source_data.json`** - Source data with data description (CSV dialect, field mapping, field units).
 
 - **`svgdigitizer.json`** - Metadata schema for digitized data from figures using svgdigitizer. Similar to autotag but includes `source` instead of `project`.
 
-- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files.
+- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files. Composes with the Frictionless data resource schema via `allOf`.
 
-- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements.
+- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements. Composes with the Frictionless data resource schema via `allOf`.
 
 ## Usage
 
 ### Validate examples
 
 ```bash
-pixi run validate-objects
-pixi run validate-file-schemas
-pixi run validate-package-schemas
+pixi run validate-objects          # Individual object examples
+pixi run validate-file-schemas     # File-level YAML examples
+pixi run validate-package-schemas  # Package JSON examples (auto-downloads Frictionless schemas)
 # or all at once:
 pixi run validate
 ```
@@ -54,6 +71,11 @@ pixi run validate
 ```bash
 check-jsonschema --schemafile schemas/autotag.json yourfile.yaml
 ```
+
+> **Note**: Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`)
+> contain `$ref` to `frictionless/dataresource.json` and require the local
+> Frictionless schemas to be present.  Use `pixi run validate-package-schemas`
+> instead of direct `check-jsonschema` for these.
 
 ### Regenerating Schemas from LinkML
 

@@ -129,5 +129,13 @@ pixi run update-expected-schemas
 To validate the example files against the JSON schemas:
 
 ```sh
-pixi run validate
+pixi run validate              # Run all validations
+pixi run validate-objects      # Validate individual object examples
+pixi run validate-file-schemas # Validate file-level YAML examples
+pixi run validate-package-schemas  # Validate package JSON examples
+pixi run check-naming          # Enforce naming conventions
 ```
+
+Package schema validation requires the Frictionless Data Package standard
+schemas.  They are **downloaded automatically on first run** into
+`schemas/frictionless/` (gitignored) and cached for subsequent offline use.

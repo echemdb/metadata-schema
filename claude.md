@@ -8,6 +8,11 @@ From these single-source definitions the toolchain generates:
 - **JSON Schema** files (`schemas/*.json`) — used for validation and enrichment
 - **Pydantic models** (`mdstools/models/*.py`) — used for typed validation in Python
 
+Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`) compose
+with the **Frictionless Data Package** standard via `allOf` references to
+locally cached Frictionless schemas (`schemas/frictionless/`, gitignored,
+downloaded on demand by `ensure_frictionless_schemas()`).
+
 Flattened metadata can be exported to Excel/CSV with descriptions and examples
 pulled from the JSON schemas (the "enrichment" workflow).
 
@@ -31,7 +36,9 @@ pulled from the JSON schemas (the "enrichment" workflow).
 
 #### `schema/` Package
 - **enricher.py**: `SchemaEnricher` class — handles both `$defs` (LinkML) and `definitions` (legacy) JSON Schema formats
-- **generate_from_linkml.py**: Generate JSON Schemas and Pydantic models from LinkML
+- **generate_from_linkml.py**: Generate JSON Schemas and Pydantic models from LinkML; includes `ensure_frictionless_schemas()` download helper and Frictionless composition post-processing for package schemas
+- **validate_examples.py**: Validation of example files against schemas (objects, file schemas, and package schemas with local Frictionless registry)
+- **check_naming.py**: Enforce naming conventions (snake_case files, PascalCase definitions, camelCase properties)
 - **validator.py**: Schema validation — both JSON Schema and Pydantic-based
 - **update_expected_schemas.py**: Script to update expected schema snapshots
 
@@ -99,10 +106,12 @@ curation:
 **Single source of truth**: All metadata schemas are defined as LinkML YAML files under `linkml/`.
 
 **Generation pipeline** (`mdstools/schema/generate_from_linkml.py`):
-1. `gen-json-schema <linkml_file>` → JSON Schema (with `$defs`, self-contained)
-2. Post-processing: add `$schema`/`$id`, fix Quantity value/unit types, add fieldMapping
-3. `gen-pydantic <linkml_file>` → Pydantic models
-4. Post-processing: replace `extra="forbid"` with `extra="allow"`, add `coerce_numbers_to_str`
+1. `ensure_frictionless_schemas()` — downloads Frictionless `datapackage.json` and `dataresource.json` to `schemas/frictionless/` if not already present (gitignored, fetched on demand)
+2. `gen-json-schema <linkml_file>` → JSON Schema (with `$defs`, self-contained)
+3. Post-processing: add `$schema`/`$id`, fix Quantity value/unit types, add fieldMapping
+4. Post-processing (package schemas only): compose resource items with Frictionless `dataresource.json` via `allOf`, set `additionalProperties: true` on Package/Resource defs
+5. `gen-pydantic <linkml_file>` → Pydantic models
+6. Post-processing: replace `extra="forbid"` with `extra="allow"`, add `coerce_numbers_to_str`
 
 **Commands**:
 ```bash
@@ -194,6 +203,8 @@ metadata-schema/
 │   ├── schema/                   # Schema utilities
 │   │   ├── enricher.py           # Schema-based enrichment ($defs + definitions)
 │   │   ├── generate_from_linkml.py # Generate JSON Schema + Pydantic from LinkML
+│   │   ├── validate_examples.py  # Validate examples against schemas (objects, files, packages)
+│   │   ├── check_naming.py       # Enforce naming conventions
 │   │   ├── validator.py          # JSON Schema + Pydantic validation
 │   │   └── update_expected_schemas.py  # Update expected snapshots
 │   ├── models/                   # Auto-generated Pydantic models
@@ -216,9 +227,12 @@ metadata-schema/
 │   ├── svgdigitizer.json
 │   ├── echemdb_package.json
 │   ├── svgdigitizer_package.json
+│   ├── frictionless/             # Frictionless standard schemas (gitignored, auto-downloaded)
+│   │   ├── datapackage.json
+│   │   └── dataresource.json
 │   ├── expected/                 # Expected baselines for snapshot testing
 │   │   └── *.json
-│   └── schema_pieces/            # Modular schema definitions
+│   └── schema_pieces/            # Modular schema definitions (legacy reference)
 │       ├── autotag.json
 │       ├── curation.json
 │       ├── data_description.json  # CSV dialect, field mapping, field units
@@ -231,11 +245,14 @@ metadata-schema/
 │       ├── general/              # Reusable types (quantity, url, etc.)
 │       └── system/               # Electrolyte, electrode, cell schemas
 │
-├── examples/                      # Example YAML files
+├── examples/                      # Example YAML/JSON files
 │   ├── file_schemas/             # Examples per schema type
 │   │   ├── autotag.yaml
 │   │   ├── minimum_echemdb.yaml
-│   │   └── source_data.yaml
+│   │   ├── source_data.yaml
+│   │   ├── svgdigitizer.yaml
+│   │   ├── echemdb_package.json
+│   │   └── svgdigitizer_package.json
 │   └── objects/                  # Examples of individual objects
 │
 ├── tests/                         # Test data
@@ -385,6 +402,9 @@ Currently ~14% on test data — limited by how many `description`/`examples` are
   - `/generated` - Project outputs (user-facing conversions)
   - `/tests/generated` - Test outputs
   - Both excluded via `.gitignore`
+- **External schemas**:
+  - `schemas/frictionless/` - Frictionless Data Package standard schemas, gitignored
+  - Auto-downloaded by `ensure_frictionless_schemas()` on first schema generation or package validation
 - **Test files**:
   - `tests/simple_test.yaml` - Small test data for automated tests
   - `tests/example_metadata.yaml` - Comprehensive example for demos
@@ -414,7 +434,7 @@ This implementation successfully provides:
 1. ✅ Robust YAML ↔ Tabular conversion
 2. ✅ Schema-based enrichment with descriptions/examples
 3. ✅ Multiple export formats (CSV, Excel single/multi-sheet, Markdown)
-4. ✅ Comprehensive test coverage (71 tests total: 64 doctests + 6 comprehensive + 1 snapshot)
+4. ✅ Comprehensive test coverage (72 tests total: 65 doctests + 6 comprehensive + 1 snapshot)
 5. ✅ Clean, documented, maintainable code
 6. ✅ CLI interface via pixi tasks
 7. ✅ Proper file organization and gitignore setup
@@ -423,6 +443,8 @@ This implementation successfully provides:
 10. ✅ Data description schema (dialect, field mapping, field units) for source data files
 11. ✅ LinkML as single source of truth (JSON Schema + Pydantic generated)
 12. ✅ Pydantic-based validation with `validate_with_pydantic()`
+13. ✅ Frictionless Data Package composition (package schemas compose with Frictionless via `allOf`)
+14. ✅ On-demand Frictionless schema download (`ensure_frictionless_schemas()`, gitignored)
 
 The system is ready for users to:
 - Generate Excel templates from YAML examples
