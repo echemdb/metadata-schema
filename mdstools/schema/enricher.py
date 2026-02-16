@@ -93,6 +93,17 @@ class SchemaEnricher:
                                     ),
                                 }
 
+        # Register schemas by the definition's "title" field as well.
+        # This handles camelCase YAML keys (e.g., "figureDescription") that map to
+        # snake_case schema filenames (e.g., "figure_description.json").
+        for schema_name in list(self.schema_cache.keys()):
+            schema_data = self.schema_cache[schema_name]
+            if "definitions" in schema_data:
+                for def_name, def_value in schema_data["definitions"].items():
+                    title = def_value.get("title", "")
+                    if title and title not in self.schema_cache:
+                        self.schema_cache[title] = schema_data
+
     def _resolve_ref(self, ref: str, current_schema: Dict) -> Optional[Dict]:
         """
         Resolve a $ref reference to its definition.
@@ -260,10 +271,24 @@ class SchemaEnricher:
 
             # Look for the definition in the schema
             if "definitions" in schema:
-                # Usually the main definition has the same name as the file (capitalized)
+                # Find the main definition: try capitalized name first, then
+                # match by title, then fall back to case-insensitive search
+                main_def = None
                 main_def_name = top_level.capitalize()
                 if main_def_name in schema["definitions"]:
                     main_def = schema["definitions"][main_def_name]
+                else:
+                    # Search by title or case-insensitive name match
+                    top_lower = top_level.lower()
+                    for def_name, def_value in schema["definitions"].items():
+                        if def_value.get("title") == top_level:
+                            main_def = def_value
+                            break
+                        if def_name.lower() == top_lower:
+                            main_def = def_value
+                            break
+
+                if main_def is not None:
                     # Pass the full schema as root_schema for resolving $refs
                     return self._get_field_metadata(
                         main_def, parts[1:], root_schema=schema
