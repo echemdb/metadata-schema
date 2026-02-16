@@ -144,12 +144,8 @@ def _run_convert(args: argparse.Namespace) -> int:
         enriched_metadata.to_excel(str(excel_path))
         print(f"  ✓ {excel_path.name}")
 
-        # TODO: Implement separate_sheets in EnrichedFlattenedMetadata.to_excel()
-        # For now, use single sheet
-        enriched_metadata.to_excel(str(excel_multi_path))
-        print(
-            f"  ✓ {excel_multi_path.name} (Note: separate_sheets not yet implemented)"
-        )
+        enriched_metadata.to_excel(str(excel_multi_path), separate_sheets=True)
+        print(f"  ✓ {excel_multi_path.name}")
     else:
         flattened.to_csv(str(csv_path))
         print(f"  ✓ {csv_path.name}")
@@ -157,8 +153,7 @@ def _run_convert(args: argparse.Namespace) -> int:
         flattened.to_excel(str(excel_path))
         print(f"  ✓ {excel_path.name}")
 
-        # TODO: Implement separate_sheets
-        flattened.to_excel(str(excel_multi_path))
+        flattened.to_excel(str(excel_multi_path), separate_sheets=True)
         print(f"  ✓ {excel_multi_path.name}")
 
     print("\nDone!")
