@@ -134,11 +134,10 @@ class SchemaEnricher:
 
     def _register_definitions(self, schema_data):
         r"""
-        Register sub-definitions from a schema by lowercase name.
+        Register sub-definitions from a schema by their definition name.
 
         For each entry in the ``definitions`` block, a standalone schema
-        wrapper is stored in :attr:`schema_cache` under the lowercased
-        definition name, making look-ups case-insensitive.
+        wrapper is stored in :attr:`schema_cache` under the definition name.
 
         :param schema_data: A loaded JSON schema dict with a ``definitions`` key
 
@@ -146,15 +145,14 @@ class SchemaEnricher:
 
             >>> from mdstools.schema.enricher import SchemaEnricher
             >>> enricher = SchemaEnricher('schemas')
-            >>> # Definitions from resolved schemas are registered in lowercase
-            >>> 'atmosphere' in enricher.schema_cache
+            >>> # PascalCase definitions are registered directly
+            >>> 'Atmosphere' in enricher.schema_cache
             True
 
         """
         for def_name, def_value in schema_data["definitions"].items():
-            lowercase_name = def_name.lower()
-            if lowercase_name not in self.schema_cache:
-                self.schema_cache[lowercase_name] = {
+            if def_name not in self.schema_cache:
+                self.schema_cache[def_name] = {
                     "definitions": {def_name: def_value},
                     "$schema": schema_data.get(
                         "$schema",
@@ -166,8 +164,9 @@ class SchemaEnricher:
         r"""
         Register schemas by definition ``title`` for camelCase key lookup.
 
-        Some schema definitions use a ``title`` field (e.g. ``"curation"``).
-        This step ensures the schema can be found by that title as well.
+        Definitions use a ``title`` field matching the camelCase property key
+        (e.g. ``"figureDescription"``).  This step allows the schema to be
+        found directly by that property key.
 
         EXAMPLES::
 
@@ -175,6 +174,9 @@ class SchemaEnricher:
             >>> enricher = SchemaEnricher('schemas')
             >>> # The curation schema has title 'curation' on its definition
             >>> 'curation' in enricher.schema_cache
+            True
+            >>> # camelCase titles like 'figureDescription' are also registered
+            >>> 'figureDescription' in enricher.schema_cache
             True
 
         """
@@ -589,22 +591,13 @@ class SchemaEnricher:
 
             # Look for the definition in the schema
             if "definitions" in schema:
-                # Find the main definition: try capitalized name first, then
-                # match by title, then fall back to case-insensitive search
+                # With consistent naming conventions, the PascalCase definition
+                # name is obtained by uppercasing the first letter of the
+                # camelCase property key.
                 main_def = None
-                main_def_name = top_level.capitalize()
-                if main_def_name in schema["definitions"]:
-                    main_def = schema["definitions"][main_def_name]
-                else:
-                    # Search by title or case-insensitive name match
-                    top_lower = top_level.lower()
-                    for def_name, def_value in schema["definitions"].items():
-                        if def_value.get("title") == top_level:
-                            main_def = def_value
-                            break
-                        if def_name.lower() == top_lower:
-                            main_def = def_value
-                            break
+                pascal_name = top_level[0].upper() + top_level[1:]
+                if pascal_name in schema["definitions"]:
+                    main_def = schema["definitions"][pascal_name]
 
                 if main_def is not None:
                     # Pass the full schema as root_schema for resolving $refs
