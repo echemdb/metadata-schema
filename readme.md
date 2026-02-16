@@ -106,17 +106,19 @@ or all
 pixi run -e dev test-all
 ```
 
-### Resolve schemas
+### Generate schemas from LinkML
 
-Generate resolved (single-file) JSON schemas from the modular schema pieces:
+Generate JSON schemas and Pydantic models from the LinkML definitions in `linkml/`:
 
 ```sh
-pixi run resolve-schemas
+pixi run generate-schemas        # JSON Schema only
+pixi run generate-models          # Pydantic models only
+pixi run generate-all             # Both
 ```
 
-This resolves all `$ref` references and writes the combined schemas to `schemas/`.
+The generated JSON schemas are written to `schemas/`.
 
-After intentional changes to schema pieces, update the expected baseline files:
+After intentional changes to LinkML files, update the expected baseline files:
 
 ```sh
 pixi run update-expected-schemas

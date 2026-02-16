@@ -32,7 +32,6 @@ pulled from the JSON schemas (the "enrichment" workflow).
 #### `schema/` Package
 - **enricher.py**: `SchemaEnricher` class — handles both `$defs` (LinkML) and `definitions` (legacy) JSON Schema formats
 - **generate_from_linkml.py**: Generate JSON Schemas and Pydantic models from LinkML
-- **resolver.py**: Legacy `SchemaResolver` for resolving `$ref` from YAML schema pieces (kept for reference)
 - **validator.py**: Schema validation — both JSON Schema and Pydantic-based
 - **update_expected_schemas.py**: Script to update expected schema snapshots
 
@@ -137,7 +136,6 @@ The following schemas are generated from `linkml/` into `schemas/`:
 - **Simplicity**: No need to maintain pre-resolved schema files
 - **Cleaner Repo**: Avoid committing generated files
 - **Flexibility**: Works with any schema structure automatically
-- **Note**: `mdstools/schema/resolver.py` still available for creating distributable single-file schemas for releases
 
 ### Why LinkML as Single Source of Truth?
 - **One definition, many outputs**: JSON Schema, Pydantic, SHACL, etc. from one YAML
@@ -196,7 +194,6 @@ metadata-schema/
 │   ├── schema/                   # Schema utilities
 │   │   ├── enricher.py           # Schema-based enrichment ($defs + definitions)
 │   │   ├── generate_from_linkml.py # Generate JSON Schema + Pydantic from LinkML
-│   │   ├── resolver.py           # Legacy schema resolution (kept for reference)
 │   │   ├── validator.py          # JSON Schema + Pydantic validation
 │   │   └── update_expected_schemas.py  # Update expected snapshots
 │   ├── models/                   # Auto-generated Pydantic models
@@ -310,33 +307,61 @@ mdstools flatten tests/example_metadata.yaml
 pixi run flatten tests/example_metadata.yaml
 ```
 
-## Future Enhancements
+## Possible Extensions
 
-### Schema Resolution Strategy
-- **Current**: Schemas generated from LinkML via `pixi run generate-schemas`
-- **For Releases**: Use `pixi run resolve-schemas` to create single distributable schema files when creating GitHub releases/tags
-  - This will make it easier for end users to have a single, self-contained schema file
-  - The resolved schema should be included in the release assets
+### Phase 3: Ontology URI Mappings (Deferred)
+- Add `class_uri` and `slot_uri` to LinkML classes and slots using w3id.org URIs
+- Enables semantic interoperability and linked-data export (RDF, JSON-LD)
+- Can be done incrementally per schema piece without breaking anything
+- Example: `Electrode` → `class_uri: w3id:echemdb/Electrode`
 
-### Potential Additions
-- **Validation**: Check if values match schema constraints (types, enums, required fields, patterns)
-  - Could run validation on Excel sheets before converting back to YAML
-  - Provide clear error messages for schema violations
-- **Auto-completion**: Generate dropdown lists in Excel for enum fields
-  - Use Data Validation feature in Excel with enum values from schemas
-- **Excel Templates**: Pre-populate Example column values as Excel comments or lighter-colored text
-- **GUI**: Simple interface for non-technical users (if needed)
+### SHACL / RDF Generation
+- LinkML can generate SHACL shapes and RDF context from the same YAML definitions
+- `gen-shacl`, `gen-jsonld-context`, `gen-rdf` are available LinkML generators
+- Would allow validating metadata as linked data graphs
+- Enables publishing metadata to SPARQL endpoints
 
-## Backlog Ideas
+### Enrichment Coverage Improvement
+Currently ~14% on test data — limited by how many `description`/`examples` are in the LinkML schemas:
+- Systematically add `description` to every slot in all LinkML YAML files
+- Add `examples` values for all primitive fields
+- Add `title` for human-friendly property names
+- This is purely additive work — no code changes needed, just LinkML YAML edits
+- Regenerate with `pixi run generate-all` after each batch of additions
 
-- Clarify which columns are required when loading enriched Excel (Number/Key/Value)
+### Excel Validation & Templates
+- **Auto-completion dropdowns**: Generate Excel Data Validation lists from enum values in schemas
+- **Pre-populated templates**: Create Excel templates with Example values as placeholder/lighter text
+- **On-import validation**: Validate Excel cell values against schema constraints (type, enum, pattern) during unflatten
+- **Conditional formatting**: Highlight required fields, mark invalid values in red
 
-### Schema Enhancement
-To improve enrichment coverage beyond current ~14%:
-- Add more `description` fields to all properties in JSON schemas
-- Add `example` values for all primitive fields
-- Consider adding `title` fields for human-friendly property names
-- Document common patterns and best practices in schema comments
+### Schema Versioning & Distribution
+- Tag schema versions with `version:` in LinkML YAML
+- Include generated JSON schemas in GitHub release assets for easy download
+- Publish schemas to a public URL (e.g., `https://echemdb.github.io/metadata-schema/schemas/autotag.json`)
+- Add `$id` URLs pointing to the published location
+
+### Additional CLI Commands
+- `mdstools validate <yaml_file> --schema <schema_name>` — validate YAML against a schema
+- `mdstools template <schema_name>` — generate a blank YAML template from a schema
+- `mdstools diff <file1> <file2>` — semantic diff between two metadata YAML files
+- `mdstools lint <yaml_file>` — check metadata for best practices beyond schema compliance
+
+### Cross-Project Integration
+- **unitpackage**: Use Pydantic models for metadata validation in unitpackage data packages
+- **echemdb website**: Validate contributed metadata before ingestion
+- **svgdigitizer**: Validate digitizer output metadata on export
+
+### Schema Composition & Profiles
+- Define "profiles" as LinkML subsets (e.g., a "quick entry" profile with only required fields)
+- Generate profile-specific Excel templates with reduced column sets
+- Allow users to select a profile in the CLI: `mdstools flatten --profile quick`
+
+### Documentation Generation
+- Generate human-readable schema documentation from LinkML (`gen-doc`)
+- Publish as part of the project website
+- Auto-generate field reference tables for each schema type
+- Include diagrams of schema relationships (class hierarchy, slot reuse)
 
 ## Testing & Maintenance Notes
 
@@ -365,7 +390,6 @@ To improve enrichment coverage beyond current ~14%:
   - `tests/example_metadata.yaml` - Comprehensive example for demos
 - **Resolved schemas**: Generated from LinkML into `schemas/` and checked against `schemas/expected/` in CI
   - `mdstools/schema/generate_from_linkml.py` is the main generator
-  - `mdstools/schema/resolver.py` kept for reference and legacy release workflows
   - `mdstools/schema/update_expected_schemas.py` updates expected baselines
   - Schemas generated: autotag, minimum_echemdb, source_data, svgdigitizer, echemdb_package, svgdigitizer_package
 

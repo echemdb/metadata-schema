@@ -1,8 +1,8 @@
 """Generate JSON Schemas and Pydantic models from LinkML YAML models.
 
-This replaces the old resolver.py approach. Instead of manually resolving
-$ref references in JSON Schema files, we now generate everything from
-LinkML model definitions.
+All metadata schemas are defined as LinkML YAML files under linkml/.
+This module generates JSON Schema files and Pydantic models from those
+definitions.
 
 Usage:
     python mdstools/schema/generate_from_linkml.py [--json-schema] [--pydantic] [--all]
