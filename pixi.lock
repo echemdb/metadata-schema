@@ -8180,8 +8180,9 @@ packages:
 - pypi: ./
   name: mdstools
   version: 0.4.0
-  sha256: 2bf4d3e087030e00e9873535c2274f652bbf5eeb9e52ac18736a3639eb096b96
+  sha256: d1304c012e8542fb8af65280936fec7db0d60aa98c3bac1cc32233a24e7287bb
   requires_dist:
+  - click>=8,<9
   - pandas
   - tabulate
   - openpyxl

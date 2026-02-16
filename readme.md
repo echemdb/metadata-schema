@@ -11,7 +11,7 @@ git clone https://github.com/echemdb/metadata-schema.git
 cd metadata-schema
 ```
 
-## Usage
+## CLI
 
 ### Flatten metadata to Excel/CSV
 
@@ -20,7 +20,7 @@ The `mdstools` package provides tools to flatten nested YAML metadata into tabul
 Flatten a YAML file to enriched Excel and CSV:
 
 ```sh
-pixi run flatten tests/example_metadata.yaml
+mdstools flatten tests/example_metadata.yaml
 ```
 
 This creates three files in `generated/`:
@@ -33,18 +33,20 @@ All exported files include `Description` and `Example` columns populated from th
 #### Options
 
 ```sh
-pixi run flatten <yaml_file> [--schema-dir DIR] [--out-dir DIR] [--no-enrichment]
+mdstools flatten <yaml_file> [--schema-dir DIR] [--output-dir DIR] [--no-enrichment]
 ```
 
 - `--schema-dir` - Directory with JSON schemas (default: `schemas`)
-- `--out-dir` - Output directory (default: `generated`)
+- `--output-dir` - Output directory (default: `generated`)
 - `--no-enrichment` - Disable enrichment (no Description/Example columns)
 
-### Unflatten Excel/CSV back to YAML (CLI)
+### Unflatten Excel/CSV back to YAML
 
 ```sh
-pixi run unflatten generated/example_metadata.xlsx --schema-file schemas/schema_pieces/minimum_echemdb.json
+mdstools unflatten generated/example_metadata.xlsx --schema-file schemas/schema_pieces/minimum_echemdb.json
 ```
+
+> **Note**: All CLI commands can also be run via pixi, e.g., `pixi run flatten ...` and `pixi run unflatten ...`.
 
 ## Python API
 
