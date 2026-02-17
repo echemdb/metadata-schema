@@ -123,7 +123,7 @@ def unflatten(rows):
 
     def is_list_index(s):
         """Check if string is an item index (i<n> format, e.g. i1, i2, i3)."""
-        return len(s) >= 2 and s[0] == 'i' and s[1:].isdigit()
+        return len(s) >= 2 and s[0] == "i" and s[1:].isdigit()
 
     def build_structure(number):
         """Recursively build the nested structure"""
