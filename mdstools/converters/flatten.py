@@ -1,7 +1,5 @@
 """Functions for flattening nested YAML/dict structures into tabular format."""
 
-import string
-
 
 # Helper to check if a list contains only primitive values
 def is_primitive_list(lst):
@@ -98,7 +96,8 @@ def _process_list(lst, prefix, parent_key, rows):
     Process a list and add rows for its items.
 
     Emits a ``<nested>`` marker row for the list, then processes each item
-    with a letter suffix (``a``, ``b``, ``c``, …).
+    with an ``i<n>`` suffix (``i1``, ``i2``, ``i3``, …) to distinguish list
+    items from dict keys.
 
     :param lst: The list to process
     :param prefix: The current numbering prefix (e.g., "1")
@@ -114,8 +113,8 @@ def _process_list(lst, prefix, parent_key, rows):
             >>> _process_list(['x', 'y'], '1', 'tags', rows)
             >>> rows  # doctest: +NORMALIZE_WHITESPACE
             [['1', 'tags', '<nested>'],
-             ['1.a', '', 'x'],
-             ['1.b', '', 'y']]
+             ['1.i1', '', 'x'],
+             ['1.i2', '', 'y']]
 
         List of dicts::
 
@@ -123,26 +122,26 @@ def _process_list(lst, prefix, parent_key, rows):
             >>> _process_list([{'k': 1}, {'k': 2}], '2', 'items', rows)
             >>> rows  # doctest: +NORMALIZE_WHITESPACE
             [['2', 'items', '<nested>'],
-             ['2.a', '', '<nested>'],
-             ['2.a.1', 'k', 1],
-             ['2.b', '', '<nested>'],
-             ['2.b.1', 'k', 2]]
+             ['2.i1', '', '<nested>'],
+             ['2.i1.1', 'k', 1],
+             ['2.i2', '', '<nested>'],
+             ['2.i2.1', 'k', 2]]
 
         Single-element list::
 
             >>> rows = []
             >>> _process_list([42], '5', 'single', rows)
             >>> rows
-            [['5', 'single', '<nested>'], ['5.a', '', 42]]
+            [['5', 'single', '<nested>'], ['5.i1', '', 42]]
 
     """
     # All lists get the parent row with <nested>
     rows.append([prefix, parent_key, "<nested>"])
 
-    # Process each list item with letter suffixes (a, b, c, ...)
-    for j, item in enumerate(lst):
-        letter = string.ascii_lowercase[j]
-        list_prefix = f"{prefix}.{letter}"
+    # Process each list item with i<n> suffixes (i1, i2, i3, ...)
+    for j, item in enumerate(lst, start=1):
+        item_id = f"i{j}"
+        list_prefix = f"{prefix}.{item_id}"
 
         if isinstance(item, dict):
             rows.append([list_prefix, "", "<nested>"])
@@ -200,12 +199,12 @@ def flatten(d, prefix="", parent_key=None):
         ...     'experiment': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
         >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
-         ['1.a', '', '<nested>'],
-         ['1.a.1', 'A', 1],
-         ['1.a.2', 'B', 2],
-         ['1.b', '', '<nested>'],
-         ['1.b.1', 'A', 3],
-         ['1.b.2', 'B', 4]]
+         ['1.i1', '', '<nested>'],
+         ['1.i1.1', 'A', 1],
+         ['1.i1.2', 'B', 2],
+         ['1.i2', '', '<nested>'],
+         ['1.i2.1', 'A', 3],
+         ['1.i2.2', 'B', 4]]
 
     Primitive lists::
 
@@ -213,9 +212,9 @@ def flatten(d, prefix="", parent_key=None):
         ...     'measurements': ['A', 'B', 'C']}
         >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'measurements', '<nested>'],
-         ['1.a', '', 'A'],
-         ['1.b', '', 'B'],
-         ['1.c', '', 'C']]
+         ['1.i1', '', 'A'],
+         ['1.i2', '', 'B'],
+         ['1.i3', '', 'C']]
 
     Mixed nested structures::
 
@@ -223,14 +222,14 @@ def flatten(d, prefix="", parent_key=None):
         ...     'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
         >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
-         ['1.a', '', '<nested>'],
-         ['1.a.1', 'A', '<nested>'],
-         ['1.a.1.1', 'value', 1],
-         ['1.a.1.2', 'units', 'mV'],
-         ['1.a.2', 'B', 2],
-         ['1.b', '', '<nested>'],
-         ['1.b.1', 'A', 3],
-         ['1.b.2', 'B', 4]]
+         ['1.i1', '', '<nested>'],
+         ['1.i1.1', 'A', '<nested>'],
+         ['1.i1.1.1', 'value', 1],
+         ['1.i1.1.2', 'units', 'mV'],
+         ['1.i1.2', 'B', 2],
+         ['1.i2', '', '<nested>'],
+         ['1.i2.1', 'A', 3],
+         ['1.i2.2', 'B', 4]]
 
     """
 

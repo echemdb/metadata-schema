@@ -152,14 +152,14 @@ class FlattenedMetadata:
             >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> original_rows = [['1', 'experiment', '<nested>'],
-            ... ['1.a', '', '<nested>'],
-            ... ['1.a.1', 'A', '<nested>'],
-            ... ['1.a.1.1', 'value', 1],
-            ... ['1.a.1.2', 'units', 'mV'],
-            ... ['1.a.2', 'B', 2],
-            ... ['1.b', '', '<nested>'],
-            ... ['1.b.1', 'A', 3],
-            ... ['1.b.2', 'B', 4]]
+            ... ['1.i1', '', '<nested>'],
+            ... ['1.i1.1', 'A', '<nested>'],
+            ... ['1.i1.1.1', 'value', 1],
+            ... ['1.i1.1.2', 'units', 'mV'],
+            ... ['1.i1.2', 'B', 2],
+            ... ['1.i2', '', '<nested>'],
+            ... ['1.i2.1', 'A', 3],
+            ... ['1.i2.2', 'B', 4]]
             >>> flattened = FlattenedMetadata(original_rows)
             >>> flattened.to_excel('tests/generated/docstrings/test_flattened.xlsx')
             >>> loaded = FlattenedMetadata.from_excel('tests/generated/docstrings/test_flattened.xlsx')
@@ -346,7 +346,7 @@ class FlattenedMetadata:
             With nested structures and lists:
 
             >>> rows = [['1', 'name', 'test'], ['2', 'foo', '<nested>'],
-            ... ['2.a', '', 'a'], ['2.b', '', 'b'], ['2.c', '', 'c']]
+            ... ['2.i1', '', 'a'], ['2.i2', '', 'b'], ['2.i3', '', 'c']]
             >>> flattened = FlattenedMetadata(rows)
             >>> markdown = flattened.to_markdown()
             >>> 'Number' in markdown and 'Key' in markdown and 'Value' in markdown

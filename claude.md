@@ -26,7 +26,7 @@ pulled from the JSON schemas (the "enrichment" workflow).
 - **enriched_metadata.py**: `EnrichedFlattenedMetadata` class with schema-based enrichment
 
 **Key Features**:
-- Flatten nested dicts and lists with hierarchical numbering (1, 1.1, 1.1.a, etc.)
+- Flatten nested dicts and lists with hierarchical numbering (1, 1.1, 1.1.i1, etc.)
 - Export to CSV, Excel, and Markdown
 - Schema-based enrichment with descriptions and examples
 
@@ -97,9 +97,9 @@ curation:
 |---------|------|-----------|----------------|--------------------------------|
 | 1       | curation | <nested> |            |                                |
 | 1.1     | process | <nested> |            | List of people involved...     |
-| 1.1.a   |      | <nested> |                |                                |
-| 1.1.a.1 | role | curator   | experimentalist| A person that recorded...      |
-| 1.1.a.2 | name | Jane Doe  | Jane Doe       | Full name of the person.       |
+| 1.1.i1  |      | <nested> |                |                                |
+| 1.1.i1.1 | role | curator   | experimentalist| A person that recorded...      |
+| 1.1.i1.2 | name | Jane Doe  | Jane Doe       | Full name of the person.       |
 
 ### Schema Generation (LinkML)
 
@@ -152,10 +152,11 @@ The following schemas are generated from `linkml/` into `schemas/`:
 - **Rich metadata**: descriptions, examples, enums, constraints all in one place
 - **Future-proof**: Ontology URIs (w3id.org) can be added incrementally without breaking anything
 
-### Why Hierarchical Numbering (1.1.a.1)?
+### Why Hierarchical Numbering (1.1.i1.1)?
 - **Human Readable**: Easy to understand nesting depth
 - **Excel Friendly**: Can be sorted naturally
 - **Reconstruction**: Numbering preserves structure for future unflattening
+- **List items use `i<n>`**: `i1`, `i2`, `i3`, … — clearly distinguishable from numeric dict keys and unlimited in size
 
 ## File Structure
 
@@ -386,6 +387,14 @@ Currently ~14% on test data — limited by how many `description`/`examples` are
 - Outputs to `generated/` directory by default
 
 ### File Organization Decisions
+
+- **News / Changelog**:
+  - `doc/news/TEMPLATE.rst` is the template for changelog entries
+  - For each PR, copy `TEMPLATE.rst` to `doc/news/<branch-name>.rst` and fill in the relevant sections
+  - All `.rst` files in `doc/news/` except `TEMPLATE.rst` are staged news items that get merged automatically during release (tag creation)
+  - These files document changes since the last release
+  - If a branch modifies behaviour already described in an existing `.rst` news file, update that file too — it is the source of truth for the upcoming release
+
 - **Generated folders**:
   - `/generated` - Project outputs (user-facing conversions)
   - `/tests/generated` - Test outputs
@@ -408,7 +417,7 @@ Currently ~14% on test data — limited by how many `description`/`examples` are
    - Not a code limitation - add more to schemas to improve
 
 2. **Array Item Handling**:
-   - Array items get lettered identifiers (1.1.a, 1.1.b)
+   - Array items get `i<n>` identifiers (1.1.i1, 1.1.i2)
    - Description/Example come from the array schema, not individual items
    - Works correctly but could be confusing for users
 

@@ -30,38 +30,38 @@ def unflatten(rows):
             >>> unflatten(rows)
             {'experiment': {'value': 42, 'units': 'mV'}}
 
-        Lists of dictionaries (letter-indexed items)::
+        Lists of dictionaries (item-indexed with i<n>)::
 
             >>> rows = [['1', 'people', '<nested>'],
-            ...         ['1.a', '', '<nested>'],
-            ...         ['1.a.1', 'name', 'Alice'],
-            ...         ['1.a.2', 'role', 'curator'],
-            ...         ['1.b', '', '<nested>'],
-            ...         ['1.b.1', 'name', 'Bob'],
-            ...         ['1.b.2', 'role', 'reviewer']]
+            ...         ['1.i1', '', '<nested>'],
+            ...         ['1.i1.1', 'name', 'Alice'],
+            ...         ['1.i1.2', 'role', 'curator'],
+            ...         ['1.i2', '', '<nested>'],
+            ...         ['1.i2.1', 'name', 'Bob'],
+            ...         ['1.i2.2', 'role', 'reviewer']]
             >>> unflatten(rows)
             {'people': [{'name': 'Alice', 'role': 'curator'}, {'name': 'Bob', 'role': 'reviewer'}]}
 
         Primitive lists::
 
             >>> rows = [['1', 'tags', '<nested>'],
-            ...         ['1.a', '', 'alpha'],
-            ...         ['1.b', '', 'beta'],
-            ...         ['1.c', '', 'gamma']]
+            ...         ['1.i1', '', 'alpha'],
+            ...         ['1.i2', '', 'beta'],
+            ...         ['1.i3', '', 'gamma']]
             >>> unflatten(rows)
             {'tags': ['alpha', 'beta', 'gamma']}
 
         Mixed nested structures (dicts inside lists inside dicts)::
 
             >>> rows = [['1', 'experiment', '<nested>'],
-            ...         ['1.a', '', '<nested>'],
-            ...         ['1.a.1', 'A', '<nested>'],
-            ...         ['1.a.1.1', 'value', 1],
-            ...         ['1.a.1.2', 'units', 'mV'],
-            ...         ['1.a.2', 'B', 2],
-            ...         ['1.b', '', '<nested>'],
-            ...         ['1.b.1', 'A', 3],
-            ...         ['1.b.2', 'B', 4]]
+            ...         ['1.i1', '', '<nested>'],
+            ...         ['1.i1.1', 'A', '<nested>'],
+            ...         ['1.i1.1.1', 'value', 1],
+            ...         ['1.i1.1.2', 'units', 'mV'],
+            ...         ['1.i1.2', 'B', 2],
+            ...         ['1.i2', '', '<nested>'],
+            ...         ['1.i2.1', 'A', 3],
+            ...         ['1.i2.2', 'B', 4]]
             >>> unflatten(rows)
             {'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
 
@@ -122,8 +122,8 @@ def unflatten(rows):
             roots.append(number)
 
     def is_list_index(s):
-        """Check if string is a single letter (a-z)"""
-        return len(s) == 1 and s.isalpha()
+        """Check if string is an item index (i<n> format, e.g. i1, i2, i3)."""
+        return len(s) >= 2 and s[0] == 'i' and s[1:].isdigit()
 
     def build_structure(number):
         """Recursively build the nested structure"""

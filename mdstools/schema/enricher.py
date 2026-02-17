@@ -655,9 +655,9 @@ class SchemaEnricher:
                 >>> rows = [
                 ...     ['1', 'curation', '<nested>'],
                 ...     ['1.1', 'process', '<nested>'],
-                ...     ['1.1.a', '', '<nested>'],
-                ...     ['1.1.a.1', 'role', 'curator'],
-                ...     ['1.1.a.2', 'name', 'Jane Doe'],
+                ...     ['1.1.i1', '', '<nested>'],
+                ...     ['1.1.i1.1', 'role', 'curator'],
+                ...     ['1.1.i1.2', 'name', 'Jane Doe'],
                 ... ]
                 >>> enriched = enricher.enrich_flattened_data(rows)
 
@@ -669,7 +669,7 @@ class SchemaEnricher:
             Leaf fields get descriptions and examples from the schema::
 
                 >>> enriched[3]  # 'role' field
-                ['1.1.a.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.']
+                ['1.1.i1.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.']
 
             Non-leaf ``<nested>`` rows may get descriptions too::
 
@@ -690,11 +690,11 @@ class SchemaEnricher:
         for row in flattened_rows:
             level, key, value = row
 
-            # Parse level like "1.2.a.3" to determine depth
+            # Parse level like "1.2.i1.3" to determine depth
             level_parts = level.split(".")
             depth = len(level_parts)
 
-            # Determine if this level is an array item marker (contains letters)
+            # Determine if this level is an array item marker (i<n> format)
             is_array_item_marker = (not key or key == "") and value == "<nested>"
 
             # Update path stack based on depth
