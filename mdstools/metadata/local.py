@@ -107,7 +107,7 @@ def save_excel_multi_sheet(df: pd.DataFrame, filepath: str, column_order: list[s
     if isinstance(filepath, str):
         os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
 
-    with pd.ExcelWriter(filepath, engine="openpyxl") as writer:
+    with pd.ExcelWriter(filepath, engine="xlsxwriter") as writer:
         # Extract top-level number (e.g., "1" from "1.2.a")
         df_copy = df.copy()
         df_copy["TopLevel"] = df_copy["Number"].astype(str).str.split(".").str[0]
