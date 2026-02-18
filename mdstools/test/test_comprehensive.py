@@ -135,12 +135,11 @@ def test_multi_sheet_export():
     assert output_flat_multi.exists()
 
     # Load and verify the multi-sheet file has multiple sheets
-    import openpyxl
+    import pandas
 
-    wb = openpyxl.load_workbook(output_multi)
-    sheet_count = len(wb.sheetnames)
-    print(f"✓ Multi-sheet Excel has {sheet_count} sheet(s): {wb.sheetnames}")
-    wb.close()
+    excel_file = pandas.ExcelFile(output_multi)
+    sheet_count = len(excel_file.sheet_names)
+    print(f"✓ Multi-sheet Excel has {sheet_count} sheet(s): {excel_file.sheet_names}")
 
     assert sheet_count > 0, "Excel file should have at least one sheet"
 
