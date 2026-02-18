@@ -204,20 +204,19 @@ def validate_file_schemas():
 def build_package_registry(schemas_dir: Path):
     """Build a referencing registry that includes local Frictionless schemas.
 
-    The generated package JSON schemas use ``$ref: frictionless/dataresource.json``
-    to compose with the Frictionless Data Resource standard.  This function
-    registers the locally-downloaded Frictionless schemas so that those ``$ref``
-    values resolve without network access.
+    The generated package JSON schemas compose with the Frictionless Data
+    Resource standard via an absolute URL. This function registers the
+    locally-downloaded Frictionless schemas under both their relative paths
+    and the canonical URLs so validation works offline.
 
     Downloads the Frictionless schemas on first use if they are not present.
-
-    Schemas are registered under both their raw relative path and the fully
-    resolved URI (relative to the package schema's ``$id``) so the
-    ``referencing`` library can look them up regardless of base URI.
     """
     from referencing import Registry, Resource
 
-    from mdstools.schema.generate_from_linkml import ensure_frictionless_schemas
+    from mdstools.schema.generate_from_linkml import (
+        FRICTIONLESS_SCHEMAS,
+        ensure_frictionless_schemas,
+    )
 
     ensure_frictionless_schemas(schemas_dir)
 
@@ -233,6 +232,10 @@ def build_package_registry(schemas_dir: Path):
         # Register under both raw relative path and fully resolved URI
         registry = registry.with_resource(rel_path, resource)
         registry = registry.with_resource(base_uri + rel_path, resource)
+        # Register under the canonical Frictionless profile URL, if known
+        url = FRICTIONLESS_SCHEMAS.get(schema_file.name)
+        if url:
+            registry = registry.with_resource(url, resource)
 
     return registry
 

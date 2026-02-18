@@ -14,9 +14,10 @@ JSON Schema and Pydantic models are generated from these definitions.
 Frictionless Data Package standard schemas (`datapackage.json`, `dataresource.json`),
 downloaded on demand from <https://datapackage.org/profiles/2.0/>.
 
-Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`) compose with
-these via `allOf` references so that standard resource properties (name, path,
-format, encoding, …) are accepted alongside our custom metadata.
+Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`) reference
+the canonical Frictionless Data Resource URL so that standard resource
+properties (name, path, format, encoding, …) are accepted alongside our custom
+metadata.
 
 The files are **not tracked in version control**.  They are fetched automatically
 by `ensure_frictionless_schemas()` on the first schema generation or package
@@ -43,9 +44,9 @@ The following schemas are generated from LinkML definitions:
 
 - **`svgdigitizer.json`** - Metadata schema for digitized data from figures using svgdigitizer. Similar to autotag but includes `source` instead of `project`.
 
-- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files. Composes with the Frictionless data resource schema via `allOf`.
+- **`echemdb_package.json`** - Data package schema following Frictionless Data Package standard with echemdb extensions for bundling metadata and data files. References the Frictionless data resource schema via `allOf`.
 
-- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements. Composes with the Frictionless data resource schema via `allOf`.
+- **`svgdigitizer_package.json`** - Simplified data package for svgdigitizer output with minimal metadata requirements. References the Frictionless data resource schema via `allOf`.
 
 ## Usage
 
@@ -66,9 +67,9 @@ check-jsonschema --schemafile schemas/autotag.json yourfile.yaml
 ```
 
 > **Note**: Package schemas (`echemdb_package.json`, `svgdigitizer_package.json`)
-> contain `$ref` to `frictionless/dataresource.json` and require the local
-> Frictionless schemas to be present.  Use `pixi run validate-package-schemas`
-> instead of direct `check-jsonschema` for these.
+> use the Frictionless profile URL for `$ref`. `pixi run validate-package-schemas`
+> remains the recommended entry point because it registers local cached copies
+> for offline validation.
 
 ### Regenerating Schemas from LinkML
 
