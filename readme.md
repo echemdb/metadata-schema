@@ -43,7 +43,7 @@ mdstools flatten <yaml_file> [--schema-dir DIR] [--output-dir DIR] [--no-enrichm
 ### Unflatten Excel/CSV back to YAML
 
 ```sh
-mdstools unflatten generated/example_metadata.xlsx --schema-file schemas/schema_pieces/minimum_echemdb.json
+mdstools unflatten generated/example_metadata.xlsx --schema-file schemas/minimum_echemdb.json
 ```
 
 > **Note**: All CLI commands can also be run via pixi, e.g., `pixi run flatten ...` and `pixi run unflatten ...`.

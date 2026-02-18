@@ -4,11 +4,30 @@ or Pydantic models generated from LinkML.
 Two validation approaches are available:
 
 1. **JSON Schema validation** via ``validate_metadata()`` – uses jsonschema
-   library against resolved JSON Schema files.  Works with any schema.
+   library against generated JSON Schema files.
 2. **Pydantic validation** via ``validate_with_pydantic()`` – uses
    auto-generated Pydantic models from LinkML.  Provides richer error
    messages and type coercion.
 """
+
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
 
 import importlib
 import json
@@ -16,7 +35,6 @@ from pathlib import Path
 from typing import Any
 
 import jsonschema
-import yaml
 from referencing import Registry, Resource
 
 # Map schema names to their (module, class) for Pydantic validation
@@ -34,40 +52,21 @@ PYDANTIC_MODELS = {
 
 
 def _load_schema(schema_file: Path) -> dict:
-    """Load a schema from a JSON or YAML file.
-
-    YAML schema pieces that use the flat definition format (no ``definitions``
-    key) are wrapped into a standard JSON Schema structure automatically.
-    """
+    """Load a JSON schema file."""
     with open(schema_file, "r", encoding="utf-8") as f:
-        if schema_file.suffix in (".yaml", ".yml"):
-            raw = yaml.safe_load(f)
-            if "definitions" in raw:
-                return {"$schema": "http://json-schema.org/draft-07/schema#", **raw}
-            # Flat YAML: wrap with definitions and infer entry point
-            main_def = "".join(
-                part.capitalize() for part in schema_file.stem.split("_")
-            )
-            schema = {
-                "$schema": "http://json-schema.org/draft-07/schema#",
-                "definitions": raw,
-            }
-            if main_def in raw:
-                schema["allOf"] = [{"$ref": f"#/definitions/{main_def}"}]
-            return schema
         return json.load(f)
 
 
 def validate_metadata(data: Any, schema_path: str) -> None:
     r"""
-    Validate metadata against a JSON or YAML schema.
+    Validate metadata against a JSON Schema.
 
     Loads the schema at *schema_path*, resolves ``$ref`` references relative
     to the file, and validates *data* against it.  Raises on the first batch
     of errors (up to 10 are reported).
 
     :param data: Metadata object to validate
-    :param schema_path: Path to JSON or YAML schema file
+    :param schema_path: Path to JSON Schema file
     :raises FileNotFoundError: If the schema file does not exist
     :raises ValueError: If validation fails
 

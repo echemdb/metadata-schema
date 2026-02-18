@@ -1,5 +1,24 @@
 """EnrichedFlattenedMetadata class for handling schema-enriched tabular metadata."""
 
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
+
 from typing import List
 
 import pandas as pd
@@ -33,15 +52,15 @@ class EnrichedFlattenedMetadata:
             >>> enriched.base_rows[0]  # Top level
             ['1', 'curation', '<nested>']
             >>> enriched.base_rows[3]  # Leaf value
-            ['1.1.a.1', 'role', 'curator']
+            ['1.1.i1.1', 'role', 'curator']
 
             >>> # Enriched rows have 5 columns: [Number, Key, Value, Example, Description]
             >>> enriched.rows
             [['1', 'curation', '<nested>', '', ''],
             ['1.1', 'process', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
-            ['1.1.a', '', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
-            ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.'],
-            ['1.1.a.2', 'name', 'John Doe', 'Jane Doe', 'Full name of the person.']]
+            ['1.1.i1', '', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
+            ['1.1.i1.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.'],
+            ['1.1.i1.2', 'name', 'John Doe', '', 'Full name of the person.']]
             >>> enriched.rows[3][3]  # Example for 'role' field
             'experimentalist'
             >>> 'person' in enriched.rows[3][4].lower()  # Description contains 'person'

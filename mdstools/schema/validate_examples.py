@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 r"""
-Validate example YAML files against YAML schema pieces.
+Validate example YAML/JSON files against generated JSON schemas.
 
-Loads YAML schema pieces, wraps them into proper JSON Schema structures,
-and validates example data against them.
+All validation uses the generated JSON schemas in ``schemas/`` (produced from
+LinkML sources).  Object examples (``examples/objects/``) are validated by
+extracting the matching ``$defs`` entry from a generated schema.
 
 Usage::
 
@@ -26,6 +27,25 @@ EXAMPLES::
 
 """
 
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
+
 import json
 import sys
 from pathlib import Path
@@ -34,123 +54,100 @@ import jsonschema
 import yaml
 
 
-def load_yaml_schema(schema_path: Path) -> dict:
-    """Load a YAML schema piece and wrap it into a valid JSON Schema."""
+def _load_generated_schema(schema_path: Path) -> dict:
+    """Load a generated JSON schema file."""
     with open(schema_path, "r", encoding="utf-8") as f:
-        raw = yaml.safe_load(f)
-
-    schema_stem = schema_path.stem
-    # Convert snake_case to PascalCase for the main definition
-    main_def = "".join(part.capitalize() for part in schema_stem.split("_"))
-
-    if "definitions" in raw:
-        # Already has definitions (e.g., package schemas)
-        schema = {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            **raw,
-        }
-    elif "type" in raw or "properties" in raw:
-        # Standard schema (e.g., schema.yaml) — wrap as single definition
-        schema = {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "definitions": {main_def: raw},
-            "allOf": [{"$ref": f"#/definitions/{main_def}"}],
-        }
-    else:
-        # Flat YAML format — top-level keys are definitions
-        schema = {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "definitions": raw,
-        }
-        if main_def in raw:
-            schema["allOf"] = [{"$ref": f"#/definitions/{main_def}"}]
-
-    return schema
+        return json.load(f)
 
 
-def build_registry(schema_dir: Path):
-    """Build a referencing registry with all schema pieces for $ref resolution.
+def _build_object_schema(parent_schema: dict, def_name: str) -> dict:
+    r"""Build a standalone schema for a single ``$defs`` entry.
 
-    Schemas are registered under multiple URI variants so that relative ``$ref``
-    strings (``./``, ``../``) resolve correctly regardless of the referencing
-    schema's location.
+    The returned schema keeps the full ``$defs`` block from *parent_schema*
+    (so nested ``$ref`` links still resolve) and sets the root to point at
+    *def_name*.
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.validate_examples import _build_object_schema
+        >>> parent = {"$defs": {"Foo": {"type": "object", "properties": {"x": {"type": "string"}}}}}
+        >>> sub = _build_object_schema(parent, "Foo")
+        >>> sub["$ref"]
+        '#/$defs/Foo'
+        >>> "Foo" in sub["$defs"]
+        True
+
     """
-    import posixpath
-
-    from referencing import Registry, Resource
-
-    registry = Registry()
-    all_schemas = {}
-
-    for schema_file in schema_dir.rglob("*.yaml"):
-        schema = load_yaml_schema(schema_file)
-        rel_path = str(schema_file.relative_to(schema_dir)).replace("\\", "/")
-        all_schemas[rel_path] = schema
-
-    for rel_path, schema in all_schemas.items():
-        resource = Resource.from_contents(schema)
-        # Register under multiple URI forms to support relative $ref resolution:
-        # ./general/url.yaml, general/url.yaml, ../general/url.yaml (from system/)
-        variants = set()
-        variants.add("./" + rel_path)
-        variants.add(rel_path)
-        variants.add("./" + rel_path.replace(".yaml", ".json"))
-        variants.add(rel_path.replace(".yaml", ".json"))
-        # Also register from parent-relative paths (e.g., ../general/x.yaml from system/)
-        for other_path in all_schemas:
-            other_dir = posixpath.dirname(other_path)
-            if other_dir:
-                # Path from other_dir to rel_path
-                relative = posixpath.relpath(rel_path, other_dir)
-                variants.add(relative)
-                variants.add(relative.replace(".yaml", ".json"))
-        for uri in variants:
-            registry = registry.with_resource(uri, resource)
-
-    return registry
+    return {
+        "$schema": parent_schema.get(
+            "$schema", "https://json-schema.org/draft/2020-12/schema"
+        ),
+        "$defs": parent_schema.get("$defs", {}),
+        "$ref": f"#/$defs/{def_name}",
+    }
 
 
 def validate_data(data: dict, schema: dict, registry=None) -> list:
     """Validate data against a schema, return list of error messages."""
+    from referencing import Registry
+
+    if registry is None:
+        registry = Registry()
     validator_cls = jsonschema.validators.validator_for(schema)
     validator = validator_cls(schema, registry=registry)
     errors = sorted(validator.iter_errors(data), key=lambda err: err.path)
     return errors
 
 
-def validate_objects():
-    """Validate individual YAML examples against their schema pieces."""
-    schema_dir = Path("schemas/schema_pieces")
-    examples_dir = Path("examples/objects")
-    registry = build_registry(schema_dir)
+# Mapping of object example names to:
+#   (generated_schema_file, PascalCase_def_name, is_array)
+_OBJECT_MAP = {
+    "curation": ("autotag.json", "Curation", False),
+    "eln": ("autotag.json", "Eln", False),
+    "experimental": ("autotag.json", "Experimental", False),
+    "figure_description": ("autotag.json", "FigureDescription", False),
+    "projects": ("autotag.json", "Project", True),
+    "source": ("minimum_echemdb.json", "Source", False),
+    "system": ("autotag.json", "System", False),
+}
 
-    objects = [
-        "curation",
-        "eln",
-        "experimental",
-        "figure_description",
-        "projects",
-        "source",
-        "system",
-    ]
+
+def validate_objects():
+    """Validate individual YAML examples against generated JSON schema definitions."""
+    schemas_dir = Path("schemas")
+    examples_dir = Path("examples/objects")
 
     ok = True
-    for obj in objects:
-        schema_path = schema_dir / f"{obj}.yaml"
+    for obj, (schema_file, def_name, is_array) in _OBJECT_MAP.items():
         example_path = examples_dir / f"{obj}.yaml"
+        schema_path = schemas_dir / schema_file
 
         if not schema_path.exists():
-            print(f"  SKIP {obj} (schema not found)")
+            print(f"  SKIP {obj} (schema {schema_file} not found)")
             continue
         if not example_path.exists():
             print(f"  SKIP {obj} (example not found)")
             continue
 
-        schema = load_yaml_schema(schema_path)
+        parent = _load_generated_schema(schema_path)
+
+        if is_array:
+            # The example file contains a bare array of items
+            schema = {
+                "$schema": parent.get(
+                    "$schema", "https://json-schema.org/draft/2020-12/schema"
+                ),
+                "$defs": parent.get("$defs", {}),
+                "type": "array",
+                "items": {"$ref": f"#/$defs/{def_name}"},
+            }
+        else:
+            schema = _build_object_schema(parent, def_name)
+
         with open(example_path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
-        errors = validate_data(data, schema, registry=registry)
+        errors = validate_data(data, schema)
         if errors:
             print(f"  FAIL {obj}: {len(errors)} error(s)")
             for err in errors[:5]:
@@ -164,15 +161,10 @@ def validate_objects():
 
 
 def validate_file_schemas():
-    """Validate file-level YAML examples against their schema pieces."""
-    schema_dir = Path("schemas/schema_pieces")
+    """Validate file-level YAML examples against generated JSON schemas."""
+    schemas_dir = Path("schemas")
     examples_dir = Path("examples/file_schemas")
-    registry = build_registry(schema_dir)
 
-    # Map schema names to their example files.
-    # Package schemas (echemdb_package, svgdigitizer_package) are excluded here
-    # because they reference external $refs (datapackage.org) that require network
-    # access. They are validated separately via the validate-package-schemas task.
     files = {
         "autotag": "autotag.yaml",
         "minimum_echemdb": "minimum_echemdb.yaml",
@@ -182,7 +174,7 @@ def validate_file_schemas():
 
     ok = True
     for name, example_file in files.items():
-        schema_path = schema_dir / f"{name}.yaml"
+        schema_path = schemas_dir / f"{name}.json"
         example_path = examples_dir / example_file
 
         if not schema_path.exists():
@@ -192,11 +184,11 @@ def validate_file_schemas():
             print(f"  SKIP {name} (example not found)")
             continue
 
-        schema = load_yaml_schema(schema_path)
+        schema = _load_generated_schema(schema_path)
         with open(example_path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
-        errors = validate_data(data, schema, registry=registry)
+        errors = validate_data(data, schema)
         if errors:
             print(f"  FAIL {name}: {len(errors)} error(s)")
             for err in errors[:5]:

@@ -18,9 +18,8 @@
 * Changed ``Purity.value`` range from ``string`` to ``float`` in LinkML.
 * Updated ``Quantity.unit`` and ``Uncertainty.unit`` descriptions to reference astropy string notation; dimensionless quantities use an empty string.
 * ``SchemaEnricher`` updated to handle both ``$defs`` (LinkML) and ``definitions`` (legacy) JSON Schema formats.
-* ``check_naming.py`` refactored and updated to validate YAML schema pieces.
-* Schema pieces (``schemas/schema_pieces/``) converted from JSON to YAML.
-* All 6 resolved JSON schemas regenerated from LinkML definitions.
+* ``check_naming.py`` refactored to validate generated JSON schemas.
+* All 6 JSON schemas generated from LinkML definitions.
 * ``schemas/README.md`` updated with LinkML-based workflow and Frictionless documentation.
 * ``validate-package-schemas`` pixi task switched from ``check-jsonschema`` CLI to Python-based validation.
 * Fixed swapped ``value``/``unit`` in ``partialPressure`` quantities across example files (``autotag.yaml``, ``svgdigitizer.yaml``, ``system.yaml``).
@@ -28,5 +27,6 @@
 **Removed:**
 
 * Removed ``mdstools/schema/resolver.py`` legacy schema resolver (replaced by ``generate_from_linkml.py``).
-* Removed JSON schema pieces (replaced by YAML versions and LinkML definitions).
+* Removed ``schemas/schema_pieces/`` legacy YAML schema definitions (replaced by LinkML-generated JSON schemas).
+* Removed ``schemas/resolved/`` empty legacy directory.
 * Remove support for Python 3.10 in CI testing (minimum supported version is now Python 3.11).

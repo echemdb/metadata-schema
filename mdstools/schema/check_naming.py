@@ -1,11 +1,11 @@
 r"""
-Check naming conventions across all JSON Schema files.
+Check naming conventions across all generated JSON Schema files.
 
 Ensures consistent naming:
 
 - **Property keys** (YAML dict keys): ``camelCase`` — lowercase first letter,
   no underscores, no spaces (e.g., ``figureDescription``, ``scanRate``).
-- **Definition names** (``definitions`` / ``$defs``): ``PascalCase`` — uppercase
+- **Definition names** (``$defs``): ``PascalCase`` — uppercase
   first letter, no underscores, no spaces (e.g., ``FigureDescription``, ``ScanRate``).
 - **File names**: ``snake_case`` with ``.json`` extension — lowercase with
   underscores (e.g., ``figure_description.json``).
@@ -29,16 +29,34 @@ EXAMPLES::
 
 """
 
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
+
+import json
 import re
 import sys
 from pathlib import Path
 
-import yaml
-
 # Patterns
 CAMEL_CASE = re.compile(r"^[a-z][a-zA-Z0-9]*$")
 PASCAL_CASE = re.compile(r"^[A-Z][a-zA-Z0-9]*$")
-SNAKE_CASE_FILE = re.compile(r"^[a-z][a-z0-9_]*\.yaml$")
+SNAKE_CASE_FILE = re.compile(r"^[a-z][a-z0-9_]*\.json$")
 
 # Known exceptions: keys that come from external standards (e.g., JSON Schema
 # itself or Frictionless Data) and are not under our control.
@@ -50,7 +68,7 @@ PROPERTY_EXCEPTIONS = {
 # conventions that intentionally deviate from PascalCase.
 DEFINITION_EXCEPTIONS = set()
 
-SCHEMA_DIR = Path("schemas/schema_pieces")
+SCHEMA_DIR = Path("schemas")
 
 
 def collect_property_names(obj, path=""):
@@ -129,12 +147,11 @@ def check_file(filepath):
     EXAMPLES::
 
         >>> import tempfile, json, os
-        >>> schema = {"properties": {"bad_key": {"type": "string"}},
-        ...           "definitions": {"bad_def": {"type": "object"}}}
+        >>> schema = {"$defs": {"bad_def": {"type": "object",
+        ...           "properties": {"bad_key": {"type": "string"}}}}}
         >>> with tempfile.NamedTemporaryFile(
-        ...     mode='w', suffix='.yaml', delete=False) as f:
-        ...     import yaml as _yaml
-        ...     _yaml.dump(schema, f)
+        ...     mode='w', suffix='.json', delete=False) as f:
+        ...     json.dump(schema, f)
         ...     tmppath = f.name
         >>> violations = check_file(Path(tmppath))
         >>> any('bad_key' in v for _, v in violations)
@@ -150,50 +167,45 @@ def check_file(filepath):
     # Check file name
     if not SNAKE_CASE_FILE.match(path.name):
         violations.append(
-            (str(path), f"File name '{path.name}' is not snake_case.yaml")
+            (str(path), f"File name '{path.name}' is not snake_case.json")
         )
 
     with open(path, "r", encoding="utf-8") as f:
-        schema = yaml.safe_load(f)
+        schema = json.load(f)
 
-    # For YAML schema pieces without a 'definitions' wrapper,
-    # top-level keys are definition names (PascalCase) that also contain
-    # property definitions. We need to check both levels.
-    if "definitions" not in schema and "properties" not in schema:
-        # Flat YAML format: top-level keys are definitions
-        for def_name, def_value in schema.items():
-            v = _check_definition_name(path, def_name)
-            if v:
-                violations.append(v)
-            # Check property names within each definition
-            if isinstance(def_value, dict):
-                for dotted_path, key in collect_property_names(def_value):
-                    v = _check_property_key(path, dotted_path, key, f"{def_name}.")
-                    if v:
-                        violations.append(v)
-    else:
-        # Standard JSON Schema structure with 'definitions' or 'properties'
-        for dotted_path, key in collect_property_names(schema):
-            v = _check_property_key(path, dotted_path, key)
-            if v:
-                violations.append(v)
+    # Generated JSON schemas use $defs with standard JSON Schema structure
+    for dotted_path, key in collect_property_names(schema):
+        v = _check_property_key(path, dotted_path, key)
+        if v:
+            violations.append(v)
 
-        for (def_name,) in collect_definition_names(schema):
-            v = _check_definition_name(path, def_name)
-            if v:
-                violations.append(v)
+    for (def_name,) in collect_definition_names(schema):
+        v = _check_definition_name(path, def_name)
+        if v:
+            violations.append(v)
+
+    # Also check property names inside each $defs entry
+    for block_name in ("$defs", "definitions"):
+        defs_block = schema.get(block_name, {})
+        for def_name, def_value in defs_block.items():
+            if not isinstance(def_value, dict):
+                continue
+            for dotted_path, key in collect_property_names(def_value):
+                v = _check_property_key(path, dotted_path, key, f"{def_name}.")
+                if v:
+                    violations.append(v)
 
     return violations
 
 
 def main():
-    """Check all schema pieces for naming convention violations."""
+    """Check all generated JSON schemas for naming convention violations."""
     if not SCHEMA_DIR.exists():
         print(f"Error: {SCHEMA_DIR} not found", file=sys.stderr)
         sys.exit(1)
 
     all_violations = []
-    files = sorted(SCHEMA_DIR.rglob("*.yaml"))
+    files = sorted(SCHEMA_DIR.glob("*.json"))
 
     for filepath in files:
         all_violations.extend(check_file(filepath))
@@ -209,7 +221,7 @@ def main():
             print(f"  {rel}: {msg}")
         print(
             "\nConventions: property keys = camelCase, "
-            "definitions = PascalCase, file names = snake_case.yaml"
+            "definitions = PascalCase, file names = snake_case.json"
         )
         sys.exit(1)
     else:

@@ -9,13 +9,6 @@ This directory contains JSON Schema files for echemdb metadata validation.
 All metadata schemas are defined as **LinkML YAML** files under `linkml/` (project root).
 JSON Schema and Pydantic models are generated from these definitions.
 
-### `schema_pieces/`
-
-Legacy modular YAML schema definitions (kept for reference). These are organized into:
-- `general/` - Reusable components (quantity, url, purity, etc.)
-- `system/` - Electrochemical system components (electrode, electrolyte, atmosphere, etc.)
-- `experimental/` - Experimental setup components (instrumentation)
-
 ### `frictionless/` (gitignored)
 
 Frictionless Data Package standard schemas (`datapackage.json`, `dataresource.json`),
@@ -38,13 +31,13 @@ Generated JSON schemas ready for distribution and use. These schemas:
 - Are generated automatically from LinkML using `pixi run generate-schemas`
 - **Work for both validation AND enrichment** (descriptions/examples are preserved)
 
-## Main Combined Schemas
+## Generated Schemas
 
-The following combined schemas are available as both development (in `schema_pieces/`) and resolved (in root) versions:
+The following schemas are generated from LinkML definitions:
 
 - **`minimum_echemdb.json`** - Minimum metadata set for echemdb entries.
 
-- **`autotag.json`** - Complete metadata schema for auto-generated echemdb YAML files. Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
+- **`autotag.json`** - Complete metadata schema for YAML templates used by [autotag-metadata](https://echemdb.github.io/autotag-metadata/). Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
 
 - **`source_data.json`** - Source data with data description (CSV dialect, field mapping, field units).
 

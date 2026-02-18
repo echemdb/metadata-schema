@@ -1,11 +1,28 @@
 """Schema enricher for adding descriptions and examples from JSON Schema to flattened data."""
 
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
+
 import json
 import os
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
-
-import yaml
 
 
 class SchemaEnricher:
@@ -48,8 +65,7 @@ class SchemaEnricher:
         """
         Initialize the enricher with a directory containing JSON Schema files.
 
-        :param schema_dir: Path to the directory containing JSON Schema files.
-                          Will first look for resolved schemas in schema_dir/resolved/
+        :param schema_dir: Path to the directory containing generated JSON Schema files.
         """
         self.schema_dir = Path(schema_dir)
         self.schema_cache = {}
@@ -88,11 +104,10 @@ class SchemaEnricher:
 
     def _load_schemas(self):
         r"""
-        Load all JSON schema files from both root (resolved) and schema_pieces (modular).
+        Load all generated JSON schema files from the schema directory.
 
         Populates :attr:`schema_cache` with schemas keyed by file stem.
-        Pieces are loaded first so that root-level resolved schemas do not
-        overwrite them.
+        Sub-definitions from each schema are also registered individually.
 
         EXAMPLES::
 
@@ -107,74 +122,15 @@ class SchemaEnricher:
         if not self.schema_dir.exists():
             raise ValueError(f"Schema directory not found: {self.schema_dir}")
 
-        self._load_schema_pieces()
         self._load_root_schemas()
         self._register_schemas_by_title()
 
-    def _load_schema_pieces(self):
-        r"""
-        Load modular schemas from the ``schema_pieces/`` directory.
-
-        Each ``.yaml`` file found (recursively) is stored in
-        :attr:`schema_cache` under its file stem.  YAML schemas are wrapped
-        in a ``{"definitions": ...}`` structure when needed.
-
-        EXAMPLES::
-
-            >>> from mdstools.schema.enricher import SchemaEnricher
-            >>> enricher = SchemaEnricher('schemas')
-            >>> # schema_pieces contains individual schema definitions
-            >>> 'system' in enricher.schema_cache
-            True
-            >>> 'source' in enricher.schema_cache
-            True
-
-        """
-        schema_pieces = self.schema_dir / "schema_pieces"
-        if not schema_pieces.exists():
-            return
-        for schema_file in schema_pieces.rglob("*.yaml"):
-            with open(schema_file, "r", encoding="utf-8") as f:
-                schema_name = schema_file.stem
-                if schema_name not in self.schema_cache:
-                    raw = yaml.safe_load(f)
-                    if "definitions" in raw or "$defs" in raw:
-                        self.schema_cache[schema_name] = {
-                            "$schema": "http://json-schema.org/draft-07/schema#",
-                            **raw,
-                        }
-                    elif "type" in raw or "properties" in raw:
-                        # Standard schema (e.g. schema.yaml)
-                        main_def = "".join(
-                            part.capitalize() for part in schema_name.split("_")
-                        )
-                        self.schema_cache[schema_name] = {
-                            "$schema": "http://json-schema.org/draft-07/schema#",
-                            "definitions": {main_def: raw},
-                            "allOf": [{"$ref": f"#/definitions/{main_def}"}],
-                        }
-                    else:
-                        # Flat YAML: top-level keys are PascalCase definitions
-                        main_def = "".join(
-                            part.capitalize() for part in schema_name.split("_")
-                        )
-                        schema_data = {
-                            "$schema": "http://json-schema.org/draft-07/schema#",
-                            "definitions": raw,
-                        }
-                        if main_def in raw:
-                            schema_data["allOf"] = [
-                                {"$ref": f"#/definitions/{main_def}"}
-                            ]
-                        self.schema_cache[schema_name] = schema_data
-                    self._normalize_defs(self.schema_cache[schema_name])
-
     def _load_root_schemas(self):
         r"""
-        Load resolved schemas from the root directory and register sub-definitions.
+        Load generated JSON schemas from the root directory and register sub-definitions.
 
-        Root-level ``.json`` files (e.g. ``schemas/autotag.json``) that are not
-        already cached are loaded and any ``definitions`` block they contain is
+        Each ``.json`` file in the schema directory (e.g. ``schemas/autotag.json``)
+        is loaded and any ``$defs`` / ``definitions`` block it contains is
         registered via :meth:`_register_definitions`.
 
         EXAMPLES::
@@ -183,6 +139,10 @@ class SchemaEnricher:
             >>> enricher = SchemaEnricher('schemas')
             >>> # Root schemas like 'autotag' are loaded from schemas/
             >>> 'autotag' in enricher.schema_cache
+            True
+            >>> 'system' in enricher.schema_cache
+            True
+            >>> 'source' in enricher.schema_cache
             True
 
         """
@@ -714,9 +674,9 @@ class SchemaEnricher:
                 >>> rows = [
                 ...     ['1', 'curation', '<nested>'],
                 ...     ['1.1', 'process', '<nested>'],
-                ...     ['1.1.a', '', '<nested>'],
-                ...     ['1.1.a.1', 'role', 'curator'],
-                ...     ['1.1.a.2', 'name', 'Jane Doe'],
+                ...     ['1.1.i1', '', '<nested>'],
+                ...     ['1.1.i1.1', 'role', 'curator'],
+                ...     ['1.1.i1.2', 'name', 'Jane Doe'],
                 ... ]
                 >>> enriched = enricher.enrich_flattened_data(rows)
 
@@ -728,7 +688,7 @@ class SchemaEnricher:
             Leaf fields get descriptions and examples from the schema::
 
                 >>> enriched[3]  # 'role' field
-                ['1.1.a.1', 'role', 'curator', 'experimentalist', 'A person that recorded the (meta)data.']
+                ['1.1.i1.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.']
 
             Non-leaf ``<nested>`` rows may get descriptions too::
 
@@ -749,11 +709,11 @@ class SchemaEnricher:
         for row in flattened_rows:
             level, key, value = row
 
-            # Parse level like "1.2.a.3" to determine depth
+            # Parse level like "1.2.i1.3" to determine depth
             level_parts = level.split(".")
             depth = len(level_parts)
 
-            # Determine if this level is an array item marker (contains letters)
+            # Determine if this level is an array item marker (i<n> format)
             is_array_item_marker = (not key or key == "") and value == "<nested>"
 
             # Update path stack based on depth

@@ -8,6 +8,25 @@ Usage:
     python mdstools/schema/generate_from_linkml.py [--json-schema] [--pydantic] [--all]
 """
 
+# ********************************************************************
+#  This file is part of mdstools.
+#
+#        Copyright (C) 2026 Albert Engstfeld
+#
+#  mdstools is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  mdstools is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
+# ********************************************************************
+
 import json
 import subprocess
 import sys
@@ -195,9 +214,33 @@ def generate_json_schemas():
 def _postprocess_pydantic(code: str) -> str:
     """Apply fixes to generated Pydantic code for compatibility.
 
+    - Prepend GPL license header
     - Add coerce_numbers_to_str=True so Quantity.value accepts numeric YAML values
     - Change extra="forbid" to extra="allow" so top-level models accept additional fields
     """
+    # Prepend license header
+    license_header = (
+        "# ********************************************************************\n"
+        "#  This file is part of mdstools.\n"
+        "#\n"
+        "#        Copyright (C) 2026 Albert Engstfeld\n"
+        "#\n"
+        "#  mdstools is free software: you can redistribute it and/or modify\n"
+        "#  it under the terms of the GNU General Public License as published by\n"
+        "#  the Free Software Foundation, either version 3 of the License, or\n"
+        "#  (at your option) any later version.\n"
+        "#\n"
+        "#  mdstools is distributed in the hope that it will be useful,\n"
+        "#  but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+        "#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+        "#  GNU General Public License for more details.\n"
+        "#\n"
+        "#  You should have received a copy of the GNU General Public License\n"
+        "#  along with mdstools. If not, see <https://www.gnu.org/licenses/>.\n"
+        "# ********************************************************************\n"
+    )
+    code = license_header + code
+
     # Allow numeric values to be coerced to strings (Quantity.value, Quantity.unit)
     code = code.replace(
         'extra = "forbid",',
