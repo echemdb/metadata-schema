@@ -261,7 +261,7 @@
           "items": {
             "allOf": [
               {
-                "$ref": "frictionless/dataresource.json"
+                "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
               },
               {
                 "$ref": "#/$defs/SvgdigitizerResource"
@@ -433,7 +433,7 @@
       "items": {
         "allOf": [
           {
-            "$ref": "frictionless/dataresource.json"
+            "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
           },
           {
             "$ref": "#/$defs/SvgdigitizerResource"

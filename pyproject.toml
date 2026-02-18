@@ -13,7 +13,7 @@ dependencies = [
     "click>=8,<9",
     "pandas",
     "tabulate",
-    "openpyxl",
+    "xlsxwriter",
     "jsonschema",
     "referencing",
     "linkml",

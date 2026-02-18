@@ -95,7 +95,7 @@ PACKAGE_SCHEMAS = {
 }
 
 # Relative path from schemas/ to the local Frictionless dataresource schema
-FRICTIONLESS_RESOURCE_REF = "frictionless/dataresource.json"
+FRICTIONLESS_RESOURCE_REF = "https://datapackage.org/profiles/2.0/dataresource.json"
 
 
 def _postprocess_package_schema(schema: dict, defs: dict, model_name: str):
