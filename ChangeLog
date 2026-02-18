@@ -4,6 +4,19 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.5.1
+====================
+
+**Changed:**
+
+* Changed backend for the creation and reading of excel files from `openpyxl` to `xlsxwriter`.
+
+**Fixed:**
+
+* Fixed referencing of datapackage resource in datapackage schemas.
+
+
+
 v0.5.0
 ====================
 
