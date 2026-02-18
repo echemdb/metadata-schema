@@ -18,7 +18,7 @@ Individual metadata sections:
 
 Complete metadata files matching the generated schemas:
 
-* [autotag.yaml](file_schemas/autotag.yaml): Complete auto-generated echemdb metadata
+* [autotag.yaml](file_schemas/autotag.yaml): Complete metadata for YAML templates used by [autotag-metadata](https://echemdb.github.io/autotag-metadata/)
 * [minimum_echemdb.yaml](file_schemas/minimum_echemdb.yaml): Minimum metadata set for echemdb
 * [source_data.yaml](file_schemas/source_data.yaml): Source data with data description
 * [svgdigitizer.yaml](file_schemas/svgdigitizer.yaml): Digitizer output metadata

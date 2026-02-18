@@ -127,7 +127,7 @@ pixi run update-expected-schemas  # Update expected baselines after intentional 
 ### Generated Schemas
 
 The following schemas are generated from `linkml/` into `schemas/`:
-- **autotag.json** - Complete echemdb metadata for auto-generated YAML
+- **autotag.json** - Complete metadata for YAML templates used by [autotag-metadata](https://echemdb.github.io/autotag-metadata/)
 - **minimum_echemdb.json** - Minimum metadata for echemdb
 - **source_data.json** - Source data with data description (dialect, field mapping, field units)
 - **svgdigitizer.json** - Digitizer output metadata
@@ -450,7 +450,7 @@ The system is ready for users to:
 - Validate metadata against JSON schemas
 
 Schema types supported:
-- **autotag** - Complete auto-generated echemdb metadata
+- **autotag** - Complete metadata for YAML templates used by [autotag-metadata](https://echemdb.github.io/autotag-metadata/)
 - **minimum_echemdb** - Minimum set for electrochemical data
 - **source_data** - Source data files with data description (dialect, field mapping, units)
 - **svgdigitizer** - Digitizer output metadata

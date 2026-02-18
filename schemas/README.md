@@ -37,7 +37,7 @@ The following schemas are generated from LinkML definitions:
 
 - **`minimum_echemdb.json`** - Minimum metadata set for echemdb entries.
 
-- **`autotag.json`** - Complete metadata schema for auto-generated echemdb YAML files. Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
+- **`autotag.json`** - Complete metadata schema for YAML templates used by [autotag-metadata](https://echemdb.github.io/autotag-metadata/). Combines all metadata sections (curation, eln, experimental, figureDescription, system, project).
 
 - **`source_data.json`** - Source data with data description (CSV dialect, field mapping, field units).
 
