@@ -4,6 +4,63 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.5.0
+====================
+
+**Added:**
+
+* Added click-based CLI via ``mdstools.entrypoint`` with ``flatten`` and ``unflatten`` commands, registered as the ``mdstools`` entry point.
+* Added ``mdstools/test/cli.py`` with ``invoke()`` helper for click CLI testing, following the unitpackage pattern.
+* Added ``mdstools/schema/check_naming.py`` to validate naming conventions across all schema files (camelCase properties, PascalCase definitions, snake_case file names).
+* Added ``check-naming`` pixi task, included in ``pixi run validate``.
+* Added naming conventions section to ``schemas/README.md``.
+* Added ``referencing`` as an explicit dependency.
+* Added LinkML YAML schemas under ``linkml/`` as single source of truth for all metadata definitions.
+* Added ``mdstools/schema/generate_from_linkml.py`` to generate JSON Schema and Pydantic models from LinkML.
+* Added ``ensure_frictionless_schemas()`` to auto-download Frictionless Data Package schemas on demand into ``schemas/frictionless/`` (gitignored).
+* Added Frictionless Data Package composition for package schemas (``echemdb_package.json``, ``svgdigitizer_package.json``): resource items use ``allOf`` with local ``frictionless/dataresource.json``.
+* Added ``validate_package_schemas()`` in ``mdstools/schema/validate_examples.py`` for Python-based package schema validation with local Frictionless registry.
+* Added auto-generated Pydantic models under ``mdstools/models/`` with permissive validation (``extra="allow"``, ``coerce_numbers_to_str=True``).
+* Added ``validate_with_pydantic()`` in ``mdstools/schema/validator.py`` for Pydantic-based metadata validation.
+* Added snapshot testing for generated schemas via ``mdstools/test/test_resolved_schemas.py``.
+* Added ``bibdata`` attribute to ``SvgdigitizerSource`` in LinkML.
+* Added pixi tasks: ``generate-schemas``, ``generate-models``, ``generate-all``.
+* Added ``linkml`` and ``linkml-runtime`` as dependencies.
+
+**Changed:**
+
+* Consolidated test directory from ``mdstools/tests/`` into ``mdstools/test/``.
+* Updated pixi tasks ``flatten`` and ``unflatten`` to use the new click-based CLI.
+* Simplified ``SchemaEnricher._register_definitions`` to register under PascalCase name directly instead of lowercase aliasing.
+* Simplified ``SchemaEnricher.enrich_row`` definition lookup from a 3-step fallback to a deterministic camelCase-to-PascalCase mapping.
+* Migrated ``validate_metadata`` from deprecated ``jsonschema.RefResolver`` to ``referencing.Registry`` / ``referencing.Resource``.
+* Changed list item identifiers in flattened metadata from letter-based (``a``, ``b``, ``c``, …) to incremental ``i<n>`` format (``i1``, ``i2``, ``i3``, …), removing the 26-item alphabet limit and improving readability.
+* Changed ``Quantity.value`` range from ``string`` to ``float`` in LinkML.
+* Changed ``Purity.value`` range from ``string`` to ``float`` in LinkML.
+* Updated ``Quantity.unit`` and ``Uncertainty.unit`` descriptions to reference astropy string notation; dimensionless quantities use an empty string.
+* ``SchemaEnricher`` updated to handle both ``$defs`` (LinkML) and ``definitions`` (legacy) JSON Schema formats.
+* ``check_naming.py`` refactored to validate generated JSON schemas.
+* All 6 JSON schemas generated from LinkML definitions.
+* ``schemas/README.md`` updated with LinkML-based workflow and Frictionless documentation.
+* ``validate-package-schemas`` pixi task switched from ``check-jsonschema`` CLI to Python-based validation.
+* Fixed swapped ``value``/``unit`` in ``partialPressure`` quantities across example files (``autotag.yaml``, ``svgdigitizer.yaml``, ``system.yaml``).
+
+**Removed:**
+
+* Removed legacy argparse-based ``mdstools/cli.py``, replaced by ``mdstools/entrypoint.py``.
+* Removed ``mdstools/schema/resolver.py`` legacy schema resolver (replaced by ``generate_from_linkml.py``).
+* Removed ``schemas/schema_pieces/`` legacy YAML schema definitions (replaced by LinkML-generated JSON schemas).
+* Removed ``schemas/resolved/`` empty legacy directory.
+* Remove support for Python 3.10 in CI testing (minimum supported version is now Python 3.11).
+
+**Fixed:**
+
+* Fixed ``"title": "scan rate"`` (with space) in ``figure_description.json`` to ``"scanRate"`` (camelCase).
+* Fixed ``svgdigitizer_resource`` definition name in ``svgdigitizer_package.json`` to ``SvgdigitizerResource`` (PascalCase).
+* Fixed ``DeprecationWarning`` for ``jsonschema.RefResolver`` in ``validator.py``.
+
+
+
 v0.4.0
 ====================
 
