@@ -7,6 +7,11 @@ echemdb-metadata-schema Change Log
 v0.5.0
 ====================
 
+
+
+v0.5.0
+====================
+
 **Added:**
 
 * Added click-based CLI via ``mdstools.entrypoint`` with ``flatten`` and ``unflatten`` commands, registered as the ``mdstools`` entry point.
