@@ -44,10 +44,24 @@ class Metadata:
     """
 
     def __init__(self, metadata: dict):
-        """
+        r"""
         Initialize with a nested dictionary.
 
         :param metadata: Nested dictionary containing metadata
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.metadata import Metadata
+            >>> m = Metadata({'key': 'value'})
+            >>> m.data
+            {'key': 'value'}
+
+            Non-dict input raises ``TypeError``::
+
+                >>> Metadata([1, 2, 3])
+                Traceback (most recent call last):
+                ...
+                TypeError: Expected dict, got list
         """
         if not isinstance(metadata, dict):
             raise TypeError(f"Expected dict, got {type(metadata).__name__}")
@@ -55,7 +69,16 @@ class Metadata:
 
     @property
     def data(self) -> dict:
-        """Get the underlying metadata dictionary."""
+        r"""
+        Get the underlying metadata dictionary.
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.metadata import Metadata
+            >>> m = Metadata({'experiment': {'value': 42}})
+            >>> m.data
+            {'experiment': {'value': 42}}
+        """
         return self._data
 
     @classmethod

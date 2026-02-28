@@ -50,6 +50,12 @@ def cli():
     Entry point of the command line interface.
 
     This redirects to the individual commands listed below.
+
+    EXAMPLES::
+
+        >>> from mdstools.entrypoint import cli
+        >>> cli.name
+        'cli'
     """
 
 

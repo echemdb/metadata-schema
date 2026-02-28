@@ -62,10 +62,17 @@ class SchemaEnricher:
     """
 
     def __init__(self, schema_dir: str):
-        """
+        r"""
         Initialize the enricher with a directory containing JSON Schema files.
 
         :param schema_dir: Path to the directory containing generated JSON Schema files.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> len(enricher.schema_cache) > 0
+            True
         """
         self.schema_dir = Path(schema_dir)
         self.schema_cache = {}

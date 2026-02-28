@@ -67,11 +67,21 @@ class EnrichedFlattenedMetadata:
     """
 
     def __init__(self, rows: List[List], schema_dir: str):
-        """
+        r"""
         Initialize with flattened data rows and schema directory.
 
         :param rows: List of rows, each containing [number, key, value]
         :param schema_dir: Path to directory containing JSON Schema files
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> len(enriched.rows)
+            2
+            >>> len(enriched.rows[0])  # enriched rows have 5 columns
+            5
         """
         # Store base flattened data (3 columns)
         # Ensure all numbers are strings
@@ -86,12 +96,36 @@ class EnrichedFlattenedMetadata:
 
     @property
     def rows(self) -> List[List]:
-        """Get the enriched data rows with Example and Description columns."""
+        r"""
+        Get the enriched data rows with Example and Description columns.
+
+        Each row is ``[number, key, value, example, description]``.
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched.rows[0][:3]
+            ['1', 'system', '<nested>']
+            >>> len(enriched.rows[0])
+            5
+        """
         return self._enriched_rows
 
     @property
     def base_rows(self) -> List[List]:
-        """Get the base 3-column rows without enrichment."""
+        r"""
+        Get the base 3-column rows without enrichment.
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> enriched.base_rows
+            [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+        """
         return self._base_rows
 
     @classmethod

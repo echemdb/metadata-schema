@@ -21,10 +21,33 @@
 
 
 def _build_tree(rows):
-    """Build a tree structure from flattened rows, synthesizing missing parents.
+    r"""
+    Build a tree structure from flattened rows, synthesizing missing parents.
 
     :param rows: List of [number, key, value] rows (no header)
     :return: Tuple of (tree dict, list of root number strings)
+
+    EXAMPLES::
+
+        Simple rows produce a tree with one root::
+
+            >>> from mdstools.converters.unflatten import _build_tree
+            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
+            >>> tree, roots = _build_tree(rows)
+            >>> sorted(roots)
+            ['1', '2']
+            >>> tree['1']['key']
+            'name'
+
+        Missing intermediate ``i<n>`` parents are synthesized automatically::
+
+            >>> rows = [['1', 'items', '<nested>'],
+            ...         ['1.i1.1', 'A', 1]]
+            >>> tree, roots = _build_tree(rows)
+            >>> '1.i1' in tree  # virtual node created
+            True
+            >>> tree['1.i1']['key']
+            ''
     """
     tree = {}
     for number, key, value in rows:
@@ -59,6 +82,113 @@ def _build_tree(rows):
             roots.append(number)
 
     return tree, roots
+
+
+def _is_list_index(s):
+    r"""
+    Check if string is an item index (``i<n>`` format, e.g. i1, i2, i3).
+
+    The function inspects the last segment of a dotted number to decide
+    whether it represents a list item.  Only strings starting with ``i``
+    followed by one or more digits are accepted.
+
+    :param s: A string segment (e.g. ``"i1"``, ``"i12"``, ``"3"``)
+    :return: ``True`` if *s* matches the ``i<n>`` pattern
+
+    EXAMPLES::
+
+        Valid list indices::
+
+            >>> from mdstools.converters.unflatten import _is_list_index
+            >>> _is_list_index('i1')
+            True
+            >>> _is_list_index('i12')
+            True
+            >>> _is_list_index('i999')
+            True
+
+        Numeric dict keys are **not** list indices::
+
+            >>> _is_list_index('1')
+            False
+            >>> _is_list_index('10')
+            False
+
+        Other non-matching strings::
+
+            >>> _is_list_index('')
+            False
+            >>> _is_list_index('i')
+            False
+            >>> _is_list_index('item')
+            False
+    """
+    return len(s) >= 2 and s[0] == "i" and s[1:].isdigit()
+
+
+def _build_structure(tree, number):
+    r"""
+    Recursively build a nested structure from a tree node.
+
+    Walks the tree produced by :func:`_build_tree`, returning the
+    reconstructed Python object for the subtree rooted at *number*.
+
+    :param tree: The full tree dict (as returned by :func:`_build_tree`)
+    :param number: The node number to start building from
+    :return: A dict, list, or scalar value
+
+    EXAMPLES::
+
+        Dict node::
+
+            >>> from mdstools.converters.unflatten import _build_tree, _build_structure
+            >>> rows = [['1', 'x', '<nested>'], ['1.1', 'a', 1], ['1.2', 'b', 2]]
+            >>> tree, roots = _build_tree(rows)
+            >>> _build_structure(tree, '1')
+            {'a': 1, 'b': 2}
+
+        List node::
+
+            >>> rows = [['1', 'tags', '<nested>'],
+            ...         ['1.i1', '', 'alpha'],
+            ...         ['1.i2', '', 'beta']]
+            >>> tree, roots = _build_tree(rows)
+            >>> _build_structure(tree, '1')
+            ['alpha', 'beta']
+
+        Leaf node returns the scalar value::
+
+            >>> rows = [['1', 'name', 'test']]
+            >>> tree, roots = _build_tree(rows)
+            >>> _build_structure(tree, '1')
+            'test'
+    """
+    node = tree[number]
+    value = node["value"]
+    children = node["children"]
+
+    if not children:
+        return value
+
+    child_numbers = sorted(children.keys(), key=lambda x: x.split(".")[-1])
+    child_suffixes = [num.split(".")[-1] for num in child_numbers]
+
+    if all(_is_list_index(suffix) for suffix in child_suffixes):
+        return [_build_structure(tree, child_num) for child_num in child_numbers]
+
+    result_dict = {}
+    for child_num in child_numbers:
+        child_node = tree[child_num]
+        child_key = child_node["key"]
+        child_result = _build_structure(tree, child_num)
+
+        if child_key:
+            result_dict[child_key] = child_result
+        else:
+            result_dict = (
+                child_result if isinstance(child_result, dict) else result_dict
+            )
+    return result_dict
 
 
 def unflatten(rows):
@@ -156,54 +286,11 @@ def unflatten(rows):
     result = {}
     tree, roots = _build_tree(rows)
 
-    def is_list_index(s):
-        """Check if string is an item index (i<n> format, e.g. i1, i2, i3)."""
-        return len(s) >= 2 and s[0] == "i" and s[1:].isdigit()
-
-    def build_structure(number):
-        """Recursively build the nested structure"""
-        node = tree[number]
-        _key = node["key"]  # Extracted but not used in this function
-        value = node["value"]
-        children = node["children"]
-
-        if not children:
-            # Leaf node - return the value
-            return value
-
-        # Check if children are list items (have letter suffixes)
-        child_numbers = sorted(children.keys(), key=lambda x: x.split(".")[-1])
-        child_suffixes = [num.split(".")[-1] for num in child_numbers]
-
-        if all(is_list_index(suffix) for suffix in child_suffixes):
-            # This is a list
-            result_list = []
-            for child_num in child_numbers:
-                child_result = build_structure(child_num)
-                result_list.append(child_result)
-            return result_list
-
-        # This is a dict
-        result_dict = {}
-        for child_num in child_numbers:
-            child_node = tree[child_num]
-            child_key = child_node["key"]
-            child_result = build_structure(child_num)
-
-            if child_key:  # Non-empty key
-                result_dict[child_key] = child_result
-            else:  # Empty key means inherit from parent or it's a list item
-                # This shouldn't happen at dict level, but handle it
-                result_dict = (
-                    child_result if isinstance(child_result, dict) else result_dict
-                )
-        return result_dict
-
     # Build the root result
     for root_number in roots:
         root_node = tree[root_number]
         root_key = root_node["key"]
         if root_key:
-            result[root_key] = build_structure(root_number)
+            result[root_key] = _build_structure(tree, root_number)
 
     return result
