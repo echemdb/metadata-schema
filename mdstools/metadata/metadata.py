@@ -109,7 +109,7 @@ class Metadata:
             >>> metadata = Metadata(data)
             >>> flattened = metadata.flatten()
             >>> len(flattened.rows)
-            7
+            5
             >>> flattened.rows[0]
             ['1', 'measurements', '<nested>']
         """

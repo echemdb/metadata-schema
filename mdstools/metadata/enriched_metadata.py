@@ -51,19 +51,18 @@ class EnrichedFlattenedMetadata:
             >>> # Base rows have 3 columns: [Number, Key, Value]
             >>> enriched.base_rows[0]  # Top level
             ['1', 'curation', '<nested>']
-            >>> enriched.base_rows[3]  # Leaf value
+            >>> enriched.base_rows[2]  # Leaf value
             ['1.1.i1.1', 'role', 'curator']
 
             >>> # Enriched rows have 5 columns: [Number, Key, Value, Example, Description]
             >>> enriched.rows
             [['1', 'curation', '<nested>', '', ''],
             ['1.1', 'process', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
-            ['1.1.i1', '', '<nested>', '', 'List of people involved in creating, recording, or curating this data.'],
             ['1.1.i1.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.'],
             ['1.1.i1.2', 'name', 'John Doe', '', 'Full name of the person.']]
-            >>> enriched.rows[3][3]  # Example for 'role' field
+            >>> enriched.rows[2][3]  # Example for 'role' field
             'experimentalist'
-            >>> 'person' in enriched.rows[3][4].lower()  # Description contains 'person'
+            >>> 'person' in enriched.rows[2][4].lower()  # Description contains 'person'
             True
     """
 

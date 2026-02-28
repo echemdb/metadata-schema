@@ -171,12 +171,10 @@ class FlattenedMetadata:
             >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> original_rows = [['1', 'experiment', '<nested>'],
-            ... ['1.i1', '', '<nested>'],
             ... ['1.i1.1', 'A', '<nested>'],
             ... ['1.i1.1.1', 'value', 1],
             ... ['1.i1.1.2', 'units', 'mV'],
             ... ['1.i1.2', 'B', 2],
-            ... ['1.i2', '', '<nested>'],
             ... ['1.i2.1', 'A', 3],
             ... ['1.i2.2', 'B', 4]]
             >>> flattened = FlattenedMetadata(original_rows)

@@ -20,6 +20,47 @@
 # ********************************************************************
 
 
+def _build_tree(rows):
+    """Build a tree structure from flattened rows, synthesizing missing parents.
+
+    :param rows: List of [number, key, value] rows (no header)
+    :return: Tuple of (tree dict, list of root number strings)
+    """
+    tree = {}
+    for number, key, value in rows:
+        number = str(number)
+        tree[number] = {"key": key, "value": value, "children": {}}
+
+    # Synthesize virtual nodes for missing intermediate i<n> parents.
+    # When dict items inside lists are flattened without an explicit row
+    # for the list-item index (e.g. "1.i1"), the children ("1.i1.1", ...)
+    # would be orphaned.  Create the missing parent so the tree stays
+    # connected.
+    for number in list(tree.keys()):
+        parts = number.split(".")
+        if len(parts) > 1:
+            parent_number = ".".join(parts[:-1])
+            if parent_number not in tree:
+                tree[parent_number] = {"key": "", "value": "<nested>", "children": {}}
+
+    # Link parent-child relationships
+    for number, node in tree.items():
+        parts = number.split(".")
+        if len(parts) > 1:
+            parent_number = ".".join(parts[:-1])
+            if parent_number in tree:
+                tree[parent_number]["children"][number] = node
+
+    # Find root entries (no parent or parent not in tree)
+    roots = []
+    for number in tree:
+        parts = number.split(".")
+        if len(parts) == 1 or ".".join(parts[:-1]) not in tree:
+            roots.append(number)
+
+    return tree, roots
+
+
 def unflatten(rows):
     r"""
     Reconstruct a nested dictionary from flattened rows.
@@ -52,10 +93,8 @@ def unflatten(rows):
         Lists of dictionaries (item-indexed with i<n>)::
 
             >>> rows = [['1', 'people', '<nested>'],
-            ...         ['1.i1', '', '<nested>'],
             ...         ['1.i1.1', 'name', 'Alice'],
             ...         ['1.i1.2', 'role', 'curator'],
-            ...         ['1.i2', '', '<nested>'],
             ...         ['1.i2.1', 'name', 'Bob'],
             ...         ['1.i2.2', 'role', 'reviewer']]
             >>> unflatten(rows)
@@ -73,12 +112,10 @@ def unflatten(rows):
         Mixed nested structures (dicts inside lists inside dicts)::
 
             >>> rows = [['1', 'experiment', '<nested>'],
-            ...         ['1.i1', '', '<nested>'],
             ...         ['1.i1.1', 'A', '<nested>'],
             ...         ['1.i1.1.1', 'value', 1],
             ...         ['1.i1.1.2', 'units', 'mV'],
             ...         ['1.i1.2', 'B', 2],
-            ...         ['1.i2', '', '<nested>'],
             ...         ['1.i2.1', 'A', 3],
             ...         ['1.i2.2', 'B', 4]]
             >>> unflatten(rows)
@@ -117,28 +154,7 @@ def unflatten(rows):
         return {}
 
     result = {}
-
-    # Build a tree structure from the rows
-    tree = {}
-    for number, key, value in rows:
-        # Ensure number is a string (pandas may read as float)
-        number = str(number)
-        tree[number] = {"key": key, "value": value, "children": {}}
-
-    # Link parent-child relationships
-    for number, node in tree.items():
-        parts = number.split(".")
-        if len(parts) > 1:
-            parent_number = ".".join(parts[:-1])
-            if parent_number in tree:
-                tree[parent_number]["children"][number] = node
-
-    # Find root entries (no parent or parent not in tree)
-    roots = []
-    for number in tree:
-        parts = number.split(".")
-        if len(parts) == 1 or ".".join(parts[:-1]) not in tree:
-            roots.append(number)
+    tree, roots = _build_tree(rows)
 
     def is_list_index(s):
         """Check if string is an item index (i<n> format, e.g. i1, i2, i3)."""

@@ -97,7 +97,6 @@ curation:
 |---------|------|-----------|----------------|--------------------------------|
 | 1       | curation | <nested> |            |                                |
 | 1.1     | process | <nested> |            | List of people involved...     |
-| 1.1.i1  |      | <nested> |                |                                |
 | 1.1.i1.1 | role | curator   | experimentalist| A person that recorded...      |
 | 1.1.i1.2 | name | Jane Doe  | Jane Doe       | Full name of the person.       |
 
