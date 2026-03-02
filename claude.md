@@ -312,6 +312,48 @@ mdstools flatten tests/example_metadata.yaml
 pixi run flatten tests/example_metadata.yaml
 ```
 
+## Design Notes & Alternatives
+
+### Flattening: Our Approach vs. Alternatives
+
+Our flattening uses **hierarchical positional numbering** (`1.1.i1.2`) with `[number, key, value]` rows.
+This is a deliberate design choice optimised for Excel-friendly ordering and roundtrip fidelity.
+
+However, the underlying metadata (nested YAML/JSON) is **format-agnostic** — alternative
+flattening strategies can be applied to the same data without any schema or data changes:
+
+- **Dot-path / `json_normalize`**: `pandas.json_normalize()`, `flatten_json` (PyPI), `jq` —
+  produce columns like `curation.process[0].role`. Self-describing keys, widely understood.
+- **JSON Pointer (RFC 6901)**: `/curation/process/0/role` — IETF standard, used by JSON Patch.
+- **Indentation / tree-level**: rows carry an indentation level instead of a full path.
+
+When building documentation, we should include examples showing how to work with these
+alternative tools on our metadata files, so users are not locked into `mdstools` for flattening.
+
+### Documentation: Two Complementary Paths
+
+1. **`FlattenedMetadata.to_markdown()`** — generates field-level Markdown tables from actual data,
+   useful for per-file documentation or embedding in READMEs.
+2. **LinkML `gen-doc`** — generates comprehensive schema documentation (class hierarchy,
+   slot descriptions, enums, constraints) directly from the LinkML YAML source of truth.
+   Better suited for a published schema reference site.
+
+Both approaches are complementary: `gen-doc` documents the *schema* (what fields exist and
+what they mean), while `to_markdown()` documents a *specific instance* (what values are present).
+
+### Enrichment: A Distinctive Capability
+
+The schema-based enrichment workflow (adding Description and Example columns from JSON Schema
+alongside actual data values) is **specific to this project** and fills a gap in the ecosystem:
+
+- Most existing tools either generate **read-only documentation** from schemas, or
+  generate **web-based forms** (CEDAR Workbench, react-jsonschema-form), or
+  produce **blank templates** without data.
+- Our enrichment takes **existing data + schema → enriched editable spreadsheet**, which
+  is uncommon and particularly valuable for offline research-data-management workflows.
+- This makes the `SchemaEnricher` and `EnrichedFlattenedMetadata` modules a potential
+  **standalone selling point** worth highlighting independently of the rest of `mdstools`.
+
 ## Possible Extensions
 
 ### Phase 3: Ontology URI Mappings (Deferred)
