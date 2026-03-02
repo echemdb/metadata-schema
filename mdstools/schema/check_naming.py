@@ -120,7 +120,22 @@ def collect_definition_names(schema):
 
 
 def _check_property_key(path, dotted_path, key, prefix=""):
-    """Return a violation tuple if *key* is not camelCase, else None."""
+    r"""
+    Return a violation tuple if *key* is not camelCase, else ``None``.
+
+    EXAMPLES::
+
+        Valid camelCase returns ``None``::
+
+            >>> from mdstools.schema.check_naming import _check_property_key
+            >>> _check_property_key('file.json', 'root.myField', 'myField') is None
+            True
+
+        Invalid key returns a violation tuple::
+
+            >>> _check_property_key('file.json', 'root.MyField', 'MyField')
+            ('file.json', "Property 'MyField' (at root.MyField) is not camelCase")
+    """
     if key in PROPERTY_EXCEPTIONS:
         return None
     if CAMEL_CASE.match(key):
@@ -130,7 +145,22 @@ def _check_property_key(path, dotted_path, key, prefix=""):
 
 
 def _check_definition_name(path, def_name):
-    """Return a violation tuple if *def_name* is not PascalCase, else None."""
+    r"""
+    Return a violation tuple if *def_name* is not PascalCase, else ``None``.
+
+    EXAMPLES::
+
+        Valid PascalCase returns ``None``::
+
+            >>> from mdstools.schema.check_naming import _check_definition_name
+            >>> _check_definition_name('file.json', 'MyClass') is None
+            True
+
+        Invalid name returns a violation tuple::
+
+            >>> _check_definition_name('file.json', 'myClass')
+            ('file.json', "Definition 'myClass' is not PascalCase")
+    """
     if def_name in DEFINITION_EXCEPTIONS:
         return None
     if PASCAL_CASE.match(def_name):

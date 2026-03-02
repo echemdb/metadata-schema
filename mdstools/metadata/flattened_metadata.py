@@ -46,13 +46,34 @@ class FlattenedMetadata:
     """
 
     def __init__(self, rows: List[List]):
-        """
+        r"""
         Initialize with flattened data rows.
 
         :param rows: List of rows, each containing [number, key, value]
 
         NOTE: The first row should NOT be a header row ['number', 'key', 'value'].
         If loading from a file with headers, they will be automatically skipped.
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
+            >>> fm = FlattenedMetadata([['1', 'name', 'test']])
+            >>> fm.rows
+            [['1', 'name', 'test']]
+
+            Non-list input raises ``TypeError``::
+
+                >>> FlattenedMetadata('invalid')
+                Traceback (most recent call last):
+                ...
+                TypeError: Expected list, got str
+
+            Rows with wrong number of elements raise ``ValueError``::
+
+                >>> FlattenedMetadata([['1', 'name']])
+                Traceback (most recent call last):
+                ...
+                ValueError: Each row must have exactly 3 elements [number, key, value], got 2
         """
         if not isinstance(rows, list):
             raise TypeError(f"Expected list, got {type(rows).__name__}")
@@ -67,7 +88,16 @@ class FlattenedMetadata:
 
     @property
     def rows(self) -> List[List]:
-        """Get the underlying flattened data rows."""
+        r"""
+        Get the underlying flattened data rows.
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
+            >>> fm = FlattenedMetadata([['1', 'a', 1], ['2', 'b', 2]])
+            >>> fm.rows
+            [['1', 'a', 1], ['2', 'b', 2]]
+        """
         return self._rows
 
     @classmethod
@@ -121,13 +151,20 @@ class FlattenedMetadata:
         """
 
         def convert_value(value_str):
-            """
+            r"""
             Convert string value to appropriate type (int, float, or keep as string).
 
             NOTE: This is necessary because CSV files store all values as strings.
             Without type conversion, numeric values would remain strings after loading,
             breaking roundtrip equality (e.g., {'value': 42} != {'value': "42"}).
             This ensures that CSV roundtrips preserve the original data types.
+
+            EXAMPLES::
+
+                >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
+                >>> fm = FlattenedMetadata.from_csv('tests/from_csv_example.csv')
+                >>> isinstance(fm.rows[1][2], int)
+                True
             """
             if value_str == "<nested>":
                 return value_str
@@ -171,12 +208,10 @@ class FlattenedMetadata:
             >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
             >>> import os
             >>> original_rows = [['1', 'experiment', '<nested>'],
-            ... ['1.i1', '', '<nested>'],
             ... ['1.i1.1', 'A', '<nested>'],
             ... ['1.i1.1.1', 'value', 1],
             ... ['1.i1.1.2', 'units', 'mV'],
             ... ['1.i1.2', 'B', 2],
-            ... ['1.i2', '', '<nested>'],
             ... ['1.i2.1', 'A', 3],
             ... ['1.i2.2', 'B', 4]]
             >>> flattened = FlattenedMetadata(original_rows)

@@ -83,8 +83,9 @@ def _process_dict(d, prefix, parent_key, rows):
 
             >>> rows = []
             >>> _process_dict({'x': 10}, '3', 'parent', rows)
-            >>> rows
-            [['3', 'parent', '<nested>'], ['3.1', 'x', 10]]
+            >>> rows  # doctest: +NORMALIZE_WHITESPACE
+            [['3', 'parent', '<nested>'],
+            ['3.1', 'x', 10]]
 
         Dict containing another dict::
 
@@ -141,9 +142,7 @@ def _process_list(lst, prefix, parent_key, rows):
             >>> _process_list([{'k': 1}, {'k': 2}], '2', 'items', rows)
             >>> rows  # doctest: +NORMALIZE_WHITESPACE
             [['2', 'items', '<nested>'],
-             ['2.i1', '', '<nested>'],
              ['2.i1.1', 'k', 1],
-             ['2.i2', '', '<nested>'],
              ['2.i2.1', 'k', 2]]
 
         Single-element list::
@@ -163,7 +162,6 @@ def _process_list(lst, prefix, parent_key, rows):
         list_prefix = f"{prefix}.{item_id}"
 
         if isinstance(item, dict):
-            rows.append([list_prefix, "", "<nested>"])
             for k_idx, (field, val) in enumerate(item.items(), start=1):
                 field_prefix = f"{list_prefix}.{k_idx}"
                 if isinstance(val, dict):
@@ -218,10 +216,8 @@ def flatten(d, prefix="", parent_key=None):
         ...     'experiment': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
         >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
-         ['1.i1', '', '<nested>'],
          ['1.i1.1', 'A', 1],
          ['1.i1.2', 'B', 2],
-         ['1.i2', '', '<nested>'],
          ['1.i2.1', 'A', 3],
          ['1.i2.2', 'B', 4]]
 
@@ -241,12 +237,10 @@ def flatten(d, prefix="", parent_key=None):
         ...     'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
         >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
         [['1', 'experiment', '<nested>'],
-         ['1.i1', '', '<nested>'],
          ['1.i1.1', 'A', '<nested>'],
          ['1.i1.1.1', 'value', 1],
          ['1.i1.1.2', 'units', 'mV'],
          ['1.i1.2', 'B', 2],
-         ['1.i2', '', '<nested>'],
          ['1.i2.1', 'A', 3],
          ['1.i2.2', 'B', 4]]
 

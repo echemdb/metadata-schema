@@ -62,10 +62,17 @@ class SchemaEnricher:
     """
 
     def __init__(self, schema_dir: str):
-        """
+        r"""
         Initialize the enricher with a directory containing JSON Schema files.
 
         :param schema_dir: Path to the directory containing generated JSON Schema files.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> len(enricher.schema_cache) > 0
+            True
         """
         self.schema_dir = Path(schema_dir)
         self.schema_cache = {}
@@ -674,7 +681,6 @@ class SchemaEnricher:
                 >>> rows = [
                 ...     ['1', 'curation', '<nested>'],
                 ...     ['1.1', 'process', '<nested>'],
-                ...     ['1.1.i1', '', '<nested>'],
                 ...     ['1.1.i1.1', 'role', 'curator'],
                 ...     ['1.1.i1.2', 'name', 'Jane Doe'],
                 ... ]
@@ -687,7 +693,7 @@ class SchemaEnricher:
 
             Leaf fields get descriptions and examples from the schema::
 
-                >>> enriched[3]  # 'role' field
+                >>> enriched[2]  # 'role' field
                 ['1.1.i1.1', 'role', 'curator', 'experimentalist', 'Role of a person in the data curation process.']
 
             Non-leaf ``<nested>`` rows may get descriptions too::

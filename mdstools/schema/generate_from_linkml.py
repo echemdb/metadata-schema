@@ -60,14 +60,28 @@ def ensure_frictionless_schemas(schemas_dir: Path = None):
     for filename, url in FRICTIONLESS_SCHEMAS.items():
         dest = frictionless_dir / filename
         if dest.exists():
-            continue
+            # Validate cached file is proper JSON; delete and re-download if not
+            try:
+                with open(dest, "r", encoding="utf-8") as f:
+                    json.load(f)
+            except (json.JSONDecodeError, ValueError):
+                print(f"  Cached {dest} is invalid JSON, re-downloading...")
+                dest.unlink()
+            else:
+                continue
         print(f"  Downloading {url} -> {dest} ...")
         req = urllib.request.Request(url, headers={"User-Agent": "mdstools"})
         with urllib.request.urlopen(req) as resp:
-            dest.write_bytes(resp.read())
-        # Validate it's proper JSON
-        with open(dest, "r", encoding="utf-8") as f:
-            json.load(f)
+            data = resp.read()
+        # Validate it's proper JSON before writing
+        try:
+            json.loads(data)
+        except (json.JSONDecodeError, ValueError) as exc:
+            raise RuntimeError(
+                f"Downloaded {url} is not valid JSON "
+                f"({len(data)} bytes, starts with {data[:80]!r})"
+            ) from exc
+        dest.write_bytes(data)
         print(f"  OK {filename}")
 
 

@@ -31,6 +31,9 @@ system:
         proportion:
           value: 50
           unit: volume percent
+        chemicalIdentifiers:
+          inchi: InChI=1S/C2H6O/c1-2-3/h3H,2H2,1H3
+          cas: 64-17-5
       - name: H2SO4
         type: acid
         source:

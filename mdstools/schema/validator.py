@@ -52,7 +52,17 @@ PYDANTIC_MODELS = {
 
 
 def _load_schema(schema_file: Path) -> dict:
-    """Load a JSON schema file."""
+    r"""
+    Load a JSON schema file.
+
+    EXAMPLES::
+
+        >>> from pathlib import Path
+        >>> from mdstools.schema.validator import _load_schema
+        >>> schema = _load_schema(Path('schemas/autotag.json'))
+        >>> '$schema' in schema
+        True
+    """
     with open(schema_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
