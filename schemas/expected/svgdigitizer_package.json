@@ -1,4 +1,31 @@
 {
+  "$id": "https://echemdb.github.io/metadata-schema/svgdigitizer_package",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": true,
+  "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
+  "metamodel_version": "1.7.0",
+  "properties": {
+    "resources": {
+      "description": "Data resources within the package.",
+      "items": {
+        "allOf": [
+          {
+            "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
+          },
+          {
+            "$ref": "#/$defs/SvgdigitizerResource"
+          }
+        ]
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    }
+  },
+  "title": "svgdigitizer_package",
+  "type": "object",
+  "version": null,
   "$defs": {
     "DataField": {
       "additionalProperties": false,
@@ -421,32 +448,5 @@
       "title": "UncertaintyType",
       "type": "string"
     }
-  },
-  "$id": "https://echemdb.github.io/metadata-schema/svgdigitizer_package",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": true,
-  "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
-  "metamodel_version": "1.7.0",
-  "properties": {
-    "resources": {
-      "description": "Data resources within the package.",
-      "items": {
-        "allOf": [
-          {
-            "$ref": "https://datapackage.org/profiles/2.0/dataresource.json"
-          },
-          {
-            "$ref": "#/$defs/SvgdigitizerResource"
-          }
-        ]
-      },
-      "type": [
-        "array",
-        "null"
-      ]
-    }
-  },
-  "title": "svgdigitizer_package",
-  "type": "object",
-  "version": null
+  }
 }

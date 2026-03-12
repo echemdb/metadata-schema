@@ -152,6 +152,19 @@ def _postprocess_package_schema(schema: dict, defs: dict, model_name: str):
         _wrap_resource_items(defs[package_class].get("properties", {}))
 
 
+def _reorder_schema_keys(schema: dict) -> dict:
+    """Reorder schema keys so root properties come first, ``$defs`` last.
+
+    This produces output that follows the hierarchical structure of the
+    schema: the root object description appears at the top, followed by the
+    component definitions.
+    """
+    reordered = {}
+    for key in sorted(schema.keys(), key=lambda k: (k == "$defs", k)):
+        reordered[key] = schema[key]
+    return reordered
+
+
 def generate_json_schemas():
     """Generate JSON Schema files from LinkML models."""
     SCHEMAS_DIR.mkdir(parents=True, exist_ok=True)
@@ -215,6 +228,9 @@ def generate_json_schemas():
         # schemas so that standard resource properties (name, path, format, etc.)
         # are accepted during validation.
         _postprocess_package_schema(schema, defs, model_name)
+
+        # Reorder keys so root schema properties come first and $defs last
+        schema = _reorder_schema_keys(schema)
 
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(schema, f, indent=2, ensure_ascii=False)
