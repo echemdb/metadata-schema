@@ -21,9 +21,16 @@ classes:
         range: string
         description: Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.
         multivalued: true
+        examples:
+          - value: "BCV"
+          - value: "ORR"
+          - value: "COOR"
+          - value: "FAOR"
       url:
         range: HttpUrl
         description: URL to related documentation, publication (DOI), or ELN entry.
+        examples:
+          - value: "https://doi.org/10.1234/experiment.2024"
       instrumentation:
         range: Instrumentation
         description: Instruments and equipment used in the experiment.

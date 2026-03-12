@@ -27,6 +27,8 @@ classes:
         range: Quantity
         description: Total organic carbon content measurement in the atmosphere.
         inlined: true
+        examples:
+          - value: "{value: 3, unit: ppb}"
       components:
         range: Component
         description: Gas components present in the atmosphere.
@@ -35,6 +37,8 @@ classes:
       url:
         range: HttpUrl
         description: URL with further details on the atmospheric setup or control system.
+        examples:
+          - value: "https://doi.org/10.1234/atmosphere-protocol.2024"
       description:
         range: string
         description: Detailed description of the atmospheric conditions.
