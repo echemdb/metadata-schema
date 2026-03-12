@@ -282,7 +282,18 @@ class Process(ConfiguredBaseModel):
     role: CurationRole = Field(
         default=...,
         description="""Role of the person in the data curation process.""",
-        json_schema_extra={"linkml_meta": {"alias": "role", "domain_of": ["Process"]}},
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "role",
+                "domain_of": ["Process"],
+                "examples": [
+                    {"value": "experimentalist"},
+                    {"value": "curator"},
+                    {"value": "reviewer"},
+                    {"value": "supervisor"},
+                ],
+            }
+        },
     )
     name: str = Field(
         default=...,
@@ -306,7 +317,13 @@ class Process(ConfiguredBaseModel):
     orcid: str = Field(
         default=...,
         description="""An URL containing the ORCID.""",
-        json_schema_extra={"linkml_meta": {"alias": "orcid", "domain_of": ["Process"]}},
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "orcid",
+                "domain_of": ["Process"],
+                "examples": [{"value": "https://orcid.org/0000-0001-2345-6789"}],
+            }
+        },
     )
     date: Optional[date] = Field(
         default=None,
@@ -487,6 +504,7 @@ class Uncertainty(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
+                "examples": [{"value": "absolute"}, {"value": "relative"}],
             }
         },
     )
@@ -519,6 +537,7 @@ class Purity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "totalOrganicCarbon",
                 "domain_of": ["Purity", "Atmosphere"],
+                "examples": [{"value": "{value: 3, unit: ppb}"}],
             }
         },
     )
@@ -526,7 +545,11 @@ class Purity(ConfiguredBaseModel):
         default=None,
         description="""Value for the total ionic conductivity measurement.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "totalIonConductivity", "domain_of": ["Purity"]}
+            "linkml_meta": {
+                "alias": "totalIonConductivity",
+                "domain_of": ["Purity"],
+                "examples": [{"value": "{value: 0.055, unit: uS / cm}"}],
+            }
         },
     )
     value: Optional[float] = Field(
@@ -588,6 +611,9 @@ class Purity(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [
+                    {"value": "https://your-chemical-supplier.com/specification/12345"}
+                ],
             }
         },
     )
@@ -639,7 +665,11 @@ class Electrode(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "function",
                 "domain_of": ["Electrode"],
-                "examples": [{"value": "working electrode"}],
+                "examples": [
+                    {"value": "working electrode"},
+                    {"value": "counter electrode"},
+                    {"value": "reference electrode"},
+                ],
             }
         },
     )
@@ -686,6 +716,7 @@ class Electrode(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "geometricElectrolyteContactArea",
                 "domain_of": ["Electrode"],
+                "examples": [{"value": "{value: 0.196, unit: cm2}"}],
             }
         },
     )
@@ -853,6 +884,9 @@ class ElectrodeSource(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [
+                    {"value": "https://your-crystal-supplier.com/product/pt111"}
+                ],
             }
         },
     )
@@ -905,19 +939,35 @@ class Shape(ConfiguredBaseModel):
     height: Optional[Quantity] = Field(
         default=None,
         description="""Height of the electrode.""",
-        json_schema_extra={"linkml_meta": {"alias": "height", "domain_of": ["Shape"]}},
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "height",
+                "domain_of": ["Shape"],
+                "examples": [{"value": "{value: 5, unit: mm}"}],
+            }
+        },
     )
     diameter: Optional[Quantity] = Field(
         default=None,
         description="""Diameter of the electrode (for cylindrical shapes).""",
         json_schema_extra={
-            "linkml_meta": {"alias": "diameter", "domain_of": ["Shape"]}
+            "linkml_meta": {
+                "alias": "diameter",
+                "domain_of": ["Shape"],
+                "examples": [{"value": "{value: 5, unit: mm}"}],
+            }
         },
     )
     length: Optional[Quantity] = Field(
         default=None,
         description="""Length of the electrode.""",
-        json_schema_extra={"linkml_meta": {"alias": "length", "domain_of": ["Shape"]}},
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "length",
+                "domain_of": ["Shape"],
+                "examples": [{"value": "{value: 10, unit: mm}"}],
+            }
+        },
     )
     description: Optional[str] = Field(
         default=None,
@@ -965,6 +1015,7 @@ class ElectrodePreparation(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [{"value": "https://doi.org/10.1234/preparation.2024"}],
             }
         },
     )
@@ -983,6 +1034,12 @@ class ElectrodePreparation(ConfiguredBaseModel):
                     "Atmosphere",
                     "DataField",
                     "Experimental",
+                ],
+                "examples": [
+                    {
+                        "value": "Polished with 0.05 um alumina, rinsed with ultrapure "
+                        "water"
+                    }
                 ],
             }
         },
@@ -1037,6 +1094,13 @@ class Component(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
+                "examples": [
+                    {"value": "solvent"},
+                    {"value": "salt"},
+                    {"value": "acid"},
+                    {"value": "base"},
+                    {"value": "gas"},
+                ],
             }
         },
     )
@@ -1051,7 +1115,11 @@ class Component(ConfiguredBaseModel):
         default=None,
         description="""Concentration of the component in the electrolyte.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "concentration", "domain_of": ["Component"]}
+            "linkml_meta": {
+                "alias": "concentration",
+                "domain_of": ["Component"],
+                "examples": [{"value": "{value: 0.1, unit: mol / l}"}],
+            }
         },
     )
     source: Optional[ComponentSource] = Field(
@@ -1088,21 +1156,33 @@ class Component(ConfiguredBaseModel):
         default=None,
         description="""Partial pressure of a gaseous / volatile component.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "partialPressure", "domain_of": ["Component"]}
+            "linkml_meta": {
+                "alias": "partialPressure",
+                "domain_of": ["Component"],
+                "examples": [{"value": "{value: 1, unit: bar}"}],
+            }
         },
     )
     proportion: Optional[Quantity] = Field(
         default=None,
         description="""Proportion of the component (e.g., volume percent, mole fraction).""",
         json_schema_extra={
-            "linkml_meta": {"alias": "proportion", "domain_of": ["Component"]}
+            "linkml_meta": {
+                "alias": "proportion",
+                "domain_of": ["Component"],
+                "examples": [{"value": "{value: 50, unit: pct}"}],
+            }
         },
     )
     flow: Optional[Quantity] = Field(
         default=None,
         description="""Flow rate for gaseous components.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "flow", "domain_of": ["Component"]}
+            "linkml_meta": {
+                "alias": "flow",
+                "domain_of": ["Component"],
+                "examples": [{"value": "{value: 50, unit: ml / min}"}],
+            }
         },
     )
     comment: Optional[str] = Field(
@@ -1129,7 +1209,11 @@ class Component(ConfiguredBaseModel):
         default=None,
         description="""Pressure for gaseous components.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "pressure", "domain_of": ["Component"]}
+            "linkml_meta": {
+                "alias": "pressure",
+                "domain_of": ["Component"],
+                "examples": [{"value": "{value: 1.013, unit: bar}"}],
+            }
         },
     )
 
@@ -1244,7 +1328,12 @@ class Electrolyte(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
-                "examples": [{"value": "aqueous"}],
+                "examples": [
+                    {"value": "aqueous"},
+                    {"value": "non-aqueous"},
+                    {"value": "ionic liquid"},
+                    {"value": "solid"},
+                ],
             }
         },
     )
@@ -1277,14 +1366,22 @@ class Electrolyte(ConfiguredBaseModel):
         default=None,
         description="""pH value of the electrolyte solution.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "ph", "domain_of": ["Electrolyte"]}
+            "linkml_meta": {
+                "alias": "ph",
+                "domain_of": ["Electrolyte"],
+                "examples": [{"value": "{value: 1, unit: ''}"}],
+            }
         },
     )
     temperature: Optional[Quantity] = Field(
         default=None,
         description="""Temperature of the electrolyte during the experiment.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "temperature", "domain_of": ["Electrolyte"]}
+            "linkml_meta": {
+                "alias": "temperature",
+                "domain_of": ["Electrolyte"],
+                "examples": [{"value": "{value: 298.15, unit: K}"}],
+            }
         },
     )
     comment: Optional[str] = Field(
@@ -1336,6 +1433,7 @@ class ElectrolyteContainer(ConfiguredBaseModel):
                     "DataField",
                     "Experimental",
                 ],
+                "examples": [{"value": "500 ml PTFE bottle"}],
             }
         },
     )
@@ -1380,6 +1478,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
+                "examples": [{"value": "Bottle"}],
             }
         },
     )
@@ -1403,6 +1502,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
+                "examples": [{"value": "PTFE"}],
             }
         },
     )
@@ -1422,6 +1522,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "Source",
                     "FigureDescription",
                 ],
+                "examples": [{"value": "Cleaned with aqua regia"}],
             }
         },
     )
@@ -1612,6 +1713,9 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [
+                    {"value": "https://your-cell-supplier.com/product/h-cell"}
+                ],
             }
         },
     )
@@ -1703,6 +1807,7 @@ class Atmosphere(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "totalOrganicCarbon",
                 "domain_of": ["Purity", "Atmosphere"],
+                "examples": [{"value": "{value: 3, unit: ppb}"}],
             }
         },
     )
@@ -1735,6 +1840,9 @@ class Atmosphere(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                ],
+                "examples": [
+                    {"value": "https://doi.org/10.1234/atmosphere-protocol.2024"}
                 ],
             }
         },
@@ -1883,6 +1991,7 @@ class Source(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [{"value": "https://doi.org/10.1234/example.2024"}],
             }
         },
     )
@@ -1890,7 +1999,11 @@ class Source(ConfiguredBaseModel):
         default=None,
         description="""Experimental techniques used in the study.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "techniques", "domain_of": ["Source"]}
+            "linkml_meta": {
+                "alias": "techniques",
+                "domain_of": ["Source"],
+                "examples": [{"value": "CV"}],
+            }
         },
     )
     figure: Optional[str] = Field(
@@ -1995,7 +2108,12 @@ class FigureDescription(ConfiguredBaseModel):
                     "DataField",
                     "Instrumentation",
                 ],
-                "examples": [{"value": "raw"}],
+                "examples": [
+                    {"value": "raw"},
+                    {"value": "digitized"},
+                    {"value": "simulated"},
+                    {"value": "processed"},
+                ],
             }
         },
     )
@@ -2017,6 +2135,7 @@ class FigureDescription(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "simultaneousMeasurements",
                 "domain_of": ["FigureDescription"],
+                "examples": [{"value": "DEMS"}, {"value": "Raman"}],
             }
         },
     )
@@ -2051,7 +2170,11 @@ class FigureDescription(ConfiguredBaseModel):
         default=None,
         description="""The rate at which the data has been recorded.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "scanRate", "domain_of": ["FigureDescription"]}
+            "linkml_meta": {
+                "alias": "scanRate",
+                "domain_of": ["FigureDescription"],
+                "examples": [{"value": "{value: 50, unit: mV / s}"}],
+            }
         },
     )
 
@@ -2123,7 +2246,11 @@ class DataField(ConfiguredBaseModel):
         default=None,
         description="""A human-readable title for this field.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "title", "domain_of": ["DataField"]}
+            "linkml_meta": {
+                "alias": "title",
+                "domain_of": ["DataField"],
+                "examples": [{"value": "Electrode Potential"}],
+            }
         },
     )
     description: Optional[str] = Field(
@@ -2188,7 +2315,11 @@ class DataField(ConfiguredBaseModel):
         default=None,
         description="""Axis orientation in plots (horizontal for x-axis, vertical for y-axis).""",
         json_schema_extra={
-            "linkml_meta": {"alias": "orientation", "domain_of": ["DataField"]}
+            "linkml_meta": {
+                "alias": "orientation",
+                "domain_of": ["DataField"],
+                "examples": [{"value": "horizontal"}, {"value": "vertical"}],
+            }
         },
     )
 
@@ -2295,7 +2426,16 @@ class Experimental(ConfiguredBaseModel):
         default=None,
         description="""Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "tags", "domain_of": ["Experimental"]}
+            "linkml_meta": {
+                "alias": "tags",
+                "domain_of": ["Experimental"],
+                "examples": [
+                    {"value": "BCV"},
+                    {"value": "ORR"},
+                    {"value": "COOR"},
+                    {"value": "FAOR"},
+                ],
+            }
         },
     )
     url: Optional[str] = Field(
@@ -2313,6 +2453,7 @@ class Experimental(ConfiguredBaseModel):
                     "Source",
                     "Experimental",
                 ],
+                "examples": [{"value": "https://doi.org/10.1234/experiment.2024"}],
             }
         },
     )
