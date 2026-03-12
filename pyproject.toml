@@ -11,14 +11,14 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "click>=8,<9",
-    "pandas",
-    "tabulate",
-    "xlsxwriter",
-    "jsonschema",
-    "jsonref",
-    "referencing",
-    "linkml",
-    "linkml-runtime",
+    "pandas>=2,<4",
+    "tabulate>=0.9,<1",
+    "xlsxwriter>=3,<4",
+    "jsonschema>=4,<5",
+    "jsonref>=1.1,<2",
+    "referencing>=0.35,<1",
+    "linkml>=1.9,<2",
+    "linkml-runtime>=1.9,<1.10",
 ]
 
 [project.scripts]
@@ -60,7 +60,7 @@ pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
 linkml = ">=1.9,<2"
-linkml-runtime = ">=1.9,<2"
+linkml-runtime = ">=1.9,<1.10"
 jsonref = ">=1.1.0,<2"
 
 
