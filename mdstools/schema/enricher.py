@@ -186,8 +186,8 @@ class SchemaEnricher:
             >>> enricher = SchemaEnricher('schemas')
             >>> result = enricher._ref_loader('https://datapackage.org/profiles/2.0/dataresource.json')
             >>> import os
-            >>> has_frictionless = os.path.isdir(os.path.join('schemas', 'frictionless'))
-            >>> result != {} or not has_frictionless
+            >>> has_file = os.path.isfile(os.path.join('schemas', 'frictionless', 'dataresource.json'))
+            >>> result != {} or not has_file
             True
             >>> enricher._ref_loader('https://example.com/unknown.json')
             {}
