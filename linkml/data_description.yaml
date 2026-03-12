@@ -37,16 +37,20 @@ classes:
         description: Column delimiter character(s) used in the data file.
         examples:
           - value: ","
+          - value: ";"
+          - value: "\\t"
       decimal:
         range: string
         description: Character used as decimal separator.
         examples:
           - value: "."
+          - value: ","
       encoding:
         range: string
         description: Character encoding of the data file.
         examples:
           - value: "utf-8"
+          - value: "latin-1"
       headerLines:
         range: integer
         description: Number of header lines to skip before the column headers.
@@ -69,17 +73,23 @@ classes:
         description: Standardized name of the data field (after mapping).
         examples:
           - value: "E"
+          - value: "j"
+          - value: "t"
       unit:
         range: string
         required: true
         description: Unit of measurement for this field, using astropy's string representation.
         examples:
           - value: "V"
+          - value: "mA / cm2"
+          - value: "s"
       reference:
         range: string
         description: Reference electrode or reference point for this field (electrochemistry-specific).
         examples:
           - value: "RHE"
+          - value: "Ag/AgCl"
+          - value: "SCE"
       description:
         range: string
         description: Optional detailed description of the field and its physical meaning.

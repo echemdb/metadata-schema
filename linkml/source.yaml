@@ -36,6 +36,8 @@ classes:
         multivalued: true
         examples:
           - value: "CV"
+          - value: "EIS"
+          - value: "CA"
       figure:
         range: string
         description: Figure number or identifier from the source including subfigure label.
@@ -61,3 +63,5 @@ classes:
         description: Specific curve or trace identifier within a figure.
         examples:
           - value: "blue"
+          - value: "solid"
+          - value: "1"
