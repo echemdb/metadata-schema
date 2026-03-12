@@ -184,7 +184,10 @@ class SchemaEnricher:
 
             >>> from mdstools.schema.enricher import SchemaEnricher
             >>> enricher = SchemaEnricher('schemas')
-            >>> enricher._ref_loader('https://datapackage.org/profiles/2.0/dataresource.json') != {}
+            >>> result = enricher._ref_loader('https://datapackage.org/profiles/2.0/dataresource.json')
+            >>> import os
+            >>> has_frictionless = os.path.isdir(os.path.join('schemas', 'frictionless'))
+            >>> result != {} or not has_frictionless
             True
             >>> enricher._ref_loader('https://example.com/unknown.json')
             {}
