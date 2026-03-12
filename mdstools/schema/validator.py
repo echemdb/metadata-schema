@@ -274,7 +274,9 @@ def _fetch_remote_schema(schema_name: str, version: str = None) -> dict:
             f"Available: {', '.join(sorted(KNOWN_SCHEMAS))}"
         )
     if version is None:
-        version = "main"
+        from mdstools import __version__
+
+        version = __version__
     filename = KNOWN_SCHEMAS[schema_name]
     url = _SCHEMA_BASE_URL.format(version=version, filename=filename)
     req = urllib.request.Request(url, headers={"User-Agent": "mdstools"})
@@ -312,7 +314,9 @@ def validate(data: Any, schema: str = "echemdb_package", version: str = None) ->
     :param schema: Schema name — one of ``'autotag'``, ``'minimum_echemdb'``,
         ``'source_data'``, ``'svgdigitizer'``, ``'echemdb_package'``,
         ``'svgdigitizer_package'``.
-    :param version: Git tag or branch name (default ``'main'``).
+    :param version: Git tag or branch name.  Defaults to the installed
+        package version (i.e. the matching release tag).  Pass ``'main'``
+        to validate against the latest development schemas.
     :raises FileNotFoundError: If *data* is a path that does not exist.
     :raises ValueError: If validation fails or *schema* is unknown.
 

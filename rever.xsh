@@ -54,6 +54,7 @@ $ACTIVITIES = [
 
 $VERSION_BUMP_PATTERNS = [
     ('pyproject.toml', r'version =', 'version = "$VERSION"'),
+    ('mdstools/__init__.py', r'__version__', '__version__ = "$VERSION"'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'
