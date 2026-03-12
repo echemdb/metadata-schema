@@ -21,5 +21,6 @@ See the [installation guide](installation.md) for setup instructions.
 installation
 usage
 schemas
+examples
 api
 ```
