@@ -5,23 +5,3 @@
   JSON schemas directly from the metadata-schema GitHub repository and
   validate metadata dicts or YAML/JSON files against them.  A ``version``
   parameter selects the git tag or branch (default ``main``).
-
-**Changed:**
-
-* <news item>
-
-**Removed:**
-
-* <news item>
-
-**Fixed:**
-
-* <news item>
-
-**Deprecated:**
-
-* <news item>
-
-**Performance:**
-
-* <news item>
