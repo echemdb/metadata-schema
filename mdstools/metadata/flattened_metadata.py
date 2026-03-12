@@ -377,10 +377,11 @@ class FlattenedMetadata:
             df, filepath, ["Number", "Key", "Value"], separate_sheets, **kwargs
         )
 
-    def to_markdown(self, **kwargs) -> str:
+    def to_markdown(self, filepath=None, **kwargs) -> str:
         """
         Convert to Markdown table format.
 
+        :param filepath: Optional path to save the Markdown file
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_markdown
         :return: Markdown-formatted string
 
@@ -407,6 +408,63 @@ class FlattenedMetadata:
             True
             >>> '<nested>' in markdown
             True
+
+            Save to file:
+
+            >>> import os
+            >>> flattened.to_markdown('tests/generated/docstrings/test_flat.md')
+            '...'
+            >>> os.path.exists('tests/generated/docstrings/test_flat.md')
+            True
         """
         df = self.to_pandas()
-        return df.to_markdown(index=False, **kwargs)
+        result = df.to_markdown(index=False, **kwargs)
+        if filepath:
+            from mdstools.metadata.local import save_text_with_path_creation
+
+            save_text_with_path_creation(result, filepath)
+        return result
+
+    def to_latex(self, filepath=None, **kwargs) -> str:
+        r"""
+        Convert to LaTeX table format.
+
+        :param filepath: Optional path to save the LaTeX file
+        :param kwargs: Additional arguments passed to pandas.DataFrame.to_latex
+        :return: LaTeX-formatted string
+
+        EXAMPLES::
+
+            Simple example:
+
+            >>> from mdstools.metadata.flattened_metadata import FlattenedMetadata
+            >>> rows = [['1', 'name', 'test'], ['2', 'value', 42]]
+            >>> flattened = FlattenedMetadata(rows)
+            >>> latex = flattened.to_latex()
+            >>> 'tabular' in latex and 'name' in latex
+            True
+
+            With nested structures and lists:
+
+            >>> rows = [['1', 'name', 'test'], ['2', 'foo', '<nested>'],
+            ... ['2.i1', '', 'a'], ['2.i2', '', 'b'], ['2.i3', '', 'c']]
+            >>> flattened = FlattenedMetadata(rows)
+            >>> latex = flattened.to_latex()
+            >>> 'Number' in latex and 'Key' in latex and 'Value' in latex
+            True
+
+            Save to file:
+
+            >>> import os
+            >>> flattened.to_latex('tests/generated/docstrings/test_flat.tex')
+            '...'
+            >>> os.path.exists('tests/generated/docstrings/test_flat.tex')
+            True
+        """
+        df = self.to_pandas()
+        result = df.to_latex(index=False, **kwargs)
+        if filepath:
+            from mdstools.metadata.local import save_text_with_path_creation
+
+            save_text_with_path_creation(result, filepath)
+        return result

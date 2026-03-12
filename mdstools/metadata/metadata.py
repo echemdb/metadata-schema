@@ -58,10 +58,10 @@ class Metadata:
 
             Non-dict input raises ``TypeError``::
 
-                >>> Metadata([1, 2, 3])
-                Traceback (most recent call last):
-                ...
-                TypeError: Expected dict, got list
+            >>> Metadata([1, 2, 3])
+            Traceback (most recent call last):
+            ...
+            TypeError: Expected dict, got list
         """
         if not isinstance(metadata, dict):
             raise TypeError(f"Expected dict, got {type(metadata).__name__}")
