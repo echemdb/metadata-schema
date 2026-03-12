@@ -20,3 +20,5 @@ classes:
         range: HttpUrl
         required: true
         description: URL to the electronic lab notebook entry.
+        examples:
+          - value: "https://eln.2024.2024/your-link-to-data"

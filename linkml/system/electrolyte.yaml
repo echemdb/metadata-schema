@@ -36,6 +36,9 @@ classes:
         description: Type of electrolyte defined by the solvent.
         examples:
           - value: "aqueous"
+          - value: "non-aqueous"
+          - value: "ionic liquid"
+          - value: "solid"
       electrolyteContainer:
         range: ElectrolyteContainer
         description: Container used to prepare or store the electrolyte before the measurement.
@@ -49,10 +52,14 @@ classes:
         range: Quantity
         description: pH value of the electrolyte solution.
         inlined: true
+        examples:
+          - value: "{value: 1, unit: ''}"
       temperature:
         range: Quantity
         description: Temperature of the electrolyte during the experiment.
         inlined: true
+        examples:
+          - value: "{value: 298.15, unit: K}"
       comment:
         range: string
         description: Additional notes or observations about the electrolyte.
@@ -65,6 +72,8 @@ classes:
       description:
         range: string
         description: The vessel in which the supplying electrolyte was prepared or stored before the measurement.
+        examples:
+          - value: "500 ml PTFE bottle"
       components:
         range: ElectrolyteContainerComponent
         description: Components of the electrolyte container.
@@ -77,9 +86,15 @@ classes:
       name:
         range: string
         description: A unique identifier.
+        examples:
+          - value: "Bottle"
       type:
         range: string
         description: The type of the container, i.e., a flask.
+        examples:
+          - value: "PTFE"
       comment:
         range: string
         description: Additional notes.
+        examples:
+          - value: "Cleaned with aqua regia"

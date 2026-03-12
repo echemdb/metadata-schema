@@ -26,10 +26,14 @@ classes:
         range: Quantity
         description: Value for the total organic carbon content measurement.
         inlined: true
+        examples:
+          - value: "{value: 3, unit: ppb}"
       totalIonConductivity:
         range: Quantity
         description: Value for the total ionic conductivity measurement.
         inlined: true
+        examples:
+          - value: "{value: 0.055, unit: uS / cm}"
       value:
         range: float
         description: Purity value as a number.
@@ -53,6 +57,8 @@ classes:
       url:
         range: HttpUrl
         description: URL with further details on the purity or container.
+        examples:
+          - value: "https://your-chemical-supplier.com/specification/12345"
       refinement:
         range: string
         description: Description of additional purification or treatment performed.

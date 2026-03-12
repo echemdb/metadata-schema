@@ -43,6 +43,8 @@ classes:
           Typical values: working electrode, counter electrode, reference electrode.
         examples:
           - value: "working electrode"
+          - value: "counter electrode"
+          - value: "reference electrode"
       redoxSystem:
         range: string
         description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).
@@ -57,6 +59,8 @@ classes:
         range: Quantity
         description: Geometric surface area of electrode in contact with electrolyte.
         inlined: true
+        examples:
+          - value: "{value: 0.196, unit: cm2}"
       purity:
         range: Purity
         description: Purity specifications of the electrode material.
@@ -114,6 +118,8 @@ classes:
       url:
         range: HttpUrl
         description: URL to product specification or datasheet.
+        examples:
+          - value: "https://your-crystal-supplier.com/product/pt111"
       supplier:
         range: string
         description: Name of the supplier.
@@ -132,14 +138,20 @@ classes:
         range: Quantity
         description: Height of the electrode.
         inlined: true
+        examples:
+          - value: "{value: 5, unit: mm}"
       diameter:
         range: Quantity
         description: Diameter of the electrode (for cylindrical shapes).
         inlined: true
+        examples:
+          - value: "{value: 5, unit: mm}"
       length:
         range: Quantity
         description: Length of the electrode.
         inlined: true
+        examples:
+          - value: "{value: 10, unit: mm}"
       description:
         range: string
         description: Detailed description of the electrode shape.
@@ -152,7 +164,11 @@ classes:
       url:
         range: HttpUrl
         description: URL to detailed preparation protocol or procedure, such as an article DOI.
+        examples:
+          - value: "https://doi.org/10.1234/preparation.2024"
       description:
         range: string
         description: Step-by-step description of preparation procedure.
         multivalued: true
+        examples:
+          - value: "Polished with 0.05 um alumina, rinsed with ultrapure water"

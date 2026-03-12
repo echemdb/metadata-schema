@@ -28,10 +28,14 @@ classes:
         range: HttpUrl
         required: true
         description: DOI (URL) to the publication or dataset.
+        examples:
+          - value: "https://doi.org/10.1234/example.2024"
       techniques:
         range: string
         description: Experimental techniques used in the study.
         multivalued: true
+        examples:
+          - value: "CV"
       figure:
         range: string
         description: Figure number or identifier from the source including subfigure label.
