@@ -351,10 +351,11 @@ class EnrichedFlattenedMetadata:
             **kwargs,
         )
 
-    def to_markdown(self, **kwargs) -> str:
+    def to_markdown(self, filepath=None, **kwargs) -> str:
         """
         Convert to Markdown table format with enrichment columns.
 
+        :param filepath: Optional path to save the Markdown file
         :param kwargs: Additional arguments passed to pandas.DataFrame.to_markdown
         :return: Markdown-formatted string
 
@@ -366,6 +367,52 @@ class EnrichedFlattenedMetadata:
             >>> markdown = enriched.to_markdown()
             >>> 'Example' in markdown and 'Description' in markdown
             True
+
+            Save to file:
+
+            >>> import os
+            >>> enriched.to_markdown('tests/generated/docstrings/enriched_test.md')
+            '...'
+            >>> os.path.exists('tests/generated/docstrings/enriched_test.md')
+            True
         """
         df = self.to_pandas()
-        return df.to_markdown(index=False, **kwargs)
+        result = df.to_markdown(index=False, **kwargs)
+        if filepath:
+            from mdstools.metadata.local import save_text_with_path_creation
+
+            save_text_with_path_creation(result, filepath)
+        return result
+
+    def to_latex(self, filepath=None, **kwargs) -> str:
+        r"""
+        Convert to LaTeX table format with enrichment columns.
+
+        :param filepath: Optional path to save the LaTeX file
+        :param kwargs: Additional arguments passed to pandas.DataFrame.to_latex
+        :return: LaTeX-formatted string
+
+        EXAMPLES::
+
+            >>> from mdstools.metadata.enriched_metadata import EnrichedFlattenedMetadata
+            >>> rows = [['1', 'system', '<nested>'], ['1.1', 'type', 'electrochemical']]
+            >>> enriched = EnrichedFlattenedMetadata(rows, schema_dir='schemas')
+            >>> latex = enriched.to_latex()
+            >>> 'tabular' in latex and 'Example' in latex and 'Description' in latex
+            True
+
+            Save to file:
+
+            >>> import os
+            >>> enriched.to_latex('tests/generated/docstrings/enriched_test.tex')
+            '...'
+            >>> os.path.exists('tests/generated/docstrings/enriched_test.tex')
+            True
+        """
+        df = self.to_pandas()
+        result = df.to_latex(index=False, **kwargs)
+        if filepath:
+            from mdstools.metadata.local import save_text_with_path_creation
+
+            save_text_with_path_creation(result, filepath)
+        return result

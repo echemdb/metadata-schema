@@ -98,6 +98,8 @@ def flatten(yaml_file, schema_dir, output_dir, no_enrichment):
           ✓ simple_test.csv
           ✓ simple_test.xlsx
           ✓ simple_test_sheets.xlsx
+          ✓ simple_test.md
+          ✓ simple_test.tex
         <BLANKLINE>
         Done!
 
@@ -133,24 +135,25 @@ def flatten(yaml_file, schema_dir, output_dir, no_enrichment):
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
 
+    source = enriched_metadata if enriched else flattened
     base_name = yaml_path.stem
-    csv_path = out / f"{base_name}.csv"
-    excel_path = out / f"{base_name}.xlsx"
-    excel_multi_path = out / f"{base_name}_sheets.xlsx"
 
     click.echo(f"\nExporting to {out.as_posix()}/")
-    if enriched:
-        enriched_metadata.to_csv(str(csv_path))
-        enriched_metadata.to_excel(str(excel_path))
-        enriched_metadata.to_excel(str(excel_multi_path), separate_sheets=True)
-    else:
-        flattened.to_csv(str(csv_path))
-        flattened.to_excel(str(excel_path))
-        flattened.to_excel(str(excel_multi_path), separate_sheets=True)
 
-    click.echo(f"  ✓ {csv_path.name}")
-    click.echo(f"  ✓ {excel_path.name}")
-    click.echo(f"  ✓ {excel_multi_path.name}")
+    for suffix in [".csv", ".xlsx", "_sheets.xlsx", ".md", ".tex"]:
+        path = out / f"{base_name}{suffix}"
+        if suffix == ".csv":
+            source.to_csv(str(path))
+        elif suffix == "_sheets.xlsx":
+            source.to_excel(str(path), separate_sheets=True)
+        elif suffix == ".xlsx":
+            source.to_excel(str(path))
+        elif suffix == ".md":
+            source.to_markdown(str(path))
+        elif suffix == ".tex":
+            source.to_latex(str(path))
+        click.echo(f"  ✓ {path.name}")
+
     click.echo("\nDone!")
 
 
