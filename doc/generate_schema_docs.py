@@ -19,6 +19,7 @@ SCHEMAS = [
 DOC_DIR = Path(__file__).parent
 LINKML_DIR = DOC_DIR.parent / "linkml"
 SCHEMA_DOC_DIR = DOC_DIR / "schema"
+TEMPLATE_DIR = DOC_DIR / "_templates" / "docgen"
 
 
 def _postprocess_markdown(output_dir):
@@ -73,6 +74,8 @@ def generate_schema_docs():
                 "--mergeimports",
                 "--diagram-type",
                 "mermaid_class_diagram",
+                "--template-directory",
+                str(TEMPLATE_DIR),
             ],
             capture_output=True,
             text=True,

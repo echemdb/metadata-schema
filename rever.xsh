@@ -56,6 +56,8 @@ $VERSION_BUMP_PATTERNS = [
     ('pyproject.toml', r'version =', 'version = "$VERSION"'),
     ('mdstools/__init__.py', r'__version__', '__version__ = "$VERSION"'),
     ('doc/conf.py', r'release =', 'release = "$VERSION"'),
+    ('doc/index.md', r'JSON Schemas \(v', 'JSON Schemas (v$VERSION)'),
+    ('doc/index.md', r'metadata-schema/\d+\.\d+\.\d+/schemas/', 'metadata-schema/$VERSION/schemas/'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'
