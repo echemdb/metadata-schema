@@ -1,4 +1,4 @@
-g**Added:**
+**Added:**
 
 * Added ``validate()`` function and per-schema convenience wrappers
   (``validate_svgdigitizer()``, ``validate_autotag()``, etc.) that fetch
