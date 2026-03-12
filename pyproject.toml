@@ -43,7 +43,7 @@ python-311 = ["test", "python-311"]
 python-312 = ["test", "python-312"]
 python-313 = ["test", "python-313"]
 python-314 = ["test", "python-314"]
-dev = ["dev", "test", "lint", "validate"] #, "doc"
+dev = ["dev", "test", "lint", "validate", "doc"]
 release = ["release"]
 
 [tool.pixi.dependencies]
@@ -130,6 +130,20 @@ validate-package-schemas = "python mdstools/schema/validate_examples.py --packag
 check-naming = "python mdstools/schema/check_naming.py"
 validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas", "check-naming"] }
 
+
+[tool.pixi.feature.doc.dependencies]
+make = "*"
+myst-parser = "*"
+sphinx = "*"
+sphinx-design = "*"
+sphinx_rtd_theme = "*"
+sphinxcontrib-mermaid = "*"
+
+[tool.pixi.feature.doc.tasks]
+generate-doc-schemas = { cmd = "python doc/generate_schema_docs.py" }
+doc = { cmd = "cd doc && make html SPHINXOPTS='-j auto -W -n --keep-going'", depends-on = ["generate-doc-schemas"] }
+doc-serve = { cmd = "python -m http.server -d doc/generated/html -b localhost 8080", depends-on = ["doc"] }
+linkcheck = "cd doc && make linkcheck"
 
 [tool.pixi.target.win-64.dependencies]
 m2-bash = ">=5.2.37.2,<6"
