@@ -171,7 +171,8 @@ class SchemaEnricher:
                     if "definitions" in schema_data:
                         self._register_definitions(schema_data)
 
-    def _ref_loader(self, uri, **kwargs):
+    # jsonref's loader interface passes extra keyword arguments that we don't need.
+    def _ref_loader(self, uri, **kwargs):  # pylint: disable=unused-argument
         r"""
         Load external schemas for ``jsonref`` resolution.
 
