@@ -43,6 +43,9 @@ classes:
         description: Source or origin of the data, such as digitized, raw, simulated, or processed.
         examples:
           - value: "raw"
+          - value: "digitized"
+          - value: "simulated"
+          - value: "processed"
       measurementType:
         range: string
         description: Acronym type for the measurement performed, such as CV, EIS, XPS, etc.
@@ -52,6 +55,9 @@ classes:
         range: string
         description: Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.
         multivalued: true
+        examples:
+          - value: "DEMS"
+          - value: "Raman"
       comment:
         range: string
         description: Additional notes about the figure or data.
@@ -66,6 +72,8 @@ classes:
         range: Quantity
         description: The rate at which the data has been recorded.
         inlined: true
+        examples:
+          - value: "{value: 50, unit: mV / s}"
 
   DataField:
     description: >-
@@ -97,6 +105,8 @@ classes:
       title:
         range: string
         description: A human-readable title for this field.
+        examples:
+          - value: "Electrode Potential"
       description:
         range: string
         description: A description of that field.
@@ -122,3 +132,6 @@ classes:
       orientation:
         range: FieldOrientation
         description: Axis orientation in plots (horizontal for x-axis, vertical for y-axis).
+        examples:
+          - value: "horizontal"
+          - value: "vertical"

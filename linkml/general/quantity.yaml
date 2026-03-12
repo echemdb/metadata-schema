@@ -86,3 +86,6 @@ classes:
       type:
         range: UncertaintyType
         description: Type of uncertainty (absolute or relative).
+        examples:
+          - value: "absolute"
+          - value: "relative"

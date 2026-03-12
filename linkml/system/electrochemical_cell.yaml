@@ -68,3 +68,5 @@ classes:
       url:
         range: HttpUrl
         description: URL to product page or technical documentation.
+        examples:
+          - value: "https://your-cell-supplier.com/product/h-cell"

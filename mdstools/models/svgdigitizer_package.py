@@ -272,6 +272,7 @@ class Uncertainty(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
+                "examples": [{"value": "absolute"}, {"value": "relative"}],
             }
         },
     )
@@ -293,7 +294,12 @@ class FigureDescription(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
-                "examples": [{"value": "raw"}],
+                "examples": [
+                    {"value": "raw"},
+                    {"value": "digitized"},
+                    {"value": "simulated"},
+                    {"value": "processed"},
+                ],
             }
         },
     )
@@ -315,6 +321,7 @@ class FigureDescription(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "simultaneousMeasurements",
                 "domain_of": ["FigureDescription"],
+                "examples": [{"value": "DEMS"}, {"value": "Raman"}],
             }
         },
     )
@@ -340,7 +347,11 @@ class FigureDescription(ConfiguredBaseModel):
         default=None,
         description="""The rate at which the data has been recorded.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "scanRate", "domain_of": ["FigureDescription"]}
+            "linkml_meta": {
+                "alias": "scanRate",
+                "domain_of": ["FigureDescription"],
+                "examples": [{"value": "{value: 50, unit: mV / s}"}],
+            }
         },
     )
 
@@ -391,7 +402,11 @@ class DataField(ConfiguredBaseModel):
         default=None,
         description="""A human-readable title for this field.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "title", "domain_of": ["DataField"]}
+            "linkml_meta": {
+                "alias": "title",
+                "domain_of": ["DataField"],
+                "examples": [{"value": "Electrode Potential"}],
+            }
         },
     )
     description: Optional[str] = Field(
@@ -447,7 +462,11 @@ class DataField(ConfiguredBaseModel):
         default=None,
         description="""Axis orientation in plots (horizontal for x-axis, vertical for y-axis).""",
         json_schema_extra={
-            "linkml_meta": {"alias": "orientation", "domain_of": ["DataField"]}
+            "linkml_meta": {
+                "alias": "orientation",
+                "domain_of": ["DataField"],
+                "examples": [{"value": "horizontal"}, {"value": "vertical"}],
+            }
         },
     )
 

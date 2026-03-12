@@ -45,6 +45,12 @@ classes:
         range: ComponentType
         required: true
         description: Role or function of the component in the electrolyte.
+        examples:
+          - value: "solvent"
+          - value: "salt"
+          - value: "acid"
+          - value: "base"
+          - value: "gas"
       chemicalIdentifiers:
         range: ChemicalIdentifiers
         description: Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.
@@ -53,6 +59,8 @@ classes:
         range: Quantity
         description: Concentration of the component in the electrolyte.
         inlined: true
+        examples:
+          - value: "{value: 0.1, unit: mol / l}"
       source:
         range: ComponentSource
         description: Information about the supplier and supplied quality of the chemical.
@@ -65,14 +73,20 @@ classes:
         range: Quantity
         description: Partial pressure of a gaseous / volatile component.
         inlined: true
+        examples:
+          - value: "{value: 1, unit: bar}"
       proportion:
         range: Quantity
         description: Proportion of the component (e.g., volume percent, mole fraction).
         inlined: true
+        examples:
+          - value: "{value: 50, unit: pct}"
       flow:
         range: Quantity
         description: Flow rate for gaseous components.
         inlined: true
+        examples:
+          - value: "{value: 50, unit: ml / min}"
       comment:
         range: string
         description: Additional notes or observations about this component.
@@ -82,6 +96,8 @@ classes:
         range: Quantity
         description: Pressure for gaseous components.
         inlined: true
+        examples:
+          - value: "{value: 1.013, unit: bar}"
 
   ComponentSource:
     description: Information about the source and quality of the chemical component.

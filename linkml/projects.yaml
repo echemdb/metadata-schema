@@ -35,6 +35,8 @@ classes:
       url:
         range: HttpUrl
         description: URL to project website or information page.
+        examples:
+          - value: "https://cordis.europa.eu/project/id/123456"
       grantNumber:
         range: string
         description: Official grant or project number.
