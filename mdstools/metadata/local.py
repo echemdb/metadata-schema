@@ -166,6 +166,31 @@ def save_csv_with_path_creation(df: pd.DataFrame, filepath: str, **kwargs) -> No
     df.to_csv(filepath, index=False, **kwargs)
 
 
+def save_text_with_path_creation(text: str, filepath: str) -> None:
+    r"""
+    Save a string to a text file with automatic parent directory creation.
+
+    Creates any missing directories in *filepath* before writing.
+
+    :param text: Text content to save
+    :param filepath: Path to save the file
+
+    EXAMPLES::
+
+        >>> from mdstools.metadata.local import save_text_with_path_creation
+        >>> import os
+        >>> save_text_with_path_creation('hello', 'tests/generated/docstrings/local_text_test.txt')
+        >>> os.path.exists('tests/generated/docstrings/local_text_test.txt')
+        True
+        >>> open('tests/generated/docstrings/local_text_test.txt').read()
+        'hello'
+
+    """
+    os.makedirs(os.path.dirname(filepath) or ".", exist_ok=True)
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
 def save_excel_with_optional_sheets(
     df: pd.DataFrame,
     filepath: str,
