@@ -1,4 +1,74 @@
 {
+  "$id": "https://echemdb.github.io/metadata-schema/svgdigitizer",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": true,
+  "description": "Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.",
+  "metamodel_version": "1.7.0",
+  "properties": {
+    "curation": {
+      "$ref": "#/$defs/Curation",
+      "description": "Details on the curation process of the data."
+    },
+    "eln": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Eln"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Electronic lab notebook reference."
+    },
+    "experimental": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Experimental"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Details about the experimental setup."
+    },
+    "figureDescription": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FigureDescription"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Description of the data to a figure or plot."
+    },
+    "projects": {
+      "description": "Research projects or funding sources.",
+      "items": {
+        "$ref": "#/$defs/Project"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "source": {
+      "$ref": "#/$defs/Source",
+      "description": "Information about the source publication or dataset."
+    },
+    "system": {
+      "$ref": "#/$defs/System",
+      "description": "Description of the experimental system."
+    }
+  },
+  "required": [
+    "curation",
+    "source",
+    "system"
+  ],
+  "title": "svgdigitizer",
+  "type": "object",
+  "version": null,
   "$defs": {
     "Atmosphere": {
       "additionalProperties": false,
@@ -1482,75 +1552,5 @@
       "title": "UncertaintyType",
       "type": "string"
     }
-  },
-  "$id": "https://echemdb.github.io/metadata-schema/svgdigitizer",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": true,
-  "description": "Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages.",
-  "metamodel_version": "1.7.0",
-  "properties": {
-    "curation": {
-      "$ref": "#/$defs/Curation",
-      "description": "Details on the curation process of the data."
-    },
-    "eln": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/Eln"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "Electronic lab notebook reference."
-    },
-    "experimental": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/Experimental"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "Details about the experimental setup."
-    },
-    "figureDescription": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/FigureDescription"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "description": "Description of the data to a figure or plot."
-    },
-    "projects": {
-      "description": "Research projects or funding sources.",
-      "items": {
-        "$ref": "#/$defs/Project"
-      },
-      "type": [
-        "array",
-        "null"
-      ]
-    },
-    "source": {
-      "$ref": "#/$defs/Source",
-      "description": "Information about the source publication or dataset."
-    },
-    "system": {
-      "$ref": "#/$defs/System",
-      "description": "Description of the experimental system."
-    }
-  },
-  "required": [
-    "curation",
-    "source",
-    "system"
-  ],
-  "title": "svgdigitizer",
-  "type": "object",
-  "version": null
+  }
 }
