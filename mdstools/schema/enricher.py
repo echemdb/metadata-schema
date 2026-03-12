@@ -20,9 +20,10 @@
 # ********************************************************************
 
 import json
-import os
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional, Tuple
+
+import jsonref
 
 
 class SchemaEnricher:
@@ -157,12 +158,49 @@ class SchemaEnricher:
             with open(schema_file, "r", encoding="utf-8") as f:
                 schema_name = schema_file.stem
                 if schema_name not in self.schema_cache:
-                    self.schema_cache[schema_name] = json.load(f)
+                    raw = json.load(f)
+                    self.schema_cache[schema_name] = jsonref.replace_refs(
+                        raw,
+                        proxies=False,
+                        lazy_load=False,
+                        loader=self._ref_loader,
+                    )
                     self._normalize_defs(self.schema_cache[schema_name])
 
                     schema_data = self.schema_cache[schema_name]
                     if "definitions" in schema_data:
                         self._register_definitions(schema_data)
+
+    # jsonref's loader interface passes extra keyword arguments that we don't need.
+    def _ref_loader(self, uri, **kwargs):  # pylint: disable=unused-argument
+        r"""
+        Load external schemas for ``jsonref`` resolution.
+
+        Maps Frictionless URLs to locally cached schema files.
+        Returns an empty dict for unknown external URIs since the
+        enricher only needs definitions from our own schemas.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.enricher import SchemaEnricher
+            >>> enricher = SchemaEnricher('schemas')
+            >>> result = enricher._ref_loader('https://datapackage.org/profiles/2.0/dataresource.json')
+            >>> import os
+            >>> has_file = os.path.isfile(os.path.join('schemas', 'frictionless', 'dataresource.json'))
+            >>> result != {} or not has_file
+            True
+            >>> enricher._ref_loader('https://example.com/unknown.json')
+            {}
+
+        """
+        frictionless_dir = self.schema_dir / "frictionless"
+        for name in ("datapackage.json", "dataresource.json"):
+            if uri.endswith(name):
+                local_path = frictionless_dir / name
+                if local_path.exists():
+                    with open(local_path, "r", encoding="utf-8") as f:
+                        return json.load(f)
+        return {}
 
     def _register_definitions(self, schema_data):
         r"""
@@ -230,82 +268,6 @@ class SchemaEnricher:
                         camel = title[0].lower() + title[1:]
                         if camel != title and camel not in self.schema_cache:
                             self.schema_cache[camel] = schema_data
-
-    def _resolve_ref(
-        self, ref: str, current_schema: Dict
-    ) -> Tuple[Optional[Dict], Optional[Dict]]:
-        r"""
-        Resolve a ``$ref`` reference to its definition.
-
-        Handles both internal references (``#/definitions/Foo``) and relative
-        external references (``./general/url.json#/definitions/Url``).
-
-        :param ref: The $ref string (e.g., ``"#/definitions/Process"``)
-        :param current_schema: The current schema dict used for internal refs
-        :return: Tuple of ``(resolved_definition, root_schema)``
-                 or ``(None, None)`` if the reference cannot be resolved
-
-        EXAMPLES::
-
-            >>> from mdstools.schema.enricher import SchemaEnricher
-            >>> enricher = SchemaEnricher('schemas')
-
-            Resolve an internal ``#/definitions/...`` reference::
-
-                >>> schema = {'definitions': {'Foo': {'type': 'string'}}}
-                >>> resolved, root = enricher._resolve_ref('#/definitions/Foo', schema)
-                >>> resolved
-                {'type': 'string'}
-
-            Unresolvable references return ``(None, None)``::
-
-                >>> enricher._resolve_ref('#/definitions/Missing', schema)
-                (None, None)
-
-            External relative references are resolved from the cache::
-
-                >>> resolved, _ = enricher._resolve_ref(
-                ...     './curation.yaml#/definitions/Curation',
-                ...     {})
-                >>> resolved is not None
-                True
-
-        """
-        if ref.startswith("#/"):
-            # Internal reference - resolve against current schema
-            parts = ref[2:].split("/")
-            result = current_schema
-            for part in parts:
-                if isinstance(result, dict) and part in result:
-                    result = result[part]
-                else:
-                    return None, None
-            return result, current_schema
-        if ref.startswith("."):
-            # Relative external reference (handles both ./ and ../)
-            ref_path = ref.split("#")[0]
-            ref_fragment = ref.split("#")[1] if "#" in ref else ""
-
-            # Load the referenced schema by filename stem
-            ref_file = ref_path.lstrip("./").replace("/", os.sep)
-            ref_schema_name = Path(ref_file).stem
-
-            if ref_schema_name in self.schema_cache:
-                ref_schema = self.schema_cache[ref_schema_name]
-
-                if ref_fragment:
-                    parts = ref_fragment[1:].split("/")
-                    result = ref_schema
-                    for part in parts:
-                        if isinstance(result, dict) and part in result:
-                            result = result[part]
-                        else:
-                            return None, None
-                    # Return resolved def + the external schema as new root
-                    return result, ref_schema
-                return ref_schema, ref_schema
-
-        return None, None
 
     def _extract_example(self, current):
         r"""
@@ -403,52 +365,14 @@ class SchemaEnricher:
                         return option["const"], option.get("description")
         return None, None
 
-    def _follow_refs(self, current, root_schema):
+    def _resolve_array_items(self, current):
         r"""
-        Follow ``$ref`` chains in a schema node until a concrete node is reached.
-
-        :param current: Schema node (may contain a ``$ref``)
-        :param root_schema: Root schema dict for resolving internal refs
-        :return: Tuple of ``(resolved_node, root_schema)``
-
-        EXAMPLES::
-
-            >>> from mdstools.schema.enricher import SchemaEnricher
-            >>> enricher = SchemaEnricher('schemas')
-
-            Nodes without ``$ref`` are returned unchanged::
-
-                >>> node = {'type': 'string', 'description': 'A name'}
-                >>> enricher._follow_refs(node, {})
-                ({'type': 'string', 'description': 'A name'}, {})
-
-            A ``$ref`` chain is resolved::
-
-                >>> schema = {'definitions': {'Foo': {'type': 'integer'}}}
-                >>> ref_node = {'$ref': '#/definitions/Foo'}
-                >>> resolved, _ = enricher._follow_refs(ref_node, schema)
-                >>> resolved
-                {'type': 'integer'}
-
-        """
-        while isinstance(current, dict) and "$ref" in current:
-            resolved, new_root = self._resolve_ref(current["$ref"], root_schema)
-            if resolved:
-                current = resolved
-                root_schema = new_root
-            else:
-                break
-        return current, root_schema
-
-    def _resolve_array_items(self, current, root_schema):
-        r"""
-        If *current* is an array schema, resolve and return its ``items`` schema.
+        If *current* is an array schema, return its ``items`` schema.
 
         Non-array schemas are returned unchanged.
 
         :param current: Schema node dict
-        :param root_schema: Root schema for resolving refs
-        :return: Tuple of ``(items_or_current, root_schema)``
+        :return: The items schema for arrays, or *current* unchanged
 
         EXAMPLES::
 
@@ -458,20 +382,19 @@ class SchemaEnricher:
             Array schema — returns the items definition::
 
                 >>> arr = {'type': 'array', 'items': {'type': 'string'}}
-                >>> enricher._resolve_array_items(arr, {})
-                ({'type': 'string'}, {})
+                >>> enricher._resolve_array_items(arr)
+                {'type': 'string'}
 
             Non-array schema — returned as-is::
 
                 >>> obj = {'type': 'object', 'properties': {}}
-                >>> enricher._resolve_array_items(obj, {})
-                ({'type': 'object', 'properties': {}}, {})
+                >>> enricher._resolve_array_items(obj)
+                {'type': 'object', 'properties': {}}
 
         """
         if current.get("type") == "array" and "items" in current:
-            items, root_schema = self._follow_refs(current["items"], root_schema)
-            return items, root_schema
-        return current, root_schema
+            return current["items"]
+        return current
 
     def _extract_leaf_metadata(self, current, prop_description):
         r"""
@@ -519,17 +442,17 @@ class SchemaEnricher:
         return description, example
 
     def _get_field_metadata(
-        self, schema: Dict, field_path: list, root_schema: Optional[Dict] = None
+        self, schema: dict, field_path: list
     ) -> Tuple[Optional[str], Optional[str]]:
         r"""
         Extract description and example from a schema for a given field path.
 
         Walks the ``properties`` tree of *schema* following each element in
-        *field_path*, resolving ``$ref`` and array ``items`` along the way.
+        *field_path*.  All ``$ref`` have already been resolved by ``jsonref``
+        at load time.
 
         :param schema: The schema definition to search within
         :param field_path: List of field names representing the path
-        :param root_schema: The root schema containing all definitions
         :return: Tuple of ``(description, example)`` or ``(None, None)``
 
         EXAMPLES::
@@ -563,26 +486,21 @@ class SchemaEnricher:
             return None, None
 
         current = schema
-        if root_schema is None:
-            root_schema = schema
 
         for i, field in enumerate(field_path):
             if not isinstance(current, dict):
                 return None, None
-
-            current, root_schema = self._follow_refs(current, root_schema)
 
             if "properties" not in current or field not in current["properties"]:
                 return None, None
 
             current = current["properties"][field]
             prop_description = current.get("description")
-            current, root_schema = self._follow_refs(current, root_schema)
 
             if i == len(field_path) - 1:
                 return self._extract_leaf_metadata(current, prop_description)
 
-            current, root_schema = self._resolve_array_items(current, root_schema)
+            current = self._resolve_array_items(current)
 
         return None, None
 
@@ -654,10 +572,7 @@ class SchemaEnricher:
                     main_def = schema["definitions"][pascal_name]
 
                 if main_def is not None:
-                    # Pass the full schema as root_schema for resolving $refs
-                    return self._get_field_metadata(
-                        main_def, parts[1:], root_schema=schema
-                    )
+                    return self._get_field_metadata(main_def, parts[1:])
 
         return None, None
 

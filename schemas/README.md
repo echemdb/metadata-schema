@@ -28,7 +28,7 @@ validation run and cached locally for all subsequent offline use.
 Generated JSON schemas ready for distribution and use. These schemas:
 
 - Are self-contained with all definitions in a `$defs` section
-- Keep only internal references (`#/$defs/...`)
+- Keep only internal references (`#/$defs/...`) — resolved at load time by `jsonref` in the enricher
 - Are generated automatically from LinkML using `pixi run generate-schemas`
 - **Work for both validation AND enrichment** (descriptions/examples are preserved)
 

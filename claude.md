@@ -35,7 +35,7 @@ pulled from the JSON schemas (the "enrichment" workflow).
 - **unflatten.py**: Reconstruct nested structures from tabular rows
 
 #### `schema/` Package
-- **enricher.py**: `SchemaEnricher` class — handles both `$defs` (LinkML) and `definitions` (legacy) JSON Schema formats
+- **enricher.py**: `SchemaEnricher` class — uses `jsonref` to resolve all `$ref` at load time; handles both `$defs` (LinkML) and `definitions` (legacy) JSON Schema formats
 - **generate_from_linkml.py**: Generate JSON Schemas and Pydantic models from LinkML; includes `ensure_frictionless_schemas()` download helper and Frictionless composition post-processing for package schemas
 - **validate_examples.py**: Validation of example files against schemas (objects, file schemas, and package schemas with local Frictionless registry)
 - **check_naming.py**: Enforce naming conventions (snake_case files, PascalCase definitions, camelCase properties)
@@ -140,10 +140,11 @@ The following schemas are generated from `linkml/` into `schemas/`:
 - **Flexibility**: Users can use flattening without schemas, or enrichment for other purposes
 - **Maintainability**: Easier to test and modify each component independently
 
-### Why On-the-Fly $ref Resolution?
-- **Simplicity**: No need to maintain pre-resolved schema files
-- **Cleaner Repo**: Avoid committing generated files
-- **Flexibility**: Works with any schema structure automatically
+### Why `jsonref` for $ref Resolution?
+- **Simplicity**: `jsonref.replace_refs()` resolves all `$ref` at load time into plain dicts — no manual JSON Pointer walking needed
+- **Upstream maintained**: Avoids custom ref-resolution code; `jsonref` handles internal (`#/$defs/...`) and external refs
+- **External refs**: Frictionless URLs (`datapackage.org/...`) are mapped to locally cached files via a custom loader
+- **Flexibility**: Works with both `$defs` and `definitions` style schemas automatically
 
 ### Why LinkML as Single Source of Truth?
 - **One definition, many outputs**: JSON Schema, Pydantic, SHACL, etc. from one YAML
