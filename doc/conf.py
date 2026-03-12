@@ -46,4 +46,6 @@ html_context = {
 
 linkcheck_ignore = [
     "https://www.gnu.org/licenses/gpl-3.0.html*",
+    r"https://echemdb\.github\.io/metadata-schema/.*",  # self-referential; exist only after deploy
+    r"https://w3id\.org/linkml/.*",  # LinkML URIs redirect to pages that 404
 ]
