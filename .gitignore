@@ -22,6 +22,7 @@ schemas/frictionless/
 # Generated documentation
 doc/generated
 doc/schema
+doc/_build
 
 # excel files
 *.xlsx

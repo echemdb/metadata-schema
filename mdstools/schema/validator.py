@@ -110,7 +110,7 @@ def validate_metadata(data: Any, schema_path: str) -> None:
     :raises FileNotFoundError: If the schema file does not exist
     :raises ValueError: If validation fails
 
-    EXAMPLES::
+    EXAMPLES:
 
         Validating correct metadata passes silently::
 
@@ -174,7 +174,7 @@ def validate_with_pydantic(data: Any, schema_name: str) -> Any:
     :returns: Validated Pydantic model instance
     :raises ValueError: If validation fails or schema_name is unknown
 
-    EXAMPLES::
+    EXAMPLES:
 
         Validating correct metadata returns a Pydantic model::
 
@@ -320,7 +320,7 @@ def validate(data: Any, schema: str = "echemdb_package", version: str = None) ->
     :raises FileNotFoundError: If *data* is a path that does not exist.
     :raises ValueError: If validation fails or *schema* is unknown.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Validate a local YAML file against the remote autotag schema::
 

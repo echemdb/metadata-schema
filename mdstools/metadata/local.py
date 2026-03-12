@@ -211,7 +211,7 @@ def save_excel_with_optional_sheets(
     :param separate_sheets: If True, create separate sheets for each top-level key
     :param kwargs: Additional arguments passed to pandas.DataFrame.to_excel
 
-    EXAMPLES::
+    EXAMPLES:
 
         Single-sheet export::
 
