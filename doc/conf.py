@@ -48,4 +48,6 @@ linkcheck_ignore = [
     "https://www.gnu.org/licenses/gpl-3.0.html*",
     r"https://echemdb\.github\.io/metadata-schema/.*",  # self-referential; exist only after deploy
     r"https://w3id\.org/linkml/.*",  # LinkML URIs redirect to pages that 404
+    r"http://www\.w3\.org/2001/XMLSchema#.*",  # XSD anchors not resolvable
+    r"http://www\.w3\.org/ns/shex#.*",  # SHEX anchors not resolvable
 ]
