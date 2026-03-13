@@ -35,7 +35,7 @@ class EnrichedFlattenedMetadata:
     from JSON Schema files. This provides documentation and reference values
     alongside the actual metadata.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Load from a dictionary and enrich with schema information::
 

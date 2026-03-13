@@ -372,7 +372,11 @@ class Quantity(ConfiguredBaseModel):
                     "DataField",
                     "FieldUnit",
                 ],
-                "examples": [{"value": "mol / l"}],
+                "examples": [
+                    {"value": "mol / l"},
+                    {"value": "V"},
+                    {"value": "mA / cm2"},
+                ],
             }
         },
     )
@@ -700,7 +704,7 @@ class Electrode(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "redoxSystem",
                 "domain_of": ["Electrode"],
-                "examples": [{"value": "RHE"}],
+                "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
         },
     )
@@ -805,7 +809,11 @@ class Electrode(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "single crystal"}],
+                "examples": [
+                    {"value": "single crystal"},
+                    {"value": "powder catalyst"},
+                    {"value": "metal wire"},
+                ],
             }
         },
     )
@@ -816,7 +824,7 @@ class Electrode(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "material",
                 "domain_of": ["Electrode"],
-                "examples": [{"value": "Pt"}],
+                "examples": [{"value": "Pt"}, {"value": "Au"}, {"value": "GC"}],
             }
         },
     )
@@ -827,7 +835,7 @@ class Electrode(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "crystallographicOrientation",
                 "domain_of": ["Electrode"],
-                "examples": [{"value": "(1 1 1)"}],
+                "examples": [{"value": "(1 1 1)"}, {"value": "poly"}],
             }
         },
     )
@@ -953,7 +961,7 @@ class Shape(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "disc"}],
+                "examples": [{"value": "disc"}, {"value": "wire"}, {"value": "rod"}],
             }
         },
     )
@@ -1528,7 +1536,11 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "PTFE"}],
+                "examples": [
+                    {"value": "PTFE"},
+                    {"value": "glass"},
+                    {"value": "borosilicate glass"},
+                ],
             }
         },
     )
@@ -1585,7 +1597,11 @@ class ElectrochemicalCell(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "H-cell"}],
+                "examples": [
+                    {"value": "H-cell"},
+                    {"value": "beaker glass"},
+                    {"value": "flow cell"},
+                ],
             }
         },
     )
@@ -1824,7 +1840,11 @@ class Atmosphere(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "inert"}],
+                "examples": [
+                    {"value": "inert"},
+                    {"value": "ambient"},
+                    {"value": "UHV"},
+                ],
             }
         },
     )
@@ -2031,7 +2051,7 @@ class Source(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "techniques",
                 "domain_of": ["Source"],
-                "examples": [{"value": "CV"}],
+                "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "CA"}],
             }
         },
     )
@@ -2102,7 +2122,7 @@ class Source(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "curve",
                 "domain_of": ["Source"],
-                "examples": [{"value": "blue"}],
+                "examples": [{"value": "blue"}, {"value": "solid"}, {"value": "1"}],
             }
         },
     )
@@ -2139,7 +2159,11 @@ class Instrumentation(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "potentiostat"}],
+                "examples": [
+                    {"value": "potentiostat"},
+                    {"value": "rotator"},
+                    {"value": "mass spectrometer"},
+                ],
             }
         },
     )
@@ -2322,7 +2346,7 @@ class FigureDescription(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "measurementType",
                 "domain_of": ["FigureDescription"],
-                "examples": [{"value": "CV"}],
+                "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "LSV"}],
             }
         },
     )
@@ -2426,7 +2450,11 @@ class DataField(ConfiguredBaseModel):
                     "FigureDescription",
                     "DataField",
                 ],
-                "examples": [{"value": "number"}],
+                "examples": [
+                    {"value": "number"},
+                    {"value": "string"},
+                    {"value": "integer"},
+                ],
             }
         },
     )
@@ -2485,7 +2513,11 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "dimension",
                 "domain_of": ["DataField"],
-                "examples": [{"value": "potential"}],
+                "examples": [
+                    {"value": "potential"},
+                    {"value": "time"},
+                    {"value": "current density"},
+                ],
             }
         },
     )
@@ -2502,7 +2534,7 @@ class DataField(ConfiguredBaseModel):
                     "DataField",
                     "FieldUnit",
                 ],
-                "examples": [{"value": "V"}],
+                "examples": [{"value": "V"}, {"value": "mA / cm2"}, {"value": "s"}],
             }
         },
     )
@@ -2513,7 +2545,7 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "reference",
                 "domain_of": ["DataField", "FieldUnit"],
-                "examples": [{"value": "RHE"}],
+                "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
         },
     )
@@ -2571,7 +2603,7 @@ class Dialect(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "delimiters",
                 "domain_of": ["Dialect"],
-                "examples": [{"value": ","}],
+                "examples": [{"value": ","}, {"value": ";"}, {"value": "\\t"}],
             }
         },
     )
@@ -2582,7 +2614,7 @@ class Dialect(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "decimal",
                 "domain_of": ["Dialect"],
-                "examples": [{"value": "."}],
+                "examples": [{"value": "."}, {"value": ","}],
             }
         },
     )
@@ -2593,7 +2625,7 @@ class Dialect(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "encoding",
                 "domain_of": ["Dialect"],
-                "examples": [{"value": "utf-8"}],
+                "examples": [{"value": "utf-8"}, {"value": "latin-1"}],
             }
         },
     )
@@ -2646,7 +2678,7 @@ class FieldUnit(ConfiguredBaseModel):
                     "DataField",
                     "FieldUnit",
                 ],
-                "examples": [{"value": "E"}],
+                "examples": [{"value": "E"}, {"value": "j"}, {"value": "t"}],
             }
         },
     )
@@ -2663,7 +2695,7 @@ class FieldUnit(ConfiguredBaseModel):
                     "DataField",
                     "FieldUnit",
                 ],
-                "examples": [{"value": "V"}],
+                "examples": [{"value": "V"}, {"value": "mA / cm2"}, {"value": "s"}],
             }
         },
     )
@@ -2674,7 +2706,7 @@ class FieldUnit(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "reference",
                 "domain_of": ["DataField", "FieldUnit"],
-                "examples": [{"value": "RHE"}],
+                "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
         },
     )

@@ -89,7 +89,7 @@ class Metadata:
         :param filepath: Path to YAML file
         :return: Metadata instance
 
-        EXAMPLES::
+        EXAMPLES:
 
             Load from a YAML file::
 

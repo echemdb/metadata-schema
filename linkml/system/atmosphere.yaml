@@ -23,6 +23,8 @@ classes:
         description: Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ultra high vacuum).
         examples:
           - value: "inert"
+          - value: "ambient"
+          - value: "UHV"
       totalOrganicCarbon:
         range: Quantity
         description: Total organic carbon content measurement in the atmosphere.

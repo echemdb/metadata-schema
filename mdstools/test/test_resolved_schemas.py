@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 """
-Test that generated schemas match expected output (snapshot/golden file testing).
+Test that committed schemas match expected output (snapshot/golden file testing).
 
 This ensures that changes to LinkML definitions produce predictable changes in
-generated JSON schemas.  During PRs, diffs in generated schemas can be reviewed
+committed JSON schemas.  During PRs, diffs in committed schemas can be reviewed
 to catch unintended changes.
+
+Note: This test compares the *committed* schemas in ``schemas/`` against the
+expected baselines in ``schemas/expected/``.  A separate CI job
+(``check-schemas``) validates that the committed schemas are up-to-date with
+the LinkML definitions by running ``gen-json-schema`` and diffing the output.
 """
 
 # ********************************************************************
@@ -27,29 +32,9 @@ to catch unintended changes.
 # ********************************************************************
 
 import json
-import subprocess
-import sys
 from pathlib import Path
 
 from mdstools.schema import RESOLVED_SCHEMA_FILES
-
-
-def _generate_schemas():
-    """Run the LinkML JSON Schema generator and return True on success."""
-    result = subprocess.run(
-        [sys.executable, "mdstools/schema/generate_from_linkml.py", "--json-schema"],
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-
-    if result.returncode != 0:
-        print("✗ Schema generation failed:")
-        print(result.stderr)
-        return False
-
-    print(result.stdout)
-    return True
 
 
 def _ensure_expected_dir(expected_dir, schemas_dir):
@@ -107,13 +92,10 @@ def _compare_schemas(schemas_dir, expected_dir):
 
 
 def test_resolved_schemas_match_expected():
-    """Test that generated resolved schemas match the expected versions."""
+    """Test that committed resolved schemas match the expected versions."""
     print("\n" + "=" * 80)
-    print("TEST: Generated Schema Snapshot Testing")
+    print("TEST: Committed Schema Snapshot Testing")
     print("=" * 80)
-
-    print("Generating schemas from LinkML definitions...")
-    assert _generate_schemas(), "Failed to generate schemas from LinkML"
 
     schemas_dir = Path("schemas")
     expected_dir = Path("schemas/expected")

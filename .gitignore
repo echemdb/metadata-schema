@@ -19,5 +19,10 @@ __pycache__/
 # Downloaded external schemas (fetched on demand)
 schemas/frictionless/
 
+# Generated documentation
+doc/generated
+doc/schema
+doc/_build
+
 # excel files
 *.xlsx

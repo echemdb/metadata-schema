@@ -34,7 +34,7 @@ class SchemaEnricher:
     examples) to flattened data structures. It automatically prefers resolved schemas
     where all $ref references have been inlined.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Basic usage with schemas::
 
@@ -587,7 +587,7 @@ class SchemaEnricher:
         :param flattened_rows: List of [level, key, value] rows
         :return: List of [level, key, value, example, description] rows
 
-        EXAMPLES::
+        EXAMPLES:
 
             Enriching curation metadata::
 

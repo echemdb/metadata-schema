@@ -20,6 +20,8 @@ classes:
         description: Type or category of instrument.
         examples:
           - value: "potentiostat"
+          - value: "rotator"
+          - value: "mass spectrometer"
       manufacturer:
         range: string
         description: Manufacturer of the instrument.

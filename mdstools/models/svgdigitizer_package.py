@@ -164,7 +164,11 @@ class Quantity(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField"],
-                "examples": [{"value": "mol / l"}],
+                "examples": [
+                    {"value": "mol / l"},
+                    {"value": "V"},
+                    {"value": "mA / cm2"},
+                ],
             }
         },
     )
@@ -310,7 +314,7 @@ class FigureDescription(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "measurementType",
                 "domain_of": ["FigureDescription"],
-                "examples": [{"value": "CV"}],
+                "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "LSV"}],
             }
         },
     )
@@ -383,7 +387,11 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
-                "examples": [{"value": "number"}],
+                "examples": [
+                    {"value": "number"},
+                    {"value": "string"},
+                    {"value": "integer"},
+                ],
             }
         },
     )
@@ -432,7 +440,11 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "dimension",
                 "domain_of": ["DataField"],
-                "examples": [{"value": "potential"}],
+                "examples": [
+                    {"value": "potential"},
+                    {"value": "time"},
+                    {"value": "current density"},
+                ],
             }
         },
     )
@@ -443,7 +455,7 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField"],
-                "examples": [{"value": "V"}],
+                "examples": [{"value": "V"}, {"value": "mA / cm2"}, {"value": "s"}],
             }
         },
     )
@@ -454,7 +466,7 @@ class DataField(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "reference",
                 "domain_of": ["DataField"],
-                "examples": [{"value": "RHE"}],
+                "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
         },
     )
@@ -593,7 +605,11 @@ class SvgdigitizerExperimental(ConfiguredBaseModel):
         default=None,
         description="""List of tags describing the experiment or measurement.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "tags", "domain_of": ["SvgdigitizerExperimental"]}
+            "linkml_meta": {
+                "alias": "tags",
+                "domain_of": ["SvgdigitizerExperimental"],
+                "examples": [{"value": "BCV"}, {"value": "ORR"}, {"value": "HER"}],
+            }
         },
     )
 
@@ -616,7 +632,7 @@ class SvgdigitizerSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "figure",
                 "domain_of": ["SvgdigitizerSource"],
-                "examples": [{"value": "2a"}],
+                "examples": [{"value": "2a"}, {"value": "1"}, {"value": "S3b"}],
             }
         },
     )
@@ -627,7 +643,7 @@ class SvgdigitizerSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "curve",
                 "domain_of": ["SvgdigitizerSource"],
-                "examples": [{"value": "blue"}],
+                "examples": [{"value": "blue"}, {"value": "solid"}, {"value": "1"}],
             }
         },
     )
@@ -646,7 +662,11 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         default=None,
         description="""URL or DOI of the source publication.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "url", "domain_of": ["SvgdigitizerSource"]}
+            "linkml_meta": {
+                "alias": "url",
+                "domain_of": ["SvgdigitizerSource"],
+                "examples": [{"value": "https://doi.org/10.1039/C0CP01001D"}],
+            }
         },
     )
     bibdata: Optional[str] = Field(
@@ -669,7 +689,11 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         default=None,
         description="""Techniques used in the source data.""",
         json_schema_extra={
-            "linkml_meta": {"alias": "techniques", "domain_of": ["SvgdigitizerSource"]}
+            "linkml_meta": {
+                "alias": "techniques",
+                "domain_of": ["SvgdigitizerSource"],
+                "examples": [{"value": "CV"}, {"value": "LSV"}, {"value": "CA"}],
+            }
         },
     )
 

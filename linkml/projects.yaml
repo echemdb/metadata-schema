@@ -32,6 +32,7 @@ classes:
         description: Type or category of project.
         examples:
           - value: "ERC Starting Grant"
+          - value: "DFG Collaborative Research Center"
       url:
         range: HttpUrl
         description: URL to project website or information page.

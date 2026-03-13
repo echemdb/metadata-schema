@@ -123,7 +123,7 @@ def _check_property_key(path, dotted_path, key, prefix=""):
     r"""
     Return a violation tuple if *key* is not camelCase, else ``None``.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Valid camelCase returns ``None``::
 
@@ -148,7 +148,7 @@ def _check_definition_name(path, def_name):
     r"""
     Return a violation tuple if *def_name* is not PascalCase, else ``None``.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Valid PascalCase returns ``None``::
 

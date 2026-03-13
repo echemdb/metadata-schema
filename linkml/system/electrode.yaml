@@ -50,6 +50,8 @@ classes:
         description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).
         examples:
           - value: "RHE"
+          - value: "Ag/AgCl"
+          - value: "SCE"
       description:
         range: string
         description: Detailed description of the electrode (especially for custom-made electrodes).
@@ -82,16 +84,21 @@ classes:
         description: Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.
         examples:
           - value: "single crystal"
+          - value: "powder catalyst"
+          - value: "metal wire"
       material:
         range: string
         description: Chemical symbol or abbreviation of the electrode material.
         examples:
           - value: "Pt"
+          - value: "Au"
+          - value: "GC"
       crystallographicOrientation:
         range: string
         description: Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.
         examples:
           - value: "(1 1 1)"
+          - value: "poly"
 
   ElectrodeSource:
     description: Information about the source and supplier of the electrode.
@@ -134,6 +141,8 @@ classes:
         description: Type or shape of electrode.
         examples:
           - value: "disc"
+          - value: "wire"
+          - value: "rod"
       height:
         range: Quantity
         description: Height of the electrode.

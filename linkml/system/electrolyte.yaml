@@ -93,6 +93,8 @@ classes:
         description: The type of the container, i.e., a flask.
         examples:
           - value: "PTFE"
+          - value: "glass"
+          - value: "borosilicate glass"
       comment:
         range: string
         description: Additional notes.

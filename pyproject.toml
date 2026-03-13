@@ -11,14 +11,14 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "click>=8,<9",
-    "pandas",
-    "tabulate",
-    "xlsxwriter",
-    "jsonschema",
-    "jsonref",
-    "referencing",
-    "linkml",
-    "linkml-runtime",
+    "pandas>=2,<4",
+    "tabulate>=0.9,<1",
+    "xlsxwriter>=3,<4",
+    "jsonschema>=4,<5",
+    "jsonref>=1.1,<2",
+    "referencing>=0.35,<1",
+    "linkml>=1.9,<2",
+    "linkml-runtime>=1.9,<1.10",
 ]
 
 [project.scripts]
@@ -44,7 +44,7 @@ python-311 = ["test", "python-311"]
 python-312 = ["test", "python-312"]
 python-313 = ["test", "python-313"]
 python-314 = ["test", "python-314"]
-dev = ["dev", "test", "lint", "validate"] #, "doc"
+dev = ["dev", "test", "lint", "validate", "doc"]
 release = ["release"]
 
 [tool.pixi.dependencies]
@@ -60,7 +60,7 @@ pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
 linkml = ">=1.9,<2"
-linkml-runtime = ">=1.9,<2"
+linkml-runtime = ">=1.9,<1.10"
 jsonref = ">=1.1.0,<2"
 
 
@@ -88,7 +88,7 @@ pytest-doctestplus = ">=1.7.1,<2"
 pytest-remotedata = ">=0.4.1,<0.5"
 
 [tool.pixi.feature.test.tasks]
-doctest = "pytest -n auto --doctest-modules mdstools"
+doctest = "pytest -n auto --doctest-modules mdstools --ignore=mdstools/test/test_comprehensive.py --ignore=mdstools/test/test_resolved_schemas.py"
 test-comprehensive = "pytest mdstools/test/test_comprehensive.py -v"
 test-resolved-schemas = "pytest mdstools/test/test_resolved_schemas.py -v"
 test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
@@ -132,6 +132,20 @@ validate-package-schemas = "python mdstools/schema/validate_examples.py --packag
 check-naming = "python mdstools/schema/check_naming.py"
 validate = { depends-on = ["validate-objects", "validate-file-schemas", "validate-package-schemas", "check-naming"] }
 
+
+[tool.pixi.feature.doc.dependencies]
+make = "*"
+myst-parser = "*"
+sphinx = "*"
+sphinx-design = "*"
+sphinx_rtd_theme = "*"
+sphinxcontrib-mermaid = "*"
+
+[tool.pixi.feature.doc.tasks]
+generate-doc-schemas = { cmd = "python doc/generate_schema_docs.py" }
+doc = { cmd = "cd doc && make html SPHINXOPTS='-j auto -W -n --keep-going'", depends-on = ["generate-doc-schemas"] }
+doc-serve = { cmd = "python -m http.server -d doc/generated/html -b localhost 8080", depends-on = ["doc"] }
+linkcheck = "cd doc && make linkcheck"
 
 [tool.pixi.target.win-64.dependencies]
 m2-bash = ">=5.2.37.2,<6"

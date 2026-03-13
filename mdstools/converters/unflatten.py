@@ -27,7 +27,7 @@ def _build_tree(rows):
     :param rows: List of [number, key, value] rows (no header)
     :return: Tuple of (tree dict, list of root number strings)
 
-    EXAMPLES::
+    EXAMPLES:
 
         Simple rows produce a tree with one root::
 
@@ -95,7 +95,7 @@ def _is_list_index(s):
     :param s: A string segment (e.g. ``"i1"``, ``"i12"``, ``"3"``)
     :return: ``True`` if *s* matches the ``i<n>`` pattern
 
-    EXAMPLES::
+    EXAMPLES:
 
         Valid list indices::
 
@@ -137,7 +137,7 @@ def _build_structure(tree, number):
     :param number: The node number to start building from
     :return: A dict, list, or scalar value
 
-    EXAMPLES::
+    EXAMPLES:
 
         Dict node::
 
@@ -203,7 +203,7 @@ def unflatten(rows):
     :param rows: List of [number, key, value] rows
     :return: Reconstructed nested dictionary
 
-    EXAMPLES::
+    EXAMPLES:
 
         Simple key-value pairs::
 
