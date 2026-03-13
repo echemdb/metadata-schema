@@ -30,3 +30,8 @@ classes:
         description: InChIKey (hashed InChI for easier searching).
         examples:
           - value: "QAOWNCQODCNURD-UHFFFAOYSA-N"
+      smiles:
+        range: string
+        description: SMILES (Simplified Molecular Input Line Entry System).
+        examples:
+          - value: "[Cl-].[Cl-].[Ca+2]"
