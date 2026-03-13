@@ -155,11 +155,6 @@ m2-bash = ">=5.2.37.2,<6"
 rever = { args = [ { "arg" = "version", "default" = "--help" } ],cmd = "rever {{ version }}" }
 
 [tool.pixi.feature.release.dependencies]
-twine = ">=6.2.0,<7"
 rever = ">=0.5.1,<0.6"
 make = ">=4.4.1,<5"
-setuptools = ">=80.10.2,<81"
 python = "*"
-
-[tool.pixi.feature.release.pypi-dependencies]
-build = ">=1.4.0, <2"
