@@ -124,6 +124,13 @@
             "string",
             "null"
           ]
+        },
+        "smiles": {
+          "description": "SMILES (Simplified Molecular Input Line Entry System).",
+          "type": [
+            "string",
+            "null"
+          ]
         }
       },
       "title": "ChemicalIdentifiers",
