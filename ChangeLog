@@ -4,6 +4,42 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.6.0
+====================
+
+**Added:**
+
+* Added a documentation.
+* Added several doctests to docstrings.
+* Added ``to_latex()`` export to ``FlattenedMetadata`` and ``EnrichedFlattenedMetadata``.
+* Added optional ``filepath`` parameter to ``to_markdown()`` and ``to_latex()`` for saving directly to file.
+* Added Markdown (``.md``) and LaTeX (``.tex``) export to the ``flatten`` CLI command.
+* Added ``validate()`` function and per-schema convenience wrappers
+  (``validate_svgdigitizer()``, ``validate_autotag()``, etc.) that fetch
+  JSON schemas directly from the metadata-schema GitHub repository and
+  validate metadata dicts or YAML/JSON files against them.  A ``version``
+  parameter selects the git tag or branch (default ``main``).
+
+**Changed:**
+
+* Replaced custom ``$ref`` resolution in the schema enricher with the ``jsonref`` library.
+  The ``SchemaEnricher`` now resolves all ``$ref`` at load time via ``jsonref.replace_refs()``,
+  removing ~95 lines of hand-written ref-walking code (``_resolve_ref``, ``_follow_refs``).
+  External Frictionless URLs are mapped to locally cached schema files.
+* Changed flattened metadata handling to remove empty nested structures.
+* Changed release workflow: replaced local ``ghrelease`` rever activity (broken due to ``github3.py`` authentication issues) with a tag-triggered GitHub Actions workflow that creates GitHub releases from ``rever/LATEST`` changelog.
+
+**Removed:**
+
+* Removed ``twine``, ``build``, and ``setuptools`` from release dependencies (not needed since this project is not published to PyPI).
+
+**Fixed:**
+
+* Fixed schemas, to show ID, description, etc at the top of the file.
+* Fixed schemas, allowing SMILES chemical identifier.
+
+
+
 v0.5.1
 ====================
 
