@@ -1,0 +1,89 @@
+
+
+# Slot: ph 
+
+
+_pH value of the electrolyte solution._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/ph](https://echemdb.github.io/metadata-schema/minimum_echemdb/ph)
+Alias: ph
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 1, unit: ''} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/ph |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/ph |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: ph
+description: pH value of the electrolyte solution.
+examples:
+- value: '{value: 1, unit: ''''}'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: ph
+owner: Electrolyte
+domain_of:
+- Electrolyte
+range: Quantity
+inlined: true
+
+```
+</details>

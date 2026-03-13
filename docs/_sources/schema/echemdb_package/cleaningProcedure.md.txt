@@ -1,0 +1,88 @@
+
+
+# Slot: cleaningProcedure 
+
+
+_Procedure used to clean the cell before experiments._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/cleaningProcedure](https://echemdb.github.io/metadata-schema/echemdb_package/cleaningProcedure)
+Alias: cleaningProcedure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/cleaningProcedure |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/cleaningProcedure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: cleaningProcedure
+description: Procedure used to clean the cell before experiments.
+examples:
+- value: Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: cleaningProcedure
+owner: ElectrochemicalCell
+domain_of:
+- ElectrochemicalCell
+range: string
+
+```
+</details>

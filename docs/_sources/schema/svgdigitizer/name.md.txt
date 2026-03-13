@@ -1,0 +1,77 @@
+
+
+# Slot: name 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/name](https://echemdb.github.io/metadata-schema/svgdigitizer/name)
+Alias: name
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Process](Process.md) | A person involved in the data curation process |  no  |
+| [Project](Project.md) | Information about a research project or funding source |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) | A component of the electrolyte container |  no  |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |  no  |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/name |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/name |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: name
+alias: name
+domain_of:
+- Process
+- Instrumentation
+- DataField
+- Project
+- Electrode
+- Component
+- ElectrolyteContainerComponent
+- ElectrochemicalCellComponent
+range: string
+
+```
+</details>

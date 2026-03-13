@@ -1,0 +1,88 @@
+
+
+# Slot: cas 
+
+
+_CAS Registry Number (Chemical Abstracts Service identifier)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/cas](https://echemdb.github.io/metadata-schema/svgdigitizer/cas)
+Alias: cas
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 7664-93-9 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/cas |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/cas |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: cas
+description: CAS Registry Number (Chemical Abstracts Service identifier).
+examples:
+- value: 7664-93-9
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: cas
+owner: ChemicalIdentifiers
+domain_of:
+- ChemicalIdentifiers
+range: string
+
+```
+</details>

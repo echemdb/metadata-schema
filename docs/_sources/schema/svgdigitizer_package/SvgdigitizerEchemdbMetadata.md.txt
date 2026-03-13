@@ -1,0 +1,205 @@
+
+
+
+
+# Class: SvgdigitizerEchemdbMetadata 
+
+
+_Simplified echemdb metadata for digitized data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerEchemdbMetadata](https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerEchemdbMetadata)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SvgdigitizerEchemdbMetadata
+    click SvgdigitizerEchemdbMetadata href "../SvgdigitizerEchemdbMetadata/"
+      SvgdigitizerEchemdbMetadata : experimental
+        
+          
+    
+        
+        
+        SvgdigitizerEchemdbMetadata --> "0..1" SvgdigitizerExperimental : experimental
+        click SvgdigitizerExperimental href "../SvgdigitizerExperimental/"
+    
+
+        
+      SvgdigitizerEchemdbMetadata : figureDescription
+        
+          
+    
+        
+        
+        SvgdigitizerEchemdbMetadata --> "1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      SvgdigitizerEchemdbMetadata : source
+        
+          
+    
+        
+        
+        SvgdigitizerEchemdbMetadata --> "0..1" SvgdigitizerSource : source
+        click SvgdigitizerSource href "../SvgdigitizerSource/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [experimental](experimental.md) | 0..1 <br/> [SvgdigitizerExperimental](SvgdigitizerExperimental.md) | Experimental tags or keywords |  |
+| [figureDescription](figureDescription.md) | 1 <br/> [FigureDescription](FigureDescription.md) | Description of the digitized figure |  |
+| [source](source.md) | 0..1 <br/> [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SvgdigitizerResourceMetadata](SvgdigitizerResourceMetadata.md) | [echemdb](echemdb.md) | range | [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerEchemdbMetadata |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerEchemdbMetadata |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SvgdigitizerEchemdbMetadata
+description: Simplified echemdb metadata for digitized data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  experimental:
+    name: experimental
+    description: Experimental tags or keywords.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: SvgdigitizerExperimental
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the digitized figure.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: FigureDescription
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Source publication information for digitized data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: SvgdigitizerSource
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SvgdigitizerEchemdbMetadata
+description: Simplified echemdb metadata for digitized data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  experimental:
+    name: experimental
+    description: Experimental tags or keywords.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: experimental
+    owner: SvgdigitizerEchemdbMetadata
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: SvgdigitizerExperimental
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the digitized figure.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: figureDescription
+    owner: SvgdigitizerEchemdbMetadata
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: FigureDescription
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Source publication information for digitized data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: source
+    owner: SvgdigitizerEchemdbMetadata
+    domain_of:
+    - SvgdigitizerEchemdbMetadata
+    range: SvgdigitizerSource
+    inlined: true
+
+```
+</details>

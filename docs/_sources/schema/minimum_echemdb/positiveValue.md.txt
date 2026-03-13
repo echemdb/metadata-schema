@@ -1,0 +1,88 @@
+
+
+# Slot: positiveValue 
+
+
+_Upper bound (+) for asymmetric uncertainties._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/positiveValue](https://echemdb.github.io/metadata-schema/minimum_echemdb/positiveValue)
+Alias: positiveValue
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Float](Float.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.02 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/positiveValue |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/positiveValue |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: positiveValue
+description: Upper bound (+) for asymmetric uncertainties.
+examples:
+- value: '0.02'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: positiveValue
+owner: Uncertainty
+domain_of:
+- Uncertainty
+range: float
+
+```
+</details>

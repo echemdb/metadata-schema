@@ -1,0 +1,80 @@
+
+
+# Slot: electrochemicalCell 
+
+
+_Description of the electrochemical cell and its configuration._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/electrochemicalCell](https://echemdb.github.io/metadata-schema/echemdb_package/electrochemicalCell)
+Alias: electrochemicalCell
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [ElectrochemicalCell](ElectrochemicalCell.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/electrochemicalCell |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/electrochemicalCell |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: electrochemicalCell
+description: Description of the electrochemical cell and its configuration.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: electrochemicalCell
+owner: System
+domain_of:
+- System
+range: ElectrochemicalCell
+inlined: true
+
+```
+</details>

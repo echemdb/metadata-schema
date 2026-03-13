@@ -1,0 +1,89 @@
+
+
+# Slot: citationKey 
+
+
+_BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber> format._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/citationKey](https://echemdb.github.io/metadata-schema/svgdigitizer_package/citationKey)
+Alias: citationKey
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| doe_2024_electrochemistry_543 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/citationKey |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/citationKey |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: citationKey
+description: BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>
+  format.
+examples:
+- value: doe_2024_electrochemistry_543
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: citationKey
+owner: SvgdigitizerSource
+domain_of:
+- SvgdigitizerSource
+range: string
+
+```
+</details>

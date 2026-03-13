@@ -1,0 +1,83 @@
+
+
+# Slot: curation 
+
+
+_Details on the curation process of the data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/curation](https://echemdb.github.io/metadata-schema/autotag/curation)
+Alias: curation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Curation](Curation.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/curation |
+| native | https://echemdb.github.io/metadata-schema/autotag/curation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: curation
+description: Details on the curation process of the data.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: curation
+owner: Autotag
+domain_of:
+- Autotag
+range: Curation
+required: true
+inlined: true
+
+```
+</details>

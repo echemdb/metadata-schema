@@ -1,0 +1,80 @@
+
+
+# Slot: dialect 
+
+
+_CSV dialect specification describing the format of the source data file._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/dialect](https://echemdb.github.io/metadata-schema/source_data/dialect)
+Alias: dialect
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataDescription](DataDescription.md) | Description of the raw data file format, including CSV dialect, field mapping... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Dialect](Dialect.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/dialect |
+| native | https://echemdb.github.io/metadata-schema/source_data/dialect |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: dialect
+description: CSV dialect specification describing the format of the source data file.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: dialect
+owner: DataDescription
+domain_of:
+- DataDescription
+range: Dialect
+inlined: true
+
+```
+</details>

@@ -1,0 +1,64 @@
+# Enum: ElectrodeFunction 
+
+
+
+
+_Role of the electrode in the electrochemical cell._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/ElectrodeFunction](https://echemdb.github.io/metadata-schema/source_data/ElectrodeFunction)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| working electrode | None | Electrode where the reaction of interest occurs |
+| counter electrode | None | Electrode that completes the circuit |
+| reference electrode | None | Electrode providing a stable reference potential |
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: ElectrodeFunction
+description: Role of the electrode in the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+permissible_values:
+  working electrode:
+    text: working electrode
+    description: Electrode where the reaction of interest occurs.
+  counter electrode:
+    text: counter electrode
+    description: Electrode that completes the circuit.
+  reference electrode:
+    text: reference electrode
+    description: Electrode providing a stable reference potential.
+
+```
+</details>

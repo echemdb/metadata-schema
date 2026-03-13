@@ -1,0 +1,310 @@
+
+
+
+
+# Class: Uncertainty 
+
+
+_Uncertainty information for a measured quantity._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/Uncertainty](https://echemdb.github.io/metadata-schema/minimum_echemdb/Uncertainty)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Uncertainty
+    click Uncertainty href "../Uncertainty/"
+      Uncertainty : comment
+        
+      Uncertainty : negativeValue
+        
+      Uncertainty : positiveValue
+        
+      Uncertainty : type
+        
+          
+    
+        
+        
+        Uncertainty --> "0..1" UncertaintyType : type
+        click UncertaintyType href "../UncertaintyType/"
+    
+
+        
+      Uncertainty : unit
+        
+      Uncertainty : value
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [value](value.md) | 0..1 <br/> [Float](Float.md) | Symmetric uncertainty value (±) | `0.01` |
+| [unit](unit.md) | 0..1 <br/> [String](String.md) | Unit of the uncertainty value, following astropy's string notation | `mol / l` |
+| [positiveValue](positiveValue.md) | 0..1 <br/> [Float](Float.md) | Upper bound (+) for asymmetric uncertainties | `0.02` |
+| [negativeValue](negativeValue.md) | 0..1 <br/> [Float](Float.md) | Lower bound (-) for asymmetric uncertainties | `0.01` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional information about the uncertainty estimation | `Standard deviation from 3 replicate measurements` |
+| [type](type.md) | 0..1 <br/> [UncertaintyType](UncertaintyType.md) | Type of uncertainty (absolute or relative) | `absolute`,  `relative` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Quantity](Quantity.md) | [uncertainty](uncertainty.md) | range | [Uncertainty](Uncertainty.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/Uncertainty |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/Uncertainty |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Uncertainty
+description: Uncertainty information for a measured quantity.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  value:
+    name: value
+    description: Symmetric uncertainty value (±).
+    examples:
+    - value: '0.01'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit of the uncertainty value, following astropy's string notation.
+      Use an empty string for dimensionless quantities.
+    examples:
+    - value: mol / l
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    range: string
+  positiveValue:
+    name: positiveValue
+    description: Upper bound (+) for asymmetric uncertainties.
+    examples:
+    - value: '0.02'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Uncertainty
+    range: float
+  negativeValue:
+    name: negativeValue
+    description: Lower bound (-) for asymmetric uncertainties.
+    examples:
+    - value: '0.01'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Uncertainty
+    range: float
+  comment:
+    name: comment
+    description: Additional information about the uncertainty estimation.
+    examples:
+    - value: Standard deviation from 3 replicate measurements
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    - FigureDescription
+    range: string
+  type:
+    name: type
+    description: Type of uncertainty (absolute or relative).
+    examples:
+    - value: absolute
+    - value: relative
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: UncertaintyType
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Uncertainty
+description: Uncertainty information for a measured quantity.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  value:
+    name: value
+    description: Symmetric uncertainty value (±).
+    examples:
+    - value: '0.01'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    alias: value
+    owner: Uncertainty
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit of the uncertainty value, following astropy's string notation.
+      Use an empty string for dimensionless quantities.
+    examples:
+    - value: mol / l
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    alias: unit
+    owner: Uncertainty
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    range: string
+  positiveValue:
+    name: positiveValue
+    description: Upper bound (+) for asymmetric uncertainties.
+    examples:
+    - value: '0.02'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: positiveValue
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: float
+  negativeValue:
+    name: negativeValue
+    description: Lower bound (-) for asymmetric uncertainties.
+    examples:
+    - value: '0.01'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: negativeValue
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    range: float
+  comment:
+    name: comment
+    description: Additional information about the uncertainty estimation.
+    examples:
+    - value: Standard deviation from 3 replicate measurements
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    alias: comment
+    owner: Uncertainty
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    - FigureDescription
+    range: string
+  type:
+    name: type
+    description: Type of uncertainty (absolute or relative).
+    examples:
+    - value: absolute
+    - value: relative
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: type
+    owner: Uncertainty
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: UncertaintyType
+
+```
+</details>

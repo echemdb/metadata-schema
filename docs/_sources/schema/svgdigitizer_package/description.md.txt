@@ -1,0 +1,88 @@
+
+
+# Slot: description 
+
+
+_A description of that field._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/description](https://echemdb.github.io/metadata-schema/svgdigitizer_package/description)
+Alias: description
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| The potential measured between the working electrode and reference electrode. |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/description |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/description |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: description
+description: A description of that field.
+examples:
+- value: The potential measured between the working electrode and reference electrode.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: description
+owner: DataField
+domain_of:
+- DataField
+range: string
+
+```
+</details>

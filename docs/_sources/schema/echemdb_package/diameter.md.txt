@@ -1,0 +1,89 @@
+
+
+# Slot: diameter 
+
+
+_Diameter of the electrode (for cylindrical shapes)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/diameter](https://echemdb.github.io/metadata-schema/echemdb_package/diameter)
+Alias: diameter
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 5, unit: mm} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/diameter |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/diameter |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: diameter
+description: Diameter of the electrode (for cylindrical shapes).
+examples:
+- value: '{value: 5, unit: mm}'
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: diameter
+owner: Shape
+domain_of:
+- Shape
+range: Quantity
+inlined: true
+
+```
+</details>

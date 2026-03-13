@@ -1,0 +1,69 @@
+
+
+# Slot: components 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/components](https://echemdb.github.io/metadata-schema/source_data/components)
+Alias: components
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/components |
+| native | https://echemdb.github.io/metadata-schema/source_data/components |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: components
+alias: components
+domain_of:
+- Electrolyte
+- ElectrolyteContainer
+- ElectrochemicalCell
+- Atmosphere
+range: string
+
+```
+</details>

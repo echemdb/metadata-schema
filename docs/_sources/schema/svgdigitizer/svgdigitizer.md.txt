@@ -1,0 +1,5 @@
+# svgdigitizer 
+
+Metadata schema for the input YAML file used by svgdigitizer.
+
+URI: https://echemdb.github.io/metadata-schema/svgdigitizer

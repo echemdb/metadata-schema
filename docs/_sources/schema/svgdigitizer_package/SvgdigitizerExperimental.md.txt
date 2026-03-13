@@ -1,0 +1,138 @@
+
+
+
+
+# Class: SvgdigitizerExperimental 
+
+
+_Experimental tags or keywords for svgdigitizer._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerExperimental](https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerExperimental)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SvgdigitizerExperimental
+    click SvgdigitizerExperimental href "../SvgdigitizerExperimental/"
+      SvgdigitizerExperimental : tags
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [tags](tags.md) | * <br/> [String](String.md) | List of tags describing the experiment or measurement | `BCV`,  `ORR`,  `HER` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) | [experimental](experimental.md) | range | [SvgdigitizerExperimental](SvgdigitizerExperimental.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerExperimental |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerExperimental |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SvgdigitizerExperimental
+description: Experimental tags or keywords for svgdigitizer.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  tags:
+    name: tags
+    description: List of tags describing the experiment or measurement.
+    examples:
+    - value: BCV
+    - value: ORR
+    - value: HER
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerExperimental
+    range: string
+    multivalued: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SvgdigitizerExperimental
+description: Experimental tags or keywords for svgdigitizer.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  tags:
+    name: tags
+    description: List of tags describing the experiment or measurement.
+    examples:
+    - value: BCV
+    - value: ORR
+    - value: HER
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: tags
+    owner: SvgdigitizerExperimental
+    domain_of:
+    - SvgdigitizerExperimental
+    range: string
+    multivalued: true
+
+```
+</details>

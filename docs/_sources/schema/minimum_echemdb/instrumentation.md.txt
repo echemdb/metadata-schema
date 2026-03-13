@@ -1,0 +1,84 @@
+
+
+# Slot: instrumentation 
+
+
+_Instruments and equipment used in the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/instrumentation](https://echemdb.github.io/metadata-schema/minimum_echemdb/instrumentation)
+Alias: instrumentation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Instrumentation](Instrumentation.md)
+
+* Multivalued: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/instrumentation |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/instrumentation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: instrumentation
+description: Instruments and equipment used in the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: instrumentation
+owner: Experimental
+domain_of:
+- Experimental
+range: Instrumentation
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

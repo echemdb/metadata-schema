@@ -1,0 +1,257 @@
+
+
+
+
+# Class: FieldUnit 
+
+
+_Unit specification for a data field, following astropy's string unit notation._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/FieldUnit](https://echemdb.github.io/metadata-schema/source_data/FieldUnit)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class FieldUnit
+    click FieldUnit href "../FieldUnit/"
+      FieldUnit : description
+        
+      FieldUnit : name
+        
+      FieldUnit : reference
+        
+      FieldUnit : unit
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Standardized name of the data field (after mapping) | `E`,  `j`,  `t` |
+| [unit](unit.md) | 1 <br/> [String](String.md) | Unit of measurement for this field, using astropy's string representation | `V`,  `mA / cm2`,  `s` |
+| [reference](reference.md) | 0..1 <br/> [String](String.md) | Reference electrode or reference point for this field (electrochemistry-speci... | `RHE`,  `Ag/AgCl`,  `SCE` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Optional detailed description of the field and its physical meaning | `Electrode potential vs. reversible hydrogen electrode` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [DataDescription](DataDescription.md) | [fieldUnits](fieldUnits.md) | range | [FieldUnit](FieldUnit.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/FieldUnit |
+| native | https://echemdb.github.io/metadata-schema/source_data/FieldUnit |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: FieldUnit
+description: Unit specification for a data field, following astropy's string unit
+  notation.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  name:
+    name: name
+    description: Standardized name of the data field (after mapping).
+    examples:
+    - value: E
+    - value: j
+    - value: t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Instrumentation
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  unit:
+    name: unit
+    description: Unit of measurement for this field, using astropy's string representation.
+    examples:
+    - value: V
+    - value: mA / cm2
+    - value: s
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  reference:
+    name: reference
+    description: Reference electrode or reference point for this field (electrochemistry-specific).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    domain_of:
+    - DataField
+    - FieldUnit
+    range: string
+  description:
+    name: description
+    description: Optional detailed description of the field and its physical meaning.
+    examples:
+    - value: Electrode potential vs. reversible hydrogen electrode
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - Experimental
+    - DataField
+    - FieldUnit
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: FieldUnit
+description: Unit specification for a data field, following astropy's string unit
+  notation.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  name:
+    name: name
+    description: Standardized name of the data field (after mapping).
+    examples:
+    - value: E
+    - value: j
+    - value: t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    alias: name
+    owner: FieldUnit
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Instrumentation
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  unit:
+    name: unit
+    description: Unit of measurement for this field, using astropy's string representation.
+    examples:
+    - value: V
+    - value: mA / cm2
+    - value: s
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    alias: unit
+    owner: FieldUnit
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  reference:
+    name: reference
+    description: Reference electrode or reference point for this field (electrochemistry-specific).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    alias: reference
+    owner: FieldUnit
+    domain_of:
+    - DataField
+    - FieldUnit
+    range: string
+  description:
+    name: description
+    description: Optional detailed description of the field and its physical meaning.
+    examples:
+    - value: Electrode potential vs. reversible hydrogen electrode
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    alias: description
+    owner: FieldUnit
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - Experimental
+    - DataField
+    - FieldUnit
+    range: string
+
+```
+</details>

@@ -1,0 +1,69 @@
+
+
+# Slot: purity 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/purity](https://echemdb.github.io/metadata-schema/minimum_echemdb/purity)
+Alias: purity
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/purity |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/purity |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: purity
+alias: purity
+domain_of:
+- Electrode
+- ElectrodeSource
+- Component
+- ComponentSource
+range: string
+
+```
+</details>

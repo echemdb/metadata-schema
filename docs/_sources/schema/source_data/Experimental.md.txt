@@ -1,0 +1,252 @@
+
+
+
+
+# Class: Experimental 
+
+
+_Details about the configuration of the experimental setup._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/Experimental](https://echemdb.github.io/metadata-schema/source_data/Experimental)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Experimental
+    click Experimental href "../Experimental/"
+      Experimental : description
+        
+      Experimental : instrumentation
+        
+          
+    
+        
+        
+        Experimental --> "*" Instrumentation : instrumentation
+        click Instrumentation href "../Instrumentation/"
+    
+
+        
+      Experimental : tags
+        
+      Experimental : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [tags](tags.md) | * <br/> [String](String.md) | Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or M... | `BCV`,  `ORR`,  `COOR`,  `FAOR` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to related documentation, publication (DOI), or ELN entry | `https://doi.org/10.1234/experiment.2024` |
+| [instrumentation](instrumentation.md) | * <br/> [Instrumentation](Instrumentation.md) | Instruments and equipment used in the experiment |  |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Detailed description of the experimental setup and conditions | `Cyclic voltammetry performed at room temperature with 50 mV/s scan rate` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SourceData](SourceData.md) | [experimental](experimental.md) | range | [Experimental](Experimental.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/Experimental |
+| native | https://echemdb.github.io/metadata-schema/source_data/Experimental |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Experimental
+description: Details about the configuration of the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  tags:
+    name: tags
+    description: Keywords or tags describing the experiment, such as BCV, ORR, COOR,
+      XPS, or MS.
+    examples:
+    - value: BCV
+    - value: ORR
+    - value: COOR
+    - value: FAOR
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    rank: 1000
+    domain_of:
+    - Experimental
+    range: string
+    multivalued: true
+  url:
+    name: url
+    description: URL to related documentation, publication (DOI), or ELN entry.
+    examples:
+    - value: https://doi.org/10.1234/experiment.2024
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  instrumentation:
+    name: instrumentation
+    description: Instruments and equipment used in the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    rank: 1000
+    domain_of:
+    - Experimental
+    range: Instrumentation
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  description:
+    name: description
+    description: Detailed description of the experimental setup and conditions.
+    examples:
+    - value: Cyclic voltammetry performed at room temperature with 50 mV/s scan rate
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - Experimental
+    - DataField
+    - FieldUnit
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Experimental
+description: Details about the configuration of the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  tags:
+    name: tags
+    description: Keywords or tags describing the experiment, such as BCV, ORR, COOR,
+      XPS, or MS.
+    examples:
+    - value: BCV
+    - value: ORR
+    - value: COOR
+    - value: FAOR
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    rank: 1000
+    alias: tags
+    owner: Experimental
+    domain_of:
+    - Experimental
+    range: string
+    multivalued: true
+  url:
+    name: url
+    description: URL to related documentation, publication (DOI), or ELN entry.
+    examples:
+    - value: https://doi.org/10.1234/experiment.2024
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    alias: url
+    owner: Experimental
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  instrumentation:
+    name: instrumentation
+    description: Instruments and equipment used in the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    rank: 1000
+    alias: instrumentation
+    owner: Experimental
+    domain_of:
+    - Experimental
+    range: Instrumentation
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  description:
+    name: description
+    description: Detailed description of the experimental setup and conditions.
+    examples:
+    - value: Cyclic voltammetry performed at room temperature with 50 mV/s scan rate
+    from_schema: https://echemdb.github.io/metadata-schema/experimental
+    alias: description
+    owner: Experimental
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - Experimental
+    - DataField
+    - FieldUnit
+    range: string
+
+```
+</details>

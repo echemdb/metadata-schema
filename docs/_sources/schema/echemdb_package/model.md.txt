@@ -1,0 +1,65 @@
+
+
+# Slot: model 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/model](https://echemdb.github.io/metadata-schema/echemdb_package/model)
+Alias: model
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/model |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/model |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: model
+alias: model
+domain_of:
+- Instrumentation
+- ElectrodeSource
+range: string
+
+```
+</details>

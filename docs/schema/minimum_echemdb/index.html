@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>minimum_echemdb &mdash; metadata-schema 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8fa8b3e9"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Class: Atmosphere" href="Atmosphere.html" />
+    <link rel="prev" title="Slot: value" href="../autotag/value.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../schemas.html">Schema Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../schemas.html#available-schemas">Available schemas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../schemas.html#schema-generation">Schema generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../schemas.html#validation">Validation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../schemas.html#schema-details">Schema details</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../autotag/index.html">autotag</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">minimum_echemdb</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#slots">Slots</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#enumerations">Enumerations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#types">Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../source_data/index.html">source_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../svgdigitizer/index.html">svgdigitizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../echemdb_package/index.html">echemdb_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../svgdigitizer_package/index.html">svgdigitizer_package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Example Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../schemas.html">Schema Reference</a></li>
+      <li class="breadcrumb-item active">minimum_echemdb</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/schema/minimum_echemdb/index.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="minimum-echemdb">
+<h1>minimum_echemdb<a class="headerlink" href="#minimum-echemdb" title="Link to this heading"></a></h1>
+<p>Minimum set of metadata to describe an electrochemical system for echemdb.</p>
+<p>URI: https://echemdb.github.io/metadata-schema/minimum_echemdb</p>
+<p>Name: minimum_echemdb</p>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Class</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="Atmosphere.html"><span class="std std-doc">Atmosphere</span></a></p></td>
+<td><p>Atmospheric conditions and gas composition during the experiment</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ChemicalIdentifiers.html"><span class="std std-doc">ChemicalIdentifiers</span></a></p></td>
+<td><p>Standard chemical identifiers for unambiguous identification of compounds</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Component.html"><span class="std std-doc">Component</span></a></p></td>
+<td><p>A chemical component of the electrolyte solution</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ComponentSource.html"><span class="std std-doc">ComponentSource</span></a></p></td>
+<td><p>Information about the source and quality of the chemical component</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Curation.html"><span class="std std-doc">Curation</span></a></p></td>
+<td><p>Details on the curation process of the data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="DataField.html"><span class="std std-doc">DataField</span></a></p></td>
+<td><p>Description of a data field (column) compatible with frictionless table-schem…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ElectrochemicalCell.html"><span class="std std-doc">ElectrochemicalCell</span></a></p></td>
+<td><p>Description of the electrochemical cell setup and configuration</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ElectrochemicalCellComponent.html"><span class="std std-doc">ElectrochemicalCellComponent</span></a></p></td>
+<td><p>A component or part of the electrochemical cell</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ElectrochemicalCellSource.html"><span class="std std-doc">ElectrochemicalCellSource</span></a></p></td>
+<td><p>Source information for the electrochemical cell</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Electrode.html"><span class="std std-doc">Electrode</span></a></p></td>
+<td><p>An electrode used in the electrochemical cell, such as working, reference, co…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ElectrodePreparation.html"><span class="std std-doc">ElectrodePreparation</span></a></p></td>
+<td><p>Procedures and methods used to prepare the electrode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ElectrodeSource.html"><span class="std std-doc">ElectrodeSource</span></a></p></td>
+<td><p>Information about the source and supplier of the electrode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Electrolyte.html"><span class="std std-doc">Electrolyte</span></a></p></td>
+<td><p>The properties and components of the electrolyte solution</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ElectrolyteContainer.html"><span class="std std-doc">ElectrolyteContainer</span></a></p></td>
+<td><p>Container used to prepare or store the electrolyte before the measurement</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ElectrolyteContainerComponent.html"><span class="std std-doc">ElectrolyteContainerComponent</span></a></p></td>
+<td><p>A component of the electrolyte container</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Experimental.html"><span class="std std-doc">Experimental</span></a></p></td>
+<td><p>Details about the configuration of the experimental setup</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="FigureDescription.html"><span class="std std-doc">FigureDescription</span></a></p></td>
+<td><p>Description of the data to a figure or plot including data type and measureme…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Instrumentation.html"><span class="std std-doc">Instrumentation</span></a></p></td>
+<td><p>The instruments used to perform the experiment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="MinimumEchemdb.html"><span class="std std-doc">MinimumEchemdb</span></a></p></td>
+<td><p>Minimum set of metadata to describe an electrochemical system for echemdb</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Process.html"><span class="std std-doc">Process</span></a></p></td>
+<td><p>A person involved in the data curation process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Purity.html"><span class="std std-doc">Purity</span></a></p></td>
+<td><p>Purity specifications of a chemical component</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Quantity.html"><span class="std std-doc">Quantity</span></a></p></td>
+<td><p>A physical quantity with a value, unit, and optional uncertainty</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Shape.html"><span class="std std-doc">Shape</span></a></p></td>
+<td><p>Physical dimensions and shape of the electrode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Source.html"><span class="std std-doc">Source</span></a></p></td>
+<td><p>Information about the source publication or dataset</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="System.html"><span class="std std-doc">System</span></a></p></td>
+<td><p>Description of the experimental system including electrodes, electrolyte, and…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Uncertainty.html"><span class="std std-doc">Uncertainty</span></a></p></td>
+<td><p>Uncertainty information for a measured quantity</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="slots">
+<h2>Slots<a class="headerlink" href="#slots" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Slot</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="atmosphere.html"><span class="std std-doc">atmosphere</span></a></p></td>
+<td><p>Atmospheric conditions during the experiment</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="bibdata.html"><span class="std std-doc">bibdata</span></a></p></td>
+<td><p>BibTeX bibliographic data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="calculation.html"><span class="std std-doc">calculation</span></a></p></td>
+<td><p>Method or formula used to calculate this quantity</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="cas.html"><span class="std std-doc">cas</span></a></p></td>
+<td><p>CAS Registry Number (Chemical Abstracts Service identifier)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="cellDescription.html"><span class="std std-doc">cellDescription</span></a></p></td>
+<td><p>Detailed description of the cell configuration</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="chemicalIdentifiers.html"><span class="std std-doc">chemicalIdentifiers</span></a></p></td>
+<td><p>Standard chemical identifiers (CAS, SMILES, InChI, etc</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="citationKey.html"><span class="std std-doc">citationKey</span></a></p></td>
+<td><p>Unique citation key for bibliographic reference, usually <FirstAuthorName>_&lt;Y…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="cleaningProcedure.html"><span class="std std-doc">cleaningProcedure</span></a></p></td>
+<td><p>Procedure used to clean the cell before experiments</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="comment.html"><span class="std std-doc">comment</span></a></p></td>
+<td><p>Additional notes about the measurement or quantity</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="components.html"><span class="std std-doc">components</span></a></p></td>
+<td><p>Chemical components of the electrolyte including solvents, salts, acids, base…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="concentration.html"><span class="std std-doc">concentration</span></a></p></td>
+<td><p>Concentration of the component in the electrolyte</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="container.html"><span class="std std-doc">container</span></a></p></td>
+<td><p>Name or identifier of the container in which the chemical is stored</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="crystallographicOrientation.html"><span class="std std-doc">crystallographicOrientation</span></a></p></td>
+<td><p>Miller indices of the surface orientation or ‘poly’ for polycrystalline</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="curation.html"><span class="std std-doc">curation</span></a></p></td>
+<td><p>Details on the curation process of the data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="curve.html"><span class="std std-doc">curve</span></a></p></td>
+<td><p>Specific curve or trace identifier within a figure</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="date.html"><span class="std std-doc">date</span></a></p></td>
+<td><p>Date when the person performed their role (ISO 8601 format: YYYY-MM-DD)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="description.html"><span class="std std-doc">description</span></a></p></td>
+<td><p>Detailed description of the electrode (especially for custom-made electrodes)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="diameter.html"><span class="std std-doc">diameter</span></a></p></td>
+<td><p>Diameter of the electrode (for cylindrical shapes)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="dimension.html"><span class="std std-doc">dimension</span></a></p></td>
+<td><p>Physical dimension of the field (e</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="electrochemicalCell.html"><span class="std std-doc">electrochemicalCell</span></a></p></td>
+<td><p>Description of the electrochemical cell and its configuration</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="electrodes.html"><span class="std std-doc">electrodes</span></a></p></td>
+<td><p>List of electrodes used in the electrochemical cell (working, reference, coun…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="electrolyte.html"><span class="std std-doc">electrolyte</span></a></p></td>
+<td><p>The electrolyte solution used in the experiment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="electrolyteContainer.html"><span class="std std-doc">electrolyteContainer</span></a></p></td>
+<td><p>Container used to prepare or store the electrolyte before the measurement</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="experimental.html"><span class="std std-doc">experimental</span></a></p></td>
+<td><p>Details about the experimental setup</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="fields.html"><span class="std std-doc">fields</span></a></p></td>
+<td><p>Description of data fields/columns in the figure</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="figure.html"><span class="std std-doc">figure</span></a></p></td>
+<td><p>Figure number or identifier from the source including subfigure label</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="figureDescription.html"><span class="std std-doc">figureDescription</span></a></p></td>
+<td><p>Description of the data to a figure or plot</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="flow.html"><span class="std std-doc">flow</span></a></p></td>
+<td><p>Flow rate for gaseous components</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="format.html"><span class="std std-doc">format</span></a></p></td>
+<td><p>Format specification for the field type (default, email, uri, binary, uuid fo…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="function.html"><span class="std std-doc">function</span></a></p></td>
+<td><p>Role of the electrode in the electrochemical cell</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="geometricElectrolyteContactArea.html"><span class="std std-doc">geometricElectrolyteContactArea</span></a></p></td>
+<td><p>Geometric surface area of electrode in contact with electrolyte</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="grade.html"><span class="std std-doc">grade</span></a></p></td>
+<td><p>Quality grade designation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="height.html"><span class="std std-doc">height</span></a></p></td>
+<td><p>Height of the electrode</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="inchi.html"><span class="std std-doc">inchi</span></a></p></td>
+<td><p>InChI (International Chemical Identifier) string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="inchikey.html"><span class="std std-doc">inchikey</span></a></p></td>
+<td><p>InChIKey (hashed InChI for easier searching)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="instrumentation.html"><span class="std std-doc">instrumentation</span></a></p></td>
+<td><p>Instruments and equipment used in the experiment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="internalLot.html"><span class="std std-doc">internalLot</span></a></p></td>
+<td><p>Internal LOT or batch number</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="length.html"><span class="std std-doc">length</span></a></p></td>
+<td><p>Length of the electrode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="lot.html"><span class="std std-doc">lot</span></a></p></td>
+<td><p>LOT or batch number</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="manufacturer.html"><span class="std std-doc">manufacturer</span></a></p></td>
+<td><p>Name of the electrode manufacturer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="material.html"><span class="std std-doc">material</span></a></p></td>
+<td><p>Chemical symbol or abbreviation of the electrode material</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="measurementType.html"><span class="std std-doc">measurementType</span></a></p></td>
+<td><p>Acronym type for the measurement performed, such as CV, EIS, XPS, etc</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="model.html"><span class="std std-doc">model</span></a></p></td>
+<td><p>Model number or designation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="name.html"><span class="std std-doc">name</span></a></p></td>
+<td><p>Full name of the person</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="negativeValue.html"><span class="std std-doc">negativeValue</span></a></p></td>
+<td><p>Lower bound (-) for asymmetric uncertainties</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="orcid.html"><span class="std std-doc">orcid</span></a></p></td>
+<td><p>An URL containing the ORCID</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="orientation.html"><span class="std std-doc">orientation</span></a></p></td>
+<td><p>Axis orientation in plots (horizontal for x-axis, vertical for y-axis)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="originalFilename.html"><span class="std std-doc">originalFilename</span></a></p></td>
+<td><p>Original filename of the data file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="part.html"><span class="std std-doc">part</span></a></p></td>
+<td><p>Part number or designation</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="partialPressure.html"><span class="std std-doc">partialPressure</span></a></p></td>
+<td><p>Partial pressure of a gaseous / volatile component</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ph.html"><span class="std std-doc">ph</span></a></p></td>
+<td><p>pH value of the electrolyte solution</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="positiveValue.html"><span class="std std-doc">positiveValue</span></a></p></td>
+<td><p>Upper bound (+) for asymmetric uncertainties</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="preparationProcedure.html"><span class="std std-doc">preparationProcedure</span></a></p></td>
+<td><p>Procedures used to prepare the electrode before measurement</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pressure.html"><span class="std std-doc">pressure</span></a></p></td>
+<td><p>Pressure for gaseous components</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="process.html"><span class="std std-doc">process</span></a></p></td>
+<td><p>List of people involved in creating, recording, or curating this data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="proportion.html"><span class="std std-doc">proportion</span></a></p></td>
+<td><p>Proportion of the component (e</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="purity.html"><span class="std std-doc">purity</span></a></p></td>
+<td><p>Purity specifications of the electrode material</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="quality.html"><span class="std std-doc">quality</span></a></p></td>
+<td><p>Quality grade of the chemical</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="redoxSystem.html"><span class="std std-doc">redoxSystem</span></a></p></td>
+<td><p>Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="reference.html"><span class="std std-doc">reference</span></a></p></td>
+<td><p>Reference electrode or reference point for this measurement (electrochemistry…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="refinement.html"><span class="std std-doc">refinement</span></a></p></td>
+<td><p>Description of additional purification or treatment performed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="role.html"><span class="std std-doc">role</span></a></p></td>
+<td><p>Role of the person in the data curation process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="scanRate.html"><span class="std std-doc">scanRate</span></a></p></td>
+<td><p>The rate at which the data has been recorded</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="shape.html"><span class="std std-doc">shape</span></a></p></td>
+<td><p>Physical shape and dimensions of the electrode</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="simultaneousMeasurements.html"><span class="std std-doc">simultaneousMeasurements</span></a></p></td>
+<td><p>Other measurements performed simultaneously, such as ring current, IR, Raman,…</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="smiles.html"><span class="std std-doc">smiles</span></a></p></td>
+<td><p>SMILES (Simplified Molecular Input Line Entry System)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="source.html"><span class="std std-doc">source</span></a></p></td>
+<td><p>Information about the source publication or dataset</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="supplier.html"><span class="std std-doc">supplier</span></a></p></td>
+<td><p>Name of the supplier</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="system.html"><span class="std std-doc">system</span></a></p></td>
+<td><p>Description of the experimental system</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="tags.html"><span class="std std-doc">tags</span></a></p></td>
+<td><p>Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or M…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="techniques.html"><span class="std std-doc">techniques</span></a></p></td>
+<td><p>Experimental techniques used in the study</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="temperature.html"><span class="std std-doc">temperature</span></a></p></td>
+<td><p>Temperature of the electrolyte during the experiment</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="title.html"><span class="std std-doc">title</span></a></p></td>
+<td><p>A human-readable title for this field</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="totalIonConductivity.html"><span class="std std-doc">totalIonConductivity</span></a></p></td>
+<td><p>Value for the total ionic conductivity measurement</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="totalOrganicCarbon.html"><span class="std std-doc">totalOrganicCarbon</span></a></p></td>
+<td><p>Value for the total organic carbon content measurement</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="type.html"><span class="std std-doc">type</span></a></p></td>
+<td><p>Type of uncertainty (absolute or relative)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="uncertainty.html"><span class="std std-doc">uncertainty</span></a></p></td>
+<td><p>Uncertainty information for a measured quantity</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="unit.html"><span class="std std-doc">unit</span></a></p></td>
+<td><p>Unit of measurement following astropy’s string notation (e</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="url.html"><span class="std std-doc">url</span></a></p></td>
+<td><p>URL with further details on the purity or container</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="value.html"><span class="std std-doc">value</span></a></p></td>
+<td><p>Numerical value of the quantity</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="enumerations">
+<h2>Enumerations<a class="headerlink" href="#enumerations" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Enumeration</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="ComponentType.html"><span class="std std-doc">ComponentType</span></a></p></td>
+<td><p>Role or function of the component in the electrolyte</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="CurationRole.html"><span class="std std-doc">CurationRole</span></a></p></td>
+<td><p>Role of a person in the data curation process</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="ElectrodeFunction.html"><span class="std std-doc">ElectrodeFunction</span></a></p></td>
+<td><p>Role of the electrode in the electrochemical cell</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ElectrolyteType.html"><span class="std std-doc">ElectrolyteType</span></a></p></td>
+<td><p>Type of electrolyte defined by the solvent</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="FieldOrientation.html"><span class="std std-doc">FieldOrientation</span></a></p></td>
+<td><p>Axis orientation in plots</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="FigureDescriptionType.html"><span class="std std-doc">FigureDescriptionType</span></a></p></td>
+<td><p>Source or origin of the data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SystemType.html"><span class="std std-doc">SystemType</span></a></p></td>
+<td><p>Type of experimental system</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="UncertaintyType.html"><span class="std std-doc">UncertaintyType</span></a></p></td>
+<td><p>Type of uncertainty measurement</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="Boolean.html"><span class="std std-doc">Boolean</span></a></p></td>
+<td><p>A binary (true or false) value</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Curie.html"><span class="std std-doc">Curie</span></a></p></td>
+<td><p>a compact URI</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Date.html"><span class="std std-doc">Date</span></a></p></td>
+<td><p>a date (year, month and day) in an idealized calendar</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="DateOrDatetime.html"><span class="std std-doc">DateOrDatetime</span></a></p></td>
+<td><p>Either a date or a datetime</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Datetime.html"><span class="std std-doc">Datetime</span></a></p></td>
+<td><p>The combination of a date and time</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Decimal.html"><span class="std std-doc">Decimal</span></a></p></td>
+<td><p>A real number with arbitrary precision that conforms to the xsd:decimal speci…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Double.html"><span class="std std-doc">Double</span></a></p></td>
+<td><p>A real number that conforms to the xsd:double specification</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Float.html"><span class="std std-doc">Float</span></a></p></td>
+<td><p>A real number that conforms to the xsd:float specification</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="HttpUrl.html"><span class="std std-doc">HttpUrl</span></a></p></td>
+<td><p>A valid HTTP or HTTPS URL, including DOIs</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Integer.html"><span class="std std-doc">Integer</span></a></p></td>
+<td><p>An integer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Jsonpath.html"><span class="std std-doc">Jsonpath</span></a></p></td>
+<td><p>A string encoding a JSON Path</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Jsonpointer.html"><span class="std std-doc">Jsonpointer</span></a></p></td>
+<td><p>A string encoding a JSON Pointer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Ncname.html"><span class="std std-doc">Ncname</span></a></p></td>
+<td><p>Prefix part of CURIE</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Nodeidentifier.html"><span class="std std-doc">Nodeidentifier</span></a></p></td>
+<td><p>A URI, CURIE or BNODE that represents a node in a model</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Objectidentifier.html"><span class="std std-doc">Objectidentifier</span></a></p></td>
+<td><p>A URI or CURIE that represents an object in the model</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Sparqlpath.html"><span class="std std-doc">Sparqlpath</span></a></p></td>
+<td><p>A string encoding a SPARQL Property Path</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="String.html"><span class="std std-doc">String</span></a></p></td>
+<td><p>A character string</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Time.html"><span class="std std-doc">Time</span></a></p></td>
+<td><p>A time object represents a (local) time of day, independent of any particular…</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Uri.html"><span class="std std-doc">Uri</span></a></p></td>
+<td><p>a complete URI</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="Uriorcurie.html"><span class="std std-doc">Uriorcurie</span></a></p></td>
+<td><p>a URI or a CURIE</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="subsets">
+<h2>Subsets<a class="headerlink" href="#subsets" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Subset</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../autotag/value.html" class="btn btn-neutral float-left" title="Slot: value" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Atmosphere.html" class="btn btn-neutral float-right" title="Class: Atmosphere" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

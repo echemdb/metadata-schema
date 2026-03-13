@@ -1,0 +1,354 @@
+
+
+
+
+# Class: Electrolyte 
+
+
+_The properties and components of the electrolyte solution._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/Electrolyte](https://echemdb.github.io/metadata-schema/echemdb_package/Electrolyte)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Electrolyte
+    click Electrolyte href "../Electrolyte/"
+      Electrolyte : comment
+        
+      Electrolyte : components
+        
+          
+    
+        
+        
+        Electrolyte --> "*" Component : components
+        click Component href "../Component/"
+    
+
+        
+      Electrolyte : electrolyteContainer
+        
+          
+    
+        
+        
+        Electrolyte --> "0..1" ElectrolyteContainer : electrolyteContainer
+        click ElectrolyteContainer href "../ElectrolyteContainer/"
+    
+
+        
+      Electrolyte : ph
+        
+          
+    
+        
+        
+        Electrolyte --> "0..1" Quantity : ph
+        click Quantity href "../Quantity/"
+    
+
+        
+      Electrolyte : temperature
+        
+          
+    
+        
+        
+        Electrolyte --> "0..1" Quantity : temperature
+        click Quantity href "../Quantity/"
+    
+
+        
+      Electrolyte : type
+        
+          
+    
+        
+        
+        Electrolyte --> "1" ElectrolyteType : type
+        click ElectrolyteType href "../ElectrolyteType/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 1 <br/> [ElectrolyteType](ElectrolyteType.md) | Type of electrolyte defined by the solvent | `aqueous`,  `non-aqueous`,  `ionic liquid`,  `solid` |
+| [electrolyteContainer](electrolyteContainer.md) | 0..1 <br/> [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |  |
+| [components](components.md) | * <br/> [Component](Component.md) | Chemical components of the electrolyte including solvents, salts, acids, base... |  |
+| [ph](ph.md) | 0..1 <br/> [Quantity](Quantity.md) | pH value of the electrolyte solution | `{value: 1, unit: ''}` |
+| [temperature](temperature.md) | 0..1 <br/> [Quantity](Quantity.md) | Temperature of the electrolyte during the experiment | `{value: 298.15, unit: K}` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes or observations about the electrolyte | `Electrolyte was not replaced between measurements.` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [System](System.md) | [electrolyte](electrolyte.md) | range | [Electrolyte](Electrolyte.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/Electrolyte |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/Electrolyte |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Electrolyte
+description: The properties and components of the electrolyte solution.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  type:
+    name: type
+    description: Type of electrolyte defined by the solvent.
+    examples:
+    - value: aqueous
+    - value: non-aqueous
+    - value: ionic liquid
+    - value: solid
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: ElectrolyteType
+    required: true
+  electrolyteContainer:
+    name: electrolyteContainer
+    description: Container used to prepare or store the electrolyte before the measurement.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    domain_of:
+    - Electrolyte
+    range: ElectrolyteContainer
+    inlined: true
+  components:
+    name: components
+    description: Chemical components of the electrolyte including solvents, salts,
+      acids, bases, and gases.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: Component
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  ph:
+    name: ph
+    description: pH value of the electrolyte solution.
+    examples:
+    - value: '{value: 1, unit: ''''}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    domain_of:
+    - Electrolyte
+    range: Quantity
+    inlined: true
+  temperature:
+    name: temperature
+    description: Temperature of the electrolyte during the experiment.
+    examples:
+    - value: '{value: 298.15, unit: K}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    domain_of:
+    - Electrolyte
+    range: Quantity
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes or observations about the electrolyte.
+    examples:
+    - value: Electrolyte was not replaced between measurements.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Electrolyte
+description: The properties and components of the electrolyte solution.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  type:
+    name: type
+    description: Type of electrolyte defined by the solvent.
+    examples:
+    - value: aqueous
+    - value: non-aqueous
+    - value: ionic liquid
+    - value: solid
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: type
+    owner: Electrolyte
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: ElectrolyteType
+    required: true
+  electrolyteContainer:
+    name: electrolyteContainer
+    description: Container used to prepare or store the electrolyte before the measurement.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    alias: electrolyteContainer
+    owner: Electrolyte
+    domain_of:
+    - Electrolyte
+    range: ElectrolyteContainer
+    inlined: true
+  components:
+    name: components
+    description: Chemical components of the electrolyte including solvents, salts,
+      acids, bases, and gases.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    alias: components
+    owner: Electrolyte
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: Component
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  ph:
+    name: ph
+    description: pH value of the electrolyte solution.
+    examples:
+    - value: '{value: 1, unit: ''''}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    alias: ph
+    owner: Electrolyte
+    domain_of:
+    - Electrolyte
+    range: Quantity
+    inlined: true
+  temperature:
+    name: temperature
+    description: Temperature of the electrolyte during the experiment.
+    examples:
+    - value: '{value: 298.15, unit: K}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    rank: 1000
+    alias: temperature
+    owner: Electrolyte
+    domain_of:
+    - Electrolyte
+    range: Quantity
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes or observations about the electrolyte.
+    examples:
+    - value: Electrolyte was not replaced between measurements.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: comment
+    owner: Electrolyte
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+
+```
+</details>

@@ -1,0 +1,147 @@
+
+
+
+
+# Class: Curation 
+
+
+_Details on the curation process of the data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Curation](https://echemdb.github.io/metadata-schema/autotag/Curation)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Curation
+    click Curation href "../Curation/"
+      Curation : process
+        
+          
+    
+        
+        
+        Curation --> "1..*" Process : process
+        click Process href "../Process/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [process](process.md) | 1..* <br/> [Process](Process.md) | List of people involved in creating, recording, or curating this data |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Autotag](Autotag.md) | [curation](curation.md) | range | [Curation](Curation.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Curation |
+| native | https://echemdb.github.io/metadata-schema/autotag/Curation |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Curation
+description: Details on the curation process of the data.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  process:
+    name: process
+    description: List of people involved in creating, recording, or curating this
+      data.
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    domain_of:
+    - Curation
+    range: Process
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Curation
+description: Details on the curation process of the data.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  process:
+    name: process
+    description: List of people involved in creating, recording, or curating this
+      data.
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    alias: process
+    owner: Curation
+    domain_of:
+    - Curation
+    range: Process
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>

@@ -1,0 +1,83 @@
+
+
+# Slot: experimental 
+
+
+_Details about the experimental setup._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/experimental](https://echemdb.github.io/metadata-schema/source_data/experimental)
+Alias: experimental
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SourceData](SourceData.md) | Metadata schema for source data files in echemdb, combining system descriptio... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Experimental](Experimental.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/experimental |
+| native | https://echemdb.github.io/metadata-schema/source_data/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Details about the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: experimental
+owner: SourceData
+domain_of:
+- SourceData
+range: Experimental
+required: true
+inlined: true
+
+```
+</details>

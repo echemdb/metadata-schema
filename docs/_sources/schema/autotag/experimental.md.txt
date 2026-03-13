@@ -1,0 +1,83 @@
+
+
+# Slot: experimental 
+
+
+_Details about the experimental setup._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/experimental](https://echemdb.github.io/metadata-schema/autotag/experimental)
+Alias: experimental
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Experimental](Experimental.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/experimental |
+| native | https://echemdb.github.io/metadata-schema/autotag/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Details about the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: experimental
+owner: Autotag
+domain_of:
+- Autotag
+range: Experimental
+required: true
+inlined: true
+
+```
+</details>

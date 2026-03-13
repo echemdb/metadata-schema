@@ -1,0 +1,80 @@
+
+
+# Slot: figureDescription 
+
+
+_Description of the data to a figure or plot._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/figureDescription](https://echemdb.github.io/metadata-schema/svgdigitizer/figureDescription)
+Alias: figureDescription
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [FigureDescription](FigureDescription.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/figureDescription |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/figureDescription |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: figureDescription
+description: Description of the data to a figure or plot.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: figureDescription
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: FigureDescription
+inlined: true
+
+```
+</details>

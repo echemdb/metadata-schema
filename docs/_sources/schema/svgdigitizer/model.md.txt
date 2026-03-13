@@ -1,0 +1,65 @@
+
+
+# Slot: model 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/model](https://echemdb.github.io/metadata-schema/svgdigitizer/model)
+Alias: model
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/model |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/model |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: model
+alias: model
+domain_of:
+- Instrumentation
+- ElectrodeSource
+range: string
+
+```
+</details>

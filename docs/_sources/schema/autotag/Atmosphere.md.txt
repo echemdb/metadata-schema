@@ -1,0 +1,345 @@
+
+
+
+
+# Class: Atmosphere 
+
+
+_Atmospheric conditions and gas composition during the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Atmosphere](https://echemdb.github.io/metadata-schema/autotag/Atmosphere)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Atmosphere
+    click Atmosphere href "../Atmosphere/"
+      Atmosphere : comment
+        
+      Atmosphere : components
+        
+          
+    
+        
+        
+        Atmosphere --> "*" Component : components
+        click Component href "../Component/"
+    
+
+        
+      Atmosphere : description
+        
+      Atmosphere : totalOrganicCarbon
+        
+          
+    
+        
+        
+        Atmosphere --> "0..1" Quantity : totalOrganicCarbon
+        click Quantity href "../Quantity/"
+    
+
+        
+      Atmosphere : type
+        
+      Atmosphere : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ul... | `inert`,  `ambient`,  `UHV` |
+| [totalOrganicCarbon](totalOrganicCarbon.md) | 0..1 <br/> [Quantity](Quantity.md) | Total organic carbon content measurement in the atmosphere | `{value: 3, unit: ppb}` |
+| [components](components.md) | * <br/> [Component](Component.md) | Gas components present in the atmosphere |  |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL with further details on the atmospheric setup or control system | `https://doi.org/10.1234/atmosphere-protocol.2024` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Detailed description of the atmospheric conditions | `Argon purged for 30 minutes before measurement` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes about the atmosphere | `Slight overpressure maintained throughout experiment` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [System](System.md) | [atmosphere](atmosphere.md) | range | [Atmosphere](Atmosphere.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Atmosphere |
+| native | https://echemdb.github.io/metadata-schema/autotag/Atmosphere |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Atmosphere
+description: Atmospheric conditions and gas composition during the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  type:
+    name: type
+    description: Type of atmospheric condition, such as inert (Ar saturated), ambient,
+      UHV (ultra high vacuum).
+    examples:
+    - value: inert
+    - value: ambient
+    - value: UHV
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  totalOrganicCarbon:
+    name: totalOrganicCarbon
+    description: Total organic carbon content measurement in the atmosphere.
+    examples:
+    - value: '{value: 3, unit: ppb}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Purity
+    - Atmosphere
+    range: Quantity
+    inlined: true
+  components:
+    name: components
+    description: Gas components present in the atmosphere.
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: Component
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  url:
+    name: url
+    description: URL with further details on the atmospheric setup or control system.
+    examples:
+    - value: https://doi.org/10.1234/atmosphere-protocol.2024
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  description:
+    name: description
+    description: Detailed description of the atmospheric conditions.
+    examples:
+    - value: Argon purged for 30 minutes before measurement
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  comment:
+    name: comment
+    description: Additional notes about the atmosphere.
+    examples:
+    - value: Slight overpressure maintained throughout experiment
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Atmosphere
+description: Atmospheric conditions and gas composition during the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  type:
+    name: type
+    description: Type of atmospheric condition, such as inert (Ar saturated), ambient,
+      UHV (ultra high vacuum).
+    examples:
+    - value: inert
+    - value: ambient
+    - value: UHV
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: type
+    owner: Atmosphere
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  totalOrganicCarbon:
+    name: totalOrganicCarbon
+    description: Total organic carbon content measurement in the atmosphere.
+    examples:
+    - value: '{value: 3, unit: ppb}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: totalOrganicCarbon
+    owner: Atmosphere
+    domain_of:
+    - Purity
+    - Atmosphere
+    range: Quantity
+    inlined: true
+  components:
+    name: components
+    description: Gas components present in the atmosphere.
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: components
+    owner: Atmosphere
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: Component
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  url:
+    name: url
+    description: URL with further details on the atmospheric setup or control system.
+    examples:
+    - value: https://doi.org/10.1234/atmosphere-protocol.2024
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: url
+    owner: Atmosphere
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  description:
+    name: description
+    description: Detailed description of the atmospheric conditions.
+    examples:
+    - value: Argon purged for 30 minutes before measurement
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: description
+    owner: Atmosphere
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  comment:
+    name: comment
+    description: Additional notes about the atmosphere.
+    examples:
+    - value: Slight overpressure maintained throughout experiment
+    from_schema: https://echemdb.github.io/metadata-schema/system/atmosphere
+    alias: comment
+    owner: Atmosphere
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+
+```
+</details>

@@ -1,0 +1,80 @@
+
+
+# Slot: experimental 
+
+
+_Experimental tags or keywords._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/experimental](https://echemdb.github.io/metadata-schema/svgdigitizer_package/experimental)
+Alias: experimental
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) | Simplified echemdb metadata for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [SvgdigitizerExperimental](SvgdigitizerExperimental.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/experimental |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Experimental tags or keywords.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: experimental
+owner: SvgdigitizerEchemdbMetadata
+domain_of:
+- SvgdigitizerEchemdbMetadata
+range: SvgdigitizerExperimental
+inlined: true
+
+```
+</details>

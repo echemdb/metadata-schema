@@ -1,0 +1,65 @@
+
+
+# Slot: reference 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/reference](https://echemdb.github.io/metadata-schema/source_data/reference)
+Alias: reference
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [FieldUnit](FieldUnit.md) | Unit specification for a data field, following astropy's string unit notation |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/reference |
+| native | https://echemdb.github.io/metadata-schema/source_data/reference |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: reference
+alias: reference
+domain_of:
+- DataField
+- FieldUnit
+range: string
+
+```
+</details>

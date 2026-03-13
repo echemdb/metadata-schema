@@ -1,0 +1,534 @@
+
+
+
+
+# Class: Electrode 
+
+
+_An electrode used in the electrochemical cell, such as working, reference, counter, or collector electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/Electrode](https://echemdb.github.io/metadata-schema/minimum_echemdb/Electrode)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Electrode
+    click Electrode href "../Electrode/"
+      Electrode : crystallographicOrientation
+        
+      Electrode : description
+        
+      Electrode : function
+        
+      Electrode : geometricElectrolyteContactArea
+        
+          
+    
+        
+        
+        Electrode --> "0..1" Quantity : geometricElectrolyteContactArea
+        click Quantity href "../Quantity/"
+    
+
+        
+      Electrode : material
+        
+      Electrode : name
+        
+      Electrode : preparationProcedure
+        
+          
+    
+        
+        
+        Electrode --> "0..1" ElectrodePreparation : preparationProcedure
+        click ElectrodePreparation href "../ElectrodePreparation/"
+    
+
+        
+      Electrode : purity
+        
+          
+    
+        
+        
+        Electrode --> "0..1" Purity : purity
+        click Purity href "../Purity/"
+    
+
+        
+      Electrode : redoxSystem
+        
+      Electrode : shape
+        
+          
+    
+        
+        
+        Electrode --> "0..1" Shape : shape
+        click Shape href "../Shape/"
+    
+
+        
+      Electrode : source
+        
+          
+    
+        
+        
+        Electrode --> "0..1" ElectrodeSource : source
+        click ElectrodeSource href "../ElectrodeSource/"
+    
+
+        
+      Electrode : type
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Name or identifier for the electrode | `WE1` |
+| [function](function.md) | 1 <br/> [String](String.md) | Role of the electrode in the electrochemical cell | `working electrode`,  `counter electrode`,  `reference electrode` |
+| [redoxSystem](redoxSystem.md) | 0..1 <br/> [String](String.md) | Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc | `RHE`,  `Ag/AgCl`,  `SCE` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Detailed description of the electrode (especially for custom-made electrodes) | `Home-made Pt wire electrode, flame-annealed before use` |
+| [geometricElectrolyteContactArea](geometricElectrolyteContactArea.md) | 0..1 <br/> [Quantity](Quantity.md) | Geometric surface area of electrode in contact with electrolyte | `{value: 0.196, unit: cm2}` |
+| [purity](purity.md) | 0..1 <br/> [Purity](Purity.md) | Purity specifications of the electrode material |  |
+| [preparationProcedure](preparationProcedure.md) | 0..1 <br/> [ElectrodePreparation](ElectrodePreparation.md) | Procedures used to prepare the electrode before measurement |  |
+| [shape](shape.md) | 0..1 <br/> [Shape](Shape.md) | Physical shape and dimensions of the electrode |  |
+| [source](source.md) | 0..1 <br/> [ElectrodeSource](ElectrodeSource.md) | Source and supplier information for the electrode |  |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type of electrode, such as single crystal, powder catalyst, metal sheet, or m... | `single crystal`,  `powder catalyst`,  `metal wire` |
+| [material](material.md) | 0..1 <br/> [String](String.md) | Chemical symbol or abbreviation of the electrode material | `Pt`,  `Au`,  `GC` |
+| [crystallographicOrientation](crystallographicOrientation.md) | 0..1 <br/> [String](String.md) | Miller indices of the surface orientation or 'poly' for polycrystalline | `(1 1 1)`,  `poly` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [System](System.md) | [electrodes](electrodes.md) | range | [Electrode](Electrode.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/Electrode |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/Electrode |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Electrode
+description: An electrode used in the electrochemical cell, such as working, reference,
+  counter, or collector electrode.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  name:
+    name: name
+    description: Name or identifier for the electrode.
+    examples:
+    - value: WE1
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - DataField
+    - Instrumentation
+    range: string
+    required: true
+  function:
+    name: function
+    description: 'Role of the electrode in the electrochemical cell. Typical values:
+      working electrode, counter electrode, reference electrode.'
+    examples:
+    - value: working electrode
+    - value: counter electrode
+    - value: reference electrode
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: string
+    required: true
+  redoxSystem:
+    name: redoxSystem
+    description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl,
+      etc.).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: string
+  description:
+    name: description
+    description: Detailed description of the electrode (especially for custom-made
+      electrodes).
+    examples:
+    - value: Home-made Pt wire electrode, flame-annealed before use
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Experimental
+    range: string
+  geometricElectrolyteContactArea:
+    name: geometricElectrolyteContactArea
+    description: Geometric surface area of electrode in contact with electrolyte.
+    examples:
+    - value: '{value: 0.196, unit: cm2}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: Quantity
+    inlined: true
+  purity:
+    name: purity
+    description: Purity specifications of the electrode material.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  preparationProcedure:
+    name: preparationProcedure
+    description: Procedures used to prepare the electrode before measurement.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: ElectrodePreparation
+    inlined: true
+  shape:
+    name: shape
+    description: Physical shape and dimensions of the electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: Shape
+    inlined: true
+  source:
+    name: source
+    description: Source and supplier information for the electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - MinimumEchemdb
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ElectrodeSource
+    inlined: true
+  type:
+    name: type
+    description: Type of electrode, such as single crystal, powder catalyst, metal
+      sheet, or metal wire.
+    examples:
+    - value: single crystal
+    - value: powder catalyst
+    - value: metal wire
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: string
+  material:
+    name: material
+    description: Chemical symbol or abbreviation of the electrode material.
+    examples:
+    - value: Pt
+    - value: Au
+    - value: GC
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: string
+  crystallographicOrientation:
+    name: crystallographicOrientation
+    description: Miller indices of the surface orientation or 'poly' for polycrystalline.
+      Always use spaces for value separation.
+    examples:
+    - value: (1 1 1)
+    - value: poly
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Electrode
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Electrode
+description: An electrode used in the electrochemical cell, such as working, reference,
+  counter, or collector electrode.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  name:
+    name: name
+    description: Name or identifier for the electrode.
+    examples:
+    - value: WE1
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: name
+    owner: Electrode
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - DataField
+    - Instrumentation
+    range: string
+    required: true
+  function:
+    name: function
+    description: 'Role of the electrode in the electrochemical cell. Typical values:
+      working electrode, counter electrode, reference electrode.'
+    examples:
+    - value: working electrode
+    - value: counter electrode
+    - value: reference electrode
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: function
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: string
+    required: true
+  redoxSystem:
+    name: redoxSystem
+    description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl,
+      etc.).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: redoxSystem
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: string
+  description:
+    name: description
+    description: Detailed description of the electrode (especially for custom-made
+      electrodes).
+    examples:
+    - value: Home-made Pt wire electrode, flame-annealed before use
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: description
+    owner: Electrode
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Experimental
+    range: string
+  geometricElectrolyteContactArea:
+    name: geometricElectrolyteContactArea
+    description: Geometric surface area of electrode in contact with electrolyte.
+    examples:
+    - value: '{value: 0.196, unit: cm2}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: geometricElectrolyteContactArea
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: Quantity
+    inlined: true
+  purity:
+    name: purity
+    description: Purity specifications of the electrode material.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: purity
+    owner: Electrode
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  preparationProcedure:
+    name: preparationProcedure
+    description: Procedures used to prepare the electrode before measurement.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: preparationProcedure
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: ElectrodePreparation
+    inlined: true
+  shape:
+    name: shape
+    description: Physical shape and dimensions of the electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: shape
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: Shape
+    inlined: true
+  source:
+    name: source
+    description: Source and supplier information for the electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: source
+    owner: Electrode
+    domain_of:
+    - MinimumEchemdb
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ElectrodeSource
+    inlined: true
+  type:
+    name: type
+    description: Type of electrode, such as single crystal, powder catalyst, metal
+      sheet, or metal wire.
+    examples:
+    - value: single crystal
+    - value: powder catalyst
+    - value: metal wire
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: type
+    owner: Electrode
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: string
+  material:
+    name: material
+    description: Chemical symbol or abbreviation of the electrode material.
+    examples:
+    - value: Pt
+    - value: Au
+    - value: GC
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: material
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: string
+  crystallographicOrientation:
+    name: crystallographicOrientation
+    description: Miller indices of the surface orientation or 'poly' for polycrystalline.
+      Always use spaces for value separation.
+    examples:
+    - value: (1 1 1)
+    - value: poly
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: crystallographicOrientation
+    owner: Electrode
+    domain_of:
+    - Electrode
+    range: string
+
+```
+</details>

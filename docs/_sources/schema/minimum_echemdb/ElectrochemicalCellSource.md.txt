@@ -1,0 +1,142 @@
+
+
+
+
+# Class: ElectrochemicalCellSource 
+
+
+_Source information for the electrochemical cell._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/ElectrochemicalCellSource](https://echemdb.github.io/metadata-schema/minimum_echemdb/ElectrochemicalCellSource)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrochemicalCellSource
+    click ElectrochemicalCellSource href "../ElectrochemicalCellSource/"
+      ElectrochemicalCellSource : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to product page or technical documentation | `https://your-cell-supplier.com/product/h-cell` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | [source](source.md) | range | [ElectrochemicalCellSource](ElectrochemicalCellSource.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/ElectrochemicalCellSource |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/ElectrochemicalCellSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrochemicalCellSource
+description: Source information for the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  url:
+    name: url
+    description: URL to product page or technical documentation.
+    examples:
+    - value: https://your-cell-supplier.com/product/h-cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrochemicalCellSource
+description: Source information for the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  url:
+    name: url
+    description: URL to product page or technical documentation.
+    examples:
+    - value: https://your-cell-supplier.com/product/h-cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: url
+    owner: ElectrochemicalCellSource
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+
+```
+</details>

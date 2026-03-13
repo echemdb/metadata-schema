@@ -1,0 +1,88 @@
+
+
+# Slot: cellDescription 
+
+
+_Detailed description of the cell configuration._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/cellDescription](https://echemdb.github.io/metadata-schema/autotag/cellDescription)
+Alias: cellDescription
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Three-electrode setup with glass cell and Teflon cap |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/cellDescription |
+| native | https://echemdb.github.io/metadata-schema/autotag/cellDescription |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: cellDescription
+description: Detailed description of the cell configuration.
+examples:
+- value: Three-electrode setup with glass cell and Teflon cap
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: cellDescription
+owner: ElectrochemicalCell
+domain_of:
+- ElectrochemicalCell
+range: string
+
+```
+</details>

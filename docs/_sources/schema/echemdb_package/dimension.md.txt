@@ -1,0 +1,93 @@
+
+
+# Slot: dimension 
+
+
+_Physical dimension of the field (e.g., 'time', 'potential', 'current density')._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/dimension](https://echemdb.github.io/metadata-schema/echemdb_package/dimension)
+Alias: dimension
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| potential |
+| time |
+| current density |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/dimension |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/dimension |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: dimension
+description: Physical dimension of the field (e.g., 'time', 'potential', 'current
+  density').
+examples:
+- value: potential
+- value: time
+- value: current density
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: dimension
+owner: DataField
+domain_of:
+- DataField
+range: string
+
+```
+</details>

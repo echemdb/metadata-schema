@@ -1,0 +1,80 @@
+
+
+# Slot: preparationProcedure 
+
+
+_Procedures used to prepare the electrode before measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/preparationProcedure](https://echemdb.github.io/metadata-schema/minimum_echemdb/preparationProcedure)
+Alias: preparationProcedure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [ElectrodePreparation](ElectrodePreparation.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/preparationProcedure |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/preparationProcedure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: preparationProcedure
+description: Procedures used to prepare the electrode before measurement.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: preparationProcedure
+owner: Electrode
+domain_of:
+- Electrode
+range: ElectrodePreparation
+inlined: true
+
+```
+</details>

@@ -1,0 +1,83 @@
+
+
+# Slot: figureDescription 
+
+
+_Description of the digitized figure._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/figureDescription](https://echemdb.github.io/metadata-schema/svgdigitizer_package/figureDescription)
+Alias: figureDescription
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) | Simplified echemdb metadata for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [FigureDescription](FigureDescription.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/figureDescription |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/figureDescription |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: figureDescription
+description: Description of the digitized figure.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: figureDescription
+owner: SvgdigitizerEchemdbMetadata
+domain_of:
+- SvgdigitizerEchemdbMetadata
+range: FigureDescription
+required: true
+inlined: true
+
+```
+</details>

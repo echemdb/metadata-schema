@@ -1,0 +1,83 @@
+
+
+# Slot: figureDescription 
+
+
+_Description of the data to a figure or plot._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/figureDescription](https://echemdb.github.io/metadata-schema/minimum_echemdb/figureDescription)
+Alias: figureDescription
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [MinimumEchemdb](MinimumEchemdb.md) | Minimum set of metadata to describe an electrochemical system for echemdb |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [FigureDescription](FigureDescription.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/figureDescription |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/figureDescription |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: figureDescription
+description: Description of the data to a figure or plot.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: figureDescription
+owner: MinimumEchemdb
+domain_of:
+- MinimumEchemdb
+range: FigureDescription
+required: true
+inlined: true
+
+```
+</details>

@@ -1,0 +1,77 @@
+
+
+# Slot: name 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/name](https://echemdb.github.io/metadata-schema/source_data/name)
+Alias: name
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Process](Process.md) | A person involved in the data curation process |  no  |
+| [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) | A component of the electrolyte container |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [FieldUnit](FieldUnit.md) | Unit specification for a data field, following astropy's string unit notation |  no  |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/name |
+| native | https://echemdb.github.io/metadata-schema/source_data/name |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: name
+alias: name
+domain_of:
+- Process
+- Electrode
+- Component
+- ElectrolyteContainerComponent
+- ElectrochemicalCellComponent
+- Instrumentation
+- DataField
+- FieldUnit
+range: string
+
+```
+</details>

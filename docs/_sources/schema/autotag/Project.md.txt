@@ -1,0 +1,282 @@
+
+
+
+
+# Class: Project 
+
+
+_Information about a research project or funding source._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Project](https://echemdb.github.io/metadata-schema/autotag/Project)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Project
+    click Project href "../Project/"
+      Project : grantNumber
+        
+      Project : name
+        
+      Project : title
+        
+      Project : type
+        
+      Project : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Short name or identifier of the project | `ERC-2024-STG` |
+| [title](title.md) | 0..1 <br/> [String](String.md) | Full title of the project | `Understanding Electrocatalysis at the Molecular Level` |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type or category of project | `ERC Starting Grant`,  `DFG Collaborative Research Center` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to project website or information page | `https://cordis.europa.eu/project/id/123456` |
+| [grantNumber](grantNumber.md) | 0..1 <br/> [String](String.md) | Official grant or project number | `123456` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Autotag](Autotag.md) | [projects](projects.md) | range | [Project](Project.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Project |
+| native | https://echemdb.github.io/metadata-schema/autotag/Project |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Project
+description: Information about a research project or funding source.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  name:
+    name: name
+    description: Short name or identifier of the project.
+    examples:
+    - value: ERC-2024-STG
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  title:
+    name: title
+    description: Full title of the project.
+    examples:
+    - value: Understanding Electrocatalysis at the Molecular Level
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    domain_of:
+    - DataField
+    - Project
+    range: string
+  type:
+    name: type
+    description: Type or category of project.
+    examples:
+    - value: ERC Starting Grant
+    - value: DFG Collaborative Research Center
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  url:
+    name: url
+    description: URL to project website or information page.
+    examples:
+    - value: https://cordis.europa.eu/project/id/123456
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  grantNumber:
+    name: grantNumber
+    description: Official grant or project number.
+    examples:
+    - value: '123456'
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    rank: 1000
+    domain_of:
+    - Project
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Project
+description: Information about a research project or funding source.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  name:
+    name: name
+    description: Short name or identifier of the project.
+    examples:
+    - value: ERC-2024-STG
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    alias: name
+    owner: Project
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  title:
+    name: title
+    description: Full title of the project.
+    examples:
+    - value: Understanding Electrocatalysis at the Molecular Level
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    alias: title
+    owner: Project
+    domain_of:
+    - DataField
+    - Project
+    range: string
+  type:
+    name: type
+    description: Type or category of project.
+    examples:
+    - value: ERC Starting Grant
+    - value: DFG Collaborative Research Center
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    alias: type
+    owner: Project
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  url:
+    name: url
+    description: URL to project website or information page.
+    examples:
+    - value: https://cordis.europa.eu/project/id/123456
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    alias: url
+    owner: Project
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  grantNumber:
+    name: grantNumber
+    description: Official grant or project number.
+    examples:
+    - value: '123456'
+    from_schema: https://echemdb.github.io/metadata-schema/projects
+    rank: 1000
+    alias: grantNumber
+    owner: Project
+    domain_of:
+    - Project
+    range: string
+
+```
+</details>

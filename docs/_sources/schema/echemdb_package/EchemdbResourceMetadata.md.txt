@@ -1,0 +1,141 @@
+
+
+
+
+# Class: EchemdbResourceMetadata 
+
+
+_Metadata container wrapping echemdb-specific metadata._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbResourceMetadata](https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbResourceMetadata)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class EchemdbResourceMetadata
+    click EchemdbResourceMetadata href "../EchemdbResourceMetadata/"
+      EchemdbResourceMetadata : echemdb
+        
+          
+    
+        
+        
+        EchemdbResourceMetadata --> "1" EchemdbMetadata : echemdb
+        click EchemdbMetadata href "../EchemdbMetadata/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [echemdb](echemdb.md) | 1 <br/> [EchemdbMetadata](EchemdbMetadata.md) | echemdb-specific metadata for electrochemical data |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [EchemdbResource](EchemdbResource.md) | [metadata](metadata.md) | range | [EchemdbResourceMetadata](EchemdbResourceMetadata.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbResourceMetadata |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbResourceMetadata |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: EchemdbResourceMetadata
+description: Metadata container wrapping echemdb-specific metadata.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  echemdb:
+    name: echemdb
+    description: echemdb-specific metadata for electrochemical data.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbResourceMetadata
+    range: EchemdbMetadata
+    required: true
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: EchemdbResourceMetadata
+description: Metadata container wrapping echemdb-specific metadata.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  echemdb:
+    name: echemdb
+    description: echemdb-specific metadata for electrochemical data.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: echemdb
+    owner: EchemdbResourceMetadata
+    domain_of:
+    - EchemdbResourceMetadata
+    range: EchemdbMetadata
+    required: true
+    inlined: true
+
+```
+</details>

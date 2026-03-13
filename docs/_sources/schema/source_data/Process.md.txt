@@ -1,0 +1,242 @@
+
+
+
+
+# Class: Process 
+
+
+_A person involved in the data curation process._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/Process](https://echemdb.github.io/metadata-schema/source_data/Process)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Process
+    click Process href "../Process/"
+      Process : date
+        
+      Process : name
+        
+      Process : orcid
+        
+      Process : role
+        
+          
+    
+        
+        
+        Process --> "1" CurationRole : role
+        click CurationRole href "../CurationRole/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [role](role.md) | 1 <br/> [CurationRole](CurationRole.md) | Role of the person in the data curation process | `experimentalist`,  `curator`,  `reviewer`,  `supervisor` |
+| [name](name.md) | 1 <br/> [String](String.md) | Full name of the person | `Jane Doe` |
+| [orcid](orcid.md) | 1 <br/> [HttpUrl](HttpUrl.md) | An URL containing the ORCID | `https://orcid.org/0000-0001-2345-6789` |
+| [date](date.md) | 0..1 <br/> [date](date.md) | Date when the person performed their role (ISO 8601 format: YYYY-MM-DD) | `2024-01-15` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Curation](Curation.md) | [process](process.md) | range | [Process](Process.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/Process |
+| native | https://echemdb.github.io/metadata-schema/source_data/Process |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Process
+description: A person involved in the data curation process.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  role:
+    name: role
+    description: Role of the person in the data curation process.
+    examples:
+    - value: experimentalist
+    - value: curator
+    - value: reviewer
+    - value: supervisor
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    domain_of:
+    - Process
+    range: CurationRole
+    required: true
+  name:
+    name: name
+    description: Full name of the person.
+    examples:
+    - value: Jane Doe
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Instrumentation
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  orcid:
+    name: orcid
+    description: An URL containing the ORCID.
+    examples:
+    - value: https://orcid.org/0000-0001-2345-6789
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    domain_of:
+    - Process
+    range: HttpUrl
+    required: true
+  date:
+    name: date
+    description: 'Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).'
+    examples:
+    - value: '2024-01-15'
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    domain_of:
+    - Process
+    range: date
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Process
+description: A person involved in the data curation process.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  role:
+    name: role
+    description: Role of the person in the data curation process.
+    examples:
+    - value: experimentalist
+    - value: curator
+    - value: reviewer
+    - value: supervisor
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    alias: role
+    owner: Process
+    domain_of:
+    - Process
+    range: CurationRole
+    required: true
+  name:
+    name: name
+    description: Full name of the person.
+    examples:
+    - value: Jane Doe
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    alias: name
+    owner: Process
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Instrumentation
+    - DataField
+    - FieldUnit
+    range: string
+    required: true
+  orcid:
+    name: orcid
+    description: An URL containing the ORCID.
+    examples:
+    - value: https://orcid.org/0000-0001-2345-6789
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    alias: orcid
+    owner: Process
+    domain_of:
+    - Process
+    range: HttpUrl
+    required: true
+  date:
+    name: date
+    description: 'Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).'
+    examples:
+    - value: '2024-01-15'
+    from_schema: https://echemdb.github.io/metadata-schema/curation
+    rank: 1000
+    alias: date
+    owner: Process
+    domain_of:
+    - Process
+    range: date
+
+```
+</details>

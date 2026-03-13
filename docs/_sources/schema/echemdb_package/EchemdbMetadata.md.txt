@@ -1,0 +1,283 @@
+
+
+
+
+# Class: EchemdbMetadata 
+
+
+_echemdb-specific metadata for electrochemical data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbMetadata](https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbMetadata)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class EchemdbMetadata
+    click EchemdbMetadata href "../EchemdbMetadata/"
+      EchemdbMetadata : curation
+        
+          
+    
+        
+        
+        EchemdbMetadata --> "1" Curation : curation
+        click Curation href "../Curation/"
+    
+
+        
+      EchemdbMetadata : experimental
+        
+          
+    
+        
+        
+        EchemdbMetadata --> "1" Experimental : experimental
+        click Experimental href "../Experimental/"
+    
+
+        
+      EchemdbMetadata : figureDescription
+        
+          
+    
+        
+        
+        EchemdbMetadata --> "1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      EchemdbMetadata : source
+        
+          
+    
+        
+        
+        EchemdbMetadata --> "1" Source : source
+        click Source href "../Source/"
+    
+
+        
+      EchemdbMetadata : system
+        
+          
+    
+        
+        
+        EchemdbMetadata --> "1" System : system
+        click System href "../System/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [curation](curation.md) | 1 <br/> [Curation](Curation.md) | Details on the curation process |  |
+| [experimental](experimental.md) | 1 <br/> [Experimental](Experimental.md) | Details about the experimental setup |  |
+| [figureDescription](figureDescription.md) | 1 <br/> [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot |  |
+| [system](system.md) | 1 <br/> [System](System.md) | Description of the experimental system |  |
+| [source](source.md) | 1 <br/> [Source](Source.md) | Information about the source publication or dataset |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [EchemdbResourceMetadata](EchemdbResourceMetadata.md) | [echemdb](echemdb.md) | range | [EchemdbMetadata](EchemdbMetadata.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbMetadata |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbMetadata |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: EchemdbMetadata
+description: echemdb-specific metadata for electrochemical data.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbMetadata
+    range: Curation
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbMetadata
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbMetadata
+    range: FigureDescription
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbMetadata
+    range: System
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbMetadata
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: EchemdbMetadata
+description: echemdb-specific metadata for electrochemical data.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: curation
+    owner: EchemdbMetadata
+    domain_of:
+    - EchemdbMetadata
+    range: Curation
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: experimental
+    owner: EchemdbMetadata
+    domain_of:
+    - EchemdbMetadata
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: figureDescription
+    owner: EchemdbMetadata
+    domain_of:
+    - EchemdbMetadata
+    range: FigureDescription
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: system
+    owner: EchemdbMetadata
+    domain_of:
+    - EchemdbMetadata
+    range: System
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: source
+    owner: EchemdbMetadata
+    domain_of:
+    - EchemdbMetadata
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+
+```
+</details>

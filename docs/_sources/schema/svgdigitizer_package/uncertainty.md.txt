@@ -1,0 +1,80 @@
+
+
+# Slot: uncertainty 
+
+
+_Uncertainty information for a measured quantity._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/uncertainty](https://echemdb.github.io/metadata-schema/svgdigitizer_package/uncertainty)
+Alias: uncertainty
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Uncertainty](Uncertainty.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/uncertainty |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/uncertainty |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: uncertainty
+description: Uncertainty information for a measured quantity.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: uncertainty
+owner: Quantity
+domain_of:
+- Quantity
+range: Uncertainty
+inlined: true
+
+```
+</details>

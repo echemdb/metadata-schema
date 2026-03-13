@@ -1,0 +1,185 @@
+
+
+
+
+# Class: ElectrodePreparation 
+
+
+_Procedures and methods used to prepare the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/ElectrodePreparation](https://echemdb.github.io/metadata-schema/autotag/ElectrodePreparation)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrodePreparation
+    click ElectrodePreparation href "../ElectrodePreparation/"
+      ElectrodePreparation : description
+        
+      ElectrodePreparation : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to detailed preparation protocol or procedure, such as an article DOI | `https://doi.org/10.1234/preparation.2024` |
+| [description](description.md) | * <br/> [String](String.md) | Step-by-step description of preparation procedure | `Polished with 0.05 um alumina, rinsed with ultrapure water` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrode](Electrode.md) | [preparationProcedure](preparationProcedure.md) | range | [ElectrodePreparation](ElectrodePreparation.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/ElectrodePreparation |
+| native | https://echemdb.github.io/metadata-schema/autotag/ElectrodePreparation |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrodePreparation
+description: Procedures and methods used to prepare the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  url:
+    name: url
+    description: URL to detailed preparation protocol or procedure, such as an article
+      DOI.
+    examples:
+    - value: https://doi.org/10.1234/preparation.2024
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  description:
+    name: description
+    description: Step-by-step description of preparation procedure.
+    examples:
+    - value: Polished with 0.05 um alumina, rinsed with ultrapure water
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+    multivalued: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrodePreparation
+description: Procedures and methods used to prepare the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  url:
+    name: url
+    description: URL to detailed preparation protocol or procedure, such as an article
+      DOI.
+    examples:
+    - value: https://doi.org/10.1234/preparation.2024
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: url
+    owner: ElectrodePreparation
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+  description:
+    name: description
+    description: Step-by-step description of preparation procedure.
+    examples:
+    - value: Polished with 0.05 um alumina, rinsed with ultrapure water
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: description
+    owner: ElectrodePreparation
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+    multivalued: true
+
+```
+</details>

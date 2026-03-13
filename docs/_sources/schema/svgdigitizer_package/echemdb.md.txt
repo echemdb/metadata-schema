@@ -1,0 +1,83 @@
+
+
+# Slot: echemdb 
+
+
+_Simplified echemdb metadata for digitized data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/echemdb](https://echemdb.github.io/metadata-schema/svgdigitizer_package/echemdb)
+Alias: echemdb
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerResourceMetadata](SvgdigitizerResourceMetadata.md) | Metadata container for svgdigitizer output |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/echemdb |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/echemdb |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdb
+description: Simplified echemdb metadata for digitized data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: echemdb
+owner: SvgdigitizerResourceMetadata
+domain_of:
+- SvgdigitizerResourceMetadata
+range: SvgdigitizerEchemdbMetadata
+required: true
+inlined: true
+
+```
+</details>

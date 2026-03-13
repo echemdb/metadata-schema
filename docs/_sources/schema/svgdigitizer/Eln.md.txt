@@ -1,0 +1,150 @@
+
+
+
+
+# Class: Eln 
+
+
+_Electronic lab notebook (ELN) reference for the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/Eln](https://echemdb.github.io/metadata-schema/svgdigitizer/Eln)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Eln
+    click Eln href "../Eln/"
+      Eln : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [url](url.md) | 1 <br/> [HttpUrl](HttpUrl.md) | URL to the electronic lab notebook entry | `https://eln.2024.2024/your-link-to-data` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | [eln](eln.md) | range | [Eln](Eln.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/Eln |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/Eln |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Eln
+description: Electronic lab notebook (ELN) reference for the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  url:
+    name: url
+    description: URL to the electronic lab notebook entry.
+    examples:
+    - value: https://eln.2024.2024/your-link-to-data
+    from_schema: https://echemdb.github.io/metadata-schema/eln
+    rank: 1000
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Source
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+    required: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Eln
+description: Electronic lab notebook (ELN) reference for the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  url:
+    name: url
+    description: URL to the electronic lab notebook entry.
+    examples:
+    - value: https://eln.2024.2024/your-link-to-data
+    from_schema: https://echemdb.github.io/metadata-schema/eln
+    rank: 1000
+    alias: url
+    owner: Eln
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Source
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+    required: true
+
+```
+</details>

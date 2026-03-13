@@ -1,0 +1,91 @@
+
+
+# Slot: part 
+
+
+_Part number or designation._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/part](https://echemdb.github.io/metadata-schema/minimum_echemdb/part)
+Alias: part
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| EC-CELL-100 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/part |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/part |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: part
+description: Part number or designation.
+examples:
+- value: EC-CELL-100
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: part
+owner: ElectrochemicalCellComponent
+domain_of:
+- ElectrochemicalCellComponent
+range: string
+required: true
+
+```
+</details>

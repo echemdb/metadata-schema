@@ -1,0 +1,208 @@
+
+
+
+
+# Class: ElectrochemicalCellComponent 
+
+
+_A component or part of the electrochemical cell._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/ElectrochemicalCellComponent](https://echemdb.github.io/metadata-schema/echemdb_package/ElectrochemicalCellComponent)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrochemicalCellComponent
+    click ElectrochemicalCellComponent href "../ElectrochemicalCellComponent/"
+      ElectrochemicalCellComponent : description
+        
+      ElectrochemicalCellComponent : name
+        
+      ElectrochemicalCellComponent : part
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Name or identifier of the component | `Cell body` |
+| [part](part.md) | 1 <br/> [String](String.md) | Part number or designation | `EC-CELL-100` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Detailed description of the component | `Borosilicate glass cell with multiple ports` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | [components](components.md) | range | [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrochemicalCellComponent |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrochemicalCellComponent |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrochemicalCellComponent
+description: A component or part of the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: Name or identifier of the component.
+    examples:
+    - value: Cell body
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  part:
+    name: part
+    description: Part number or designation.
+    examples:
+    - value: EC-CELL-100
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    domain_of:
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  description:
+    name: description
+    description: Detailed description of the component.
+    examples:
+    - value: Borosilicate glass cell with multiple ports
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrochemicalCellComponent
+description: A component or part of the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: Name or identifier of the component.
+    examples:
+    - value: Cell body
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: name
+    owner: ElectrochemicalCellComponent
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  part:
+    name: part
+    description: Part number or designation.
+    examples:
+    - value: EC-CELL-100
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    alias: part
+    owner: ElectrochemicalCellComponent
+    domain_of:
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  description:
+    name: description
+    description: Detailed description of the component.
+    examples:
+    - value: Borosilicate glass cell with multiple ports
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: description
+    owner: ElectrochemicalCellComponent
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+
+```
+</details>

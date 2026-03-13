@@ -1,0 +1,186 @@
+
+
+
+
+# Class: ElectrolyteContainer 
+
+
+_Container used to prepare or store the electrolyte before the measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainer](https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainer)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrolyteContainer
+    click ElectrolyteContainer href "../ElectrolyteContainer/"
+      ElectrolyteContainer : components
+        
+          
+    
+        
+        
+        ElectrolyteContainer --> "*" ElectrolyteContainerComponent : components
+        click ElectrolyteContainerComponent href "../ElectrolyteContainerComponent/"
+    
+
+        
+      ElectrolyteContainer : description
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [description](description.md) | 0..1 <br/> [String](String.md) | The vessel in which the supplying electrolyte was prepared or stored before t... | `500 ml PTFE bottle` |
+| [components](components.md) | * <br/> [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) | Components of the electrolyte container |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | [electrolyteContainer](electrolyteContainer.md) | range | [ElectrolyteContainer](ElectrolyteContainer.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainer |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainer |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrolyteContainer
+description: Container used to prepare or store the electrolyte before the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  description:
+    name: description
+    description: The vessel in which the supplying electrolyte was prepared or stored
+      before the measurement.
+    examples:
+    - value: 500 ml PTFE bottle
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  components:
+    name: components
+    description: Components of the electrolyte container.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: ElectrolyteContainerComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrolyteContainer
+description: Container used to prepare or store the electrolyte before the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  description:
+    name: description
+    description: The vessel in which the supplying electrolyte was prepared or stored
+      before the measurement.
+    examples:
+    - value: 500 ml PTFE bottle
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: description
+    owner: ElectrolyteContainer
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  components:
+    name: components
+    description: Components of the electrolyte container.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: components
+    owner: ElectrolyteContainer
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: ElectrolyteContainerComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>

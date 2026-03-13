@@ -1,0 +1,343 @@
+
+
+
+
+# Class: Svgdigitizer 
+
+
+_Metadata schema for the input YAML file used by svgdigitizer to create echemdb compatible data packages._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/Svgdigitizer](https://echemdb.github.io/metadata-schema/svgdigitizer/Svgdigitizer)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Svgdigitizer
+    click Svgdigitizer href "../Svgdigitizer/"
+      Svgdigitizer : curation
+        
+          
+    
+        
+        
+        Svgdigitizer --> "1" Curation : curation
+        click Curation href "../Curation/"
+    
+
+        
+      Svgdigitizer : eln
+        
+          
+    
+        
+        
+        Svgdigitizer --> "0..1" Eln : eln
+        click Eln href "../Eln/"
+    
+
+        
+      Svgdigitizer : experimental
+        
+          
+    
+        
+        
+        Svgdigitizer --> "0..1" Experimental : experimental
+        click Experimental href "../Experimental/"
+    
+
+        
+      Svgdigitizer : figureDescription
+        
+          
+    
+        
+        
+        Svgdigitizer --> "0..1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      Svgdigitizer : projects
+        
+          
+    
+        
+        
+        Svgdigitizer --> "*" Project : projects
+        click Project href "../Project/"
+    
+
+        
+      Svgdigitizer : source
+        
+          
+    
+        
+        
+        Svgdigitizer --> "1" Source : source
+        click Source href "../Source/"
+    
+
+        
+      Svgdigitizer : system
+        
+          
+    
+        
+        
+        Svgdigitizer --> "1" System : system
+        click System href "../System/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [curation](curation.md) | 1 <br/> [Curation](Curation.md) | Details on the curation process of the data |  |
+| [eln](eln.md) | 0..1 <br/> [Eln](Eln.md) | Electronic lab notebook reference |  |
+| [experimental](experimental.md) | 0..1 <br/> [Experimental](Experimental.md) | Details about the experimental setup |  |
+| [figureDescription](figureDescription.md) | 0..1 <br/> [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot |  |
+| [projects](projects.md) | * <br/> [Project](Project.md) | Research projects or funding sources |  |
+| [source](source.md) | 1 <br/> [Source](Source.md) | Information about the source publication or dataset |  |
+| [system](system.md) | 1 <br/> [System](System.md) | Description of the experimental system |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/Svgdigitizer |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/Svgdigitizer |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Svgdigitizer
+description: Metadata schema for the input YAML file used by svgdigitizer to create
+  echemdb compatible data packages.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: Curation
+    required: true
+    inlined: true
+  eln:
+    name: eln
+    description: Electronic lab notebook reference.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: Eln
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: Experimental
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: FigureDescription
+    inlined: true
+  projects:
+    name: projects
+    description: Research projects or funding sources.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: Project
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    domain_of:
+    - Svgdigitizer
+    range: System
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Svgdigitizer
+description: Metadata schema for the input YAML file used by svgdigitizer to create
+  echemdb compatible data packages.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: curation
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: Curation
+    required: true
+    inlined: true
+  eln:
+    name: eln
+    description: Electronic lab notebook reference.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: eln
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: Eln
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: experimental
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: Experimental
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: figureDescription
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: FigureDescription
+    inlined: true
+  projects:
+    name: projects
+    description: Research projects or funding sources.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: projects
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: Project
+    multivalued: true
+    inlined_as_list: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: source
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+    rank: 1000
+    alias: system
+    owner: Svgdigitizer
+    domain_of:
+    - Svgdigitizer
+    range: System
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>

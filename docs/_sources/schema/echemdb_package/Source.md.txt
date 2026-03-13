@@ -1,0 +1,343 @@
+
+
+
+
+# Class: Source 
+
+
+_Information about the source publication or dataset._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/Source](https://echemdb.github.io/metadata-schema/echemdb_package/Source)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Source
+    click Source href "../Source/"
+      Source : bibdata
+        
+      Source : citationKey
+        
+      Source : comment
+        
+      Source : curve
+        
+      Source : figure
+        
+      Source : originalFilename
+        
+      Source : techniques
+        
+      Source : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [citationKey](citationKey.md) | 1 <br/> [String](String.md) | Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Y... | `electrobear_2024_electrochemistry_563` |
+| [url](url.md) | 1 <br/> [HttpUrl](HttpUrl.md) | DOI (URL) to the publication or dataset | `https://doi.org/10.1234/example.2024` |
+| [techniques](techniques.md) | * <br/> [String](String.md) | Experimental techniques used in the study | `CV`,  `EIS`,  `CA` |
+| [figure](figure.md) | 0..1 <br/> [String](String.md) | Figure number or identifier from the source including subfigure label | `Figure 2a` |
+| [originalFilename](originalFilename.md) | 0..1 <br/> [String](String.md) | Original filename of the data file | `2023-04-24_cv_data_001.csv` |
+| [bibdata](bibdata.md) | 0..1 <br/> [String](String.md) | BibTeX bibliographic data | `@article{electrobear_2024_electrochemistry_563, title={...}, ...}` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes about the source | `The data in the figures of this work are blurry.` |
+| [curve](curve.md) | 0..1 <br/> [String](String.md) | Specific curve or trace identifier within a figure | `blue`,  `solid`,  `1` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [EchemdbMetadata](EchemdbMetadata.md) | [source](source.md) | range | [Source](Source.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/Source |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/Source |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Source
+description: Information about the source publication or dataset.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  citationKey:
+    name: citationKey
+    description: Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.
+    examples:
+    - value: electrobear_2024_electrochemistry_563
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+    required: true
+  url:
+    name: url
+    description: DOI (URL) to the publication or dataset.
+    examples:
+    - value: https://doi.org/10.1234/example.2024
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    domain_of:
+    - Experimental
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    range: HttpUrl
+    required: true
+  techniques:
+    name: techniques
+    description: Experimental techniques used in the study.
+    examples:
+    - value: CV
+    - value: EIS
+    - value: CA
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+    multivalued: true
+  figure:
+    name: figure
+    description: Figure number or identifier from the source including subfigure label.
+    examples:
+    - value: Figure 2a
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+  originalFilename:
+    name: originalFilename
+    description: Original filename of the data file.
+    examples:
+    - value: 2023-04-24_cv_data_001.csv
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+  bibdata:
+    name: bibdata
+    description: BibTeX bibliographic data.
+    examples:
+    - value: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+  comment:
+    name: comment
+    description: Additional notes about the source.
+    examples:
+    - value: The data in the figures of this work are blurry.
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+  curve:
+    name: curve
+    description: Specific curve or trace identifier within a figure.
+    examples:
+    - value: blue
+    - value: solid
+    - value: '1'
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    domain_of:
+    - Source
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Source
+description: Information about the source publication or dataset.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  citationKey:
+    name: citationKey
+    description: Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.
+    examples:
+    - value: electrobear_2024_electrochemistry_563
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: citationKey
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+    required: true
+  url:
+    name: url
+    description: DOI (URL) to the publication or dataset.
+    examples:
+    - value: https://doi.org/10.1234/example.2024
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    alias: url
+    owner: Source
+    domain_of:
+    - Experimental
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    range: HttpUrl
+    required: true
+  techniques:
+    name: techniques
+    description: Experimental techniques used in the study.
+    examples:
+    - value: CV
+    - value: EIS
+    - value: CA
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: techniques
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+    multivalued: true
+  figure:
+    name: figure
+    description: Figure number or identifier from the source including subfigure label.
+    examples:
+    - value: Figure 2a
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: figure
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+  originalFilename:
+    name: originalFilename
+    description: Original filename of the data file.
+    examples:
+    - value: 2023-04-24_cv_data_001.csv
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: originalFilename
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+  bibdata:
+    name: bibdata
+    description: BibTeX bibliographic data.
+    examples:
+    - value: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: bibdata
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+  comment:
+    name: comment
+    description: Additional notes about the source.
+    examples:
+    - value: The data in the figures of this work are blurry.
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    alias: comment
+    owner: Source
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+  curve:
+    name: curve
+    description: Specific curve or trace identifier within a figure.
+    examples:
+    - value: blue
+    - value: solid
+    - value: '1'
+    from_schema: https://echemdb.github.io/metadata-schema/source
+    rank: 1000
+    alias: curve
+    owner: Source
+    domain_of:
+    - Source
+    range: string
+
+```
+</details>

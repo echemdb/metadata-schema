@@ -1,0 +1,94 @@
+
+
+# Slot: simultaneousMeasurements 
+
+
+_Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/simultaneousMeasurements](https://echemdb.github.io/metadata-schema/autotag/simultaneousMeasurements)
+Alias: simultaneousMeasurements
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Multivalued: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| DEMS |
+| Raman |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/simultaneousMeasurements |
+| native | https://echemdb.github.io/metadata-schema/autotag/simultaneousMeasurements |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: simultaneousMeasurements
+description: Other measurements performed simultaneously, such as ring current, IR,
+  Raman, ICP-MS.
+examples:
+- value: DEMS
+- value: Raman
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: simultaneousMeasurements
+owner: FigureDescription
+domain_of:
+- FigureDescription
+range: string
+multivalued: true
+
+```
+</details>

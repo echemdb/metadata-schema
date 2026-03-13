@@ -1,0 +1,89 @@
+
+
+# Slot: columnHeaderLines 
+
+
+_Number of lines that make up the column headers. If more than one, header parts are joined with ' / '._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/columnHeaderLines](https://echemdb.github.io/metadata-schema/source_data/columnHeaderLines)
+Alias: columnHeaderLines
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Integer](Integer.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 2 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/columnHeaderLines |
+| native | https://echemdb.github.io/metadata-schema/source_data/columnHeaderLines |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: columnHeaderLines
+description: Number of lines that make up the column headers. If more than one, header
+  parts are joined with ' / '.
+examples:
+- value: '2'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: columnHeaderLines
+owner: Dialect
+domain_of:
+- Dialect
+range: integer
+
+```
+</details>

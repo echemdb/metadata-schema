@@ -1,0 +1,89 @@
+
+
+# Slot: format 
+
+
+_Format specification for the field type (default, email, uri, binary, uuid for strings; default for numbers)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/format](https://echemdb.github.io/metadata-schema/source_data/format)
+Alias: format
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| default |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/format |
+| native | https://echemdb.github.io/metadata-schema/source_data/format |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: format
+description: Format specification for the field type (default, email, uri, binary,
+  uuid for strings; default for numbers).
+examples:
+- value: default
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: format
+owner: DataField
+domain_of:
+- DataField
+range: string
+
+```
+</details>

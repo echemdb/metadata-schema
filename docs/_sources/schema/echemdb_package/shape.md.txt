@@ -1,0 +1,80 @@
+
+
+# Slot: shape 
+
+
+_Physical shape and dimensions of the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/shape](https://echemdb.github.io/metadata-schema/echemdb_package/shape)
+Alias: shape
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Shape](Shape.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/shape |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/shape |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: shape
+description: Physical shape and dimensions of the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: shape
+owner: Electrode
+domain_of:
+- Electrode
+range: Shape
+inlined: true
+
+```
+</details>

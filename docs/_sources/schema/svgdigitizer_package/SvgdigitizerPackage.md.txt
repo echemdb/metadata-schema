@@ -1,0 +1,139 @@
+
+
+
+
+# Class: SvgdigitizerPackage 
+
+
+_Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerPackage](https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerPackage)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SvgdigitizerPackage
+    click SvgdigitizerPackage href "../SvgdigitizerPackage/"
+      SvgdigitizerPackage : resources
+        
+          
+    
+        
+        
+        SvgdigitizerPackage --> "*" SvgdigitizerResource : resources
+        click SvgdigitizerResource href "../SvgdigitizerResource/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [resources](resources.md) | * <br/> [SvgdigitizerResource](SvgdigitizerResource.md) | Data resources within the package |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerPackage |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerPackage |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SvgdigitizerPackage
+description: Data package schema for svgdigitizer output following the Frictionless
+  Data Package specification with simplified echemdb metadata.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  resources:
+    name: resources
+    description: Data resources within the package.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerPackage
+    range: SvgdigitizerResource
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SvgdigitizerPackage
+description: Data package schema for svgdigitizer output following the Frictionless
+  Data Package specification with simplified echemdb metadata.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  resources:
+    name: resources
+    description: Data resources within the package.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: resources
+    owner: SvgdigitizerPackage
+    domain_of:
+    - SvgdigitizerPackage
+    range: SvgdigitizerResource
+    multivalued: true
+    inlined_as_list: true
+tree_root: true
+
+```
+</details>

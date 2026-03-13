@@ -1,0 +1,95 @@
+
+
+# Slot: techniques 
+
+
+_Experimental techniques used in the study._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/techniques](https://echemdb.github.io/metadata-schema/source_data/techniques)
+Alias: techniques
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Multivalued: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| CV |
+| EIS |
+| CA |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/techniques |
+| native | https://echemdb.github.io/metadata-schema/source_data/techniques |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: techniques
+description: Experimental techniques used in the study.
+examples:
+- value: CV
+- value: EIS
+- value: CA
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: techniques
+owner: Source
+domain_of:
+- Source
+range: string
+multivalued: true
+
+```
+</details>

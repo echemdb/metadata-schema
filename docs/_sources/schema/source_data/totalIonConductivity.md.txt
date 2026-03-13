@@ -1,0 +1,89 @@
+
+
+# Slot: totalIonConductivity 
+
+
+_Value for the total ionic conductivity measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/totalIonConductivity](https://echemdb.github.io/metadata-schema/source_data/totalIonConductivity)
+Alias: totalIonConductivity
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 0.055, unit: uS / cm} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/totalIonConductivity |
+| native | https://echemdb.github.io/metadata-schema/source_data/totalIonConductivity |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: totalIonConductivity
+description: Value for the total ionic conductivity measurement.
+examples:
+- value: '{value: 0.055, unit: uS / cm}'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: totalIonConductivity
+owner: Purity
+domain_of:
+- Purity
+range: Quantity
+inlined: true
+
+```
+</details>

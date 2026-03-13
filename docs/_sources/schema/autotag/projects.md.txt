@@ -1,0 +1,84 @@
+
+
+# Slot: projects 
+
+
+_Research projects or funding sources._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/projects](https://echemdb.github.io/metadata-schema/autotag/projects)
+Alias: projects
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Project](Project.md)
+
+* Multivalued: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/projects |
+| native | https://echemdb.github.io/metadata-schema/autotag/projects |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: projects
+description: Research projects or funding sources.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: projects
+owner: Autotag
+domain_of:
+- Autotag
+range: Project
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

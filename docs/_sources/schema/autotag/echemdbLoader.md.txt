@@ -1,0 +1,88 @@
+
+
+# Slot: echemdbLoader 
+
+
+_Loader or importer used to process the data into echemdb format._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/echemdbLoader](https://echemdb.github.io/metadata-schema/autotag/echemdbLoader)
+Alias: echemdbLoader
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| baseloader |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/echemdbLoader |
+| native | https://echemdb.github.io/metadata-schema/autotag/echemdbLoader |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdbLoader
+description: Loader or importer used to process the data into echemdb format.
+examples:
+- value: baseloader
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: echemdbLoader
+owner: Autotag
+domain_of:
+- Autotag
+range: string
+
+```
+</details>

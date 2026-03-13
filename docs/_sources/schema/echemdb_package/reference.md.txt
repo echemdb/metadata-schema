@@ -1,0 +1,92 @@
+
+
+# Slot: reference 
+
+
+_Reference electrode or reference point for this measurement (electrochemistry-specific)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/reference](https://echemdb.github.io/metadata-schema/echemdb_package/reference)
+Alias: reference
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| RHE |
+| Ag/AgCl |
+| SCE |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/reference |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/reference |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: reference
+description: Reference electrode or reference point for this measurement (electrochemistry-specific).
+examples:
+- value: RHE
+- value: Ag/AgCl
+- value: SCE
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: reference
+owner: DataField
+domain_of:
+- DataField
+range: string
+
+```
+</details>

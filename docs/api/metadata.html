@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metadata &mdash; metadata-schema 0.6.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8fa8b3e9"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Schema Enricher" href="enricher.html" />
+    <link rel="prev" title="API Reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../schemas.html">Schema Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Example Files</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Metadata</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.metadata.metadata.Metadata"><code class="docutils literal notranslate"><span class="pre">Metadata</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.metadata.Metadata.data"><code class="docutils literal notranslate"><span class="pre">Metadata.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.metadata.Metadata.flatten"><code class="docutils literal notranslate"><span class="pre">Metadata.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.metadata.Metadata.from_yaml"><code class="docutils literal notranslate"><span class="pre">Metadata.from_yaml()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.metadata.Metadata.to_yaml"><code class="docutils literal notranslate"><span class="pre">Metadata.to_yaml()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.from_csv"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.from_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.from_excel"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.from_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.rows"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.rows</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_csv"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.to_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_excel"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.to_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_latex"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.to_latex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_markdown"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.to_markdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_pandas"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.to_pandas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.unflatten"><code class="docutils literal notranslate"><span class="pre">FlattenedMetadata.unflatten()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.base_rows"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.base_rows</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_csv"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.from_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_dict"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_excel"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.from_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.rows"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.rows</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_csv"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.to_csv()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_excel"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.to_excel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_latex"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.to_latex()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_markdown"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.to_markdown()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_pandas"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.to_pandas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.unflatten"><code class="docutils literal notranslate"><span class="pre">EnrichedFlattenedMetadata.unflatten()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="enricher.html">Schema Enricher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="validator.html">Validator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entrypoint.html">CLI Entrypoint</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Metadata</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/api/metadata.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="module-mdstools.metadata.metadata">
+<span id="metadata"></span><h1>Metadata<a class="headerlink" href="#module-mdstools.metadata.metadata" title="Link to this heading"></a></h1>
+<p>Metadata class for handling nested dictionary/YAML metadata structures.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdstools.metadata.metadata.Metadata">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdstools.metadata.metadata.</span></span><span class="sig-name descname"><span class="pre">Metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.metadata.Metadata" title="Link to this definition"></a></dt>
+<dd><p>Wrapper for nested dictionary metadata structures.</p>
+<p>Provides methods to load from YAML and convert to flattened tabular format.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">&#39;test&#39;</span>
+</pre></div>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="mdstools.metadata.metadata.Metadata.data">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#mdstools.metadata.metadata.Metadata.data" title="Link to this definition"></a></dt>
+<dd><p>Get the underlying metadata dictionary.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">({</span><span class="s1">&#39;experiment&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span><span class="o">.</span><span class="n">data</span>
+<span class="go">{&#39;experiment&#39;: {&#39;value&#39;: 42}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.metadata.Metadata.flatten">
+<span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.metadata.Metadata.flatten" title="Link to this definition"></a></dt>
+<dd><p>Convert to flattened tabular representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>FlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Nested</span> <span class="n">dictionaries</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;experiment&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">:</span> <span class="s1">&#39;mV&#39;</span><span class="p">}}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">rows</span> <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
+<span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span>
+ <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">],</span>
+ <span class="p">[</span><span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="s1">&#39;mV&#39;</span><span class="p">]]</span>
+
+<span class="n">Lists</span> <span class="n">of</span> <span class="n">dictionaries</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;measurements&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}]}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;measurements&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.metadata.Metadata.from_yaml">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.metadata.Metadata.from_yaml" title="Link to this definition"></a></dt>
+<dd><p>Load metadata from a YAML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> – Path to YAML file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>Load from a YAML file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;tests/simple_test.yaml&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">Metadata</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;curation&#39;</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">data</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+<span class="go">&#39;electrochemical&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.metadata.Metadata.to_yaml">
+<span class="sig-name descname"><span class="pre">to_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.metadata.Metadata.to_yaml" title="Link to this definition"></a></dt>
+<dd><p>Save metadata to a YAML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> – Path to save YAML file</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Basic save:
+
+&gt;&gt;&gt; from mdstools.metadata.metadata import Metadata
+&gt;&gt;&gt; import os
+&gt;&gt;&gt; data = {&#39;name&#39;: &#39;test&#39;, &#39;value&#39;: 42}
+&gt;&gt;&gt; metadata = Metadata(data)
+&gt;&gt;&gt; metadata.to_yaml(&#39;tests/generated/docstrings/test_metadata.yaml&#39;)
+&gt;&gt;&gt; os.path.exists(&#39;tests/generated/docstrings/test_metadata.yaml&#39;)
+True
+
+Test roundtrip (dict → YAML → dict):
+
+&gt;&gt;&gt; data = {&#39;experiment&#39;: {&#39;value&#39;: 42, &#39;units&#39;: &#39;mV&#39;}, &#39;author&#39;: &#39;test&#39;}
+&gt;&gt;&gt; metadata = Metadata(data)
+&gt;&gt;&gt; metadata.to_yaml(&#39;tests/generated/docstrings/roundtrip.yaml&#39;)
+&gt;&gt;&gt; loaded = Metadata.from_yaml(&#39;tests/generated/docstrings/roundtrip.yaml&#39;)
+&gt;&gt;&gt; loaded.data == data
+True
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-mdstools.metadata.flattened_metadata">FlattenedMetadata class for handling tabular representations of metadata.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdstools.metadata.flattened_metadata.</span></span><span class="sig-name descname"><span class="pre">FlattenedMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata" title="Link to this definition"></a></dt>
+<dd><p>Wrapper for flattened tabular metadata structures.</p>
+<p>Handles metadata in tabular format as list of [number, key, value] rows.
+Provides methods to load from/save to CSV and Excel formats.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[&#39;1&#39;, &#39;name&#39;, &#39;test&#39;]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.from_csv">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.from_csv" title="Link to this definition"></a></dt>
+<dd><p>Load flattened metadata from a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to CSV file</p></li>
+<li><p><strong>_kwargs</strong> – Additional arguments (currently unused, for future compatibility)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Basic</span> <span class="n">CSV</span> <span class="n">loading</span> <span class="k">with</span> <span class="nb">type</span> <span class="n">preservation</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;tests/from_csv_example.csv&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="mi">5</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># First row, key column</span>
+<span class="s1">&#39;name&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Values are converted to appropriate types (int, float, string)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">flattened</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>  <span class="c1"># value field is int 42</span>
+<span class="kc">True</span>
+
+<span class="n">Reconstruct</span> <span class="n">nested</span> <span class="n">structure</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">unflatten</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata</span><span class="o">.</span><span class="n">data</span>
+<span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;details&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">,</span> <span class="s1">&#39;year&#39;</span><span class="p">:</span> <span class="mi">2024</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>TESTS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Test</span> <span class="n">roundtrip</span> <span class="n">conversion</span> <span class="k">with</span> <span class="n">strings</span> <span class="n">containing</span> <span class="n">commas</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Create data with comma in string value</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">original_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;test, with comma&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;A, B, C&#39;</span><span class="p">}</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">Metadata</span><span class="p">(</span><span class="n">original_data</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Save to CSV</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_comma.csv&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Load back from CSV</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">loaded</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_comma.csv&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># Verify commas in strings are preserved</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">loaded</span><span class="o">.</span><span class="n">unflatten</span><span class="p">()</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">original_data</span>
+<span class="kc">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">loaded</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># First value should contain comma</span>
+<span class="s1">&#39;test, with comma&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.from_excel">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.from_excel" title="Link to this definition"></a></dt>
+<dd><p>Load flattened metadata from an Excel file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to Excel file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.read_excel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>NOTE: The Excel file must include columns named Number, Key, and Value.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Test roundtrip: flattened → Excel → flattened
+
+&gt;&gt;&gt; from mdstools.metadata.flattened_metadata import FlattenedMetadata
+&gt;&gt;&gt; import os
+&gt;&gt;&gt; original_rows = [[&#39;1&#39;, &#39;experiment&#39;, &#39;&lt;nested&gt;&#39;],
+... [&#39;1.i1.1&#39;, &#39;A&#39;, &#39;&lt;nested&gt;&#39;],
+... [&#39;1.i1.1.1&#39;, &#39;value&#39;, 1],
+... [&#39;1.i1.1.2&#39;, &#39;units&#39;, &#39;mV&#39;],
+... [&#39;1.i1.2&#39;, &#39;B&#39;, 2],
+... [&#39;1.i2.1&#39;, &#39;A&#39;, 3],
+... [&#39;1.i2.2&#39;, &#39;B&#39;, 4]]
+&gt;&gt;&gt; flattened = FlattenedMetadata(original_rows)
+&gt;&gt;&gt; flattened.to_excel(&#39;tests/generated/docstrings/test_flattened.xlsx&#39;)
+&gt;&gt;&gt; loaded = FlattenedMetadata.from_excel(&#39;tests/generated/docstrings/test_flattened.xlsx&#39;)
+&gt;&gt;&gt; loaded.unflatten().data == flattened.unflatten().data
+True
+
+Multi-sheet roundtrip: save with separate_sheets, load automatically merges:
+
+&gt;&gt;&gt; # Save as multi-sheet Excel
+&gt;&gt;&gt; rows = [[&#39;1&#39;, &#39;experiment&#39;, &#39;&lt;nested&gt;&#39;], [&#39;1.1&#39;, &#39;value&#39;, 1],
+...         [&#39;2&#39;, &#39;source&#39;, &#39;&lt;nested&gt;&#39;], [&#39;2.1&#39;, &#39;author&#39;, &#39;test&#39;]]
+&gt;&gt;&gt; flattened_multi = FlattenedMetadata(rows)
+&gt;&gt;&gt; flattened_multi.to_excel(&#39;tests/generated/docstrings/multi_roundtrip.xlsx&#39;, separate_sheets=True)
+&gt;&gt;&gt; # Load back - automatically handles multiple sheets
+&gt;&gt;&gt; loaded_multi = FlattenedMetadata.from_excel(&#39;tests/generated/docstrings/multi_roundtrip.xlsx&#39;)
+&gt;&gt;&gt; len(loaded_multi.rows) == len(rows)
+True
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.rows">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.rows" title="Link to this definition"></a></dt>
+<dd><p>Get the underlying flattened data rows.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fm</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">([[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fm</span><span class="o">.</span><span class="n">rows</span>
+<span class="go">[[&#39;1&#39;, &#39;a&#39;, 1], [&#39;2&#39;, &#39;b&#39;, 2]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.to_csv">
+<span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_csv" title="Link to this definition"></a></dt>
+<dd><p>Save flattened metadata to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to save CSV file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_csv</p></li>
+</ul>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.csv&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.to_excel">
+<span class="sig-name descname"><span class="pre">to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_excel" title="Link to this definition"></a></dt>
+<dd><p>Save flattened metadata to an Excel file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to save Excel file</p></li>
+<li><p><strong>separate_sheets</strong> – If True, create separate sheets for each top-level key</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_excel</p></li>
+</ul>
+</dd>
+</dl>
+<p>When separate_sheets=True, the Excel file will have one sheet per top-level
+key in the nested structure, making it easier to navigate large metadata files.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Single</span> <span class="n">sheet</span> <span class="n">export</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.xlsx&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.xlsx&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">Multi</span><span class="o">-</span><span class="n">sheet</span> <span class="n">export</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="o">...</span>         <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat_multi.xlsx&#39;</span><span class="p">,</span> <span class="n">separate_sheets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat_multi.xlsx&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.to_latex">
+<span class="sig-name descname"><span class="pre">to_latex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_latex" title="Link to this definition"></a></dt>
+<dd><p>Convert to LaTeX table format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Optional path to save the LaTeX file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_latex</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>LaTeX-formatted string</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Simple</span> <span class="n">example</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">latex</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_latex</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;tabular&#39;</span> <span class="ow">in</span> <span class="n">latex</span> <span class="ow">and</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">latex</span>
+<span class="kc">True</span>
+
+<span class="n">With</span> <span class="n">nested</span> <span class="n">structures</span> <span class="ow">and</span> <span class="n">lists</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span>
+<span class="o">...</span> <span class="p">[</span><span class="s1">&#39;2.i1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.i2&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.i3&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">latex</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_latex</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;Number&#39;</span> <span class="ow">in</span> <span class="n">latex</span> <span class="ow">and</span> <span class="s1">&#39;Key&#39;</span> <span class="ow">in</span> <span class="n">latex</span> <span class="ow">and</span> <span class="s1">&#39;Value&#39;</span> <span class="ow">in</span> <span class="n">latex</span>
+<span class="kc">True</span>
+
+<span class="n">Save</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.tex&#39;</span><span class="p">)</span>
+<span class="s1">&#39;...&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.tex&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.to_markdown">
+<span class="sig-name descname"><span class="pre">to_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_markdown" title="Link to this definition"></a></dt>
+<dd><p>Convert to Markdown table format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Optional path to save the Markdown file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_markdown</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Markdown-formatted string</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Simple</span> <span class="n">example</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">flattened</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">())</span> <span class="c1"># doctest: +NORMALIZE_WHITESPACE</span>
+<span class="o">|</span>   <span class="n">Number</span> <span class="o">|</span> <span class="n">Key</span>   <span class="o">|</span> <span class="n">Value</span>   <span class="o">|</span>
+<span class="o">|---------</span><span class="p">:</span><span class="o">|</span><span class="p">:</span><span class="o">------|</span><span class="p">:</span><span class="o">--------|</span>
+<span class="o">|</span>        <span class="mi">1</span> <span class="o">|</span> <span class="n">name</span>  <span class="o">|</span> <span class="n">test</span>    <span class="o">|</span>
+<span class="o">|</span>        <span class="mi">2</span> <span class="o">|</span> <span class="n">value</span> <span class="o">|</span> <span class="mi">42</span>      <span class="o">|</span>
+
+<span class="n">With</span> <span class="n">nested</span> <span class="n">structures</span> <span class="ow">and</span> <span class="n">lists</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span>
+<span class="o">...</span> <span class="p">[</span><span class="s1">&#39;2.i1&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.i2&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.i3&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">markdown</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;Number&#39;</span> <span class="ow">in</span> <span class="n">markdown</span> <span class="ow">and</span> <span class="s1">&#39;Key&#39;</span> <span class="ow">in</span> <span class="n">markdown</span> <span class="ow">and</span> <span class="s1">&#39;Value&#39;</span> <span class="ow">in</span> <span class="n">markdown</span>
+<span class="kc">True</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span> <span class="ow">in</span> <span class="n">markdown</span>
+<span class="kc">True</span>
+
+<span class="n">Save</span> <span class="n">to</span> <span class="n">file</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.md&#39;</span><span class="p">)</span>
+<span class="s1">&#39;...&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/test_flat.md&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.to_pandas">
+<span class="sig-name descname"><span class="pre">to_pandas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.to_pandas" title="Link to this definition"></a></dt>
+<dd><p>Convert to pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame with columns [‘Number’, ‘Key’, ‘Value’]</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[&#39;Number&#39;, &#39;Key&#39;, &#39;Value&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Key&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[&#39;name&#39;, &#39;value&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.flattened_metadata.FlattenedMetadata.unflatten">
+<span class="sig-name descname"><span class="pre">unflatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.flattened_metadata.FlattenedMetadata.unflatten" title="Link to this definition"></a></dt>
+<dd><p>Convert back to nested metadata structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schema_path</strong> – Optional JSON schema file path for validation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">[</span><span class="s1">&#39;1.2&#39;</span><span class="p">,</span> <span class="s1">&#39;units&#39;</span><span class="p">,</span> <span class="s1">&#39;mV&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="n">flattened</span><span class="o">.</span><span class="n">unflatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">data</span>
+<span class="go">{&#39;experiment&#39;: {&#39;value&#39;: 1, &#39;units&#39;: &#39;mV&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p id="module-mdstools.metadata.enriched_metadata">EnrichedFlattenedMetadata class for handling schema-enriched tabular metadata.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mdstools.metadata.enriched_metadata.</span></span><span class="sig-name descname"><span class="pre">EnrichedFlattenedMetadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata" title="Link to this definition"></a></dt>
+<dd><p>Schema-enriched wrapper for flattened tabular metadata structures.</p>
+<p>Extends FlattenedMetadata by adding Example and Description columns
+from JSON Schema files. This provides documentation and reference values
+alongside the actual metadata.</p>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>Load from a dictionary and enrich with schema information:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Start with nested metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;curation&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;process&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;curator&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;John Doe&#39;</span><span class="p">}]}}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create enriched metadata (flattens and adds schema info)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Base rows have 3 columns: [Number, Key, Value]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">base_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Top level</span>
+<span class="go">[&#39;1&#39;, &#39;curation&#39;, &#39;&lt;nested&gt;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">base_rows</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Leaf value</span>
+<span class="go">[&#39;1.1.i1.1&#39;, &#39;role&#39;, &#39;curator&#39;]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Enriched rows have 5 columns: [Number, Key, Value, Example, Description]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span>
+<span class="go">[[&#39;1&#39;, &#39;curation&#39;, &#39;&lt;nested&gt;&#39;, &#39;&#39;, &#39;&#39;],</span>
+<span class="go">[&#39;1.1&#39;, &#39;process&#39;, &#39;&lt;nested&gt;&#39;, &#39;&#39;, &#39;List of people involved in creating, recording, or curating this data.&#39;],</span>
+<span class="go">[&#39;1.1.i1.1&#39;, &#39;role&#39;, &#39;curator&#39;, &#39;experimentalist&#39;, &#39;Role of a person in the data curation process.&#39;],</span>
+<span class="go">[&#39;1.1.i1.2&#39;, &#39;name&#39;, &#39;John Doe&#39;, &#39;&#39;, &#39;Full name of the person.&#39;]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># Example for &#39;role&#39; field</span>
+<span class="go">&#39;experimentalist&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;person&#39;</span> <span class="ow">in</span> <span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>  <span class="c1"># Description contains &#39;person&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.base_rows">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">base_rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.base_rows" title="Link to this definition"></a></dt>
+<dd><p>Get the base 3-column rows without enrichment.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">base_rows</span>
+<span class="go">[[&#39;1&#39;, &#39;system&#39;, &#39;&lt;nested&gt;&#39;], [&#39;1.1&#39;, &#39;type&#39;, &#39;electrochemical&#39;]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_csv">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_csv" title="Link to this definition"></a></dt>
+<dd><p>Load flattened metadata from a CSV file and enrich with schema information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to CSV file</p></li>
+<li><p><strong>schema_dir</strong> – Path to directory containing JSON Schema files</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to FlattenedMetadata.from_csv</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>EnrichedFlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a test CSV with system metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings&#39;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/system_example.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Key&#39;</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="o">.</span><span class="n">from_csv</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/system_example.csv&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                               <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Has 5 columns</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_dict">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create EnrichedFlattenedMetadata from a nested dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Nested dictionary of metadata</p></li>
+<li><p><strong>schema_dir</strong> – Path to directory containing JSON Schema files</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>EnrichedFlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;system&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">base_rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">[&#39;1&#39;, &#39;system&#39;, &#39;&lt;nested&gt;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">base_rows</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">[&#39;1.1&#39;, &#39;type&#39;, &#39;electrochemical&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Enriched row has 5 columns</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_excel">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.from_excel" title="Link to this definition"></a></dt>
+<dd><p>Load flattened metadata from an Excel file and enrich with schema information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to Excel file</p></li>
+<li><p><strong>schema_dir</strong> – Path to directory containing JSON Schema files</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to FlattenedMetadata.from_excel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>EnrichedFlattenedMetadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.flattened_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create test data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span> <span class="o">=</span> <span class="n">FlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flattened</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/system_excel_example.xlsx&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load with enrichment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="o">.</span><span class="n">from_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/system_excel_example.xlsx&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                                 <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Has 5 columns</span>
+<span class="go">5</span>
+
+<span class="go">Load multi-sheet enriched Excel file:</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Can load enriched files saved with separate_sheets=True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">],</span>
+<span class="gp">... </span>        <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;curation&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;process&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched_multi</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched_multi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_multi_ex.xlsx&#39;</span><span class="p">,</span> <span class="n">separate_sheets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">loaded</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="o">.</span><span class="n">from_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_multi_ex.xlsx&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                               <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">loaded</span><span class="o">.</span><span class="n">base_rows</span><span class="p">)</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.rows">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rows</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.rows" title="Link to this definition"></a></dt>
+<dd><p>Get the enriched data rows with Example and Description columns.</p>
+<p>Each row is <code class="docutils literal notranslate"><span class="pre">[number,</span> <span class="pre">key,</span> <span class="pre">value,</span> <span class="pre">example,</span> <span class="pre">description]</span></code>.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">[&#39;1&#39;, &#39;system&#39;, &#39;&lt;nested&gt;&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">enriched</span><span class="o">.</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_csv">
+<span class="sig-name descname"><span class="pre">to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_csv" title="Link to this definition"></a></dt>
+<dd><p>Save enriched metadata to a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to save CSV file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_csv</p></li>
+</ul>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.csv&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_excel">
+<span class="sig-name descname"><span class="pre">to_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">separate_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_excel" title="Link to this definition"></a></dt>
+<dd><p>Save enriched metadata to an Excel file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Path to save Excel file</p></li>
+<li><p><strong>separate_sheets</strong> – If True, create separate sheets for each top-level key</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_excel</p></li>
+</ul>
+</dd>
+</dl>
+<p>When separate_sheets=True, the Excel file will have one sheet per top-level
+key in the nested structure, making it easier to navigate large metadata files.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Single</span> <span class="n">sheet</span> <span class="n">export</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">enriched</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.xlsx&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.xlsx&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+
+<span class="n">Multi</span><span class="o">-</span><span class="n">sheet</span> <span class="n">export</span><span class="p">:</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">],</span>
+<span class="o">...</span>         <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;author&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">]]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">enriched</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_multi.xlsx&#39;</span><span class="p">,</span> <span class="n">separate_sheets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_multi.xlsx&#39;</span><span class="p">)</span>
+<span class="kc">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_latex">
+<span class="sig-name descname"><span class="pre">to_latex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_latex" title="Link to this definition"></a></dt>
+<dd><p>Convert to LaTeX table format with enrichment columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Optional path to save the LaTeX file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_latex</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>LaTeX-formatted string</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latex</span> <span class="o">=</span> <span class="n">enriched</span><span class="o">.</span><span class="n">to_latex</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;tabular&#39;</span> <span class="ow">in</span> <span class="n">latex</span> <span class="ow">and</span> <span class="s1">&#39;Example&#39;</span> <span class="ow">in</span> <span class="n">latex</span> <span class="ow">and</span> <span class="s1">&#39;Description&#39;</span> <span class="ow">in</span> <span class="n">latex</span>
+<span class="go">True</span>
+
+<span class="go">Save to file:</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">to_latex</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.tex&#39;</span><span class="p">)</span>
+<span class="go">&#39;...&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.tex&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_markdown">
+<span class="sig-name descname"><span class="pre">to_markdown</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_markdown" title="Link to this definition"></a></dt>
+<dd><p>Convert to Markdown table format with enrichment columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Optional path to save the Markdown file</p></li>
+<li><p><strong>kwargs</strong> – Additional arguments passed to pandas.DataFrame.to_markdown</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Markdown-formatted string</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">markdown</span> <span class="o">=</span> <span class="n">enriched</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;Example&#39;</span> <span class="ow">in</span> <span class="n">markdown</span> <span class="ow">and</span> <span class="s1">&#39;Description&#39;</span> <span class="ow">in</span> <span class="n">markdown</span>
+<span class="go">True</span>
+
+<span class="go">Save to file:</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.md&#39;</span><span class="p">)</span>
+<span class="go">&#39;...&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;tests/generated/docstrings/enriched_test.md&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_pandas">
+<span class="sig-name descname"><span class="pre">to_pandas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.to_pandas" title="Link to this definition"></a></dt>
+<dd><p>Convert to pandas DataFrame with enrichment columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame with columns [‘Number’, ‘Key’, ‘Value’, ‘Example’, ‘Description’]</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;system&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="s1">&#39;electrochemical&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">enriched</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">[&#39;Number&#39;, &#39;Key&#39;, &#39;Value&#39;, &#39;Example&#39;, &#39;Description&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;&lt;nested&gt;&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.unflatten">
+<span class="sig-name descname"><span class="pre">unflatten</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">schema_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdstools.metadata.enriched_metadata.EnrichedFlattenedMetadata.unflatten" title="Link to this definition"></a></dt>
+<dd><p>Convert back to nested metadata structure (ignores enrichment columns).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>schema_path</strong> – Optional JSON schema file path for validation</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metadata instance</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.enriched_metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">EnrichedFlattenedMetadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rows</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;experiment&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;nested&gt;&#39;</span><span class="p">],</span>
+<span class="gp">... </span><span class="p">[</span><span class="s1">&#39;1.1&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">enriched</span> <span class="o">=</span> <span class="n">EnrichedFlattenedMetadata</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">schema_dir</span><span class="o">=</span><span class="s1">&#39;schemas&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span> <span class="o">=</span> <span class="n">enriched</span><span class="o">.</span><span class="n">unflatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">metadata</span><span class="o">.</span><span class="n">data</span>
+<span class="go">{&#39;experiment&#39;: {&#39;value&#39;: 1}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="enricher.html" class="btn btn-neutral float-right" title="Schema Enricher" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

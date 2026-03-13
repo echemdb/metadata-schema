@@ -1,0 +1,91 @@
+
+
+# Slot: citationKey 
+
+
+_Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/citationKey](https://echemdb.github.io/metadata-schema/source_data/citationKey)
+Alias: citationKey
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| electrobear_2024_electrochemistry_563 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/citationKey |
+| native | https://echemdb.github.io/metadata-schema/source_data/citationKey |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: citationKey
+description: Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.
+examples:
+- value: electrobear_2024_electrochemistry_563
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: citationKey
+owner: Source
+domain_of:
+- Source
+range: string
+required: true
+
+```
+</details>

@@ -1,0 +1,290 @@
+
+
+
+
+# Class: ElectrochemicalCell 
+
+
+_Description of the electrochemical cell setup and configuration._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCell](https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCell)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrochemicalCell
+    click ElectrochemicalCell href "../ElectrochemicalCell/"
+      ElectrochemicalCell : cellDescription
+        
+      ElectrochemicalCell : cleaningProcedure
+        
+      ElectrochemicalCell : components
+        
+          
+    
+        
+        
+        ElectrochemicalCell --> "*" ElectrochemicalCellComponent : components
+        click ElectrochemicalCellComponent href "../ElectrochemicalCellComponent/"
+    
+
+        
+      ElectrochemicalCell : source
+        
+          
+    
+        
+        
+        ElectrochemicalCell --> "0..1" ElectrochemicalCellSource : source
+        click ElectrochemicalCellSource href "../ElectrochemicalCellSource/"
+    
+
+        
+      ElectrochemicalCell : type
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type of electrochemical cell, such as H-cell, beaker glass, flow cell | `H-cell`,  `beaker glass`,  `flow cell` |
+| [components](components.md) | * <br/> [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | Physical components and parts of the cell that are in contact with the electr... |  |
+| [cellDescription](cellDescription.md) | 0..1 <br/> [String](String.md) | Detailed description of the cell configuration | `Three-electrode setup with glass cell and Teflon cap` |
+| [cleaningProcedure](cleaningProcedure.md) | 0..1 <br/> [String](String.md) | Procedure used to clean the cell before experiments | `Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream` |
+| [source](source.md) | 0..1 <br/> [ElectrochemicalCellSource](ElectrochemicalCellSource.md) | Source and supplier information for the cell |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [System](System.md) | [electrochemicalCell](electrochemicalCell.md) | range | [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCell |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCell |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrochemicalCell
+description: Description of the electrochemical cell setup and configuration.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type of electrochemical cell, such as H-cell, beaker glass, flow
+      cell.
+    examples:
+    - value: H-cell
+    - value: beaker glass
+    - value: flow cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  components:
+    name: components
+    description: Physical components and parts of the cell that are in contact with
+      the electrolyte.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: ElectrochemicalCellComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  cellDescription:
+    name: cellDescription
+    description: Detailed description of the cell configuration.
+    examples:
+    - value: Three-electrode setup with glass cell and Teflon cap
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    domain_of:
+    - ElectrochemicalCell
+    range: string
+  cleaningProcedure:
+    name: cleaningProcedure
+    description: Procedure used to clean the cell before experiments.
+    examples:
+    - value: Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar
+        stream
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    domain_of:
+    - ElectrochemicalCell
+    range: string
+  source:
+    name: source
+    description: Source and supplier information for the cell.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Svgdigitizer
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ElectrochemicalCellSource
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrochemicalCell
+description: Description of the electrochemical cell setup and configuration.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type of electrochemical cell, such as H-cell, beaker glass, flow
+      cell.
+    examples:
+    - value: H-cell
+    - value: beaker glass
+    - value: flow cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: type
+    owner: ElectrochemicalCell
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  components:
+    name: components
+    description: Physical components and parts of the cell that are in contact with
+      the electrolyte.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: components
+    owner: ElectrochemicalCell
+    domain_of:
+    - Electrolyte
+    - ElectrolyteContainer
+    - ElectrochemicalCell
+    - Atmosphere
+    range: ElectrochemicalCellComponent
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  cellDescription:
+    name: cellDescription
+    description: Detailed description of the cell configuration.
+    examples:
+    - value: Three-electrode setup with glass cell and Teflon cap
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    alias: cellDescription
+    owner: ElectrochemicalCell
+    domain_of:
+    - ElectrochemicalCell
+    range: string
+  cleaningProcedure:
+    name: cleaningProcedure
+    description: Procedure used to clean the cell before experiments.
+    examples:
+    - value: Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar
+        stream
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    rank: 1000
+    alias: cleaningProcedure
+    owner: ElectrochemicalCell
+    domain_of:
+    - ElectrochemicalCell
+    range: string
+  source:
+    name: source
+    description: Source and supplier information for the cell.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: source
+    owner: ElectrochemicalCell
+    domain_of:
+    - Svgdigitizer
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ElectrochemicalCellSource
+    inlined: true
+
+```
+</details>

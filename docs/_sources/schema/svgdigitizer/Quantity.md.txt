@@ -1,0 +1,283 @@
+
+
+
+
+# Class: Quantity 
+
+
+_A physical quantity with a value, unit, and optional uncertainty._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/Quantity](https://echemdb.github.io/metadata-schema/svgdigitizer/Quantity)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Quantity
+    click Quantity href "../Quantity/"
+      Quantity : calculation
+        
+      Quantity : comment
+        
+      Quantity : uncertainty
+        
+          
+    
+        
+        
+        Quantity --> "0..1" Uncertainty : uncertainty
+        click Uncertainty href "../Uncertainty/"
+    
+
+        
+      Quantity : unit
+        
+      Quantity : value
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [value](value.md) | 0..1 <br/> [Float](Float.md) | Numerical value of the quantity | `0.5` |
+| [unit](unit.md) | 0..1 <br/> [String](String.md) | Unit of measurement following astropy's string notation (e | `mol / l`,  `V`,  `mA / cm2` |
+| [uncertainty](uncertainty.md) | 0..1 <br/> [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes about the measurement or quantity | `Measured at room temperature` |
+| [calculation](calculation.md) | 0..1 <br/> [String](String.md) | Method or formula used to calculate this quantity | `Obtained by multiplying U and I` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | [scanRate](scanRate.md) | range | [Quantity](Quantity.md) |
+| [Purity](Purity.md) | [totalOrganicCarbon](totalOrganicCarbon.md) | range | [Quantity](Quantity.md) |
+| [Purity](Purity.md) | [totalIonConductivity](totalIonConductivity.md) | range | [Quantity](Quantity.md) |
+| [Electrode](Electrode.md) | [geometricElectrolyteContactArea](geometricElectrolyteContactArea.md) | range | [Quantity](Quantity.md) |
+| [Shape](Shape.md) | [height](height.md) | range | [Quantity](Quantity.md) |
+| [Shape](Shape.md) | [diameter](diameter.md) | range | [Quantity](Quantity.md) |
+| [Shape](Shape.md) | [length](length.md) | range | [Quantity](Quantity.md) |
+| [Component](Component.md) | [concentration](concentration.md) | range | [Quantity](Quantity.md) |
+| [Component](Component.md) | [partialPressure](partialPressure.md) | range | [Quantity](Quantity.md) |
+| [Component](Component.md) | [proportion](proportion.md) | range | [Quantity](Quantity.md) |
+| [Component](Component.md) | [flow](flow.md) | range | [Quantity](Quantity.md) |
+| [Component](Component.md) | [pressure](pressure.md) | range | [Quantity](Quantity.md) |
+| [Electrolyte](Electrolyte.md) | [ph](ph.md) | range | [Quantity](Quantity.md) |
+| [Electrolyte](Electrolyte.md) | [temperature](temperature.md) | range | [Quantity](Quantity.md) |
+| [Atmosphere](Atmosphere.md) | [totalOrganicCarbon](totalOrganicCarbon.md) | range | [Quantity](Quantity.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/Quantity |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/Quantity |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Quantity
+description: A physical quantity with a value, unit, and optional uncertainty.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  value:
+    name: value
+    description: Numerical value of the quantity.
+    examples:
+    - value: '0.5'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit of measurement following astropy's string notation (e.g., 'mol
+      / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.
+    examples:
+    - value: mol / l
+    - value: V
+    - value: mA / cm2
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - DataField
+    - Purity
+    range: string
+  uncertainty:
+    name: uncertainty
+    description: Uncertainty information for a measured quantity.
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Quantity
+    range: Uncertainty
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes about the measurement or quantity.
+    examples:
+    - value: Measured at room temperature
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Source
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+  calculation:
+    name: calculation
+    description: Method or formula used to calculate this quantity.
+    examples:
+    - value: Obtained by multiplying U and I
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    domain_of:
+    - Quantity
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Quantity
+description: A physical quantity with a value, unit, and optional uncertainty.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  value:
+    name: value
+    description: Numerical value of the quantity.
+    examples:
+    - value: '0.5'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: value
+    owner: Quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit of measurement following astropy's string notation (e.g., 'mol
+      / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.
+    examples:
+    - value: mol / l
+    - value: V
+    - value: mA / cm2
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: unit
+    owner: Quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - DataField
+    - Purity
+    range: string
+  uncertainty:
+    name: uncertainty
+    description: Uncertainty information for a measured quantity.
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: uncertainty
+    owner: Quantity
+    domain_of:
+    - Quantity
+    range: Uncertainty
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes about the measurement or quantity.
+    examples:
+    - value: Measured at room temperature
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: comment
+    owner: Quantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Source
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+  calculation:
+    name: calculation
+    description: Method or formula used to calculate this quantity.
+    examples:
+    - value: Obtained by multiplying U and I
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    alias: calculation
+    owner: Quantity
+    domain_of:
+    - Quantity
+    range: string
+
+```
+</details>

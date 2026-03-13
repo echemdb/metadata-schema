@@ -1,0 +1,88 @@
+
+
+# Slot: smiles 
+
+
+_SMILES (Simplified Molecular Input Line Entry System)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/smiles](https://echemdb.github.io/metadata-schema/minimum_echemdb/smiles)
+Alias: smiles
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| [Cl-].[Cl-].[Ca+2] |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/smiles |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/smiles |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: smiles
+description: SMILES (Simplified Molecular Input Line Entry System).
+examples:
+- value: '[Cl-].[Cl-].[Ca+2]'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: smiles
+owner: ChemicalIdentifiers
+domain_of:
+- ChemicalIdentifiers
+range: string
+
+```
+</details>

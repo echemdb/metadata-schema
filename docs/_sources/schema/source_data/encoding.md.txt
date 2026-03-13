@@ -1,0 +1,90 @@
+
+
+# Slot: encoding 
+
+
+_Character encoding of the data file._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/encoding](https://echemdb.github.io/metadata-schema/source_data/encoding)
+Alias: encoding
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| utf-8 |
+| latin-1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/encoding |
+| native | https://echemdb.github.io/metadata-schema/source_data/encoding |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: encoding
+description: Character encoding of the data file.
+examples:
+- value: utf-8
+- value: latin-1
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: encoding
+owner: Dialect
+domain_of:
+- Dialect
+range: string
+
+```
+</details>

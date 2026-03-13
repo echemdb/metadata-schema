@@ -1,0 +1,83 @@
+
+
+# Slot: curation 
+
+
+_Details on the curation process of the data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/curation](https://echemdb.github.io/metadata-schema/minimum_echemdb/curation)
+Alias: curation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [MinimumEchemdb](MinimumEchemdb.md) | Minimum set of metadata to describe an electrochemical system for echemdb |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Curation](Curation.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/curation |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/curation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: curation
+description: Details on the curation process of the data.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: curation
+owner: MinimumEchemdb
+domain_of:
+- MinimumEchemdb
+range: Curation
+required: true
+inlined: true
+
+```
+</details>

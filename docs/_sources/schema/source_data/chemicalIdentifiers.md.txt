@@ -1,0 +1,81 @@
+
+
+# Slot: chemicalIdentifiers 
+
+
+_Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/chemicalIdentifiers](https://echemdb.github.io/metadata-schema/source_data/chemicalIdentifiers)
+Alias: chemicalIdentifiers
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [ChemicalIdentifiers](ChemicalIdentifiers.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/chemicalIdentifiers |
+| native | https://echemdb.github.io/metadata-schema/source_data/chemicalIdentifiers |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: chemicalIdentifiers
+description: Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous
+  identification.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: chemicalIdentifiers
+owner: Component
+domain_of:
+- Component
+range: ChemicalIdentifiers
+inlined: true
+
+```
+</details>

@@ -1,0 +1,88 @@
+
+
+# Slot: calculation 
+
+
+_Method or formula used to calculate this quantity._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/calculation](https://echemdb.github.io/metadata-schema/echemdb_package/calculation)
+Alias: calculation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Obtained by multiplying U and I |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/calculation |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/calculation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: calculation
+description: Method or formula used to calculate this quantity.
+examples:
+- value: Obtained by multiplying U and I
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: calculation
+owner: Quantity
+domain_of:
+- Quantity
+range: string
+
+```
+</details>

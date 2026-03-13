@@ -1,0 +1,89 @@
+
+
+# Slot: height 
+
+
+_Height of the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/height](https://echemdb.github.io/metadata-schema/echemdb_package/height)
+Alias: height
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 5, unit: mm} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/height |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/height |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: height
+description: Height of the electrode.
+examples:
+- value: '{value: 5, unit: mm}'
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: height
+owner: Shape
+domain_of:
+- Shape
+range: Quantity
+inlined: true
+
+```
+</details>

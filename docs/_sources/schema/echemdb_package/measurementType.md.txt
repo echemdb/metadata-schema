@@ -1,0 +1,92 @@
+
+
+# Slot: measurementType 
+
+
+_Acronym type for the measurement performed, such as CV, EIS, XPS, etc._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/measurementType](https://echemdb.github.io/metadata-schema/echemdb_package/measurementType)
+Alias: measurementType
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| CV |
+| EIS |
+| LSV |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/measurementType |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/measurementType |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: measurementType
+description: Acronym type for the measurement performed, such as CV, EIS, XPS, etc.
+examples:
+- value: CV
+- value: EIS
+- value: LSV
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: measurementType
+owner: FigureDescription
+domain_of:
+- FigureDescription
+range: string
+
+```
+</details>

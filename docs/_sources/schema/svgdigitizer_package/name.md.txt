@@ -1,0 +1,92 @@
+
+
+# Slot: name 
+
+
+_Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/name](https://echemdb.github.io/metadata-schema/svgdigitizer_package/name)
+Alias: name
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| E_WE |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/name |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/name |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: name
+description: Name of the data field. Use single letters for specific systems. Otherwise
+  use descriptive names like 't_rel', 'E_WE', or 'j_WE'.
+examples:
+- value: E_WE
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: name
+owner: DataField
+domain_of:
+- DataField
+range: string
+required: true
+
+```
+</details>

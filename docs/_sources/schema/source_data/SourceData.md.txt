@@ -1,0 +1,316 @@
+
+
+
+
+# Class: SourceData 
+
+
+_Metadata schema for source data files in echemdb, combining system description, curation, source provenance, experimental details, figure description, and data format description._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/SourceData](https://echemdb.github.io/metadata-schema/source_data/SourceData)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SourceData
+    click SourceData href "../SourceData/"
+      SourceData : curation
+        
+          
+    
+        
+        
+        SourceData --> "1" Curation : curation
+        click Curation href "../Curation/"
+    
+
+        
+      SourceData : dataDescription
+        
+          
+    
+        
+        
+        SourceData --> "1" DataDescription : dataDescription
+        click DataDescription href "../DataDescription/"
+    
+
+        
+      SourceData : experimental
+        
+          
+    
+        
+        
+        SourceData --> "1" Experimental : experimental
+        click Experimental href "../Experimental/"
+    
+
+        
+      SourceData : figureDescription
+        
+          
+    
+        
+        
+        SourceData --> "1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      SourceData : source
+        
+          
+    
+        
+        
+        SourceData --> "1" Source : source
+        click Source href "../Source/"
+    
+
+        
+      SourceData : system
+        
+          
+    
+        
+        
+        SourceData --> "1" System : system
+        click System href "../System/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [curation](curation.md) | 1 <br/> [Curation](Curation.md) | Details on the curation process of the data |  |
+| [system](system.md) | 1 <br/> [System](System.md) | Description of the experimental system |  |
+| [source](source.md) | 1 <br/> [Source](Source.md) | Information about the source publication or dataset |  |
+| [experimental](experimental.md) | 1 <br/> [Experimental](Experimental.md) | Details about the experimental setup |  |
+| [figureDescription](figureDescription.md) | 1 <br/> [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot |  |
+| [dataDescription](dataDescription.md) | 1 <br/> [DataDescription](DataDescription.md) | Description of the raw data file format |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/SourceData |
+| native | https://echemdb.github.io/metadata-schema/source_data/SourceData |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SourceData
+description: Metadata schema for source data files in echemdb, combining system description,
+  curation, source provenance, experimental details, figure description, and data
+  format description.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    range: Curation
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    range: System
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    range: FigureDescription
+    required: true
+    inlined: true
+  dataDescription:
+    name: dataDescription
+    description: Description of the raw data file format.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    domain_of:
+    - SourceData
+    range: DataDescription
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SourceData
+description: Metadata schema for source data files in echemdb, combining system description,
+  curation, source provenance, experimental details, figure description, and data
+  format description.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: curation
+    owner: SourceData
+    domain_of:
+    - SourceData
+    range: Curation
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: system
+    owner: SourceData
+    domain_of:
+    - SourceData
+    range: System
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: source
+    owner: SourceData
+    domain_of:
+    - SourceData
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: experimental
+    owner: SourceData
+    domain_of:
+    - SourceData
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: figureDescription
+    owner: SourceData
+    domain_of:
+    - SourceData
+    range: FigureDescription
+    required: true
+    inlined: true
+  dataDescription:
+    name: dataDescription
+    description: Description of the raw data file format.
+    from_schema: https://echemdb.github.io/metadata-schema/source_data
+    rank: 1000
+    alias: dataDescription
+    owner: SourceData
+    domain_of:
+    - SourceData
+    range: DataDescription
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>

@@ -1,0 +1,228 @@
+
+
+
+
+# Class: ElectrolyteContainerComponent 
+
+
+_A component of the electrolyte container._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainerComponent](https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainerComponent)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrolyteContainerComponent
+    click ElectrolyteContainerComponent href "../ElectrolyteContainerComponent/"
+      ElectrolyteContainerComponent : comment
+        
+      ElectrolyteContainerComponent : name
+        
+      ElectrolyteContainerComponent : type
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 0..1 <br/> [String](String.md) | A unique identifier | `Bottle` |
+| [type](type.md) | 0..1 <br/> [String](String.md) | The type of the container, i | `PTFE`,  `glass`,  `borosilicate glass` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes | `Cleaned with aqua regia` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | [components](components.md) | range | [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainerComponent |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/ElectrolyteContainerComponent |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrolyteContainerComponent
+description: A component of the electrolyte container.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: A unique identifier.
+    examples:
+    - value: Bottle
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+  type:
+    name: type
+    description: The type of the container, i.e., a flask.
+    examples:
+    - value: PTFE
+    - value: glass
+    - value: borosilicate glass
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  comment:
+    name: comment
+    description: Additional notes.
+    examples:
+    - value: Cleaned with aqua regia
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrolyteContainerComponent
+description: A component of the electrolyte container.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: A unique identifier.
+    examples:
+    - value: Bottle
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: name
+    owner: ElectrolyteContainerComponent
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+  type:
+    name: type
+    description: The type of the container, i.e., a flask.
+    examples:
+    - value: PTFE
+    - value: glass
+    - value: borosilicate glass
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: type
+    owner: ElectrolyteContainerComponent
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  comment:
+    name: comment
+    description: Additional notes.
+    examples:
+    - value: Cleaned with aqua regia
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrolyte
+    alias: comment
+    owner: ElectrolyteContainerComponent
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+
+```
+</details>

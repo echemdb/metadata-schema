@@ -1,0 +1,181 @@
+
+
+
+
+# Class: DataDescription 
+
+
+_Description of the raw data file format, including CSV dialect, field mapping from original headers to standardized names, and units for each field._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/DataDescription](https://echemdb.github.io/metadata-schema/source_data/DataDescription)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class DataDescription
+    click DataDescription href "../DataDescription/"
+      DataDescription : dialect
+        
+          
+    
+        
+        
+        DataDescription --> "0..1" Dialect : dialect
+        click Dialect href "../Dialect/"
+    
+
+        
+      DataDescription : fieldUnits
+        
+          
+    
+        
+        
+        DataDescription --> "*" FieldUnit : fieldUnits
+        click FieldUnit href "../FieldUnit/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [dialect](dialect.md) | 0..1 <br/> [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  |
+| [fieldUnits](fieldUnits.md) | * <br/> [FieldUnit](FieldUnit.md) | List of fields with their units and optional reference electrodes |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SourceData](SourceData.md) | [dataDescription](dataDescription.md) | range | [DataDescription](DataDescription.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/DataDescription |
+| native | https://echemdb.github.io/metadata-schema/source_data/DataDescription |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: DataDescription
+description: Description of the raw data file format, including CSV dialect, field
+  mapping from original headers to standardized names, and units for each field.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  dialect:
+    name: dialect
+    description: CSV dialect specification describing the format of the source data
+      file.
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - DataDescription
+    range: Dialect
+    inlined: true
+  fieldUnits:
+    name: fieldUnits
+    description: List of fields with their units and optional reference electrodes.
+      Describes the physical units of each data column after mapping.
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - DataDescription
+    range: FieldUnit
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: DataDescription
+description: Description of the raw data file format, including CSV dialect, field
+  mapping from original headers to standardized names, and units for each field.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  dialect:
+    name: dialect
+    description: CSV dialect specification describing the format of the source data
+      file.
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: dialect
+    owner: DataDescription
+    domain_of:
+    - DataDescription
+    range: Dialect
+    inlined: true
+  fieldUnits:
+    name: fieldUnits
+    description: List of fields with their units and optional reference electrodes.
+      Describes the physical units of each data column after mapping.
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: fieldUnits
+    owner: DataDescription
+    domain_of:
+    - DataDescription
+    range: FieldUnit
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+
+```
+</details>
