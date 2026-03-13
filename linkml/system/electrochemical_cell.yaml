@@ -21,6 +21,8 @@ classes:
         description: Type of electrochemical cell, such as H-cell, beaker glass, flow cell.
         examples:
           - value: "H-cell"
+          - value: "beaker glass"
+          - value: "flow cell"
       components:
         range: ElectrochemicalCellComponent
         description: Physical components and parts of the cell that are in contact with the electrolyte.

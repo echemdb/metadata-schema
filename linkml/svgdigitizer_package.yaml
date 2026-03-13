@@ -67,6 +67,10 @@ classes:
         range: string
         description: List of tags describing the experiment or measurement.
         multivalued: true
+        examples:
+          - value: "BCV"
+          - value: "ORR"
+          - value: "HER"
 
   SvgdigitizerSource:
     description: Source publication information for digitized data.
@@ -76,11 +80,15 @@ classes:
         description: Figure identifier in the source publication.
         examples:
           - value: "2a"
+          - value: "1"
+          - value: "S3b"
       curve:
         range: string
         description: Specific curve identifier within the figure.
         examples:
           - value: "blue"
+          - value: "solid"
+          - value: "1"
       citationKey:
         range: string
         description: >-
@@ -91,6 +99,8 @@ classes:
       url:
         range: HttpUrl
         description: URL or DOI of the source publication.
+        examples:
+          - value: "https://doi.org/10.1039/C0CP01001D"
       bibdata:
         range: string
         description: BibTeX bibliographic data.
@@ -100,3 +110,7 @@ classes:
         range: string
         description: Techniques used in the source data.
         multivalued: true
+        examples:
+          - value: "CV"
+          - value: "LSV"
+          - value: "CA"

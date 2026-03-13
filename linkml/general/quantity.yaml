@@ -38,6 +38,8 @@ classes:
           Use an empty string for dimensionless quantities.
         examples:
           - value: "mol / l"
+          - value: "V"
+          - value: "mA / cm2"
       uncertainty:
         range: Uncertainty
         description: Uncertainty information for a measured quantity.

@@ -28,7 +28,7 @@ def is_primitive_list(lst):
     Returns True if every element is a simple scalar (str, int, float, bool, None),
     and False if any element is a dict or list.
 
-    EXAMPLES::
+    EXAMPLES:
 
         Primitive lists::
 
@@ -69,7 +69,7 @@ def _process_dict(d, prefix, parent_key, rows):
     :param parent_key: The parent key name (if nested)
     :param rows: The list to append rows to
 
-    EXAMPLES::
+    EXAMPLES:
 
         Top-level dict (no parent_key) — only children are emitted::
 
@@ -124,7 +124,7 @@ def _process_list(lst, prefix, parent_key, rows):
     :param parent_key: The parent key name
     :param rows: The list to append rows to
 
-    EXAMPLES::
+    EXAMPLES:
 
         Primitive list::
 
@@ -185,64 +185,64 @@ def flatten(d, prefix="", parent_key=None):
     :param parent_key: The parent key name (default: None)
     :return: A list of rows, each containing [number, key, value]
 
-    EXAMPLES::
+    EXAMPLES:
 
-    Simple key-value pairs::
+        Simple key-value pairs::
 
-        >>> data = {
-        ...     'experiment': 'abc'}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'experiment', 'abc']]
+            >>> data = {
+            ...     'experiment': 'abc'}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'experiment', 'abc']]
 
-        >>> data = {
-        ...     'experiment': 'abc',
-        ...     'details': 'foo'}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'experiment', 'abc'],
-         ['2', 'details', 'foo']]
+            >>> data = {
+            ...     'experiment': 'abc',
+            ...     'details': 'foo'}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'experiment', 'abc'],
+             ['2', 'details', 'foo']]
 
-    Nested dictionaries::
+        Nested dictionaries::
 
-        >>> data = {
-        ...     'experiment': {'value': 42, 'units': 'mV'}}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'experiment', '<nested>'],
-         ['1.1', 'value', 42],
-         ['1.2', 'units', 'mV']]
+            >>> data = {
+            ...     'experiment': {'value': 42, 'units': 'mV'}}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'experiment', '<nested>'],
+             ['1.1', 'value', 42],
+             ['1.2', 'units', 'mV']]
 
-    Lists of dictionaries::
+        Lists of dictionaries::
 
-        >>> data = {
-        ...     'experiment': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'experiment', '<nested>'],
-         ['1.i1.1', 'A', 1],
-         ['1.i1.2', 'B', 2],
-         ['1.i2.1', 'A', 3],
-         ['1.i2.2', 'B', 4]]
+            >>> data = {
+            ...     'experiment': [{'A': 1, 'B': 2}, {'A': 3, 'B': 4}]}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'experiment', '<nested>'],
+             ['1.i1.1', 'A', 1],
+             ['1.i1.2', 'B', 2],
+             ['1.i2.1', 'A', 3],
+             ['1.i2.2', 'B', 4]]
 
-    Primitive lists::
+        Primitive lists::
 
-        >>> data = {
-        ...     'measurements': ['A', 'B', 'C']}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'measurements', '<nested>'],
-         ['1.i1', '', 'A'],
-         ['1.i2', '', 'B'],
-         ['1.i3', '', 'C']]
+            >>> data = {
+            ...     'measurements': ['A', 'B', 'C']}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'measurements', '<nested>'],
+             ['1.i1', '', 'A'],
+             ['1.i2', '', 'B'],
+             ['1.i3', '', 'C']]
 
-    Mixed nested structures::
+        Mixed nested structures::
 
-        >>> data = {
-        ...     'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
-        >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
-        [['1', 'experiment', '<nested>'],
-         ['1.i1.1', 'A', '<nested>'],
-         ['1.i1.1.1', 'value', 1],
-         ['1.i1.1.2', 'units', 'mV'],
-         ['1.i1.2', 'B', 2],
-         ['1.i2.1', 'A', 3],
-         ['1.i2.2', 'B', 4]]
+            >>> data = {
+            ...     'experiment': [{'A': {'value': 1, 'units': 'mV'}, 'B': 2}, {'A': 3, 'B': 4}]}
+            >>> flatten(data) # doctest: +NORMALIZE_WHITESPACE
+            [['1', 'experiment', '<nested>'],
+             ['1.i1.1', 'A', '<nested>'],
+             ['1.i1.1.1', 'value', 1],
+             ['1.i1.1.2', 'units', 'mV'],
+             ['1.i1.2', 'B', 2],
+             ['1.i2.1', 'A', 3],
+             ['1.i2.2', 'B', 4]]
 
     """
 

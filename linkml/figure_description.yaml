@@ -51,6 +51,8 @@ classes:
         description: Acronym type for the measurement performed, such as CV, EIS, XPS, etc.
         examples:
           - value: "CV"
+          - value: "EIS"
+          - value: "LSV"
       simultaneousMeasurements:
         range: string
         description: Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.
@@ -95,6 +97,8 @@ classes:
           date, time, datetime, year, duration, geopoint, geojson, any).
         examples:
           - value: "number"
+          - value: "string"
+          - value: "integer"
       format:
         range: string
         description: >-
@@ -117,6 +121,8 @@ classes:
         description: Physical dimension of the field (e.g., 'time', 'potential', 'current density').
         examples:
           - value: "potential"
+          - value: "time"
+          - value: "current density"
       unit:
         range: string
         description: >-
@@ -124,11 +130,15 @@ classes:
           following astropy's string unit notation.
         examples:
           - value: "V"
+          - value: "mA / cm2"
+          - value: "s"
       reference:
         range: string
         description: Reference electrode or reference point for this measurement (electrochemistry-specific).
         examples:
           - value: "RHE"
+          - value: "Ag/AgCl"
+          - value: "SCE"
       orientation:
         range: FieldOrientation
         description: Axis orientation in plots (horizontal for x-axis, vertical for y-axis).
