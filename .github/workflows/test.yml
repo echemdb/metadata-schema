@@ -35,7 +35,9 @@ jobs:
         with: { submodules: recursive }
       - uses: prefix-dev/setup-pixi@v0.9.3
         with: { pixi-version: v0.63.2 }
-      - name: resolve-schemas
-        run: pixi run resolve-schemas
-      - name: check schemas match expected
-        run: pixi run diff-schemas
+      - name: regenerate schemas and models
+        run: python mdstools/schema/generate_from_linkml.py --all
+      - name: refresh expected schema snapshots
+        run: pixi run update-expected-schemas
+      - name: verify generated artifacts are committed
+        run: git diff --exit-code -- schemas mdstools/models

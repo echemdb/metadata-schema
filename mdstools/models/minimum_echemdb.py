@@ -1781,6 +1781,17 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
             }
         },
     )
+    smiles: Optional[str] = Field(
+        default=None,
+        description="""SMILES (Simplified Molecular Input Line Entry System).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "smiles",
+                "domain_of": ["ChemicalIdentifiers"],
+                "examples": [{"value": "[Cl-].[Cl-].[Ca+2]"}],
+            }
+        },
+    )
 
 
 class Atmosphere(ConfiguredBaseModel):

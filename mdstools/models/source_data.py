@@ -1809,6 +1809,17 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
             }
         },
     )
+    smiles: Optional[str] = Field(
+        default=None,
+        description="""SMILES (Simplified Molecular Input Line Entry System).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "smiles",
+                "domain_of": ["ChemicalIdentifiers"],
+                "examples": [{"value": "[Cl-].[Cl-].[Ca+2]"}],
+            }
+        },
+    )
 
 
 class Atmosphere(ConfiguredBaseModel):
@@ -2596,12 +2607,23 @@ class Dialect(ConfiguredBaseModel):
         {"from_schema": "https://echemdb.github.io/metadata-schema/data_description"}
     )
 
-    delimiters: Optional[str] = Field(
+    delimiter: Optional[str] = Field(
         default=None,
-        description="""Column delimiter character(s) used in the data file.""",
+        description="""Column delimiter character used in the data file.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "delimiters",
+                "alias": "delimiter",
+                "domain_of": ["Dialect"],
+                "examples": [{"value": ","}, {"value": ";"}, {"value": "\\t"}],
+            }
+        },
+    )
+    candidateDelimiters: Optional[list[str]] = Field(
+        default=None,
+        description="""Optional list of candidate delimiters used when trying to infer the file dialect.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "candidateDelimiters",
                 "domain_of": ["Dialect"],
                 "examples": [{"value": ","}, {"value": ";"}, {"value": "\\t"}],
             }
