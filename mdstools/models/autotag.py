@@ -27,9 +27,6 @@ from typing import Any, ClassVar, Literal, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
 
-metamodel_version = "None"
-version = "None"
-
 
 class ConfiguredBaseModel(BaseModel):
     model_config = ConfigDict(
@@ -2343,6 +2340,17 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
             }
         },
     )
+    smiles: Optional[str] = Field(
+        default=None,
+        description="""SMILES (Simplified Molecular Input Line Entry System).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "smiles",
+                "domain_of": ["ChemicalIdentifiers"],
+                "examples": [{"value": "[Cl-].[Cl-].[Ca+2]"}],
+            }
+        },
+    )
 
 
 class Atmosphere(ConfiguredBaseModel):
@@ -2552,6 +2560,17 @@ class Autotag(ConfiguredBaseModel):
         }
     )
 
+    echemdbSchemaVersion: Optional[str] = Field(
+        default=None,
+        description="""Version of the echemdb metadata schema this data conforms to.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "echemdbSchemaVersion",
+                "domain_of": ["Autotag"],
+                "examples": [{"value": "0.6.0"}],
+            }
+        },
+    )
     curation: Curation = Field(
         default=...,
         description="""Details on the curation process of the data.""",

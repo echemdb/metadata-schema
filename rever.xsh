@@ -42,10 +42,12 @@ $PROJECT = 'metadata-schema'
 from rever.activities.command import command
 
 command('pixi', 'pixi install --manifest-path "$PWD/pyproject.toml"')
+command('regenerate_schemas', 'pixi run generate-all && pixi run update-expected-schemas')
 
 $ACTIVITIES = [
     'version_bump',
     'pixi',
+    'regenerate_schemas',
     'changelog',
     'tag',
     'push_tag',
@@ -57,6 +59,20 @@ $VERSION_BUMP_PATTERNS = [
     ('doc/conf.py', r'release =', 'release = "$VERSION"'),
     ('doc/index.md', r'JSON Schemas \(v', 'JSON Schemas (v$VERSION)'),
     ('doc/index.md', r'metadata-schema/\d+\.\d+\.\d+/schemas/', 'metadata-schema/$VERSION/schemas/'),
+    # echemdbSchemaVersion in LinkML schemas (example values)
+    ('linkml/minimum_echemdb.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    ('linkml/autotag.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    ('linkml/source_data.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    ('linkml/svgdigitizer.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    ('linkml/echemdb_package.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    ('linkml/svgdigitizer_package.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
+    # echemdbSchemaVersion in example files
+    ('examples/file_schemas/minimum_echemdb.yaml', r'echemdbSchemaVersion:', 'echemdbSchemaVersion: $VERSION'),
+    ('examples/file_schemas/autotag.yaml', r'echemdbSchemaVersion:', 'echemdbSchemaVersion: $VERSION'),
+    ('examples/file_schemas/source_data.yaml', r'echemdbSchemaVersion:', 'echemdbSchemaVersion: $VERSION'),
+    ('examples/file_schemas/svgdigitizer.yaml', r'echemdbSchemaVersion:', 'echemdbSchemaVersion: $VERSION'),
+    ('examples/file_schemas/echemdb_package.json', r'"echemdbSchemaVersion":', '"echemdbSchemaVersion": "$VERSION",'),
+    ('examples/file_schemas/svgdigitizer_package.json', r'"echemdbSchemaVersion":', '"echemdbSchemaVersion": "$VERSION",'),
 ]
 
 $CHANGELOG_FILENAME = 'ChangeLog'

@@ -21,6 +21,11 @@ classes:
     tree_root: true
     description: Minimum set of metadata to describe an electrochemical system for echemdb.
     attributes:
+      echemdbSchemaVersion:
+        range: string
+        description: Version of the echemdb metadata schema this data conforms to.
+        examples:
+          - value: "0.6.0"
       curation:
         range: Curation
         required: true
