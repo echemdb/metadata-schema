@@ -1,6 +1,7 @@
 # This file has been inferred from https://github.com/echemdb/metadata-schema
 # It can be used to annotate measurement data during its creation using a tool such as autotag
 # Adding the `echemdb loader` and `field` data in `figureDescription` in principle allows creating a datapackage.
+echemdbSchemaVersion: 0.6.0
 curation:
   process:
     - role: experimentalist

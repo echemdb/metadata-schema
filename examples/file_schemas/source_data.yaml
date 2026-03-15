@@ -1,5 +1,6 @@
 # This file has been inferred from https://github.com/echemdb/metadata-schema
 # It provides a minimum set of metadata to describe an electrochemical system.
+echemdbSchemaVersion: 0.6.0
 curation: # Requires only the curator information
   process:
     - role: curator

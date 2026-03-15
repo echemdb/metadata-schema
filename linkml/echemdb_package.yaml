@@ -49,6 +49,11 @@ classes:
   EchemdbMetadata:
     description: echemdb-specific metadata for electrochemical data.
     attributes:
+      echemdbSchemaVersion:
+        range: string
+        description: Version of the echemdb metadata schema this data conforms to.
+        examples:
+          - value: "0.6.0"
       curation:
         range: Curation
         required: true

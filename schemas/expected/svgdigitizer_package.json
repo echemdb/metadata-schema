@@ -3,7 +3,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
   "description": "Data package schema for svgdigitizer output following the Frictionless Data Package specification with simplified echemdb metadata.",
-  "metamodel_version": "1.7.0",
   "properties": {
     "resources": {
       "description": "Data resources within the package.",
@@ -25,7 +24,6 @@
   },
   "title": "svgdigitizer_package",
   "type": "object",
-  "version": null,
   "$defs": {
     "DataField": {
       "additionalProperties": false,
@@ -228,6 +226,13 @@
       "additionalProperties": false,
       "description": "Simplified echemdb metadata for digitized data.",
       "properties": {
+        "echemdbSchemaVersion": {
+          "description": "Version of the echemdb metadata schema this data conforms to.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "experimental": {
           "anyOf": [
             {

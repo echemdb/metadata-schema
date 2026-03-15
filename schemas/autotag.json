@@ -3,7 +3,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
   "description": "Complete metadata schema for YAML templates used by autotag, combining all metadata sections into a single comprehensive structure.",
-  "metamodel_version": "1.7.0",
   "properties": {
     "curation": {
       "$ref": "#/$defs/Curation",
@@ -11,6 +10,13 @@
     },
     "echemdbLoader": {
       "description": "Loader or importer used to process the data into echemdb format.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "echemdbSchemaVersion": {
+      "description": "Version of the echemdb metadata schema this data conforms to.",
       "type": [
         "string",
         "null"
@@ -52,7 +58,6 @@
   ],
   "title": "autotag",
   "type": "object",
-  "version": null,
   "$defs": {
     "Atmosphere": {
       "additionalProperties": false,
@@ -122,6 +127,13 @@
         },
         "echemdbLoader": {
           "description": "Loader or importer used to process the data into echemdb format.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "echemdbSchemaVersion": {
+          "description": "Version of the echemdb metadata schema this data conforms to.",
           "type": [
             "string",
             "null"

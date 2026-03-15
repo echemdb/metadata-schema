@@ -3,11 +3,17 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
   "description": "Minimum set of metadata to describe an electrochemical system for echemdb.",
-  "metamodel_version": "1.7.0",
   "properties": {
     "curation": {
       "$ref": "#/$defs/Curation",
       "description": "Details on the curation process of the data."
+    },
+    "echemdbSchemaVersion": {
+      "description": "Version of the echemdb metadata schema this data conforms to.",
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "experimental": {
       "$ref": "#/$defs/Experimental",
@@ -35,7 +41,6 @@
   ],
   "title": "minimum_echemdb",
   "type": "object",
-  "version": null,
   "$defs": {
     "Atmosphere": {
       "additionalProperties": false,
@@ -1007,6 +1012,13 @@
         "curation": {
           "$ref": "#/$defs/Curation",
           "description": "Details on the curation process of the data."
+        },
+        "echemdbSchemaVersion": {
+          "description": "Version of the echemdb metadata schema this data conforms to.",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "experimental": {
           "$ref": "#/$defs/Experimental",
