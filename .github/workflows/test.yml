@@ -36,7 +36,7 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.9.3
         with: { pixi-version: v0.63.2 }
       - name: regenerate schemas and models
-        run: python mdstools/schema/generate_from_linkml.py --all
+        run: pixi run generate-all
       - name: refresh expected schema snapshots
         run: pixi run update-expected-schemas
       - name: verify generated artifacts are committed
