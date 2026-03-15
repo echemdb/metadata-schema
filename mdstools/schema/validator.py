@@ -402,7 +402,11 @@ def validate_source_data(data: Any, version: str = None) -> None:
     EXAMPLES::
 
         >>> from mdstools.schema.validator import validate_source_data  # doctest: +REMOTE_DATA
-        >>> validate_source_data('examples/file_schemas/source_data.yaml')  # doctest: +REMOTE_DATA
+        >>> import yaml  # doctest: +REMOTE_DATA
+        >>> with open('examples/file_schemas/source_data.yaml') as f:  # doctest: +REMOTE_DATA
+        ...     data = yaml.safe_load(f)
+        >>> _ = data['dataDescription'].pop('dialect', None)  # doctest: +REMOTE_DATA
+        >>> validate_source_data(data)  # doctest: +REMOTE_DATA
 
     """
     validate(data, schema="source_data", version=version)
