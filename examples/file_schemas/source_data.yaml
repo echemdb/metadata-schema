@@ -94,7 +94,11 @@ figureDescription: # optional but recommended
     unit: mV / s
 dataDescription:
   dialect:
-    delimiters: ','
+    delimiter: ','
+    candidateDelimiters:
+      - ','
+      - ';'
+      - "\t"
     decimal: '.'
     encoding: utf-8
     headerLines: 0

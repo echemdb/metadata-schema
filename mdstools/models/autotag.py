@@ -84,7 +84,7 @@ linkml_meta = LinkMLMeta(
                 "prefix_reference": "https://w3id.org/linkml/",
             },
         },
-        "source_file": "D:\\github\\echemdb\\metadata-schema\\linkml\\autotag.yaml",
+        "source_file": "linkml/autotag.yaml",
     }
 )
 

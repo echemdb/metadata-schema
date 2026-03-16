@@ -32,9 +32,19 @@ classes:
   Dialect:
     description: CSV dialect specification describing the format of the source data file.
     attributes:
-      delimiters:
+      delimiter:
         range: string
-        description: Column delimiter character(s) used in the data file.
+        description: Column delimiter character used in the data file.
+        examples:
+          - value: ","
+          - value: ";"
+          - value: "\\t"
+      candidateDelimiters:
+        range: string
+        multivalued: true
+        description: >-
+          Optional list of candidate delimiters used when trying to infer the
+          file dialect.
         examples:
           - value: ","
           - value: ";"

@@ -376,6 +376,14 @@ def validate_autotag(data: Any, version: str = None) -> None:
         >>> from mdstools.schema.validator import validate_autotag  # doctest: +REMOTE_DATA
         >>> validate_autotag('examples/file_schemas/autotag.yaml')  # doctest: +REMOTE_DATA
 
+        Local validation (always in sync with the working tree)::
+
+            >>> import yaml
+            >>> from mdstools.schema.validator import validate_metadata
+            >>> validate_metadata(
+            ...     yaml.safe_load(open('examples/file_schemas/autotag.yaml')),
+            ...     'schemas/autotag.json')
+
     """
     validate(data, schema="autotag", version=version)
 
@@ -390,6 +398,14 @@ def validate_minimum_echemdb(data: Any, version: str = None) -> None:
         >>> from mdstools.schema.validator import validate_minimum_echemdb  # doctest: +REMOTE_DATA
         >>> validate_minimum_echemdb('examples/file_schemas/minimum_echemdb.yaml')  # doctest: +REMOTE_DATA
 
+        Local validation (always in sync with the working tree)::
+
+            >>> import yaml
+            >>> from mdstools.schema.validator import validate_metadata
+            >>> validate_metadata(
+            ...     yaml.safe_load(open('examples/file_schemas/minimum_echemdb.yaml')),
+            ...     'schemas/minimum_echemdb.json')
+
     """
     validate(data, schema="minimum_echemdb", version=version)
 
@@ -402,7 +418,15 @@ def validate_source_data(data: Any, version: str = None) -> None:
     EXAMPLES::
 
         >>> from mdstools.schema.validator import validate_source_data  # doctest: +REMOTE_DATA
-        >>> validate_source_data('examples/file_schemas/source_data.yaml')  # doctest: +REMOTE_DATA
+        >>> validate_source_data('examples/file_schemas/source_data.yaml', version='main')  # doctest: +REMOTE_DATA, +SKIP
+
+        Local validation (always in sync with the working tree)::
+
+            >>> import yaml
+            >>> from mdstools.schema.validator import validate_metadata
+            >>> validate_metadata(
+            ...     yaml.safe_load(open('examples/file_schemas/source_data.yaml')),
+            ...     'schemas/source_data.json')
 
     """
     validate(data, schema="source_data", version=version)
@@ -418,6 +442,14 @@ def validate_svgdigitizer(data: Any, version: str = None) -> None:
         >>> from mdstools.schema.validator import validate_svgdigitizer  # doctest: +REMOTE_DATA
         >>> validate_svgdigitizer('examples/file_schemas/svgdigitizer.yaml')  # doctest: +REMOTE_DATA
 
+        Local validation (always in sync with the working tree)::
+
+            >>> import yaml
+            >>> from mdstools.schema.validator import validate_metadata
+            >>> validate_metadata(
+            ...     yaml.safe_load(open('examples/file_schemas/svgdigitizer.yaml')),
+            ...     'schemas/svgdigitizer.json')
+
     """
     validate(data, schema="svgdigitizer", version=version)
 
@@ -432,6 +464,18 @@ def validate_echemdb_package(data: Any, version: str = None) -> None:
         >>> from mdstools.schema.validator import validate_echemdb_package  # doctest: +REMOTE_DATA
         >>> validate_echemdb_package('examples/file_schemas/echemdb_package.json')  # doctest: +REMOTE_DATA
 
+        Local validation (always in sync with the working tree)::
+
+            >>> import json
+            >>> from pathlib import Path
+            >>> from mdstools.schema.validate_examples import validate_data, build_package_registry
+            >>> schema = json.load(open('schemas/echemdb_package.json'))
+            >>> data = json.load(open('examples/file_schemas/echemdb_package.json'))
+            >>> registry = build_package_registry(Path('schemas'))
+            >>> errors = validate_data(data, schema, registry=registry)
+            >>> len(errors)
+            0
+
     """
     validate(data, schema="echemdb_package", version=version)
 
@@ -445,6 +489,18 @@ def validate_svgdigitizer_package(data: Any, version: str = None) -> None:
 
         >>> from mdstools.schema.validator import validate_svgdigitizer_package  # doctest: +REMOTE_DATA
         >>> validate_svgdigitizer_package('examples/file_schemas/svgdigitizer_package.json')  # doctest: +REMOTE_DATA
+
+        Local validation (always in sync with the working tree)::
+
+            >>> import json
+            >>> from pathlib import Path
+            >>> from mdstools.schema.validate_examples import validate_data, build_package_registry
+            >>> schema = json.load(open('schemas/svgdigitizer_package.json'))
+            >>> data = json.load(open('examples/file_schemas/svgdigitizer_package.json'))
+            >>> registry = build_package_registry(Path('schemas'))
+            >>> errors = validate_data(data, schema, registry=registry)
+            >>> len(errors)
+            0
 
     """
     validate(data, schema="svgdigitizer_package", version=version)

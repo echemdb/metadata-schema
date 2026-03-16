@@ -84,7 +84,7 @@ linkml_meta = LinkMLMeta(
                 "prefix_reference": "https://w3id.org/linkml/",
             },
         },
-        "source_file": "D:\\github\\echemdb\\metadata-schema\\linkml\\minimum_echemdb.yaml",
+        "source_file": "linkml/minimum_echemdb.yaml",
     }
 )
 
