@@ -11001,8 +11001,8 @@ packages:
   timestamp: 1754946862113
 - pypi: ./
   name: mdstools
-  version: 0.6.0
-  sha256: 8a8e2077b349a7698c8ae6eb21698644c8d255dbbff3d90410bd540cf5031eee
+  version: 0.7.1
+  sha256: 8e6197078c5b6fa398c7d467a287449342a2299783d7a7d89643442b3eba4a02
   requires_dist:
   - click>=8,<9
   - pandas>=2,<4

@@ -2567,7 +2567,7 @@ class Autotag(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "echemdbSchemaVersion",
                 "domain_of": ["Autotag"],
-                "examples": [{"value": "0.6.0"}],
+                "examples": [{"value": "0.7.1"}],
             }
         },
     )

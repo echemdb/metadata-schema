@@ -2550,7 +2550,7 @@ class MinimumEchemdb(ConfiguredBaseModel):
             "linkml_meta": {
                 "alias": "echemdbSchemaVersion",
                 "domain_of": ["MinimumEchemdb"],
-                "examples": [{"value": "0.6.0"}],
+                "examples": [{"value": "0.7.1"}],
             }
         },
     )
