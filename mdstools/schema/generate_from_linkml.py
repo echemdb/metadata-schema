@@ -276,6 +276,7 @@ def _postprocess_pydantic(code: str) -> str:
         'extra = "forbid",',
         'extra = "allow",\n        coerce_numbers_to_str = True,',
     )
+
     return code
 
 
@@ -300,11 +301,14 @@ def generate_pydantic_models():
             continue
 
         print(f"  Generating {output_file.name} from {linkml_file.name}...")
+        # Use relative POSIX path so gen-pydantic embeds an OS-independent source_file
+        linkml_rel = linkml_file.relative_to(REPO_ROOT).as_posix()
         result = subprocess.run(
-            ["gen-pydantic", str(linkml_file)],
+            ["gen-pydantic", linkml_rel],
             capture_output=True,
             text=True,
             check=False,
+            cwd=str(REPO_ROOT),
         )
 
         if result.returncode != 0:

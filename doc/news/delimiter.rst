@@ -6,3 +6,4 @@
 **Fixed:**
 
 * Fixed CI generation checks to prevent generator drift by regenerating schemas and Pydantic models and failing when tracked generated artifacts differ.
+* Fixed OS-dependent absolute paths in generated Pydantic models (``source_file``) by passing relative POSIX paths to ``gen-pydantic``.
