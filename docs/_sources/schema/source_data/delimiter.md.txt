@@ -1,0 +1,92 @@
+
+
+# Slot: delimiter 
+
+
+_Column delimiter character used in the data file._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/delimiter](https://echemdb.github.io/metadata-schema/source_data/delimiter)
+Alias: delimiter
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| , |
+| ; |
+| \t |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/delimiter |
+| native | https://echemdb.github.io/metadata-schema/source_data/delimiter |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: delimiter
+description: Column delimiter character used in the data file.
+examples:
+- value: ','
+- value: ;
+- value: \t
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: delimiter
+owner: Dialect
+domain_of:
+- Dialect
+range: string
+
+```
+</details>

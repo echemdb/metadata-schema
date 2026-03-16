@@ -1,0 +1,92 @@
+
+
+# Slot: redoxSystem 
+
+
+_Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/redoxSystem](https://echemdb.github.io/metadata-schema/svgdigitizer/redoxSystem)
+Alias: redoxSystem
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| RHE |
+| Ag/AgCl |
+| SCE |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/redoxSystem |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/redoxSystem |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: redoxSystem
+description: Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).
+examples:
+- value: RHE
+- value: Ag/AgCl
+- value: SCE
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: redoxSystem
+owner: Electrode
+domain_of:
+- Electrode
+range: string
+
+```
+</details>

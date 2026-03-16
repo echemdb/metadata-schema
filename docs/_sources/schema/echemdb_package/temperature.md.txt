@@ -1,0 +1,89 @@
+
+
+# Slot: temperature 
+
+
+_Temperature of the electrolyte during the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/temperature](https://echemdb.github.io/metadata-schema/echemdb_package/temperature)
+Alias: temperature
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 298.15, unit: K} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/temperature |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/temperature |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: temperature
+description: Temperature of the electrolyte during the experiment.
+examples:
+- value: '{value: 298.15, unit: K}'
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: temperature
+owner: Electrolyte
+domain_of:
+- Electrolyte
+range: Quantity
+inlined: true
+
+```
+</details>

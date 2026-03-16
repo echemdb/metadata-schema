@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG Digitizer &mdash; metadata-schema 0.7.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5a057da9"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="echemdb Package" href="echemdb_package.html" />
+    <link rel="prev" title="Source Data" href="source_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../schemas.html">Schema Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Example Files</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../examples.html#object-schemas">Object schemas</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../examples.html#file-schemas">File schemas</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="autotag.html">Autotag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="minimum_echemdb.html">Minimum echemdb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source_data.html">Source Data</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">SVG Digitizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="echemdb_package.html">echemdb Package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="svgdigitizer_package.html">SVG Digitizer Package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../examples.html">Example Files</a></li>
+      <li class="breadcrumb-item active">SVG Digitizer</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/examples/svgdigitizer.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="svg-digitizer">
+<h1>SVG Digitizer<a class="headerlink" href="#svg-digitizer" title="Link to this heading"></a></h1>
+<p>Metadata for digitized data from SVG figures. See the <a class="reference internal" href="../schema/svgdigitizer/index.html"><span class="doc std std-doc">schema reference</span></a> for detailed field descriptions.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file describes a figure from a publication containing electrochemical data.</span>
+<span class="c1"># For the `echemdb/website` project, the source, curator and electrochemicalSystem is mandatory.</span>
+<span class="c1"># figureDescription is optional. It is created automatically by the cv module of svgdigitizer</span>
+<span class="nt">echemdbSchemaVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.7.1</span>
+<span class="nt">curation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">process</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">curator</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Albert Engstfeld</span>
+<span class="w">      </span><span class="nt">orcid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://orcid.org/0000-0002-9686-3948</span>
+<span class="w">      </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2021-07-09&quot;</span><span class="w"> </span><span class="c1"># YYYY-MM-DD</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reviewer</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Albert Engstfeld</span>
+<span class="w">      </span><span class="nt">orcid</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://orcid.org/0000-0002-9686-3948</span>
+<span class="w">      </span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2022-01-21&quot;</span>
+<span class="nt">eln</span><span class="p">:</span><span class="w"> </span><span class="c1"># not required for svgdigitizer</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.url</span><span class="w"> </span><span class="c1"># URL to the ELN describing the data</span>
+<span class="nt">experimental</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tags</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BCV</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SPST</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.url</span><span class="w"> </span><span class="c1"># For example: doi referring to a published work</span>
+<span class="w">  </span><span class="nt">instrumentation</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">potentiostat</span>
+<span class="w">      </span><span class="nt">manufacturer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Biologic</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Poti1</span><span class="w"> </span><span class="c1"># a unique name of the device</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mass spectrometer</span>
+<span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">xyz</span>
+<span class="w">      </span><span class="nt">manufacturer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pfeiffer</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MS-Lab2</span><span class="w"> </span><span class="c1"># a unique name of the device</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pH meter</span>
+<span class="w">      </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Lab850</span>
+<span class="w">      </span><span class="nt">manufacturer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SI Analytics</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">FancyDevice15</span><span class="w"> </span><span class="c1"># a unique name of the device</span>
+<span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">some decsription</span><span class="w"> </span><span class="c1"># A string or a new set of metadata</span>
+<span class="nt">source</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://doi.org/10.1016/0039-6028(85)90985-9</span><span class="w"> </span><span class="c1"># DOI or a URL of the source.</span>
+<span class="w">  </span><span class="nt">citationKey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mustermann_2021_scientific_102</span><span class="w"> </span><span class="c1"># AuthorName_YYYY_FirstWordTitle_pageNr. Lower case only.</span>
+<span class="w">  </span><span class="nt">originalFilename</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">experiment_figure2b.csv</span><span class="w"> </span><span class="c1"># name of the original measurement file</span>
+<span class="w">  </span><span class="nt">techniques</span><span class="p">:</span><span class="w"> </span><span class="c1"># provide a list of techniques used in the publication</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">XPS</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CV</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">EIS</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEMS</span>
+<span class="w">  </span><span class="nt">figure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2b</span><span class="w"> </span><span class="c1"># depending on the subfigure labels use 1, 1b, or 1_3. Can be provided in the SVG instead.</span>
+<span class="w">  </span><span class="nt">curve</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solid</span><span class="w"> </span><span class="c1"># use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.</span>
+<span class="nt">system</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">electrochemical</span>
+<span class="w">  </span><span class="nt">electrolyte</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aqueous</span><span class="w"> </span><span class="c1"># aqueous = aq, non-aqueous=naq, solid=s, gas=g</span>
+<span class="w">    </span><span class="nt">electrolyteContainer</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">glass flask</span><span class="w"> </span><span class="c1"># keys need to be defined for local data structuring. Usually anyway not provided in the literature.</span>
+<span class="w">        </span><span class="nt">components</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">borosilicate glass</span>
+<span class="w">            </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flask</span>
+<span class="w">            </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">some comment</span>
+<span class="w">    </span><span class="nt">components</span><span class="p">:</span><span class="w"> </span><span class="c1"># create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Name</span><span class="w"> </span><span class="c1"># This is a standard component entry. Some entries are related to certain types of components.</span>
+<span class="w">        </span><span class="nt">concentration</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mol / l</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">salt</span><span class="w"> </span><span class="c1"># salt, base, acid, solvent, gas, ...</span>
+<span class="w">        </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">supplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">company name</span><span class="w"> </span><span class="c1"># Company name, organic chemistry III - Uni Ulm</span>
+<span class="w">          </span><span class="nt">lot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">155464A</span><span class="w"> </span><span class="c1"># LOT number</span>
+<span class="w">          </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5N</span><span class="w"> </span><span class="c1"># analytical grade, 5N, etc</span>
+<span class="w">            </span><span class="nt">totalOrganicCarbon</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">              </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppb</span>
+<span class="w">            </span><span class="nt">totalIonConductivity</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18</span>
+<span class="w">              </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MOhm cm</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span><span class="w"> </span><span class="c1"># puity after refinement</span>
+<span class="w">          </span><span class="nt">refinement</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Thorough cleaning.</span><span class="w"> </span><span class="c1"># Description of additional cleaning procedures post purchase</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6N</span>
+<span class="w">          </span><span class="nt">totalOrganicCarbon</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">            </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppb</span>
+<span class="w">          </span><span class="nt">container</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">new name</span><span class="w"> </span><span class="c1"># the new container in which the chemical has been transferred for daily use</span>
+<span class="w">          </span><span class="nt">internalLot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Number</span><span class="w"> </span><span class="c1"># Flask in which some of the chemicals were transferred</span>
+<span class="w">          </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://some.url</span><span class="w"> </span><span class="c1"># details on the wiki</span>
+<span class="w">        </span><span class="nt">partialPressure</span><span class="p">:</span><span class="w"> </span><span class="c1"># if type gas</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span><span class="w"> </span><span class="c1"># use 1 bar for saturated solutions</span>
+<span class="w">        </span><span class="nt">proportion</span><span class="p">:</span><span class="w"> </span><span class="c1"># if type solvent</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volume percent</span>
+<span class="w">        </span><span class="nt">flow</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">        </span><span class="nt">comment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Nothing special.</span><span class="w"> </span><span class="c1"># text description</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NaCl</span><span class="w"> </span><span class="c1"># can be trivia name, sum formula, etc</span>
+<span class="w">        </span><span class="nt">concentration</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mol / l</span><span class="w"> </span><span class="c1"># [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">salt</span><span class="w"> </span><span class="c1">#</span>
+<span class="w">        </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">supplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Supplier name</span>
+<span class="w">          </span><span class="nt">lot</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;654654&#39;</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5N</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">water</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solvent</span>
+<span class="w">        </span><span class="nt">proportion</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volume percent</span>
+<span class="w">        </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">refinement</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sartorius Arium 611UV</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ultrapure water</span><span class="w"> </span><span class="c1"># qualitative description of the purity commonly used in the community</span>
+<span class="w">          </span><span class="nt">totalOrganicCarbon</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">            </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ppb</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ethanol</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solvent</span>
+<span class="w">        </span><span class="nt">proportion</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volume percent</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">analytical grade</span><span class="w"> </span><span class="c1"># qualitative description of the purity commonly used in the community</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BMPyr-TFSI</span>
+<span class="w">        </span><span class="nt">chemicalIdentifiers</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">cas</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">223437-11-4</span>
+<span class="w">            </span><span class="nt">inchi</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InChI=1S/C9H20N.C2F6NO4S2/c1-3-4-7-10(2)8-5-6-9-10;3-1(4,5)14(10,11)9-15(12,13)2(6,7)8/h3-9H2,1-2H3;/q+1;-1</span>
+<span class="w">            </span><span class="nt">inchikey</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InChIKey=HSLXOARVFIWOQF-UHFFFAOYSA-N</span>
+<span class="w">        </span><span class="nt">proportion</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">volume percent</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">        </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">supplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MERCK/emd</span>
+<span class="w">          </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ultrapure</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">refinement</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vacuum dried at 120 °C</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">solvent</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">H2SO4</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">acid</span>
+<span class="w">        </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">supplier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Supplier name</span>
+<span class="w">          </span><span class="nt">lot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">C45456</span>
+<span class="w">        </span><span class="nt">concentration</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mol / l</span><span class="w"> </span><span class="c1"># [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">N2</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gas</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">N5.0</span><span class="w"> </span><span class="c1"># some genereic name</span>
+<span class="w">        </span><span class="nt">partialPressure</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bar</span><span class="w"> </span><span class="c1"># use 1 bar for saturated solutions</span>
+<span class="w">        </span><span class="nt">proportion</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">        </span><span class="nt">flow</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">null</span>
+<span class="w">    </span><span class="nt">ph</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">13</span>
+<span class="w">      </span><span class="nt">uncertainty</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="w">    </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="c1"># provide the temperature as it is given in the article. Assume room temperature if nothing is provided</span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">298.15</span>
+<span class="w">      </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">K</span><span class="w"> </span><span class="c1"># [K, C, F]</span>
+<span class="w">  </span><span class="nt">electrodes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RHE</span>
+<span class="w">      </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reference electrode</span>
+<span class="w">      </span><span class="nt">redoxSystem</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RHE</span><span class="w"> </span><span class="c1"># the reference electrode given in the experimental section. Might differ from that in the plot: MSE-sat, MSE-3M, MSE-1M, RHE, AgCl2</span>
+<span class="w">      </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">manufacturer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SI Analytics</span>
+<span class="w">        </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MSE Shott</span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http://some.url.to.a.pdf.html</span>
+<span class="w">      </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Home made RHE.</span>
+<span class="w">      </span><span class="nt">material</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pt</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wire</span>
+<span class="w">      </span><span class="nt">shape</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Description of the shape.</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CE</span>
+<span class="w">      </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">counter electrode</span>
+<span class="w">      </span><span class="nt">material</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pt</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wire</span>
+<span class="w">      </span><span class="nt">shape</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">length</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mm</span>
+<span class="w">        </span><span class="nt">diameter</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mm</span>
+<span class="w">      </span><span class="nt">crystallographicOrientation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">poly</span>
+<span class="w">      </span><span class="nt">geometricElectrolyteContactArea</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cm-2</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WE</span>
+<span class="w">      </span><span class="nt">function</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">working electrode</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">single crystal</span>
+<span class="w">      </span><span class="nt">material</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ni</span>
+<span class="w">      </span><span class="nt">crystallographicOrientation</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;111&quot;</span><span class="w"> </span><span class="c1"># &#39;hkl&#39;, &#39;100&#39;, &#39;110&#39;, &#39;11,15,1&#39;, &#39;poly&#39;. Force string with &#39;&#39;. Otherwise leading zeros will be removed and the entry will be understood as an octal number.</span>
+<span class="w">      </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">manufacturer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Company name</span>
+<span class="w">        </span><span class="nt">lot</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">145823A</span><span class="w"> </span><span class="c1"># LOT number</span>
+<span class="w">        </span><span class="nt">purity</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">grade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5N</span>
+<span class="w">      </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="c1"># optional</span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cylinder</span><span class="w"> </span><span class="c1"># bead/sphere</span>
+<span class="w">        </span><span class="nt">height</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mm</span>
+<span class="w">        </span><span class="nt">diameter</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">          </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mm</span>
+<span class="w">      </span><span class="nt">geometricElectrolyteContactArea</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cm-2</span>
+<span class="w">      </span><span class="nt">preparationProcedure</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="c1"># Short description of the sample preparation.</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Description step 1.</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Description Step 2.</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://www.preparation.html</span><span class="w"> </span><span class="c1"># Link to a page with a standard preparation procedure.</span>
+<span class="w">  </span><span class="nt">electrochemicalCell</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">glass electrolysis cell</span>
+<span class="w">    </span><span class="nt">components</span><span class="p">:</span><span class="w"> </span><span class="c1"># list of components in contact with the electrolyte</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">glass</span>
+<span class="w">        </span><span class="nt">part</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cell</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nafion</span>
+<span class="w">        </span><span class="nt">part</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">membrane</span>
+<span class="w">    </span><span class="nt">cellDescription</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A classical electrochemical cell.</span><span class="w"> </span><span class="c1"># freetext description</span>
+<span class="w">    </span><span class="nt">cleaningProcedure</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Storing in highly concentrated KOH and boiling in Milli-Q water.</span><span class="w"> </span><span class="c1"># freetext description</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://doi.org/doi</span><span class="w"> </span><span class="c1"># DOI or URL where the design is published</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="source_data.html" class="btn btn-neutral float-left" title="Source Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="echemdb_package.html" class="btn btn-neutral float-right" title="echemdb Package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

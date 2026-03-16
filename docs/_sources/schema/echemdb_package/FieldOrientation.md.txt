@@ -1,0 +1,66 @@
+# Enum: FieldOrientation 
+
+
+
+
+_Axis orientation in plots._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/FieldOrientation](https://echemdb.github.io/metadata-schema/echemdb_package/FieldOrientation)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| horizontal | None | Displayed on x-axis |
+| vertical | None | Displayed on y-axis |
+
+
+
+
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [orientation](orientation.md) | Axis orientation in plots (horizontal for x-axis, vertical for y-axis) |
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: FieldOrientation
+description: Axis orientation in plots.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+permissible_values:
+  horizontal:
+    text: horizontal
+    description: Displayed on x-axis.
+  vertical:
+    text: vertical
+    description: Displayed on y-axis.
+
+```
+</details>

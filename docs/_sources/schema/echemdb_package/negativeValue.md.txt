@@ -1,0 +1,88 @@
+
+
+# Slot: negativeValue 
+
+
+_Lower bound (-) for asymmetric uncertainties._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/negativeValue](https://echemdb.github.io/metadata-schema/echemdb_package/negativeValue)
+Alias: negativeValue
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Float](Float.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.01 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/negativeValue |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/negativeValue |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: negativeValue
+description: Lower bound (-) for asymmetric uncertainties.
+examples:
+- value: '0.01'
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: negativeValue
+owner: Uncertainty
+domain_of:
+- Uncertainty
+range: float
+
+```
+</details>

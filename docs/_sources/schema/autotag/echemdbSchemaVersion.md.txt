@@ -1,0 +1,88 @@
+
+
+# Slot: echemdbSchemaVersion 
+
+
+_Version of the echemdb metadata schema this data conforms to._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/echemdbSchemaVersion](https://echemdb.github.io/metadata-schema/autotag/echemdbSchemaVersion)
+Alias: echemdbSchemaVersion
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.7.1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/echemdbSchemaVersion |
+| native | https://echemdb.github.io/metadata-schema/autotag/echemdbSchemaVersion |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdbSchemaVersion
+description: Version of the echemdb metadata schema this data conforms to.
+examples:
+- value: 0.7.1
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: echemdbSchemaVersion
+owner: Autotag
+domain_of:
+- Autotag
+range: string
+
+```
+</details>

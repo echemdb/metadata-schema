@@ -1,0 +1,90 @@
+
+
+# Slot: orientation 
+
+
+_Axis orientation in plots (horizontal for x-axis, vertical for y-axis)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/orientation](https://echemdb.github.io/metadata-schema/svgdigitizer_package/orientation)
+Alias: orientation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [FieldOrientation](FieldOrientation.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| horizontal |
+| vertical |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/orientation |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/orientation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: orientation
+description: Axis orientation in plots (horizontal for x-axis, vertical for y-axis).
+examples:
+- value: horizontal
+- value: vertical
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: orientation
+owner: DataField
+domain_of:
+- DataField
+range: FieldOrientation
+
+```
+</details>

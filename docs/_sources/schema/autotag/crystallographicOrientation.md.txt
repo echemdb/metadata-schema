@@ -1,0 +1,91 @@
+
+
+# Slot: crystallographicOrientation 
+
+
+_Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/crystallographicOrientation](https://echemdb.github.io/metadata-schema/autotag/crystallographicOrientation)
+Alias: crystallographicOrientation
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| (1 1 1) |
+| poly |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/crystallographicOrientation |
+| native | https://echemdb.github.io/metadata-schema/autotag/crystallographicOrientation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: crystallographicOrientation
+description: Miller indices of the surface orientation or 'poly' for polycrystalline.
+  Always use spaces for value separation.
+examples:
+- value: (1 1 1)
+- value: poly
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: crystallographicOrientation
+owner: Electrode
+domain_of:
+- Electrode
+range: string
+
+```
+</details>

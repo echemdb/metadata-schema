@@ -1,0 +1,98 @@
+
+
+# Slot: tags 
+
+
+_Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/tags](https://echemdb.github.io/metadata-schema/minimum_echemdb/tags)
+Alias: tags
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Multivalued: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| BCV |
+| ORR |
+| COOR |
+| FAOR |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/tags |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/tags |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: tags
+description: Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS,
+  or MS.
+examples:
+- value: BCV
+- value: ORR
+- value: COOR
+- value: FAOR
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: tags
+owner: Experimental
+domain_of:
+- Experimental
+range: string
+multivalued: true
+
+```
+</details>

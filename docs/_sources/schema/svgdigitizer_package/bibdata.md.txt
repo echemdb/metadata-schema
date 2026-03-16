@@ -1,0 +1,88 @@
+
+
+# Slot: bibdata 
+
+
+_BibTeX bibliographic data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/bibdata](https://echemdb.github.io/metadata-schema/svgdigitizer_package/bibdata)
+Alias: bibdata
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| @article{electrobear_2024_electrochemistry_563, title={...}, ...} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/bibdata |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/bibdata |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: bibdata
+description: BibTeX bibliographic data.
+examples:
+- value: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: bibdata
+owner: SvgdigitizerSource
+domain_of:
+- SvgdigitizerSource
+range: string
+
+```
+</details>

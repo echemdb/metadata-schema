@@ -1,0 +1,83 @@
+
+
+# Slot: eln 
+
+
+_Electronic lab notebook reference._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/eln](https://echemdb.github.io/metadata-schema/autotag/eln)
+Alias: eln
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Autotag](Autotag.md) | Complete metadata schema for YAML templates used by autotag, combining all me... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Eln](Eln.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/eln |
+| native | https://echemdb.github.io/metadata-schema/autotag/eln |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: eln
+description: Electronic lab notebook reference.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: eln
+owner: Autotag
+domain_of:
+- Autotag
+range: Eln
+required: true
+inlined: true
+
+```
+</details>

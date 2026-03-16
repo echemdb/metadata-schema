@@ -1,0 +1,275 @@
+
+
+
+
+# Class: Dialect 
+
+
+_CSV dialect specification describing the format of the source data file._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/Dialect](https://echemdb.github.io/metadata-schema/source_data/Dialect)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Dialect
+    click Dialect href "../Dialect/"
+      Dialect : candidateDelimiters
+        
+      Dialect : columnHeaderLines
+        
+      Dialect : decimal
+        
+      Dialect : delimiter
+        
+      Dialect : encoding
+        
+      Dialect : headerLines
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [delimiter](delimiter.md) | 0..1 <br/> [String](String.md) | Column delimiter character used in the data file | `,`,  `;`,  `\t` |
+| [candidateDelimiters](candidateDelimiters.md) | * <br/> [String](String.md) | Optional list of candidate delimiters used when trying to infer the file dial... | `,`,  `;`,  `\t` |
+| [decimal](decimal.md) | 0..1 <br/> [String](String.md) | Character used as decimal separator | `.`,  `,` |
+| [encoding](encoding.md) | 0..1 <br/> [String](String.md) | Character encoding of the data file | `utf-8`,  `latin-1` |
+| [headerLines](headerLines.md) | 0..1 <br/> [Integer](Integer.md) | Number of header lines to skip before the column headers | `5` |
+| [columnHeaderLines](columnHeaderLines.md) | 0..1 <br/> [Integer](Integer.md) | Number of lines that make up the column headers | `2` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [DataDescription](DataDescription.md) | [dialect](dialect.md) | range | [Dialect](Dialect.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/Dialect |
+| native | https://echemdb.github.io/metadata-schema/source_data/Dialect |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Dialect
+description: CSV dialect specification describing the format of the source data file.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  delimiter:
+    name: delimiter
+    description: Column delimiter character used in the data file.
+    examples:
+    - value: ','
+    - value: ;
+    - value: \t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: string
+  candidateDelimiters:
+    name: candidateDelimiters
+    description: Optional list of candidate delimiters used when trying to infer the
+      file dialect.
+    examples:
+    - value: ','
+    - value: ;
+    - value: \t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: string
+    multivalued: true
+  decimal:
+    name: decimal
+    description: Character used as decimal separator.
+    examples:
+    - value: .
+    - value: ','
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: string
+  encoding:
+    name: encoding
+    description: Character encoding of the data file.
+    examples:
+    - value: utf-8
+    - value: latin-1
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: string
+  headerLines:
+    name: headerLines
+    description: Number of header lines to skip before the column headers.
+    examples:
+    - value: '5'
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: integer
+  columnHeaderLines:
+    name: columnHeaderLines
+    description: Number of lines that make up the column headers. If more than one,
+      header parts are joined with ' / '.
+    examples:
+    - value: '2'
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    domain_of:
+    - Dialect
+    range: integer
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Dialect
+description: CSV dialect specification describing the format of the source data file.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  delimiter:
+    name: delimiter
+    description: Column delimiter character used in the data file.
+    examples:
+    - value: ','
+    - value: ;
+    - value: \t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: delimiter
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: string
+  candidateDelimiters:
+    name: candidateDelimiters
+    description: Optional list of candidate delimiters used when trying to infer the
+      file dialect.
+    examples:
+    - value: ','
+    - value: ;
+    - value: \t
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: candidateDelimiters
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: string
+    multivalued: true
+  decimal:
+    name: decimal
+    description: Character used as decimal separator.
+    examples:
+    - value: .
+    - value: ','
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: decimal
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: string
+  encoding:
+    name: encoding
+    description: Character encoding of the data file.
+    examples:
+    - value: utf-8
+    - value: latin-1
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: encoding
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: string
+  headerLines:
+    name: headerLines
+    description: Number of header lines to skip before the column headers.
+    examples:
+    - value: '5'
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: headerLines
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: integer
+  columnHeaderLines:
+    name: columnHeaderLines
+    description: Number of lines that make up the column headers. If more than one,
+      header parts are joined with ' / '.
+    examples:
+    - value: '2'
+    from_schema: https://echemdb.github.io/metadata-schema/data_description
+    rank: 1000
+    alias: columnHeaderLines
+    owner: Dialect
+    domain_of:
+    - Dialect
+    range: integer
+
+```
+</details>

@@ -1,0 +1,275 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schema Reference &mdash; metadata-schema 0.7.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5a057da9"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="autotag" href="schema/autotag/index.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Schema Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#available-schemas">Available schemas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-generation">Schema generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validation">Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#schema-details">Schema details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="schema/autotag/index.html">autotag</a></li>
+<li class="toctree-l3"><a class="reference internal" href="schema/minimum_echemdb/index.html">minimum_echemdb</a></li>
+<li class="toctree-l3"><a class="reference internal" href="schema/source_data/index.html">source_data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="schema/svgdigitizer/index.html">svgdigitizer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="schema/echemdb_package/index.html">echemdb_package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="schema/svgdigitizer_package/index.html">svgdigitizer_package</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Example Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Schema Reference</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/schemas.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="schema-reference">
+<h1>Schema Reference<a class="headerlink" href="#schema-reference" title="Link to this heading"></a></h1>
+<p>All metadata schemas are defined as <a class="reference external" href="https://linkml.io/">LinkML</a> YAML files and serve as the single source of truth. From these definitions, JSON Schema files and Pydantic models are generated automatically.</p>
+<section id="available-schemas">
+<h2>Available schemas<a class="headerlink" href="#available-schemas" title="Link to this heading"></a></h2>
+<p>The following schema types are available:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Autotag</div>
+<p class="sd-card-text">Complete metadata for YAML templates used by <a class="reference external" href="https://echemdb.github.io/autotag-metadata/">autotag-metadata</a>.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/autotag/index.html"><span class="doc">autotag</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Minimum echemdb</div>
+<p class="sd-card-text">Minimum set of metadata required for the echemdb database.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/minimum_echemdb/index.html"><span class="doc">minimum_echemdb</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Source Data</div>
+<p class="sd-card-text">Source data with data description (dialect, field mapping, field units).</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/source_data/index.html"><span class="doc">source_data</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+SVG Digitizer</div>
+<p class="sd-card-text">Metadata for digitized data from SVG figures.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/svgdigitizer/index.html"><span class="doc">svgdigitizer</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+echemdb Package</div>
+<p class="sd-card-text">Data package schema for echemdb, composing with the Frictionless Data Package standard.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/echemdb_package/index.html"><span class="doc">echemdb_package</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+SVG Digitizer Package</div>
+<p class="sd-card-text">Data package schema for SVG Digitizer output.</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="schema/svgdigitizer_package/index.html"><span class="doc">svgdigitizer_package</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="schema-generation">
+<h2>Schema generation<a class="headerlink" href="#schema-generation" title="Link to this heading"></a></h2>
+<p>Schemas are generated from LinkML YAML definitions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate JSON Schemas</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-schemas
+
+<span class="c1"># Generate Pydantic models</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-models
+
+<span class="c1"># Generate both</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-all
+</pre></div>
+</div>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Link to this heading"></a></h2>
+<p>Validate example files against the schemas:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pixi<span class="w"> </span>run<span class="w"> </span>validate
+</pre></div>
+</div>
+</section>
+<section id="schema-details">
+<h2>Schema details<a class="headerlink" href="#schema-details" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="schema/autotag/index.html">autotag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/autotag/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/autotag/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/autotag/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/autotag/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/autotag/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema/minimum_echemdb/index.html">minimum_echemdb</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/minimum_echemdb/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/minimum_echemdb/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/minimum_echemdb/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/minimum_echemdb/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/minimum_echemdb/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema/source_data/index.html">source_data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/source_data/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/source_data/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/source_data/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/source_data/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/source_data/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema/svgdigitizer/index.html">svgdigitizer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema/echemdb_package/index.html">echemdb_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/echemdb_package/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/echemdb_package/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/echemdb_package/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/echemdb_package/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/echemdb_package/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="schema/svgdigitizer_package/index.html">svgdigitizer_package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer_package/index.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer_package/index.html#slots">Slots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer_package/index.html#enumerations">Enumerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer_package/index.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="schema/svgdigitizer_package/index.html#subsets">Subsets</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pixi<span class="w"> </span>run<span class="w"> </span>validate
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="schema/autotag/index.html" class="btn btn-neutral float-right" title="autotag" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

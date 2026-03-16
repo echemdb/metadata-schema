@@ -1,0 +1,193 @@
+# source_data
+
+Metadata schema for source data files in echemdb.
+
+URI: https://echemdb.github.io/metadata-schema/source_data
+
+Name: source_data
+
+
+
+## Classes
+
+| Class | Description |
+| --- | --- |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |
+| [Component](Component.md) | A chemical component of the electrolyte solution |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |
+| [Curation](Curation.md) | Details on the curation process of the data |
+| [DataDescription](DataDescription.md) | Description of the raw data file format, including CSV dialect, field mapping... |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |
+| [ElectrochemicalCellSource](ElectrochemicalCellSource.md) | Source information for the electrochemical cell |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |
+| [ElectrodePreparation](ElectrodePreparation.md) | Procedures and methods used to prepare the electrode |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |
+| [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) | A component of the electrolyte container |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |
+| [FieldUnit](FieldUnit.md) | Unit specification for a data field, following astropy's string unit notation |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |
+| [Process](Process.md) | A person involved in the data curation process |
+| [Purity](Purity.md) | Purity specifications of a chemical component |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |
+| [Source](Source.md) | Information about the source publication or dataset |
+| [SourceData](SourceData.md) | Metadata schema for source data files in echemdb, combining system descriptio... |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |
+
+
+
+## Slots
+
+| Slot | Description |
+| --- | --- |
+| [atmosphere](atmosphere.md) | Atmospheric conditions during the experiment |
+| [bibdata](bibdata.md) | BibTeX bibliographic data |
+| [calculation](calculation.md) | Method or formula used to calculate this quantity |
+| [candidateDelimiters](candidateDelimiters.md) | Optional list of candidate delimiters used when trying to infer the file dial... |
+| [cas](cas.md) | CAS Registry Number (Chemical Abstracts Service identifier) |
+| [cellDescription](cellDescription.md) | Detailed description of the cell configuration |
+| [chemicalIdentifiers](chemicalIdentifiers.md) | Standard chemical identifiers (CAS, SMILES, InChI, etc |
+| [citationKey](citationKey.md) | Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Y... |
+| [cleaningProcedure](cleaningProcedure.md) | Procedure used to clean the cell before experiments |
+| [columnHeaderLines](columnHeaderLines.md) | Number of lines that make up the column headers |
+| [comment](comment.md) | Additional notes about the measurement or quantity |
+| [components](components.md) | Chemical components of the electrolyte including solvents, salts, acids, base... |
+| [concentration](concentration.md) | Concentration of the component in the electrolyte |
+| [container](container.md) | Name or identifier of the container in which the chemical is stored |
+| [crystallographicOrientation](crystallographicOrientation.md) | Miller indices of the surface orientation or 'poly' for polycrystalline |
+| [curation](curation.md) | Details on the curation process of the data |
+| [curve](curve.md) | Specific curve or trace identifier within a figure |
+| [dataDescription](dataDescription.md) | Description of the raw data file format |
+| [date](date.md) | Date when the person performed their role (ISO 8601 format: YYYY-MM-DD) |
+| [decimal](decimal.md) | Character used as decimal separator |
+| [delimiter](delimiter.md) | Column delimiter character used in the data file |
+| [description](description.md) | Detailed description of the electrode (especially for custom-made electrodes) |
+| [dialect](dialect.md) | CSV dialect specification describing the format of the source data file |
+| [diameter](diameter.md) | Diameter of the electrode (for cylindrical shapes) |
+| [dimension](dimension.md) | Physical dimension of the field (e |
+| [echemdbSchemaVersion](echemdbSchemaVersion.md) | Version of the echemdb metadata schema this data conforms to |
+| [electrochemicalCell](electrochemicalCell.md) | Description of the electrochemical cell and its configuration |
+| [electrodes](electrodes.md) | List of electrodes used in the electrochemical cell (working, reference, coun... |
+| [electrolyte](electrolyte.md) | The electrolyte solution used in the experiment |
+| [electrolyteContainer](electrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |
+| [encoding](encoding.md) | Character encoding of the data file |
+| [experimental](experimental.md) | Details about the experimental setup |
+| [fields](fields.md) | Description of data fields/columns in the figure |
+| [fieldUnits](fieldUnits.md) | List of fields with their units and optional reference electrodes |
+| [figure](figure.md) | Figure number or identifier from the source including subfigure label |
+| [figureDescription](figureDescription.md) | Description of the data to a figure or plot |
+| [flow](flow.md) | Flow rate for gaseous components |
+| [format](format.md) | Format specification for the field type (default, email, uri, binary, uuid fo... |
+| [function](function.md) | Role of the electrode in the electrochemical cell |
+| [geometricElectrolyteContactArea](geometricElectrolyteContactArea.md) | Geometric surface area of electrode in contact with electrolyte |
+| [grade](grade.md) | Quality grade designation |
+| [headerLines](headerLines.md) | Number of header lines to skip before the column headers |
+| [height](height.md) | Height of the electrode |
+| [inchi](inchi.md) | InChI (International Chemical Identifier) string |
+| [inchikey](inchikey.md) | InChIKey (hashed InChI for easier searching) |
+| [instrumentation](instrumentation.md) | Instruments and equipment used in the experiment |
+| [internalLot](internalLot.md) | Internal LOT or batch number |
+| [length](length.md) | Length of the electrode |
+| [lot](lot.md) | LOT or batch number |
+| [manufacturer](manufacturer.md) | Name of the electrode manufacturer |
+| [material](material.md) | Chemical symbol or abbreviation of the electrode material |
+| [measurementType](measurementType.md) | Acronym type for the measurement performed, such as CV, EIS, XPS, etc |
+| [model](model.md) | Model number or designation |
+| [name](name.md) | Full name of the person |
+| [negativeValue](negativeValue.md) | Lower bound (-) for asymmetric uncertainties |
+| [orcid](orcid.md) | An URL containing the ORCID |
+| [orientation](orientation.md) | Axis orientation in plots (horizontal for x-axis, vertical for y-axis) |
+| [originalFilename](originalFilename.md) | Original filename of the data file |
+| [part](part.md) | Part number or designation |
+| [partialPressure](partialPressure.md) | Partial pressure of a gaseous / volatile component |
+| [ph](ph.md) | pH value of the electrolyte solution |
+| [positiveValue](positiveValue.md) | Upper bound (+) for asymmetric uncertainties |
+| [preparationProcedure](preparationProcedure.md) | Procedures used to prepare the electrode before measurement |
+| [pressure](pressure.md) | Pressure for gaseous components |
+| [process](process.md) | List of people involved in creating, recording, or curating this data |
+| [proportion](proportion.md) | Proportion of the component (e |
+| [purity](purity.md) | Purity specifications of the electrode material |
+| [quality](quality.md) | Quality grade of the chemical |
+| [redoxSystem](redoxSystem.md) | Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc |
+| [reference](reference.md) | Reference electrode or reference point for this measurement (electrochemistry... |
+| [refinement](refinement.md) | Description of additional purification or treatment performed |
+| [role](role.md) | Role of the person in the data curation process |
+| [scanRate](scanRate.md) | The rate at which the data has been recorded |
+| [shape](shape.md) | Physical shape and dimensions of the electrode |
+| [simultaneousMeasurements](simultaneousMeasurements.md) | Other measurements performed simultaneously, such as ring current, IR, Raman,... |
+| [smiles](smiles.md) | SMILES (Simplified Molecular Input Line Entry System) |
+| [source](source.md) | Information about the source publication or dataset |
+| [supplier](supplier.md) | Name of the supplier |
+| [system](system.md) | Description of the experimental system |
+| [tags](tags.md) | Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or M... |
+| [techniques](techniques.md) | Experimental techniques used in the study |
+| [temperature](temperature.md) | Temperature of the electrolyte during the experiment |
+| [title](title.md) | A human-readable title for this field |
+| [totalIonConductivity](totalIonConductivity.md) | Value for the total ionic conductivity measurement |
+| [totalOrganicCarbon](totalOrganicCarbon.md) | Value for the total organic carbon content measurement |
+| [type](type.md) | Type of uncertainty (absolute or relative) |
+| [uncertainty](uncertainty.md) | Uncertainty information for a measured quantity |
+| [unit](unit.md) | Unit of measurement following astropy's string notation (e |
+| [url](url.md) | URL with further details on the purity or container |
+| [value](value.md) | Numerical value of the quantity |
+
+
+## Enumerations
+
+| Enumeration | Description |
+| --- | --- |
+| [ComponentType](ComponentType.md) | Role or function of the component in the electrolyte |
+| [CurationRole](CurationRole.md) | Role of a person in the data curation process |
+| [ElectrodeFunction](ElectrodeFunction.md) | Role of the electrode in the electrochemical cell |
+| [ElectrolyteType](ElectrolyteType.md) | Type of electrolyte defined by the solvent |
+| [FieldOrientation](FieldOrientation.md) | Axis orientation in plots |
+| [FigureDescriptionType](FigureDescriptionType.md) | Source or origin of the data |
+| [SystemType](SystemType.md) | Type of experimental system |
+| [UncertaintyType](UncertaintyType.md) | Type of uncertainty measurement |
+
+
+## Types
+
+| Type | Description |
+| --- | --- |
+| [Boolean](Boolean.md) | A binary (true or false) value |
+| [Curie](Curie.md) | a compact URI |
+| [Date](Date.md) | a date (year, month and day) in an idealized calendar |
+| [DateOrDatetime](DateOrDatetime.md) | Either a date or a datetime |
+| [Datetime](Datetime.md) | The combination of a date and time |
+| [Decimal](Decimal.md) | A real number with arbitrary precision that conforms to the xsd:decimal speci... |
+| [Double](Double.md) | A real number that conforms to the xsd:double specification |
+| [Float](Float.md) | A real number that conforms to the xsd:float specification |
+| [HttpUrl](HttpUrl.md) | A valid HTTP or HTTPS URL, including DOIs |
+| [Integer](Integer.md) | An integer |
+| [Jsonpath](Jsonpath.md) | A string encoding a JSON Path |
+| [Jsonpointer](Jsonpointer.md) | A string encoding a JSON Pointer |
+| [Ncname](Ncname.md) | Prefix part of CURIE |
+| [Nodeidentifier](Nodeidentifier.md) | A URI, CURIE or BNODE that represents a node in a model |
+| [Objectidentifier](Objectidentifier.md) | A URI or CURIE that represents an object in the model |
+| [Sparqlpath](Sparqlpath.md) | A string encoding a SPARQL Property Path |
+| [String](String.md) | A character string |
+| [Time](Time.md) | A time object represents a (local) time of day, independent of any particular... |
+| [Uri](Uri.md) | a complete URI |
+| [Uriorcurie](Uriorcurie.md) | a URI or a CURIE |
+
+
+## Subsets
+
+| Subset | Description |
+| --- | --- |
+
+```{toctree}
+:hidden:
+:glob:
+
+*
+```

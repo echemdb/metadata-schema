@@ -1,0 +1,66 @@
+# Enum: UncertaintyType 
+
+
+
+
+_Type of uncertainty measurement._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/UncertaintyType](https://echemdb.github.io/metadata-schema/svgdigitizer_package/UncertaintyType)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| absolute | None | Absolute uncertainty value |
+| relative | None | Relative uncertainty value |
+
+
+
+
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [type](type.md) | Type of uncertainty (absolute or relative) |
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: UncertaintyType
+description: Type of uncertainty measurement.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+permissible_values:
+  absolute:
+    text: absolute
+    description: Absolute uncertainty value.
+  relative:
+    text: relative
+    description: Relative uncertainty value.
+
+```
+</details>

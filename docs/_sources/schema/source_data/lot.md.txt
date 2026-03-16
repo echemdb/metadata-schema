@@ -1,0 +1,65 @@
+
+
+# Slot: lot 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/lot](https://echemdb.github.io/metadata-schema/source_data/lot)
+Alias: lot
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/lot |
+| native | https://echemdb.github.io/metadata-schema/source_data/lot |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: lot
+alias: lot
+domain_of:
+- ElectrodeSource
+- ComponentSource
+range: string
+
+```
+</details>

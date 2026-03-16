@@ -1,0 +1,274 @@
+
+
+
+
+# Class: ComponentSource 
+
+
+_Information about the source and quality of the chemical component._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/ComponentSource](https://echemdb.github.io/metadata-schema/echemdb_package/ComponentSource)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ComponentSource
+    click ComponentSource href "../ComponentSource/"
+      ComponentSource : lot
+        
+      ComponentSource : manufacturer
+        
+      ComponentSource : purity
+        
+          
+    
+        
+        
+        ComponentSource --> "0..1" Purity : purity
+        click Purity href "../Purity/"
+    
+
+        
+      ComponentSource : quality
+        
+      ComponentSource : refinement
+        
+      ComponentSource : supplier
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [supplier](supplier.md) | 0..1 <br/> [String](String.md) | Name of the company that supplied the chemical | `Your Chemical Supplier Inc.` |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) | Name of the company or organization that manufactured the chemical | `Organic Chemistry II - Bar Group` |
+| [lot](lot.md) | 0..1 <br/> [String](String.md) | LOT or batch number provided by the manufacturer or supplier for traceability | `LOT12345` |
+| [purity](purity.md) | 0..1 <br/> [Purity](Purity.md) | Stated purity level from the supplier or manufacturer |  |
+| [refinement](refinement.md) | 0..1 <br/> [String](String.md) | Any additional purification or treatment performed | `Recrystallized from ethanol` |
+| [quality](quality.md) | 0..1 <br/> [String](String.md) | Quality grade of the chemical | `ACS reagent grade` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Component](Component.md) | [source](source.md) | range | [ComponentSource](ComponentSource.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/ComponentSource |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/ComponentSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ComponentSource
+description: Information about the source and quality of the chemical component.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  supplier:
+    name: supplier
+    description: Name of the company that supplied the chemical.
+    examples:
+    - value: Your Chemical Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  manufacturer:
+    name: manufacturer
+    description: Name of the company or organization that manufactured the chemical.
+    examples:
+    - value: Organic Chemistry II - Bar Group
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  lot:
+    name: lot
+    description: LOT or batch number provided by the manufacturer or supplier for
+      traceability.
+    examples:
+    - value: LOT12345
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  purity:
+    name: purity
+    description: Stated purity level from the supplier or manufacturer.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  refinement:
+    name: refinement
+    description: Any additional purification or treatment performed.
+    examples:
+    - value: Recrystallized from ethanol
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Purity
+    - ComponentSource
+    range: string
+  quality:
+    name: quality
+    description: Quality grade of the chemical.
+    examples:
+    - value: ACS reagent grade
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - ComponentSource
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ComponentSource
+description: Information about the source and quality of the chemical component.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  supplier:
+    name: supplier
+    description: Name of the company that supplied the chemical.
+    examples:
+    - value: Your Chemical Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: supplier
+    owner: ComponentSource
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  manufacturer:
+    name: manufacturer
+    description: Name of the company or organization that manufactured the chemical.
+    examples:
+    - value: Organic Chemistry II - Bar Group
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: manufacturer
+    owner: ComponentSource
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  lot:
+    name: lot
+    description: LOT or batch number provided by the manufacturer or supplier for
+      traceability.
+    examples:
+    - value: LOT12345
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: lot
+    owner: ComponentSource
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  purity:
+    name: purity
+    description: Stated purity level from the supplier or manufacturer.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: purity
+    owner: ComponentSource
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  refinement:
+    name: refinement
+    description: Any additional purification or treatment performed.
+    examples:
+    - value: Recrystallized from ethanol
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: refinement
+    owner: ComponentSource
+    domain_of:
+    - Purity
+    - ComponentSource
+    range: string
+  quality:
+    name: quality
+    description: Quality grade of the chemical.
+    examples:
+    - value: ACS reagent grade
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: quality
+    owner: ComponentSource
+    domain_of:
+    - ComponentSource
+    range: string
+
+```
+</details>

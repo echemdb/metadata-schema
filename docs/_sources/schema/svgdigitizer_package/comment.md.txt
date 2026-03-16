@@ -1,0 +1,67 @@
+
+
+# Slot: comment 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/comment](https://echemdb.github.io/metadata-schema/svgdigitizer_package/comment)
+Alias: comment
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/comment |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/comment |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: comment
+alias: comment
+domain_of:
+- Quantity
+- Uncertainty
+- FigureDescription
+range: string
+
+```
+</details>

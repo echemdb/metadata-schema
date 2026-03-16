@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validator &mdash; metadata-schema 0.7.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5a057da9"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Converters" href="converters.html" />
+    <link rel="prev" title="Schema Enricher" href="enricher.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../schemas.html">Schema Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Example Files</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metadata.html">Metadata</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enricher.html">Schema Enricher</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Validator</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate"><code class="docutils literal notranslate"><span class="pre">validate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_autotag"><code class="docutils literal notranslate"><span class="pre">validate_autotag()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_echemdb_package"><code class="docutils literal notranslate"><span class="pre">validate_echemdb_package()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_metadata"><code class="docutils literal notranslate"><span class="pre">validate_metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_minimum_echemdb"><code class="docutils literal notranslate"><span class="pre">validate_minimum_echemdb()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_source_data"><code class="docutils literal notranslate"><span class="pre">validate_source_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_svgdigitizer"><code class="docutils literal notranslate"><span class="pre">validate_svgdigitizer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_svgdigitizer_package"><code class="docutils literal notranslate"><span class="pre">validate_svgdigitizer_package()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mdstools.schema.validator.validate_with_pydantic"><code class="docutils literal notranslate"><span class="pre">validate_with_pydantic()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="converters.html">Converters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entrypoint.html">CLI Entrypoint</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Validator</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/api/validator.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="module-mdstools.schema.validator">
+<span id="validator"></span><h1>Validator<a class="headerlink" href="#module-mdstools.schema.validator" title="Link to this heading"></a></h1>
+<p>Schema validation utilities for checking metadata against JSON Schema files
+or Pydantic models generated from LinkML.</p>
+<p>Three validation approaches are available:</p>
+<ol class="arabic simple">
+<li><p><strong>Remote validation</strong> via <code class="docutils literal notranslate"><span class="pre">validate()</span></code> – fetches the JSON Schema from
+the <a class="reference external" href="https://github.com/echemdb/metadata-schema">metadata-schema repository</a>
+on GitHub and validates a dict or file against it.  Convenience wrappers
+such as <code class="docutils literal notranslate"><span class="pre">validate_svgdigitizer()</span></code> are provided for each schema.</p></li>
+<li><p><strong>Local JSON Schema validation</strong> via <code class="docutils literal notranslate"><span class="pre">validate_metadata()</span></code> – uses
+jsonschema library against a local JSON Schema file.</p></li>
+<li><p><strong>Pydantic validation</strong> via <code class="docutils literal notranslate"><span class="pre">validate_with_pydantic()</span></code> – uses
+auto-generated Pydantic models from LinkML.  Provides richer error
+messages and type coercion.</p></li>
+</ol>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'echemdb_package'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against a schema from the metadata-schema repository.</p>
+<p>Fetches the JSON schema from
+<code class="docutils literal notranslate"><span class="pre">https://raw.githubusercontent.com/echemdb/metadata-schema/&lt;version&gt;/schemas/</span></code>
+and validates <em>data</em> against it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metadata dict, or path to a YAML/JSON file.</p></li>
+<li><p><strong>schema</strong> – Schema name — one of <code class="docutils literal notranslate"><span class="pre">'autotag'</span></code>, <code class="docutils literal notranslate"><span class="pre">'minimum_echemdb'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'source_data'</span></code>, <code class="docutils literal notranslate"><span class="pre">'svgdigitizer'</span></code>, <code class="docutils literal notranslate"><span class="pre">'echemdb_package'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'svgdigitizer_package'</span></code>.</p></li>
+<li><p><strong>version</strong> – Git tag or branch name.  Defaults to the installed
+package version (i.e. the matching release tag).  Pass <code class="docutils literal notranslate"><span class="pre">'main'</span></code>
+to validate against the latest development schemas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If <em>data</em> is a path that does not exist.</p></li>
+<li><p><strong>ValueError</strong> – If validation fails or <em>schema</em> is unknown.</p></li>
+</ul>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>Validate a local YAML file against the remote autotag schema:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/autotag.yaml&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;autotag&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Validate a dict:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/minimum_echemdb.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;minimum_echemdb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Validate against a specific version (git tag):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/autotag.yaml&#39;</span><span class="p">,</span> <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;autotag&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.5.1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Invalid data raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">validate</span><span class="p">({</span><span class="s1">&#39;curation&#39;</span><span class="p">:</span> <span class="s1">&#39;not a dict&#39;</span><span class="p">},</span> <span class="n">schema</span><span class="o">=</span><span class="s1">&#39;autotag&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="s1">&#39;validation failed&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_autotag">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_autotag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_autotag" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">autotag</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_autotag</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_autotag</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/autotag.yaml&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import yaml</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validator import validate_metadata</span>
+<span class="go">    &gt;&gt;&gt; validate_metadata(</span>
+<span class="go">    ...     yaml.safe_load(open(&#39;examples/file_schemas/autotag.yaml&#39;)),</span>
+<span class="go">    ...     &#39;schemas/autotag.json&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_echemdb_package">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_echemdb_package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_echemdb_package" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">echemdb_package</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_echemdb_package</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_echemdb_package</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/echemdb_package.json&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import json, contextlib, io</span>
+<span class="go">    &gt;&gt;&gt; from pathlib import Path</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validate_examples import validate_data, build_package_registry</span>
+<span class="go">    &gt;&gt;&gt; schema = json.load(open(&#39;schemas/echemdb_package.json&#39;))</span>
+<span class="go">    &gt;&gt;&gt; data = json.load(open(&#39;examples/file_schemas/echemdb_package.json&#39;))</span>
+<span class="go">    &gt;&gt;&gt; with contextlib.redirect_stdout(io.StringIO()):</span>
+<span class="go">    ...     registry = build_package_registry(Path(&#39;schemas&#39;))</span>
+<span class="go">    &gt;&gt;&gt; errors = validate_data(data, schema, registry=registry)</span>
+<span class="go">    &gt;&gt;&gt; len(errors)</span>
+<span class="go">    0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_metadata">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_metadata" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against a JSON Schema.</p>
+<p>Loads the schema at <em>schema_path</em>, resolves <code class="docutils literal notranslate"><span class="pre">$ref</span></code> references relative
+to the file, and validates <em>data</em> against it.  Raises on the first batch
+of errors (up to 10 are reported).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metadata object to validate</p></li>
+<li><p><strong>schema_path</strong> – Path to JSON Schema file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the schema file does not exist</p></li>
+<li><p><strong>ValueError</strong> – If validation fails</p></li>
+</ul>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>Validating correct metadata passes silently:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.metadata.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">Metadata</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">Metadata</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/autotag.yaml&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_metadata</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;schemas/autotag.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Validation errors raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> with details:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">invalid_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;curation&#39;</span><span class="p">:</span> <span class="s1">&#39;not a dict&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">validate_metadata</span><span class="p">(</span><span class="n">invalid_data</span><span class="p">,</span> <span class="s1">&#39;schemas/autotag.json&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="s1">&#39;validation failed&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Missing schema file raises <code class="docutils literal notranslate"><span class="pre">FileNotFoundError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">validate_metadata</span><span class="p">({},</span> <span class="s1">&#39;nonexistent_schema.json&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Schema file not found&#39;</span><span class="p">)</span>
+<span class="go">Schema file not found</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_minimum_echemdb">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_minimum_echemdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_minimum_echemdb" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">minimum_echemdb</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_minimum_echemdb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_minimum_echemdb</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/minimum_echemdb.yaml&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import yaml</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validator import validate_metadata</span>
+<span class="go">    &gt;&gt;&gt; validate_metadata(</span>
+<span class="go">    ...     yaml.safe_load(open(&#39;examples/file_schemas/minimum_echemdb.yaml&#39;)),</span>
+<span class="go">    ...     &#39;schemas/minimum_echemdb.json&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_source_data">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_source_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_source_data" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">source_data</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_source_data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_source_data</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/source_data.yaml&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;main&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import yaml</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validator import validate_metadata</span>
+<span class="go">    &gt;&gt;&gt; validate_metadata(</span>
+<span class="go">    ...     yaml.safe_load(open(&#39;examples/file_schemas/source_data.yaml&#39;)),</span>
+<span class="go">    ...     &#39;schemas/source_data.json&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_svgdigitizer">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_svgdigitizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_svgdigitizer" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">svgdigitizer</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_svgdigitizer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_svgdigitizer</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/svgdigitizer.yaml&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import yaml</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validator import validate_metadata</span>
+<span class="go">    &gt;&gt;&gt; validate_metadata(</span>
+<span class="go">    ...     yaml.safe_load(open(&#39;examples/file_schemas/svgdigitizer.yaml&#39;)),</span>
+<span class="go">    ...     &#39;schemas/svgdigitizer.json&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_svgdigitizer_package">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_svgdigitizer_package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_svgdigitizer_package" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata against the <code class="docutils literal notranslate"><span class="pre">svgdigitizer_package</span></code> schema.</p>
+<p>See <a class="reference internal" href="#mdstools.schema.validator.validate" title="mdstools.schema.validator.validate"><code class="xref py py-func docutils literal notranslate"><span class="pre">validate()</span></code></a> for parameter details.</p>
+<p>EXAMPLES:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_svgdigitizer_package</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">validate_svgdigitizer_package</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/svgdigitizer_package.json&#39;</span><span class="p">)</span>
+
+<span class="go">Local validation (always in sync with the working tree)::</span>
+
+<span class="go">    &gt;&gt;&gt; import json, contextlib, io</span>
+<span class="go">    &gt;&gt;&gt; from pathlib import Path</span>
+<span class="go">    &gt;&gt;&gt; from mdstools.schema.validate_examples import validate_data, build_package_registry</span>
+<span class="go">    &gt;&gt;&gt; schema = json.load(open(&#39;schemas/svgdigitizer_package.json&#39;))</span>
+<span class="go">    &gt;&gt;&gt; data = json.load(open(&#39;examples/file_schemas/svgdigitizer_package.json&#39;))</span>
+<span class="go">    &gt;&gt;&gt; with contextlib.redirect_stdout(io.StringIO()):</span>
+<span class="go">    ...     registry = build_package_registry(Path(&#39;schemas&#39;))</span>
+<span class="go">    &gt;&gt;&gt; errors = validate_data(data, schema, registry=registry)</span>
+<span class="go">    &gt;&gt;&gt; len(errors)</span>
+<span class="go">    0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdstools.schema.validator.validate_with_pydantic">
+<span class="sig-prename descclassname"><span class="pre">mdstools.schema.validator.</span></span><span class="sig-name descname"><span class="pre">validate_with_pydantic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#mdstools.schema.validator.validate_with_pydantic" title="Link to this definition"></a></dt>
+<dd><p>Validate metadata using auto-generated Pydantic models from LinkML.</p>
+<p>Returns the validated Pydantic model instance on success.  Raises
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> on validation failure with detailed error messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Metadata dict to validate</p></li>
+<li><p><strong>schema_name</strong> – Schema name (e.g. ‘minimum_echemdb’, ‘autotag’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validated Pydantic model instance</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If validation fails or schema_name is unknown</p>
+</dd>
+</dl>
+<p>EXAMPLES:</p>
+<blockquote>
+<div><p>Validating correct metadata returns a Pydantic model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">mdstools.schema.validator</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_with_pydantic</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;examples/file_schemas/minimum_echemdb.yaml&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">validate_with_pydantic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;minimum_echemdb&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">citationKey</span>
+<span class="go">&#39;engstfeld_2018_polycrystalline_17743&#39;</span>
+</pre></div>
+</div>
+<p>Validation errors raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">validate_with_pydantic</span><span class="p">({</span><span class="s1">&#39;curation&#39;</span><span class="p">:</span> <span class="s1">&#39;not a dict&#39;</span><span class="p">},</span> <span class="s1">&#39;minimum_echemdb&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="s1">&#39;validation failed&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Unknown schema name raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">validate_with_pydantic</span><span class="p">({},</span> <span class="s1">&#39;nonexistent&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown schema&#39;</span><span class="p">)</span>
+<span class="go">Unknown schema</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="enricher.html" class="btn btn-neutral float-left" title="Schema Enricher" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="converters.html" class="btn btn-neutral float-right" title="Converters" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

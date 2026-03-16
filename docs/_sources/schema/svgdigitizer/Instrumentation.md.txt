@@ -1,0 +1,284 @@
+
+
+
+
+# Class: Instrumentation 
+
+
+_The instruments used to perform the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/Instrumentation](https://echemdb.github.io/metadata-schema/svgdigitizer/Instrumentation)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Instrumentation
+    click Instrumentation href "../Instrumentation/"
+      Instrumentation : manufacturer
+        
+      Instrumentation : model
+        
+      Instrumentation : name
+        
+      Instrumentation : supplier
+        
+      Instrumentation : type
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type or category of instrument | `potentiostat`,  `rotator`,  `mass spectrometer` |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) | Manufacturer of the instrument | `Awesome Supplier Inc.` |
+| [name](name.md) | 1 <br/> [String](String.md) | Name or identifier of the instrument | `Poti05` |
+| [model](model.md) | 0..1 <br/> [String](String.md) | Model number or designation | `P302NX5` |
+| [supplier](supplier.md) | 0..1 <br/> [String](String.md) | Supplier of the instrument | `Awesome Supplier Inc.` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Experimental](Experimental.md) | [instrumentation](instrumentation.md) | range | [Instrumentation](Instrumentation.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/Instrumentation |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/Instrumentation |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Instrumentation
+description: The instruments used to perform the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type or category of instrument.
+    examples:
+    - value: potentiostat
+    - value: rotator
+    - value: mass spectrometer
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  manufacturer:
+    name: manufacturer
+    description: Manufacturer of the instrument.
+    examples:
+    - value: Awesome Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  name:
+    name: name
+    description: Name or identifier of the instrument.
+    examples:
+    - value: Poti05
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  model:
+    name: model
+    description: Model number or designation.
+    examples:
+    - value: P302NX5
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    range: string
+  supplier:
+    name: supplier
+    description: Supplier of the instrument.
+    examples:
+    - value: Awesome Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Instrumentation
+description: The instruments used to perform the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type or category of instrument.
+    examples:
+    - value: potentiostat
+    - value: rotator
+    - value: mass spectrometer
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    alias: type
+    owner: Instrumentation
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  manufacturer:
+    name: manufacturer
+    description: Manufacturer of the instrument.
+    examples:
+    - value: Awesome Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    alias: manufacturer
+    owner: Instrumentation
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  name:
+    name: name
+    description: Name or identifier of the instrument.
+    examples:
+    - value: Poti05
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    alias: name
+    owner: Instrumentation
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  model:
+    name: model
+    description: Model number or designation.
+    examples:
+    - value: P302NX5
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    alias: model
+    owner: Instrumentation
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    range: string
+  supplier:
+    name: supplier
+    description: Supplier of the instrument.
+    examples:
+    - value: Awesome Supplier Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/instrumentation
+    rank: 1000
+    alias: supplier
+    owner: Instrumentation
+    domain_of:
+    - Instrumentation
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+
+```
+</details>

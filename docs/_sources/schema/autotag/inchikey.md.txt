@@ -1,0 +1,88 @@
+
+
+# Slot: inchikey 
+
+
+_InChIKey (hashed InChI for easier searching)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/inchikey](https://echemdb.github.io/metadata-schema/autotag/inchikey)
+Alias: inchikey
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| QAOWNCQODCNURD-UHFFFAOYSA-N |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/inchikey |
+| native | https://echemdb.github.io/metadata-schema/autotag/inchikey |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: inchikey
+description: InChIKey (hashed InChI for easier searching).
+examples:
+- value: QAOWNCQODCNURD-UHFFFAOYSA-N
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: inchikey
+owner: ChemicalIdentifiers
+domain_of:
+- ChemicalIdentifiers
+range: string
+
+```
+</details>

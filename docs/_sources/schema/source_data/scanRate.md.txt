@@ -1,0 +1,89 @@
+
+
+# Slot: scanRate 
+
+
+_The rate at which the data has been recorded._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/scanRate](https://echemdb.github.io/metadata-schema/source_data/scanRate)
+Alias: scanRate
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 50, unit: mV / s} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/scanRate |
+| native | https://echemdb.github.io/metadata-schema/source_data/scanRate |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: scanRate
+description: The rate at which the data has been recorded.
+examples:
+- value: '{value: 50, unit: mV / s}'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: scanRate
+owner: FigureDescription
+domain_of:
+- FigureDescription
+range: Quantity
+inlined: true
+
+```
+</details>

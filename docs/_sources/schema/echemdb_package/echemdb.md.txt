@@ -1,0 +1,83 @@
+
+
+# Slot: echemdb 
+
+
+_echemdb-specific metadata for electrochemical data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/echemdb](https://echemdb.github.io/metadata-schema/echemdb_package/echemdb)
+Alias: echemdb
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [EchemdbResourceMetadata](EchemdbResourceMetadata.md) | Metadata container wrapping echemdb-specific metadata |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [EchemdbMetadata](EchemdbMetadata.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/echemdb |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/echemdb |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdb
+description: echemdb-specific metadata for electrochemical data.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: echemdb
+owner: EchemdbResourceMetadata
+domain_of:
+- EchemdbResourceMetadata
+range: EchemdbMetadata
+required: true
+inlined: true
+
+```
+</details>

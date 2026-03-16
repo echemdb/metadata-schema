@@ -1,0 +1,381 @@
+
+
+
+
+# Class: Purity 
+
+
+_Purity specifications of a chemical component._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/Purity](https://echemdb.github.io/metadata-schema/source_data/Purity)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Purity
+    click Purity href "../Purity/"
+      Purity : container
+        
+      Purity : grade
+        
+      Purity : internalLot
+        
+      Purity : refinement
+        
+      Purity : totalIonConductivity
+        
+          
+    
+        
+        
+        Purity --> "0..1" Quantity : totalIonConductivity
+        click Quantity href "../Quantity/"
+    
+
+        
+      Purity : totalOrganicCarbon
+        
+          
+    
+        
+        
+        Purity --> "0..1" Quantity : totalOrganicCarbon
+        click Quantity href "../Quantity/"
+    
+
+        
+      Purity : unit
+        
+      Purity : url
+        
+      Purity : value
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [grade](grade.md) | 0..1 <br/> [String](String.md) | Quality grade designation | `ACS reagent` |
+| [totalOrganicCarbon](totalOrganicCarbon.md) | 0..1 <br/> [Quantity](Quantity.md) | Value for the total organic carbon content measurement | `{value: 3, unit: ppb}` |
+| [totalIonConductivity](totalIonConductivity.md) | 0..1 <br/> [Quantity](Quantity.md) | Value for the total ionic conductivity measurement | `{value: 0.055, unit: uS / cm}` |
+| [value](value.md) | 0..1 <br/> [Float](Float.md) | Purity value as a number | `99.9` |
+| [unit](unit.md) | 0..1 <br/> [String](String.md) | Unit for purity value | `pct` |
+| [container](container.md) | 0..1 <br/> [String](String.md) | Name or identifier of the container in which the chemical is stored | `Glass bottle, amber` |
+| [internalLot](internalLot.md) | 0..1 <br/> [String](String.md) | Internal LOT or batch number | `LOT-2024-001` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL with further details on the purity or container | `https://your-chemical-supplier.com/specification/12345` |
+| [refinement](refinement.md) | 0..1 <br/> [String](String.md) | Description of additional purification or treatment performed | `Triple distilled` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrode](Electrode.md) | [purity](purity.md) | range | [Purity](Purity.md) |
+| [ElectrodeSource](ElectrodeSource.md) | [purity](purity.md) | range | [Purity](Purity.md) |
+| [Component](Component.md) | [purity](purity.md) | range | [Purity](Purity.md) |
+| [ComponentSource](ComponentSource.md) | [purity](purity.md) | range | [Purity](Purity.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/Purity |
+| native | https://echemdb.github.io/metadata-schema/source_data/Purity |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Purity
+description: Purity specifications of a chemical component.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  grade:
+    name: grade
+    description: Quality grade designation.
+    examples:
+    - value: ACS reagent
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    range: string
+  totalOrganicCarbon:
+    name: totalOrganicCarbon
+    description: Value for the total organic carbon content measurement.
+    examples:
+    - value: '{value: 3, unit: ppb}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    - Atmosphere
+    range: Quantity
+    inlined: true
+  totalIonConductivity:
+    name: totalIonConductivity
+    description: Value for the total ionic conductivity measurement.
+    examples:
+    - value: '{value: 0.055, unit: uS / cm}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    range: Quantity
+    inlined: true
+  value:
+    name: value
+    description: Purity value as a number.
+    examples:
+    - value: '99.9'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit for purity value.
+    examples:
+    - value: pct
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    - FieldUnit
+    range: string
+  container:
+    name: container
+    description: Name or identifier of the container in which the chemical is stored.
+    examples:
+    - value: Glass bottle, amber
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    range: string
+  internalLot:
+    name: internalLot
+    description: Internal LOT or batch number.
+    examples:
+    - value: LOT-2024-001
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    range: string
+  url:
+    name: url
+    description: URL with further details on the purity or container.
+    examples:
+    - value: https://your-chemical-supplier.com/specification/12345
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  refinement:
+    name: refinement
+    description: Description of additional purification or treatment performed.
+    examples:
+    - value: Triple distilled
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    domain_of:
+    - Purity
+    - ComponentSource
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Purity
+description: Purity specifications of a chemical component.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  grade:
+    name: grade
+    description: Quality grade designation.
+    examples:
+    - value: ACS reagent
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: grade
+    owner: Purity
+    domain_of:
+    - Purity
+    range: string
+  totalOrganicCarbon:
+    name: totalOrganicCarbon
+    description: Value for the total organic carbon content measurement.
+    examples:
+    - value: '{value: 3, unit: ppb}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: totalOrganicCarbon
+    owner: Purity
+    domain_of:
+    - Purity
+    - Atmosphere
+    range: Quantity
+    inlined: true
+  totalIonConductivity:
+    name: totalIonConductivity
+    description: Value for the total ionic conductivity measurement.
+    examples:
+    - value: '{value: 0.055, unit: uS / cm}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: totalIonConductivity
+    owner: Purity
+    domain_of:
+    - Purity
+    range: Quantity
+    inlined: true
+  value:
+    name: value
+    description: Purity value as a number.
+    examples:
+    - value: '99.9'
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    alias: value
+    owner: Purity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit for purity value.
+    examples:
+    - value: pct
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    alias: unit
+    owner: Purity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    - FieldUnit
+    range: string
+  container:
+    name: container
+    description: Name or identifier of the container in which the chemical is stored.
+    examples:
+    - value: Glass bottle, amber
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: container
+    owner: Purity
+    domain_of:
+    - Purity
+    range: string
+  internalLot:
+    name: internalLot
+    description: Internal LOT or batch number.
+    examples:
+    - value: LOT-2024-001
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: internalLot
+    owner: Purity
+    domain_of:
+    - Purity
+    range: string
+  url:
+    name: url
+    description: URL with further details on the purity or container.
+    examples:
+    - value: https://your-chemical-supplier.com/specification/12345
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: url
+    owner: Purity
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  refinement:
+    name: refinement
+    description: Description of additional purification or treatment performed.
+    examples:
+    - value: Triple distilled
+    from_schema: https://echemdb.github.io/metadata-schema/general/purity
+    rank: 1000
+    alias: refinement
+    owner: Purity
+    domain_of:
+    - Purity
+    - ComponentSource
+    range: string
+
+```
+</details>

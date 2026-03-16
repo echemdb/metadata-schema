@@ -1,0 +1,91 @@
+
+
+# Slot: orcid 
+
+
+_An URL containing the ORCID._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/orcid](https://echemdb.github.io/metadata-schema/minimum_echemdb/orcid)
+Alias: orcid
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Process](Process.md) | A person involved in the data curation process |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [HttpUrl](HttpUrl.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| https://orcid.org/0000-0001-2345-6789 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/orcid |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/orcid |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: orcid
+description: An URL containing the ORCID.
+examples:
+- value: https://orcid.org/0000-0001-2345-6789
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: orcid
+owner: Process
+domain_of:
+- Process
+range: HttpUrl
+required: true
+
+```
+</details>

@@ -1,0 +1,84 @@
+
+
+# Slot: projects 
+
+
+_Research projects or funding sources._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/projects](https://echemdb.github.io/metadata-schema/svgdigitizer/projects)
+Alias: projects
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Project](Project.md)
+
+* Multivalued: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/projects |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/projects |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: projects
+description: Research projects or funding sources.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: projects
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: Project
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

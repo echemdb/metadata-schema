@@ -1,0 +1,57 @@
+# Enum: SystemType 
+
+
+
+
+_Type of experimental system._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/SystemType](https://echemdb.github.io/metadata-schema/svgdigitizer/SystemType)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| electrochemical | None | An electrochemical system consisting of electrodes, an electrolyte, and an el... |
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: SystemType
+description: Type of experimental system.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+permissible_values:
+  electrochemical:
+    text: electrochemical
+    description: An electrochemical system consisting of electrodes, an electrolyte,
+      and an electrochemical cell.
+
+```
+</details>

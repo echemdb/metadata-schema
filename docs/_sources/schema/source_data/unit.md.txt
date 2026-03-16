@@ -1,0 +1,71 @@
+
+
+# Slot: unit 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/unit](https://echemdb.github.io/metadata-schema/source_data/unit)
+Alias: unit
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+| [FieldUnit](FieldUnit.md) | Unit specification for a data field, following astropy's string unit notation |  no  |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/unit |
+| native | https://echemdb.github.io/metadata-schema/source_data/unit |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: unit
+alias: unit
+domain_of:
+- Quantity
+- Uncertainty
+- Purity
+- DataField
+- FieldUnit
+range: string
+
+```
+</details>

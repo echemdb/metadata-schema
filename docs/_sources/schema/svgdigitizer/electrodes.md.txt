@@ -1,0 +1,88 @@
+
+
+# Slot: electrodes 
+
+
+_List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/electrodes](https://echemdb.github.io/metadata-schema/svgdigitizer/electrodes)
+Alias: electrodes
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Electrode](Electrode.md)
+
+* Multivalued: True
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/electrodes |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/electrodes |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: electrodes
+description: List of electrodes used in the electrochemical cell (working, reference,
+  counter electrodes, ring electrodes).
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: electrodes
+owner: System
+domain_of:
+- System
+range: Electrode
+required: true
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

@@ -1,0 +1,88 @@
+
+
+# Slot: quality 
+
+
+_Quality grade of the chemical._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/quality](https://echemdb.github.io/metadata-schema/echemdb_package/quality)
+Alias: quality
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| ACS reagent grade |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/quality |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/quality |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: quality
+description: Quality grade of the chemical.
+examples:
+- value: ACS reagent grade
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: quality
+owner: ComponentSource
+domain_of:
+- ComponentSource
+range: string
+
+```
+</details>

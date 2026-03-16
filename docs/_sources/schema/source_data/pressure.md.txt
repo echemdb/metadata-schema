@@ -1,0 +1,89 @@
+
+
+# Slot: pressure 
+
+
+_Pressure for gaseous components._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/pressure](https://echemdb.github.io/metadata-schema/source_data/pressure)
+Alias: pressure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 1.013, unit: bar} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/pressure |
+| native | https://echemdb.github.io/metadata-schema/source_data/pressure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: pressure
+description: Pressure for gaseous components.
+examples:
+- value: '{value: 1.013, unit: bar}'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: pressure
+owner: Component
+domain_of:
+- Component
+range: Quantity
+inlined: true
+
+```
+</details>

@@ -1,0 +1,92 @@
+
+
+# Slot: figure 
+
+
+_Figure identifier in the source publication._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/figure](https://echemdb.github.io/metadata-schema/svgdigitizer_package/figure)
+Alias: figure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 2a |
+| 1 |
+| S3b |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/figure |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/figure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: figure
+description: Figure identifier in the source publication.
+examples:
+- value: 2a
+- value: '1'
+- value: S3b
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: figure
+owner: SvgdigitizerSource
+domain_of:
+- SvgdigitizerSource
+range: string
+
+```
+</details>

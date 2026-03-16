@@ -1,0 +1,85 @@
+
+
+# Slot: type 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/type](https://echemdb.github.io/metadata-schema/echemdb_package/type)
+Alias: type
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ElectrolyteContainerComponent](ElectrolyteContainerComponent.md) | A component of the electrolyte container |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/type |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/type |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: type
+alias: type
+domain_of:
+- Instrumentation
+- Uncertainty
+- FigureDescription
+- DataField
+- Electrode
+- Shape
+- Component
+- Electrolyte
+- ElectrolyteContainerComponent
+- ElectrochemicalCell
+- Atmosphere
+- System
+range: string
+
+```
+</details>

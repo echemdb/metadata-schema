@@ -1,0 +1,80 @@
+
+
+# Slot: atmosphere 
+
+
+_Atmospheric conditions during the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/atmosphere](https://echemdb.github.io/metadata-schema/autotag/atmosphere)
+Alias: atmosphere
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Atmosphere](Atmosphere.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/atmosphere |
+| native | https://echemdb.github.io/metadata-schema/autotag/atmosphere |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: atmosphere
+description: Atmospheric conditions during the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: atmosphere
+owner: System
+domain_of:
+- System
+range: Atmosphere
+inlined: true
+
+```
+</details>

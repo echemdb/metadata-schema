@@ -1,0 +1,92 @@
+
+
+# Slot: material 
+
+
+_Chemical symbol or abbreviation of the electrode material._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/material](https://echemdb.github.io/metadata-schema/autotag/material)
+Alias: material
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Pt |
+| Au |
+| GC |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/material |
+| native | https://echemdb.github.io/metadata-schema/autotag/material |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: material
+description: Chemical symbol or abbreviation of the electrode material.
+examples:
+- value: Pt
+- value: Au
+- value: GC
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: material
+owner: Electrode
+domain_of:
+- Electrode
+range: string
+
+```
+</details>

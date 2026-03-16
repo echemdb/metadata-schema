@@ -1,0 +1,67 @@
+
+
+# Slot: supplier 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/supplier](https://echemdb.github.io/metadata-schema/svgdigitizer/supplier)
+Alias: supplier
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/supplier |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/supplier |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: supplier
+alias: supplier
+domain_of:
+- Instrumentation
+- ElectrodeSource
+- ComponentSource
+range: string
+
+```
+</details>

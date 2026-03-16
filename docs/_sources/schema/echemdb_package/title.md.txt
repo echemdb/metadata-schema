@@ -1,0 +1,88 @@
+
+
+# Slot: title 
+
+
+_A human-readable title for this field._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/title](https://echemdb.github.io/metadata-schema/echemdb_package/title)
+Alias: title
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Electrode Potential |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/title |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/title |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: title
+description: A human-readable title for this field.
+examples:
+- value: Electrode Potential
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: title
+owner: DataField
+domain_of:
+- DataField
+range: string
+
+```
+</details>

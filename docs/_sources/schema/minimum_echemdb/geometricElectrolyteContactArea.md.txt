@@ -1,0 +1,89 @@
+
+
+# Slot: geometricElectrolyteContactArea 
+
+
+_Geometric surface area of electrode in contact with electrolyte._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/geometricElectrolyteContactArea](https://echemdb.github.io/metadata-schema/minimum_echemdb/geometricElectrolyteContactArea)
+Alias: geometricElectrolyteContactArea
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 0.196, unit: cm2} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/geometricElectrolyteContactArea |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/geometricElectrolyteContactArea |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: geometricElectrolyteContactArea
+description: Geometric surface area of electrode in contact with electrolyte.
+examples:
+- value: '{value: 0.196, unit: cm2}'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: geometricElectrolyteContactArea
+owner: Electrode
+domain_of:
+- Electrode
+range: Quantity
+inlined: true
+
+```
+</details>

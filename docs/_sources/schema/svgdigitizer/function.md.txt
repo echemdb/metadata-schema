@@ -1,0 +1,96 @@
+
+
+# Slot: function 
+
+
+_Role of the electrode in the electrochemical cell. Typical values: working electrode, counter electrode, reference electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/function](https://echemdb.github.io/metadata-schema/svgdigitizer/function)
+Alias: function
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| working electrode |
+| counter electrode |
+| reference electrode |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/function |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/function |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: function
+description: 'Role of the electrode in the electrochemical cell. Typical values: working
+  electrode, counter electrode, reference electrode.'
+examples:
+- value: working electrode
+- value: counter electrode
+- value: reference electrode
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: function
+owner: Electrode
+domain_of:
+- Electrode
+range: string
+required: true
+
+```
+</details>

@@ -1,0 +1,92 @@
+
+
+# Slot: curve 
+
+
+_Specific curve or trace identifier within a figure._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/curve](https://echemdb.github.io/metadata-schema/source_data/curve)
+Alias: curve
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| blue |
+| solid |
+| 1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/curve |
+| native | https://echemdb.github.io/metadata-schema/source_data/curve |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: curve
+description: Specific curve or trace identifier within a figure.
+examples:
+- value: blue
+- value: solid
+- value: '1'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: curve
+owner: Source
+domain_of:
+- Source
+range: string
+
+```
+</details>

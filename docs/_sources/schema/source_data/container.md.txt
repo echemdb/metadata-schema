@@ -1,0 +1,88 @@
+
+
+# Slot: container 
+
+
+_Name or identifier of the container in which the chemical is stored._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/container](https://echemdb.github.io/metadata-schema/source_data/container)
+Alias: container
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Glass bottle, amber |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/container |
+| native | https://echemdb.github.io/metadata-schema/source_data/container |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: container
+description: Name or identifier of the container in which the chemical is stored.
+examples:
+- value: Glass bottle, amber
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: container
+owner: Purity
+domain_of:
+- Purity
+range: string
+
+```
+</details>

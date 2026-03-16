@@ -1,0 +1,84 @@
+
+
+# Slot: resources 
+
+
+_Data resources within the package._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/resources](https://echemdb.github.io/metadata-schema/echemdb_package/resources)
+Alias: resources
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [EchemdbPackage](EchemdbPackage.md) | Data package schema for echemdb following the Frictionless Data Package speci... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [EchemdbResource](EchemdbResource.md)
+
+* Multivalued: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/resources |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/resources |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: resources
+description: Data resources within the package.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: resources
+owner: EchemdbPackage
+domain_of:
+- EchemdbPackage
+range: EchemdbResource
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

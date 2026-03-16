@@ -1,0 +1,77 @@
+# Enum: ComponentType 
+
+
+
+
+_Role or function of the component in the electrolyte._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/ComponentType](https://echemdb.github.io/metadata-schema/minimum_echemdb/ComponentType)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| solvent | None | The solvent |
+| salt | None | A salt added the solvent |
+| acid | None | An acid added to the solvent |
+| base | None | A base added to the solvent |
+| gas | None | A gas passed through the solvent |
+| solute | None | A solute added to the solvent, which is not a salt, acid, base or a gas, i |
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: ComponentType
+description: Role or function of the component in the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+permissible_values:
+  solvent:
+    text: solvent
+    description: The solvent.
+  salt:
+    text: salt
+    description: A salt added the solvent.
+  acid:
+    text: acid
+    description: An acid added to the solvent.
+  base:
+    text: base
+    description: A base added to the solvent.
+  gas:
+    text: gas
+    description: A gas passed through the solvent.
+  solute:
+    text: solute
+    description: A solute added to the solvent, which is not a salt, acid, base or
+      a gas, i.e., water.
+
+```
+</details>

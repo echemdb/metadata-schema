@@ -1,0 +1,87 @@
+
+
+# Slot: process 
+
+
+_List of people involved in creating, recording, or curating this data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/process](https://echemdb.github.io/metadata-schema/svgdigitizer/process)
+Alias: process
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Curation](Curation.md) | Details on the curation process of the data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Process](Process.md)
+
+* Multivalued: True
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/process |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/process |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: process
+description: List of people involved in creating, recording, or curating this data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: process
+owner: Curation
+domain_of:
+- Curation
+range: Process
+required: true
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

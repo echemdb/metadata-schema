@@ -1,0 +1,303 @@
+
+
+
+
+# Class: MinimumEchemdb 
+
+
+_Minimum set of metadata to describe an electrochemical system for echemdb._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/MinimumEchemdb](https://echemdb.github.io/metadata-schema/minimum_echemdb/MinimumEchemdb)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class MinimumEchemdb
+    click MinimumEchemdb href "../MinimumEchemdb/"
+      MinimumEchemdb : curation
+        
+          
+    
+        
+        
+        MinimumEchemdb --> "1" Curation : curation
+        click Curation href "../Curation/"
+    
+
+        
+      MinimumEchemdb : echemdbSchemaVersion
+        
+      MinimumEchemdb : experimental
+        
+          
+    
+        
+        
+        MinimumEchemdb --> "1" Experimental : experimental
+        click Experimental href "../Experimental/"
+    
+
+        
+      MinimumEchemdb : figureDescription
+        
+          
+    
+        
+        
+        MinimumEchemdb --> "1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      MinimumEchemdb : source
+        
+          
+    
+        
+        
+        MinimumEchemdb --> "1" Source : source
+        click Source href "../Source/"
+    
+
+        
+      MinimumEchemdb : system
+        
+          
+    
+        
+        
+        MinimumEchemdb --> "1" System : system
+        click System href "../System/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [echemdbSchemaVersion](echemdbSchemaVersion.md) | 0..1 <br/> [String](String.md) | Version of the echemdb metadata schema this data conforms to | `0.7.1` |
+| [curation](curation.md) | 1 <br/> [Curation](Curation.md) | Details on the curation process of the data |  |
+| [system](system.md) | 1 <br/> [System](System.md) | Description of the experimental system |  |
+| [figureDescription](figureDescription.md) | 1 <br/> [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot |  |
+| [experimental](experimental.md) | 1 <br/> [Experimental](Experimental.md) | Details about the experimental setup |  |
+| [source](source.md) | 1 <br/> [Source](Source.md) | Information about the source publication or dataset |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/MinimumEchemdb |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/MinimumEchemdb |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: MinimumEchemdb
+description: Minimum set of metadata to describe an electrochemical system for echemdb.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  echemdbSchemaVersion:
+    name: echemdbSchemaVersion
+    description: Version of the echemdb metadata schema this data conforms to.
+    examples:
+    - value: 0.7.1
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    range: string
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    range: Curation
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    range: System
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    range: FigureDescription
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    range: Experimental
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    domain_of:
+    - MinimumEchemdb
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: MinimumEchemdb
+description: Minimum set of metadata to describe an electrochemical system for echemdb.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  echemdbSchemaVersion:
+    name: echemdbSchemaVersion
+    description: Version of the echemdb metadata schema this data conforms to.
+    examples:
+    - value: 0.7.1
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: echemdbSchemaVersion
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    range: string
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: curation
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    range: Curation
+    required: true
+    inlined: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: system
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    range: System
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: figureDescription
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    range: FigureDescription
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: experimental
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    range: Experimental
+    required: true
+    inlined: true
+  source:
+    name: source
+    description: Information about the source publication or dataset.
+    from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+    rank: 1000
+    alias: source
+    owner: MinimumEchemdb
+    domain_of:
+    - MinimumEchemdb
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: Source
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>

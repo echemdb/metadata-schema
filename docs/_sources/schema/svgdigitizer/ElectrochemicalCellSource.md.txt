@@ -1,0 +1,146 @@
+
+
+
+
+# Class: ElectrochemicalCellSource 
+
+
+_Source information for the electrochemical cell._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCellSource](https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCellSource)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrochemicalCellSource
+    click ElectrochemicalCellSource href "../ElectrochemicalCellSource/"
+      ElectrochemicalCellSource : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to product page or technical documentation | `https://your-cell-supplier.com/product/h-cell` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | [source](source.md) | range | [ElectrochemicalCellSource](ElectrochemicalCellSource.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCellSource |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/ElectrochemicalCellSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrochemicalCellSource
+description: Source information for the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  url:
+    name: url
+    description: URL to product page or technical documentation.
+    examples:
+    - value: https://your-cell-supplier.com/product/h-cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Source
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrochemicalCellSource
+description: Source information for the electrochemical cell.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  url:
+    name: url
+    description: URL to product page or technical documentation.
+    examples:
+    - value: https://your-cell-supplier.com/product/h-cell
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrochemical_cell
+    alias: url
+    owner: ElectrochemicalCellSource
+    domain_of:
+    - Eln
+    - Experimental
+    - Project
+    - Source
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    range: HttpUrl
+
+```
+</details>

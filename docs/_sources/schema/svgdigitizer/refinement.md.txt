@@ -1,0 +1,65 @@
+
+
+# Slot: refinement 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/refinement](https://echemdb.github.io/metadata-schema/svgdigitizer/refinement)
+Alias: refinement
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/refinement |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/refinement |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: refinement
+alias: refinement
+domain_of:
+- Purity
+- ComponentSource
+range: string
+
+```
+</details>

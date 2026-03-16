@@ -1,0 +1,344 @@
+
+
+
+
+# Class: FigureDescription 
+
+
+_Description of the data to a figure or plot including data type and measurement details._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/FigureDescription](https://echemdb.github.io/metadata-schema/autotag/FigureDescription)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class FigureDescription
+    click FigureDescription href "../FigureDescription/"
+      FigureDescription : comment
+        
+      FigureDescription : fields
+        
+          
+    
+        
+        
+        FigureDescription --> "*" DataField : fields
+        click DataField href "../DataField/"
+    
+
+        
+      FigureDescription : measurementType
+        
+      FigureDescription : scanRate
+        
+          
+    
+        
+        
+        FigureDescription --> "0..1" Quantity : scanRate
+        click Quantity href "../Quantity/"
+    
+
+        
+      FigureDescription : simultaneousMeasurements
+        
+      FigureDescription : type
+        
+          
+    
+        
+        
+        FigureDescription --> "1" FigureDescriptionType : type
+        click FigureDescriptionType href "../FigureDescriptionType/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 1 <br/> [FigureDescriptionType](FigureDescriptionType.md) | Source or origin of the data, such as digitized, raw, simulated, or processed | `raw`,  `digitized`,  `simulated`,  `processed` |
+| [measurementType](measurementType.md) | 0..1 <br/> [String](String.md) | Acronym type for the measurement performed, such as CV, EIS, XPS, etc | `CV`,  `EIS`,  `LSV` |
+| [simultaneousMeasurements](simultaneousMeasurements.md) | * <br/> [String](String.md) | Other measurements performed simultaneously, such as ring current, IR, Raman,... | `DEMS`,  `Raman` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes about the figure or data | `Data below 0 V was cut off by the x-axis.` |
+| [fields](fields.md) | * <br/> [DataField](DataField.md) | Description of data fields/columns in the figure |  |
+| [scanRate](scanRate.md) | 0..1 <br/> [Quantity](Quantity.md) | The rate at which the data has been recorded | `{value: 50, unit: mV / s}` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Autotag](Autotag.md) | [figureDescription](figureDescription.md) | range | [FigureDescription](FigureDescription.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/FigureDescription |
+| native | https://echemdb.github.io/metadata-schema/autotag/FigureDescription |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: FigureDescription
+description: Description of the data to a figure or plot including data type and measurement
+  details.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  type:
+    name: type
+    description: Source or origin of the data, such as digitized, raw, simulated,
+      or processed.
+    examples:
+    - value: raw
+    - value: digitized
+    - value: simulated
+    - value: processed
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: FigureDescriptionType
+    required: true
+  measurementType:
+    name: measurementType
+    description: Acronym type for the measurement performed, such as CV, EIS, XPS,
+      etc.
+    examples:
+    - value: CV
+    - value: EIS
+    - value: LSV
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - FigureDescription
+    range: string
+  simultaneousMeasurements:
+    name: simultaneousMeasurements
+    description: Other measurements performed simultaneously, such as ring current,
+      IR, Raman, ICP-MS.
+    examples:
+    - value: DEMS
+    - value: Raman
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - FigureDescription
+    range: string
+    multivalued: true
+  comment:
+    name: comment
+    description: Additional notes about the figure or data.
+    examples:
+    - value: Data below 0 V was cut off by the x-axis.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+  fields:
+    name: fields
+    description: Description of data fields/columns in the figure.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - FigureDescription
+    range: DataField
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  scanRate:
+    name: scanRate
+    description: The rate at which the data has been recorded.
+    examples:
+    - value: '{value: 50, unit: mV / s}'
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - FigureDescription
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: FigureDescription
+description: Description of the data to a figure or plot including data type and measurement
+  details.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  type:
+    name: type
+    description: Source or origin of the data, such as digitized, raw, simulated,
+      or processed.
+    examples:
+    - value: raw
+    - value: digitized
+    - value: simulated
+    - value: processed
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: type
+    owner: FigureDescription
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: FigureDescriptionType
+    required: true
+  measurementType:
+    name: measurementType
+    description: Acronym type for the measurement performed, such as CV, EIS, XPS,
+      etc.
+    examples:
+    - value: CV
+    - value: EIS
+    - value: LSV
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: measurementType
+    owner: FigureDescription
+    domain_of:
+    - FigureDescription
+    range: string
+  simultaneousMeasurements:
+    name: simultaneousMeasurements
+    description: Other measurements performed simultaneously, such as ring current,
+      IR, Raman, ICP-MS.
+    examples:
+    - value: DEMS
+    - value: Raman
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: simultaneousMeasurements
+    owner: FigureDescription
+    domain_of:
+    - FigureDescription
+    range: string
+    multivalued: true
+  comment:
+    name: comment
+    description: Additional notes about the figure or data.
+    examples:
+    - value: Data below 0 V was cut off by the x-axis.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: comment
+    owner: FigureDescription
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    range: string
+  fields:
+    name: fields
+    description: Description of data fields/columns in the figure.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: fields
+    owner: FigureDescription
+    domain_of:
+    - FigureDescription
+    range: DataField
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  scanRate:
+    name: scanRate
+    description: The rate at which the data has been recorded.
+    examples:
+    - value: '{value: 50, unit: mV / s}'
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: scanRate
+    owner: FigureDescription
+    domain_of:
+    - FigureDescription
+    range: Quantity
+    inlined: true
+
+```
+</details>

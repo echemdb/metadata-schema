@@ -1,0 +1,88 @@
+
+
+# Slot: echemdbSchemaVersion 
+
+
+_Version of the echemdb metadata schema this data conforms to._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/echemdbSchemaVersion](https://echemdb.github.io/metadata-schema/svgdigitizer/echemdbSchemaVersion)
+Alias: echemdbSchemaVersion
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.7.1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/echemdbSchemaVersion |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/echemdbSchemaVersion |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdbSchemaVersion
+description: Version of the echemdb metadata schema this data conforms to.
+examples:
+- value: 0.7.1
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: echemdbSchemaVersion
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: string
+
+```
+</details>

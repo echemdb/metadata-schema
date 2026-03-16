@@ -1,0 +1,83 @@
+
+
+# Slot: system 
+
+
+_Description of the experimental system._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/system](https://echemdb.github.io/metadata-schema/source_data/system)
+Alias: system
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SourceData](SourceData.md) | Metadata schema for source data files in echemdb, combining system descriptio... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [System](System.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/system |
+| native | https://echemdb.github.io/metadata-schema/source_data/system |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: system
+description: Description of the experimental system.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: system
+owner: SourceData
+domain_of:
+- SourceData
+range: System
+required: true
+inlined: true
+
+```
+</details>

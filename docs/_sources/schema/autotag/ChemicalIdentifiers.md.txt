@@ -1,0 +1,207 @@
+
+
+
+
+# Class: ChemicalIdentifiers 
+
+
+_Standard chemical identifiers for unambiguous identification of compounds._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/ChemicalIdentifiers](https://echemdb.github.io/metadata-schema/autotag/ChemicalIdentifiers)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ChemicalIdentifiers
+    click ChemicalIdentifiers href "../ChemicalIdentifiers/"
+      ChemicalIdentifiers : cas
+        
+      ChemicalIdentifiers : inchi
+        
+      ChemicalIdentifiers : inchikey
+        
+      ChemicalIdentifiers : smiles
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [cas](cas.md) | 0..1 <br/> [String](String.md) | CAS Registry Number (Chemical Abstracts Service identifier) | `7664-93-9` |
+| [inchi](inchi.md) | 0..1 <br/> [String](String.md) | InChI (International Chemical Identifier) string | `InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)` |
+| [inchikey](inchikey.md) | 0..1 <br/> [String](String.md) | InChIKey (hashed InChI for easier searching) | `QAOWNCQODCNURD-UHFFFAOYSA-N` |
+| [smiles](smiles.md) | 0..1 <br/> [String](String.md) | SMILES (Simplified Molecular Input Line Entry System) | `[Cl-].[Cl-].[Ca+2]` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Component](Component.md) | [chemicalIdentifiers](chemicalIdentifiers.md) | range | [ChemicalIdentifiers](ChemicalIdentifiers.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/ChemicalIdentifiers |
+| native | https://echemdb.github.io/metadata-schema/autotag/ChemicalIdentifiers |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ChemicalIdentifiers
+description: Standard chemical identifiers for unambiguous identification of compounds.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  cas:
+    name: cas
+    description: CAS Registry Number (Chemical Abstracts Service identifier).
+    examples:
+    - value: 7664-93-9
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  inchi:
+    name: inchi
+    description: InChI (International Chemical Identifier) string.
+    examples:
+    - value: InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  inchikey:
+    name: inchikey
+    description: InChIKey (hashed InChI for easier searching).
+    examples:
+    - value: QAOWNCQODCNURD-UHFFFAOYSA-N
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  smiles:
+    name: smiles
+    description: SMILES (Simplified Molecular Input Line Entry System).
+    examples:
+    - value: '[Cl-].[Cl-].[Ca+2]'
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ChemicalIdentifiers
+description: Standard chemical identifiers for unambiguous identification of compounds.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  cas:
+    name: cas
+    description: CAS Registry Number (Chemical Abstracts Service identifier).
+    examples:
+    - value: 7664-93-9
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    alias: cas
+    owner: ChemicalIdentifiers
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  inchi:
+    name: inchi
+    description: InChI (International Chemical Identifier) string.
+    examples:
+    - value: InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    alias: inchi
+    owner: ChemicalIdentifiers
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  inchikey:
+    name: inchikey
+    description: InChIKey (hashed InChI for easier searching).
+    examples:
+    - value: QAOWNCQODCNURD-UHFFFAOYSA-N
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    alias: inchikey
+    owner: ChemicalIdentifiers
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+  smiles:
+    name: smiles
+    description: SMILES (Simplified Molecular Input Line Entry System).
+    examples:
+    - value: '[Cl-].[Cl-].[Ca+2]'
+    from_schema: https://echemdb.github.io/metadata-schema/general/chemical_identifiers
+    rank: 1000
+    alias: smiles
+    owner: ChemicalIdentifiers
+    domain_of:
+    - ChemicalIdentifiers
+    range: string
+
+```
+</details>

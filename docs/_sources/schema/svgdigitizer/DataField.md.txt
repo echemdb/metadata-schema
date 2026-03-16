@@ -1,0 +1,425 @@
+
+
+
+
+# Class: DataField 
+
+
+_Description of a data field (column) compatible with frictionless table-schema and extended with echemdb-specific properties for physical quantities._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/DataField](https://echemdb.github.io/metadata-schema/svgdigitizer/DataField)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class DataField
+    click DataField href "../DataField/"
+      DataField : description
+        
+      DataField : dimension
+        
+      DataField : format
+        
+      DataField : name
+        
+      DataField : orientation
+        
+          
+    
+        
+        
+        DataField --> "0..1" FieldOrientation : orientation
+        click FieldOrientation href "../FieldOrientation/"
+    
+
+        
+      DataField : reference
+        
+      DataField : title
+        
+      DataField : type
+        
+      DataField : unit
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the data field | `E_WE` |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Data type of the field (string, number, integer, boolean, object, array, date... | `number`,  `string`,  `integer` |
+| [format](format.md) | 0..1 <br/> [String](String.md) | Format specification for the field type (default, email, uri, binary, uuid fo... | `default` |
+| [title](title.md) | 0..1 <br/> [String](String.md) | A human-readable title for this field | `Electrode Potential` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | A description of that field | `The potential measured between the working electrode and reference electrode.` |
+| [dimension](dimension.md) | 0..1 <br/> [String](String.md) | Physical dimension of the field (e | `potential`,  `time`,  `current density` |
+| [unit](unit.md) | 0..1 <br/> [String](String.md) | Unit of measurement for this field (SI or conventional electrochemical units)... | `V`,  `mA / cm2`,  `s` |
+| [reference](reference.md) | 0..1 <br/> [String](String.md) | Reference electrode or reference point for this measurement (electrochemistry... | `RHE`,  `Ag/AgCl`,  `SCE` |
+| [orientation](orientation.md) | 0..1 <br/> [FieldOrientation](FieldOrientation.md) | Axis orientation in plots (horizontal for x-axis, vertical for y-axis) | `horizontal`,  `vertical` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | [fields](fields.md) | range | [DataField](DataField.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/DataField |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/DataField |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: DataField
+description: Description of a data field (column) compatible with frictionless table-schema
+  and extended with echemdb-specific properties for physical quantities.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  name:
+    name: name
+    description: Name of the data field. Use single letters for specific systems.
+      Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.
+    examples:
+    - value: E_WE
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  type:
+    name: type
+    description: Data type of the field (string, number, integer, boolean, object,
+      array, date, time, datetime, year, duration, geopoint, geojson, any).
+    examples:
+    - value: number
+    - value: string
+    - value: integer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  format:
+    name: format
+    description: Format specification for the field type (default, email, uri, binary,
+      uuid for strings; default for numbers).
+    examples:
+    - value: default
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - DataField
+    range: string
+  title:
+    name: title
+    description: A human-readable title for this field.
+    examples:
+    - value: Electrode Potential
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - DataField
+    - Project
+    range: string
+  description:
+    name: description
+    description: A description of that field.
+    examples:
+    - value: The potential measured between the working electrode and reference electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  dimension:
+    name: dimension
+    description: Physical dimension of the field (e.g., 'time', 'potential', 'current
+      density').
+    examples:
+    - value: potential
+    - value: time
+    - value: current density
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - DataField
+    range: string
+  unit:
+    name: unit
+    description: Unit of measurement for this field (SI or conventional electrochemical
+      units), following astropy's string unit notation.
+    examples:
+    - value: V
+    - value: mA / cm2
+    - value: s
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - DataField
+    - Purity
+    range: string
+  reference:
+    name: reference
+    description: Reference electrode or reference point for this measurement (electrochemistry-specific).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - DataField
+    range: string
+  orientation:
+    name: orientation
+    description: Axis orientation in plots (horizontal for x-axis, vertical for y-axis).
+    examples:
+    - value: horizontal
+    - value: vertical
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - DataField
+    range: FieldOrientation
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: DataField
+description: Description of a data field (column) compatible with frictionless table-schema
+  and extended with echemdb-specific properties for physical quantities.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  name:
+    name: name
+    description: Name of the data field. Use single letters for specific systems.
+      Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.
+    examples:
+    - value: E_WE
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: name
+    owner: DataField
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Project
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  type:
+    name: type
+    description: Data type of the field (string, number, integer, boolean, object,
+      array, date, time, datetime, year, duration, geopoint, geojson, any).
+    examples:
+    - value: number
+    - value: string
+    - value: integer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: type
+    owner: DataField
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  format:
+    name: format
+    description: Format specification for the field type (default, email, uri, binary,
+      uuid for strings; default for numbers).
+    examples:
+    - value: default
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: format
+    owner: DataField
+    domain_of:
+    - DataField
+    range: string
+  title:
+    name: title
+    description: A human-readable title for this field.
+    examples:
+    - value: Electrode Potential
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: title
+    owner: DataField
+    domain_of:
+    - DataField
+    - Project
+    range: string
+  description:
+    name: description
+    description: A description of that field.
+    examples:
+    - value: The potential measured between the working electrode and reference electrode.
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: description
+    owner: DataField
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+  dimension:
+    name: dimension
+    description: Physical dimension of the field (e.g., 'time', 'potential', 'current
+      density').
+    examples:
+    - value: potential
+    - value: time
+    - value: current density
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: dimension
+    owner: DataField
+    domain_of:
+    - DataField
+    range: string
+  unit:
+    name: unit
+    description: Unit of measurement for this field (SI or conventional electrochemical
+      units), following astropy's string unit notation.
+    examples:
+    - value: V
+    - value: mA / cm2
+    - value: s
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    alias: unit
+    owner: DataField
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - DataField
+    - Purity
+    range: string
+  reference:
+    name: reference
+    description: Reference electrode or reference point for this measurement (electrochemistry-specific).
+    examples:
+    - value: RHE
+    - value: Ag/AgCl
+    - value: SCE
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: reference
+    owner: DataField
+    domain_of:
+    - DataField
+    range: string
+  orientation:
+    name: orientation
+    description: Axis orientation in plots (horizontal for x-axis, vertical for y-axis).
+    examples:
+    - value: horizontal
+    - value: vertical
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    alias: orientation
+    owner: DataField
+    domain_of:
+    - DataField
+    range: FieldOrientation
+
+```
+</details>

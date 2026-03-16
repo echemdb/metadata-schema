@@ -1,0 +1,88 @@
+
+
+# Slot: grantNumber 
+
+
+_Official grant or project number._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/grantNumber](https://echemdb.github.io/metadata-schema/svgdigitizer/grantNumber)
+Alias: grantNumber
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Project](Project.md) | Information about a research project or funding source |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 123456 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/grantNumber |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/grantNumber |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: grantNumber
+description: Official grant or project number.
+examples:
+- value: '123456'
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: grantNumber
+owner: Project
+domain_of:
+- Project
+range: string
+
+```
+</details>

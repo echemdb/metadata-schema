@@ -1,0 +1,55 @@
+# Type: HttpUrl 
+
+
+
+
+_A valid HTTP or HTTPS URL, including DOIs._
+
+
+
+URI: [xsd:anyURI](http://www.w3.org/2001/XMLSchema#anyURI)
+
+* [base](https://w3id.org/linkml/base): URI
+
+* [uri](https://w3id.org/linkml/uri): xsd:anyURI
+
+* [repr](https://w3id.org/linkml/repr): str
+
+* [typeof](https://w3id.org/linkml/typeof): uri
+
+* [pattern](https://w3id.org/linkml/pattern): `^https?://.*$`
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| https://example.org |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/HttpUrl |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/HttpUrl |
+
+

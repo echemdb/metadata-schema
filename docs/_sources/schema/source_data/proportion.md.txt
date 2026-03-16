@@ -1,0 +1,89 @@
+
+
+# Slot: proportion 
+
+
+_Proportion of the component (e.g., volume percent, mole fraction)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/proportion](https://echemdb.github.io/metadata-schema/source_data/proportion)
+Alias: proportion
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 50, unit: pct} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/proportion |
+| native | https://echemdb.github.io/metadata-schema/source_data/proportion |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: proportion
+description: Proportion of the component (e.g., volume percent, mole fraction).
+examples:
+- value: '{value: 50, unit: pct}'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: proportion
+owner: Component
+domain_of:
+- Component
+range: Quantity
+inlined: true
+
+```
+</details>

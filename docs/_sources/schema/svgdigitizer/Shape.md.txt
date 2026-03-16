@@ -1,0 +1,303 @@
+
+
+
+
+# Class: Shape 
+
+
+_Physical dimensions and shape of the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/Shape](https://echemdb.github.io/metadata-schema/svgdigitizer/Shape)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Shape
+    click Shape href "../Shape/"
+      Shape : description
+        
+      Shape : diameter
+        
+          
+    
+        
+        
+        Shape --> "0..1" Quantity : diameter
+        click Quantity href "../Quantity/"
+    
+
+        
+      Shape : height
+        
+          
+    
+        
+        
+        Shape --> "0..1" Quantity : height
+        click Quantity href "../Quantity/"
+    
+
+        
+      Shape : length
+        
+          
+    
+        
+        
+        Shape --> "0..1" Quantity : length
+        click Quantity href "../Quantity/"
+    
+
+        
+      Shape : type
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 0..1 <br/> [String](String.md) | Type or shape of electrode | `disc`,  `wire`,  `rod` |
+| [height](height.md) | 0..1 <br/> [Quantity](Quantity.md) | Height of the electrode | `{value: 5, unit: mm}` |
+| [diameter](diameter.md) | 0..1 <br/> [Quantity](Quantity.md) | Diameter of the electrode (for cylindrical shapes) | `{value: 5, unit: mm}` |
+| [length](length.md) | 0..1 <br/> [Quantity](Quantity.md) | Length of the electrode | `{value: 10, unit: mm}` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Detailed description of the electrode shape | `Hemispherical tip` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrode](Electrode.md) | [shape](shape.md) | range | [Shape](Shape.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/Shape |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/Shape |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Shape
+description: Physical dimensions and shape of the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type or shape of electrode.
+    examples:
+    - value: disc
+    - value: wire
+    - value: rod
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  height:
+    name: height
+    description: Height of the electrode.
+    examples:
+    - value: '{value: 5, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  diameter:
+    name: diameter
+    description: Diameter of the electrode (for cylindrical shapes).
+    examples:
+    - value: '{value: 5, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  length:
+    name: length
+    description: Length of the electrode.
+    examples:
+    - value: '{value: 10, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  description:
+    name: description
+    description: Detailed description of the electrode shape.
+    examples:
+    - value: Hemispherical tip
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Shape
+description: Physical dimensions and shape of the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+attributes:
+  type:
+    name: type
+    description: Type or shape of electrode.
+    examples:
+    - value: disc
+    - value: wire
+    - value: rod
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: type
+    owner: Shape
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Project
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: string
+  height:
+    name: height
+    description: Height of the electrode.
+    examples:
+    - value: '{value: 5, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: height
+    owner: Shape
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  diameter:
+    name: diameter
+    description: Diameter of the electrode (for cylindrical shapes).
+    examples:
+    - value: '{value: 5, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: diameter
+    owner: Shape
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  length:
+    name: length
+    description: Length of the electrode.
+    examples:
+    - value: '{value: 10, unit: mm}'
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: length
+    owner: Shape
+    domain_of:
+    - Shape
+    range: Quantity
+    inlined: true
+  description:
+    name: description
+    description: Detailed description of the electrode shape.
+    examples:
+    - value: Hemispherical tip
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: description
+    owner: Shape
+    domain_of:
+    - Experimental
+    - DataField
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    range: string
+
+```
+</details>

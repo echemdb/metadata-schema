@@ -1,0 +1,67 @@
+
+
+# Slot: manufacturer 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/manufacturer](https://echemdb.github.io/metadata-schema/echemdb_package/manufacturer)
+Alias: manufacturer
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/manufacturer |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/manufacturer |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: manufacturer
+alias: manufacturer
+domain_of:
+- Instrumentation
+- ElectrodeSource
+- ComponentSource
+range: string
+
+```
+</details>

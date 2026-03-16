@@ -1,0 +1,139 @@
+
+
+
+
+# Class: EchemdbPackage 
+
+
+_Data package schema for echemdb following the Frictionless Data Package specification with echemdb-specific metadata extensions._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbPackage](https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbPackage)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class EchemdbPackage
+    click EchemdbPackage href "../EchemdbPackage/"
+      EchemdbPackage : resources
+        
+          
+    
+        
+        
+        EchemdbPackage --> "*" EchemdbResource : resources
+        click EchemdbResource href "../EchemdbResource/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [resources](resources.md) | * <br/> [EchemdbResource](EchemdbResource.md) | Data resources within the package |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbPackage |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/EchemdbPackage |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: EchemdbPackage
+description: Data package schema for echemdb following the Frictionless Data Package
+  specification with echemdb-specific metadata extensions.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  resources:
+    name: resources
+    description: Data resources within the package.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    domain_of:
+    - EchemdbPackage
+    range: EchemdbResource
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: EchemdbPackage
+description: Data package schema for echemdb following the Frictionless Data Package
+  specification with echemdb-specific metadata extensions.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  resources:
+    name: resources
+    description: Data resources within the package.
+    from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+    rank: 1000
+    alias: resources
+    owner: EchemdbPackage
+    domain_of:
+    - EchemdbPackage
+    range: EchemdbResource
+    multivalued: true
+    inlined_as_list: true
+tree_root: true
+
+```
+</details>

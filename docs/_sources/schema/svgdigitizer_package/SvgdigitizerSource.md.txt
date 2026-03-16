@@ -1,0 +1,273 @@
+
+
+
+
+# Class: SvgdigitizerSource 
+
+
+_Source publication information for digitized data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerSource](https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerSource)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SvgdigitizerSource
+    click SvgdigitizerSource href "../SvgdigitizerSource/"
+      SvgdigitizerSource : bibdata
+        
+      SvgdigitizerSource : citationKey
+        
+      SvgdigitizerSource : curve
+        
+      SvgdigitizerSource : figure
+        
+      SvgdigitizerSource : techniques
+        
+      SvgdigitizerSource : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [figure](figure.md) | 0..1 <br/> [String](String.md) | Figure identifier in the source publication | `2a`,  `1`,  `S3b` |
+| [curve](curve.md) | 0..1 <br/> [String](String.md) | Specific curve identifier within the figure | `blue`,  `solid`,  `1` |
+| [citationKey](citationKey.md) | 0..1 <br/> [String](String.md) | BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstW... | `doe_2024_electrochemistry_543` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL or DOI of the source publication | `https://doi.org/10.1039/C0CP01001D` |
+| [bibdata](bibdata.md) | 0..1 <br/> [String](String.md) | BibTeX bibliographic data | `@article{electrobear_2024_electrochemistry_563, title={...}, ...}` |
+| [techniques](techniques.md) | * <br/> [String](String.md) | Techniques used in the source data | `CV`,  `LSV`,  `CA` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) | [source](source.md) | range | [SvgdigitizerSource](SvgdigitizerSource.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerSource |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SvgdigitizerSource
+description: Source publication information for digitized data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  figure:
+    name: figure
+    description: Figure identifier in the source publication.
+    examples:
+    - value: 2a
+    - value: '1'
+    - value: S3b
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  curve:
+    name: curve
+    description: Specific curve identifier within the figure.
+    examples:
+    - value: blue
+    - value: solid
+    - value: '1'
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  citationKey:
+    name: citationKey
+    description: BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>
+      format.
+    examples:
+    - value: doe_2024_electrochemistry_543
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  url:
+    name: url
+    description: URL or DOI of the source publication.
+    examples:
+    - value: https://doi.org/10.1039/C0CP01001D
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: HttpUrl
+  bibdata:
+    name: bibdata
+    description: BibTeX bibliographic data.
+    examples:
+    - value: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  techniques:
+    name: techniques
+    description: Techniques used in the source data.
+    examples:
+    - value: CV
+    - value: LSV
+    - value: CA
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+    multivalued: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SvgdigitizerSource
+description: Source publication information for digitized data.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  figure:
+    name: figure
+    description: Figure identifier in the source publication.
+    examples:
+    - value: 2a
+    - value: '1'
+    - value: S3b
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: figure
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  curve:
+    name: curve
+    description: Specific curve identifier within the figure.
+    examples:
+    - value: blue
+    - value: solid
+    - value: '1'
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: curve
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  citationKey:
+    name: citationKey
+    description: BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>
+      format.
+    examples:
+    - value: doe_2024_electrochemistry_543
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: citationKey
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  url:
+    name: url
+    description: URL or DOI of the source publication.
+    examples:
+    - value: https://doi.org/10.1039/C0CP01001D
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: url
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: HttpUrl
+  bibdata:
+    name: bibdata
+    description: BibTeX bibliographic data.
+    examples:
+    - value: '@article{electrobear_2024_electrochemistry_563, title={...}, ...}'
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: bibdata
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+  techniques:
+    name: techniques
+    description: Techniques used in the source data.
+    examples:
+    - value: CV
+    - value: LSV
+    - value: CA
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: techniques
+    owner: SvgdigitizerSource
+    domain_of:
+    - SvgdigitizerSource
+    range: string
+    multivalued: true
+
+```
+</details>

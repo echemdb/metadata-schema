@@ -1,0 +1,534 @@
+
+
+
+
+# Class: Component 
+
+
+_A chemical component of the electrolyte solution._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/Component](https://echemdb.github.io/metadata-schema/echemdb_package/Component)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Component
+    click Component href "../Component/"
+      Component : chemicalIdentifiers
+        
+          
+    
+        
+        
+        Component --> "0..1" ChemicalIdentifiers : chemicalIdentifiers
+        click ChemicalIdentifiers href "../ChemicalIdentifiers/"
+    
+
+        
+      Component : comment
+        
+      Component : concentration
+        
+          
+    
+        
+        
+        Component --> "0..1" Quantity : concentration
+        click Quantity href "../Quantity/"
+    
+
+        
+      Component : flow
+        
+          
+    
+        
+        
+        Component --> "0..1" Quantity : flow
+        click Quantity href "../Quantity/"
+    
+
+        
+      Component : name
+        
+      Component : partialPressure
+        
+          
+    
+        
+        
+        Component --> "0..1" Quantity : partialPressure
+        click Quantity href "../Quantity/"
+    
+
+        
+      Component : pressure
+        
+          
+    
+        
+        
+        Component --> "0..1" Quantity : pressure
+        click Quantity href "../Quantity/"
+    
+
+        
+      Component : proportion
+        
+          
+    
+        
+        
+        Component --> "0..1" Quantity : proportion
+        click Quantity href "../Quantity/"
+    
+
+        
+      Component : purity
+        
+          
+    
+        
+        
+        Component --> "0..1" Purity : purity
+        click Purity href "../Purity/"
+    
+
+        
+      Component : source
+        
+          
+    
+        
+        
+        Component --> "0..1" ComponentSource : source
+        click ComponentSource href "../ComponentSource/"
+    
+
+        
+      Component : type
+        
+          
+    
+        
+        
+        Component --> "1" ComponentType : type
+        click ComponentType href "../ComponentType/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Name or identifier of the chemical component (trivial name, formula, or IUPAC... | `H2SO4` |
+| [type](type.md) | 1 <br/> [ComponentType](ComponentType.md) | Role or function of the component in the electrolyte | `solvent`,  `salt`,  `acid`,  `base`,  `gas` |
+| [chemicalIdentifiers](chemicalIdentifiers.md) | 0..1 <br/> [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers (CAS, SMILES, InChI, etc |  |
+| [concentration](concentration.md) | 0..1 <br/> [Quantity](Quantity.md) | Concentration of the component in the electrolyte | `{value: 0.1, unit: mol / l}` |
+| [source](source.md) | 0..1 <br/> [ComponentSource](ComponentSource.md) | Information about the supplier and supplied quality of the chemical |  |
+| [purity](purity.md) | 0..1 <br/> [Purity](Purity.md) | Purity level of the chemical component after the purification process |  |
+| [partialPressure](partialPressure.md) | 0..1 <br/> [Quantity](Quantity.md) | Partial pressure of a gaseous / volatile component | `{value: 1, unit: bar}` |
+| [proportion](proportion.md) | 0..1 <br/> [Quantity](Quantity.md) | Proportion of the component (e | `{value: 50, unit: pct}` |
+| [flow](flow.md) | 0..1 <br/> [Quantity](Quantity.md) | Flow rate for gaseous components | `{value: 50, unit: ml / min}` |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes or observations about this component | `Freshly prepared solution` |
+| [pressure](pressure.md) | 0..1 <br/> [Quantity](Quantity.md) | Pressure for gaseous components | `{value: 1.013, unit: bar}` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | [components](components.md) | range | [Component](Component.md) |
+| [Atmosphere](Atmosphere.md) | [components](components.md) | range | [Component](Component.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/Component |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/Component |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Component
+description: A chemical component of the electrolyte solution.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: Name or identifier of the chemical component (trivial name, formula,
+      or IUPAC name).
+    examples:
+    - value: H2SO4
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  type:
+    name: type
+    description: Role or function of the component in the electrolyte.
+    examples:
+    - value: solvent
+    - value: salt
+    - value: acid
+    - value: base
+    - value: gas
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: ComponentType
+    required: true
+  chemicalIdentifiers:
+    name: chemicalIdentifiers
+    description: Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous
+      identification.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: ChemicalIdentifiers
+    inlined: true
+  concentration:
+    name: concentration
+    description: Concentration of the component in the electrolyte.
+    examples:
+    - value: '{value: 0.1, unit: mol / l}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  source:
+    name: source
+    description: Information about the supplier and supplied quality of the chemical.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - EchemdbMetadata
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ComponentSource
+    inlined: true
+  purity:
+    name: purity
+    description: Purity level of the chemical component after the purification process.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  partialPressure:
+    name: partialPressure
+    description: Partial pressure of a gaseous / volatile component.
+    examples:
+    - value: '{value: 1, unit: bar}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  proportion:
+    name: proportion
+    description: Proportion of the component (e.g., volume percent, mole fraction).
+    examples:
+    - value: '{value: 50, unit: pct}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  flow:
+    name: flow
+    description: Flow rate for gaseous components.
+    examples:
+    - value: '{value: 50, unit: ml / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes or observations about this component.
+    examples:
+    - value: Freshly prepared solution
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+  pressure:
+    name: pressure
+    description: Pressure for gaseous components.
+    examples:
+    - value: '{value: 1.013, unit: bar}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Component
+description: A chemical component of the electrolyte solution.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  name:
+    name: name
+    description: Name or identifier of the chemical component (trivial name, formula,
+      or IUPAC name).
+    examples:
+    - value: H2SO4
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: name
+    owner: Component
+    domain_of:
+    - Process
+    - Instrumentation
+    - DataField
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    range: string
+    required: true
+  type:
+    name: type
+    description: Role or function of the component in the electrolyte.
+    examples:
+    - value: solvent
+    - value: salt
+    - value: acid
+    - value: base
+    - value: gas
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: type
+    owner: Component
+    domain_of:
+    - Instrumentation
+    - Uncertainty
+    - FigureDescription
+    - DataField
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    range: ComponentType
+    required: true
+  chemicalIdentifiers:
+    name: chemicalIdentifiers
+    description: Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous
+      identification.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: chemicalIdentifiers
+    owner: Component
+    domain_of:
+    - Component
+    range: ChemicalIdentifiers
+    inlined: true
+  concentration:
+    name: concentration
+    description: Concentration of the component in the electrolyte.
+    examples:
+    - value: '{value: 0.1, unit: mol / l}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: concentration
+    owner: Component
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  source:
+    name: source
+    description: Information about the supplier and supplied quality of the chemical.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: source
+    owner: Component
+    domain_of:
+    - EchemdbMetadata
+    - Electrode
+    - Component
+    - ElectrochemicalCell
+    range: ComponentSource
+    inlined: true
+  purity:
+    name: purity
+    description: Purity level of the chemical component after the purification process.
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: purity
+    owner: Component
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  partialPressure:
+    name: partialPressure
+    description: Partial pressure of a gaseous / volatile component.
+    examples:
+    - value: '{value: 1, unit: bar}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: partialPressure
+    owner: Component
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  proportion:
+    name: proportion
+    description: Proportion of the component (e.g., volume percent, mole fraction).
+    examples:
+    - value: '{value: 50, unit: pct}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: proportion
+    owner: Component
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  flow:
+    name: flow
+    description: Flow rate for gaseous components.
+    examples:
+    - value: '{value: 50, unit: ml / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: flow
+    owner: Component
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes or observations about this component.
+    examples:
+    - value: Freshly prepared solution
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    alias: comment
+    owner: Component
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - FigureDescription
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    range: string
+  pressure:
+    name: pressure
+    description: Pressure for gaseous components.
+    examples:
+    - value: '{value: 1.013, unit: bar}'
+    from_schema: https://echemdb.github.io/metadata-schema/general/component
+    rank: 1000
+    alias: pressure
+    owner: Component
+    domain_of:
+    - Component
+    range: Quantity
+    inlined: true
+
+```
+</details>

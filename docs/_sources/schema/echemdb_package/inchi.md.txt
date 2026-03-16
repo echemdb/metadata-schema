@@ -1,0 +1,88 @@
+
+
+# Slot: inchi 
+
+
+_InChI (International Chemical Identifier) string._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/inchi](https://echemdb.github.io/metadata-schema/echemdb_package/inchi)
+Alias: inchi
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4) |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/inchi |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/inchi |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: inchi
+description: InChI (International Chemical Identifier) string.
+examples:
+- value: InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: inchi
+owner: ChemicalIdentifiers
+domain_of:
+- ChemicalIdentifiers
+range: string
+
+```
+</details>

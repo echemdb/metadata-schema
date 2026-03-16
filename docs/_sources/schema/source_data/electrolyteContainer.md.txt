@@ -1,0 +1,80 @@
+
+
+# Slot: electrolyteContainer 
+
+
+_Container used to prepare or store the electrolyte before the measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/electrolyteContainer](https://echemdb.github.io/metadata-schema/source_data/electrolyteContainer)
+Alias: electrolyteContainer
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [ElectrolyteContainer](ElectrolyteContainer.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/electrolyteContainer |
+| native | https://echemdb.github.io/metadata-schema/source_data/electrolyteContainer |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: electrolyteContainer
+description: Container used to prepare or store the electrolyte before the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: electrolyteContainer
+owner: Electrolyte
+domain_of:
+- Electrolyte
+range: ElectrolyteContainer
+inlined: true
+
+```
+</details>

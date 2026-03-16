@@ -1,0 +1,89 @@
+
+
+# Slot: partialPressure 
+
+
+_Partial pressure of a gaseous / volatile component._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/partialPressure](https://echemdb.github.io/metadata-schema/minimum_echemdb/partialPressure)
+Alias: partialPressure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 1, unit: bar} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/partialPressure |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/partialPressure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: partialPressure
+description: Partial pressure of a gaseous / volatile component.
+examples:
+- value: '{value: 1, unit: bar}'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: partialPressure
+owner: Component
+domain_of:
+- Component
+range: Quantity
+inlined: true
+
+```
+</details>

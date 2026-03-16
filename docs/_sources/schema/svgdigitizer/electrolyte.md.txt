@@ -1,0 +1,83 @@
+
+
+# Slot: electrolyte 
+
+
+_The electrolyte solution used in the experiment._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/electrolyte](https://echemdb.github.io/metadata-schema/svgdigitizer/electrolyte)
+Alias: electrolyte
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [System](System.md) | Description of the experimental system including electrodes, electrolyte, and... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Electrolyte](Electrolyte.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/electrolyte |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/electrolyte |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: electrolyte
+description: The electrolyte solution used in the experiment.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: electrolyte
+owner: System
+domain_of:
+- System
+range: Electrolyte
+required: true
+inlined: true
+
+```
+</details>

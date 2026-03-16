@@ -1,0 +1,88 @@
+
+
+# Slot: originalFilename 
+
+
+_Original filename of the data file._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/originalFilename](https://echemdb.github.io/metadata-schema/svgdigitizer/originalFilename)
+Alias: originalFilename
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 2023-04-24_cv_data_001.csv |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/originalFilename |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/originalFilename |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: originalFilename
+description: Original filename of the data file.
+examples:
+- value: 2023-04-24_cv_data_001.csv
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: originalFilename
+owner: Source
+domain_of:
+- Source
+range: string
+
+```
+</details>

@@ -1,0 +1,74 @@
+# Enum: CurationRole 
+
+
+
+
+_Role of a person in the data curation process._
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/CurationRole](https://echemdb.github.io/metadata-schema/autotag/CurationRole)
+
+## Permissible Values
+
+| Value | Meaning | Description |
+| --- | --- | --- |
+| experimentalist | None | A person that recorded the (meta)data |
+| curator | None | A person that created a (meta)dataset from literature data |
+| reviewer | None | A person that verified the (meta)data (usually literature data) |
+| supervisor | None | A person that supervised the experimentalist |
+
+
+
+
+## Slots
+
+| Name | Description |
+| ---  | --- |
+| [role](role.md) | Role of the person in the data curation process |
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: CurationRole
+description: Role of a person in the data curation process.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+permissible_values:
+  experimentalist:
+    text: experimentalist
+    description: A person that recorded the (meta)data.
+  curator:
+    text: curator
+    description: A person that created a (meta)dataset from literature data.
+  reviewer:
+    text: reviewer
+    description: A person that verified the (meta)data (usually literature data).
+  supervisor:
+    text: supervisor
+    description: A person that supervised the experimentalist.
+
+```
+</details>

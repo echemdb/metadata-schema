@@ -1,0 +1,303 @@
+
+
+
+
+# Class: System 
+
+
+_Description of the experimental system including electrodes, electrolyte, and environmental conditions._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/System](https://echemdb.github.io/metadata-schema/minimum_echemdb/System)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class System
+    click System href "../System/"
+      System : atmosphere
+        
+          
+    
+        
+        
+        System --> "0..1" Atmosphere : atmosphere
+        click Atmosphere href "../Atmosphere/"
+    
+
+        
+      System : electrochemicalCell
+        
+          
+    
+        
+        
+        System --> "0..1" ElectrochemicalCell : electrochemicalCell
+        click ElectrochemicalCell href "../ElectrochemicalCell/"
+    
+
+        
+      System : electrodes
+        
+          
+    
+        
+        
+        System --> "1..*" Electrode : electrodes
+        click Electrode href "../Electrode/"
+    
+
+        
+      System : electrolyte
+        
+          
+    
+        
+        
+        System --> "1" Electrolyte : electrolyte
+        click Electrolyte href "../Electrolyte/"
+    
+
+        
+      System : type
+        
+          
+    
+        
+        
+        System --> "1" SystemType : type
+        click SystemType href "../SystemType/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [type](type.md) | 1 <br/> [SystemType](SystemType.md) | Type of experimental system | `electrochemical` |
+| [electrolyte](electrolyte.md) | 1 <br/> [Electrolyte](Electrolyte.md) | The electrolyte solution used in the experiment |  |
+| [electrodes](electrodes.md) | 1..* <br/> [Electrode](Electrode.md) | List of electrodes used in the electrochemical cell (working, reference, coun... |  |
+| [electrochemicalCell](electrochemicalCell.md) | 0..1 <br/> [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell and its configuration |  |
+| [atmosphere](atmosphere.md) | 0..1 <br/> [Atmosphere](Atmosphere.md) | Atmospheric conditions during the experiment |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [MinimumEchemdb](MinimumEchemdb.md) | [system](system.md) | range | [System](System.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/System |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/System |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: System
+description: Description of the experimental system including electrodes, electrolyte,
+  and environmental conditions.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  type:
+    name: type
+    description: Type of experimental system.
+    examples:
+    - value: electrochemical
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: SystemType
+    required: true
+  electrolyte:
+    name: electrolyte
+    description: The electrolyte solution used in the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    domain_of:
+    - System
+    range: Electrolyte
+    required: true
+    inlined: true
+  electrodes:
+    name: electrodes
+    description: List of electrodes used in the electrochemical cell (working, reference,
+      counter electrodes, ring electrodes).
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    domain_of:
+    - System
+    range: Electrode
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  electrochemicalCell:
+    name: electrochemicalCell
+    description: Description of the electrochemical cell and its configuration.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    domain_of:
+    - System
+    range: ElectrochemicalCell
+    inlined: true
+  atmosphere:
+    name: atmosphere
+    description: Atmospheric conditions during the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    domain_of:
+    - System
+    range: Atmosphere
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: System
+description: Description of the experimental system including electrodes, electrolyte,
+  and environmental conditions.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  type:
+    name: type
+    description: Type of experimental system.
+    examples:
+    - value: electrochemical
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    alias: type
+    owner: System
+    domain_of:
+    - Uncertainty
+    - Electrode
+    - Shape
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCell
+    - Atmosphere
+    - System
+    - FigureDescription
+    - DataField
+    - Instrumentation
+    range: SystemType
+    required: true
+  electrolyte:
+    name: electrolyte
+    description: The electrolyte solution used in the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    alias: electrolyte
+    owner: System
+    domain_of:
+    - System
+    range: Electrolyte
+    required: true
+    inlined: true
+  electrodes:
+    name: electrodes
+    description: List of electrodes used in the electrochemical cell (working, reference,
+      counter electrodes, ring electrodes).
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    alias: electrodes
+    owner: System
+    domain_of:
+    - System
+    range: Electrode
+    required: true
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  electrochemicalCell:
+    name: electrochemicalCell
+    description: Description of the electrochemical cell and its configuration.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    alias: electrochemicalCell
+    owner: System
+    domain_of:
+    - System
+    range: ElectrochemicalCell
+    inlined: true
+  atmosphere:
+    name: atmosphere
+    description: Atmospheric conditions during the experiment.
+    from_schema: https://echemdb.github.io/metadata-schema/system
+    rank: 1000
+    alias: atmosphere
+    owner: System
+    domain_of:
+    - System
+    range: Atmosphere
+    inlined: true
+
+```
+</details>

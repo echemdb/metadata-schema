@@ -1,0 +1,77 @@
+
+
+# Slot: description 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/description](https://echemdb.github.io/metadata-schema/autotag/description)
+Alias: description
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |  no  |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [ElectrodePreparation](ElectrodePreparation.md) | Procedures and methods used to prepare the electrode |  no  |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/description |
+| native | https://echemdb.github.io/metadata-schema/autotag/description |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: description
+alias: description
+domain_of:
+- Experimental
+- DataField
+- Electrode
+- Shape
+- ElectrodePreparation
+- ElectrolyteContainer
+- ElectrochemicalCellComponent
+- Atmosphere
+range: string
+
+```
+</details>

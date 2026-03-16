@@ -1,0 +1,88 @@
+
+
+# Slot: url 
+
+
+_URL or DOI of the source publication._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/url](https://echemdb.github.io/metadata-schema/svgdigitizer_package/url)
+Alias: url
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [HttpUrl](HttpUrl.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| https://doi.org/10.1039/C0CP01001D |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/url |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/url |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: url
+description: URL or DOI of the source publication.
+examples:
+- value: https://doi.org/10.1039/C0CP01001D
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: url
+owner: SvgdigitizerSource
+domain_of:
+- SvgdigitizerSource
+range: HttpUrl
+
+```
+</details>

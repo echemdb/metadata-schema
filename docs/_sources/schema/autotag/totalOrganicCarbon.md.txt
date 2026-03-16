@@ -1,0 +1,65 @@
+
+
+# Slot: totalOrganicCarbon 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/totalOrganicCarbon](https://echemdb.github.io/metadata-schema/autotag/totalOrganicCarbon)
+Alias: totalOrganicCarbon
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/totalOrganicCarbon |
+| native | https://echemdb.github.io/metadata-schema/autotag/totalOrganicCarbon |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: totalOrganicCarbon
+alias: totalOrganicCarbon
+domain_of:
+- Purity
+- Atmosphere
+range: string
+
+```
+</details>

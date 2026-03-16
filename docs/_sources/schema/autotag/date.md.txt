@@ -1,0 +1,95 @@
+
+
+# Slot: date 
+
+
+_Date when the person performed their role (ISO 8601 format: YYYY-MM-DD)._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/date](https://echemdb.github.io/metadata-schema/autotag/date)
+Alias: date
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Process](Process.md) | A person involved in the data curation process |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [date](date.md)
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Process](Process.md) | [date](date.md) | range | [date](date.md) |
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 2024-01-15 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/date |
+| native | https://echemdb.github.io/metadata-schema/autotag/date |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: date
+description: 'Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).'
+examples:
+- value: '2024-01-15'
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+alias: date
+owner: Process
+domain_of:
+- Process
+range: date
+
+```
+</details>

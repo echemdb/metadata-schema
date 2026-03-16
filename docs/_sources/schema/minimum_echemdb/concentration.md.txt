@@ -1,0 +1,89 @@
+
+
+# Slot: concentration 
+
+
+_Concentration of the component in the electrolyte._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/concentration](https://echemdb.github.io/metadata-schema/minimum_echemdb/concentration)
+Alias: concentration
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Quantity](Quantity.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 0.1, unit: mol / l} |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/concentration |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/concentration |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: concentration
+description: Concentration of the component in the electrolyte.
+examples:
+- value: '{value: 0.1, unit: mol / l}'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: concentration
+owner: Component
+domain_of:
+- Component
+range: Quantity
+inlined: true
+
+```
+</details>

@@ -1,0 +1,290 @@
+
+
+
+
+# Class: ElectrodeSource 
+
+
+_Information about the source and supplier of the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/ElectrodeSource](https://echemdb.github.io/metadata-schema/source_data/ElectrodeSource)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ElectrodeSource
+    click ElectrodeSource href "../ElectrodeSource/"
+      ElectrodeSource : lot
+        
+      ElectrodeSource : manufacturer
+        
+      ElectrodeSource : model
+        
+      ElectrodeSource : purity
+        
+          
+    
+        
+        
+        ElectrodeSource --> "0..1" Purity : purity
+        click Purity href "../Purity/"
+    
+
+        
+      ElectrodeSource : supplier
+        
+      ElectrodeSource : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [manufacturer](manufacturer.md) | 0..1 <br/> [String](String.md) | Name of the electrode manufacturer | `Your Favorite Crystals GmbH` |
+| [lot](lot.md) | 0..1 <br/> [String](String.md) | LOT or batch number | `LOT-2024-PT111` |
+| [purity](purity.md) | 0..1 <br/> [Purity](Purity.md) | Purity specifications from the manufacturer or supplier |  |
+| [model](model.md) | 0..1 <br/> [String](String.md) | Model number or designation | `PT111-10` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to product specification or datasheet | `https://your-crystal-supplier.com/product/pt111` |
+| [supplier](supplier.md) | 0..1 <br/> [String](String.md) | Name of the supplier | `Chemicals & More Inc.` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrode](Electrode.md) | [source](source.md) | range | [ElectrodeSource](ElectrodeSource.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/ElectrodeSource |
+| native | https://echemdb.github.io/metadata-schema/source_data/ElectrodeSource |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ElectrodeSource
+description: Information about the source and supplier of the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  manufacturer:
+    name: manufacturer
+    description: Name of the electrode manufacturer.
+    examples:
+    - value: Your Favorite Crystals GmbH
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    - Instrumentation
+    range: string
+  lot:
+    name: lot
+    description: LOT or batch number.
+    examples:
+    - value: LOT-2024-PT111
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  purity:
+    name: purity
+    description: Purity specifications from the manufacturer or supplier.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  model:
+    name: model
+    description: Model number or designation.
+    examples:
+    - value: PT111-10
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - ElectrodeSource
+    - Instrumentation
+    range: string
+  url:
+    name: url
+    description: URL to product specification or datasheet.
+    examples:
+    - value: https://your-crystal-supplier.com/product/pt111
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  supplier:
+    name: supplier
+    description: Name of the supplier.
+    examples:
+    - value: Chemicals & More Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    - Instrumentation
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ElectrodeSource
+description: Information about the source and supplier of the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  manufacturer:
+    name: manufacturer
+    description: Name of the electrode manufacturer.
+    examples:
+    - value: Your Favorite Crystals GmbH
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: manufacturer
+    owner: ElectrodeSource
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    - Instrumentation
+    range: string
+  lot:
+    name: lot
+    description: LOT or batch number.
+    examples:
+    - value: LOT-2024-PT111
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: lot
+    owner: ElectrodeSource
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    range: string
+  purity:
+    name: purity
+    description: Purity specifications from the manufacturer or supplier.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: purity
+    owner: ElectrodeSource
+    domain_of:
+    - Electrode
+    - ElectrodeSource
+    - Component
+    - ComponentSource
+    range: Purity
+    inlined: true
+  model:
+    name: model
+    description: Model number or designation.
+    examples:
+    - value: PT111-10
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: model
+    owner: ElectrodeSource
+    domain_of:
+    - ElectrodeSource
+    - Instrumentation
+    range: string
+  url:
+    name: url
+    description: URL to product specification or datasheet.
+    examples:
+    - value: https://your-crystal-supplier.com/product/pt111
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    alias: url
+    owner: ElectrodeSource
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Experimental
+    range: HttpUrl
+  supplier:
+    name: supplier
+    description: Name of the supplier.
+    examples:
+    - value: Chemicals & More Inc.
+    from_schema: https://echemdb.github.io/metadata-schema/system/electrode
+    rank: 1000
+    alias: supplier
+    owner: ElectrodeSource
+    domain_of:
+    - ElectrodeSource
+    - ComponentSource
+    - Instrumentation
+    range: string
+
+```
+</details>

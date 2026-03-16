@@ -1,0 +1,97 @@
+
+
+# Slot: role 
+
+
+_Role of the person in the data curation process._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/role](https://echemdb.github.io/metadata-schema/minimum_echemdb/role)
+Alias: role
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Process](Process.md) | A person involved in the data curation process |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [CurationRole](CurationRole.md)
+
+* Required: True
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| experimentalist |
+| curator |
+| reviewer |
+| supervisor |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/role |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/role |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: role
+description: Role of the person in the data curation process.
+examples:
+- value: experimentalist
+- value: curator
+- value: reviewer
+- value: supervisor
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+alias: role
+owner: Process
+domain_of:
+- Process
+range: CurationRole
+required: true
+
+```
+</details>

@@ -1,0 +1,88 @@
+
+
+# Slot: headerLines 
+
+
+_Number of header lines to skip before the column headers._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/headerLines](https://echemdb.github.io/metadata-schema/source_data/headerLines)
+Alias: headerLines
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Integer](Integer.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 5 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/headerLines |
+| native | https://echemdb.github.io/metadata-schema/source_data/headerLines |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: headerLines
+description: Number of header lines to skip before the column headers.
+examples:
+- value: '5'
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: headerLines
+owner: Dialect
+domain_of:
+- Dialect
+range: integer
+
+```
+</details>

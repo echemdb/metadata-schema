@@ -1,0 +1,84 @@
+
+
+# Slot: fields 
+
+
+_Description of data fields/columns in the figure._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/fields](https://echemdb.github.io/metadata-schema/source_data/fields)
+Alias: fields
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [DataField](DataField.md)
+
+* Multivalued: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/fields |
+| native | https://echemdb.github.io/metadata-schema/source_data/fields |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: fields
+description: Description of data fields/columns in the figure.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: fields
+owner: FigureDescription
+domain_of:
+- FigureDescription
+range: DataField
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details>

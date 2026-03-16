@@ -1,0 +1,88 @@
+
+
+# Slot: echemdbSchemaVersion 
+
+
+_Version of the echemdb metadata schema this data conforms to._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/echemdbSchemaVersion](https://echemdb.github.io/metadata-schema/source_data/echemdbSchemaVersion)
+Alias: echemdbSchemaVersion
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SourceData](SourceData.md) | Metadata schema for source data files in echemdb, combining system descriptio... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.7.1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/echemdbSchemaVersion |
+| native | https://echemdb.github.io/metadata-schema/source_data/echemdbSchemaVersion |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: echemdbSchemaVersion
+description: Version of the echemdb metadata schema this data conforms to.
+examples:
+- value: 0.7.1
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+alias: echemdbSchemaVersion
+owner: SourceData
+domain_of:
+- SourceData
+range: string
+
+```
+</details>

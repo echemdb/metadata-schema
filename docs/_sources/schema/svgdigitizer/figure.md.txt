@@ -1,0 +1,88 @@
+
+
+# Slot: figure 
+
+
+_Figure number or identifier from the source including subfigure label._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/figure](https://echemdb.github.io/metadata-schema/svgdigitizer/figure)
+Alias: figure
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Figure 2a |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/figure |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/figure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: figure
+description: Figure number or identifier from the source including subfigure label.
+examples:
+- value: Figure 2a
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: figure
+owner: Source
+domain_of:
+- Source
+range: string
+
+```
+</details>

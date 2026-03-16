@@ -1,0 +1,80 @@
+
+
+# Slot: eln 
+
+
+_Electronic lab notebook reference._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/eln](https://echemdb.github.io/metadata-schema/svgdigitizer/eln)
+Alias: eln
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Eln](Eln.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/eln |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/eln |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: eln
+description: Electronic lab notebook reference.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: eln
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: Eln
+inlined: true
+
+```
+</details>

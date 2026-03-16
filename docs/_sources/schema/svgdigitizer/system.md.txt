@@ -1,0 +1,83 @@
+
+
+# Slot: system 
+
+
+_Description of the experimental system._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/system](https://echemdb.github.io/metadata-schema/svgdigitizer/system)
+Alias: system
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [System](System.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/system |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/system |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: system
+description: Description of the experimental system.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+alias: system
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: System
+required: true
+inlined: true
+
+```
+</details>

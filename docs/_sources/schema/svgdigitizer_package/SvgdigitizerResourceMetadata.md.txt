@@ -1,0 +1,141 @@
+
+
+
+
+# Class: SvgdigitizerResourceMetadata 
+
+
+_Metadata container for svgdigitizer output._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerResourceMetadata](https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerResourceMetadata)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class SvgdigitizerResourceMetadata
+    click SvgdigitizerResourceMetadata href "../SvgdigitizerResourceMetadata/"
+      SvgdigitizerResourceMetadata : echemdb
+        
+          
+    
+        
+        
+        SvgdigitizerResourceMetadata --> "1" SvgdigitizerEchemdbMetadata : echemdb
+        click SvgdigitizerEchemdbMetadata href "../SvgdigitizerEchemdbMetadata/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [echemdb](echemdb.md) | 1 <br/> [SvgdigitizerEchemdbMetadata](SvgdigitizerEchemdbMetadata.md) | Simplified echemdb metadata for digitized data |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [SvgdigitizerResource](SvgdigitizerResource.md) | [metadata](metadata.md) | range | [SvgdigitizerResourceMetadata](SvgdigitizerResourceMetadata.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerResourceMetadata |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/SvgdigitizerResourceMetadata |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: SvgdigitizerResourceMetadata
+description: Metadata container for svgdigitizer output.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  echemdb:
+    name: echemdb
+    description: Simplified echemdb metadata for digitized data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    domain_of:
+    - SvgdigitizerResourceMetadata
+    range: SvgdigitizerEchemdbMetadata
+    required: true
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: SvgdigitizerResourceMetadata
+description: Metadata container for svgdigitizer output.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+attributes:
+  echemdb:
+    name: echemdb
+    description: Simplified echemdb metadata for digitized data.
+    from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+    rank: 1000
+    alias: echemdb
+    owner: SvgdigitizerResourceMetadata
+    domain_of:
+    - SvgdigitizerResourceMetadata
+    range: SvgdigitizerEchemdbMetadata
+    required: true
+    inlined: true
+
+```
+</details>

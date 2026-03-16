@@ -1,0 +1,83 @@
+
+
+# Slot: experimental 
+
+
+_Details about the experimental setup._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/experimental](https://echemdb.github.io/metadata-schema/echemdb_package/experimental)
+Alias: experimental
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [EchemdbMetadata](EchemdbMetadata.md) | echemdb-specific metadata for electrochemical data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [Experimental](Experimental.md)
+
+* Required: True
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/experimental |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Details about the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+alias: experimental
+owner: EchemdbMetadata
+domain_of:
+- EchemdbMetadata
+range: Experimental
+required: true
+inlined: true
+
+```
+</details>

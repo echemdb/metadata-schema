@@ -1,0 +1,92 @@
+
+
+# Slot: curve 
+
+
+_Specific curve identifier within the figure._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/curve](https://echemdb.github.io/metadata-schema/svgdigitizer_package/curve)
+Alias: curve
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| blue |
+| solid |
+| 1 |
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/curve |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/curve |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: curve
+description: Specific curve identifier within the figure.
+examples:
+- value: blue
+- value: solid
+- value: '1'
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+alias: curve
+owner: SvgdigitizerSource
+domain_of:
+- SvgdigitizerSource
+range: string
+
+```
+</details>

@@ -1,0 +1,69 @@
+
+
+# Slot: unit 
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/unit](https://echemdb.github.io/metadata-schema/autotag/unit)
+Alias: unit
+
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+
+
+
+
+
+
+## Properties
+
+* Range: [String](String.md)
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/unit |
+| native | https://echemdb.github.io/metadata-schema/autotag/unit |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: unit
+alias: unit
+domain_of:
+- Quantity
+- Uncertainty
+- DataField
+- Purity
+range: string
+
+```
+</details>

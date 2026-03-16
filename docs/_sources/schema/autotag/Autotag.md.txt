@@ -1,0 +1,359 @@
+
+
+
+
+# Class: Autotag 
+
+
+_Complete metadata schema for YAML templates used by autotag, combining all metadata sections into a single comprehensive structure._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Autotag](https://echemdb.github.io/metadata-schema/autotag/Autotag)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Autotag
+    click Autotag href "../Autotag/"
+      Autotag : curation
+        
+          
+    
+        
+        
+        Autotag --> "1" Curation : curation
+        click Curation href "../Curation/"
+    
+
+        
+      Autotag : echemdbLoader
+        
+      Autotag : echemdbSchemaVersion
+        
+      Autotag : eln
+        
+          
+    
+        
+        
+        Autotag --> "1" Eln : eln
+        click Eln href "../Eln/"
+    
+
+        
+      Autotag : experimental
+        
+          
+    
+        
+        
+        Autotag --> "1" Experimental : experimental
+        click Experimental href "../Experimental/"
+    
+
+        
+      Autotag : figureDescription
+        
+          
+    
+        
+        
+        Autotag --> "1" FigureDescription : figureDescription
+        click FigureDescription href "../FigureDescription/"
+    
+
+        
+      Autotag : projects
+        
+          
+    
+        
+        
+        Autotag --> "*" Project : projects
+        click Project href "../Project/"
+    
+
+        
+      Autotag : system
+        
+          
+    
+        
+        
+        Autotag --> "1" System : system
+        click System href "../System/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [echemdbSchemaVersion](echemdbSchemaVersion.md) | 0..1 <br/> [String](String.md) | Version of the echemdb metadata schema this data conforms to | `0.7.1` |
+| [curation](curation.md) | 1 <br/> [Curation](Curation.md) | Details on the curation process of the data |  |
+| [echemdbLoader](echemdbLoader.md) | 0..1 <br/> [String](String.md) | Loader or importer used to process the data into echemdb format | `baseloader` |
+| [eln](eln.md) | 1 <br/> [Eln](Eln.md) | Electronic lab notebook reference |  |
+| [experimental](experimental.md) | 1 <br/> [Experimental](Experimental.md) | Details about the experimental setup |  |
+| [figureDescription](figureDescription.md) | 1 <br/> [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot |  |
+| [projects](projects.md) | * <br/> [Project](Project.md) | Research projects or funding sources |  |
+| [system](system.md) | 1 <br/> [System](System.md) | Description of the experimental system |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Autotag |
+| native | https://echemdb.github.io/metadata-schema/autotag/Autotag |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Autotag
+description: Complete metadata schema for YAML templates used by autotag, combining
+  all metadata sections into a single comprehensive structure.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  echemdbSchemaVersion:
+    name: echemdbSchemaVersion
+    description: Version of the echemdb metadata schema this data conforms to.
+    examples:
+    - value: 0.7.1
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: string
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: Curation
+    required: true
+    inlined: true
+  echemdbLoader:
+    name: echemdbLoader
+    description: Loader or importer used to process the data into echemdb format.
+    examples:
+    - value: baseloader
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: string
+  eln:
+    name: eln
+    description: Electronic lab notebook reference.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: Eln
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: FigureDescription
+    required: true
+    inlined: true
+  projects:
+    name: projects
+    description: Research projects or funding sources.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: Project
+    multivalued: true
+    inlined: true
+    inlined_as_list: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    domain_of:
+    - Autotag
+    range: System
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Autotag
+description: Complete metadata schema for YAML templates used by autotag, combining
+  all metadata sections into a single comprehensive structure.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+attributes:
+  echemdbSchemaVersion:
+    name: echemdbSchemaVersion
+    description: Version of the echemdb metadata schema this data conforms to.
+    examples:
+    - value: 0.7.1
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: echemdbSchemaVersion
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: string
+  curation:
+    name: curation
+    description: Details on the curation process of the data.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: curation
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: Curation
+    required: true
+    inlined: true
+  echemdbLoader:
+    name: echemdbLoader
+    description: Loader or importer used to process the data into echemdb format.
+    examples:
+    - value: baseloader
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: echemdbLoader
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: string
+  eln:
+    name: eln
+    description: Electronic lab notebook reference.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: eln
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: Eln
+    required: true
+    inlined: true
+  experimental:
+    name: experimental
+    description: Details about the experimental setup.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: experimental
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: Experimental
+    required: true
+    inlined: true
+  figureDescription:
+    name: figureDescription
+    description: Description of the data to a figure or plot.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: figureDescription
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: FigureDescription
+    required: true
+    inlined: true
+  projects:
+    name: projects
+    description: Research projects or funding sources.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: projects
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: Project
+    multivalued: true
+    inlined_as_list: true
+  system:
+    name: system
+    description: Description of the experimental system.
+    from_schema: https://echemdb.github.io/metadata-schema/autotag
+    rank: 1000
+    alias: system
+    owner: Autotag
+    domain_of:
+    - Autotag
+    range: System
+    required: true
+    inlined: true
+tree_root: true
+
+```
+</details>
