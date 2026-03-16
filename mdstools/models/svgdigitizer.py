@@ -88,7 +88,7 @@ linkml_meta = LinkMLMeta(
                 "prefix_reference": "https://w3id.org/linkml/",
             },
         },
-        "source_file": "D:\\github\\echemdb\\metadata-schema\\linkml\\svgdigitizer.yaml",
+        "source_file": "linkml/svgdigitizer.yaml",
     }
 )
 
@@ -2494,6 +2494,17 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
                 "alias": "inchikey",
                 "domain_of": ["ChemicalIdentifiers"],
                 "examples": [{"value": "QAOWNCQODCNURD-UHFFFAOYSA-N"}],
+            }
+        },
+    )
+    smiles: Optional[str] = Field(
+        default=None,
+        description="""SMILES (Simplified Molecular Input Line Entry System).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "smiles",
+                "domain_of": ["ChemicalIdentifiers"],
+                "examples": [{"value": "[Cl-].[Cl-].[Ca+2]"}],
             }
         },
     )

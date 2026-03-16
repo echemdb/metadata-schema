@@ -455,6 +455,16 @@
       "additionalProperties": false,
       "description": "CSV dialect specification describing the format of the source data file.",
       "properties": {
+        "candidateDelimiters": {
+          "description": "Optional list of candidate delimiters used when trying to infer the file dialect.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
         "columnHeaderLines": {
           "description": "Number of lines that make up the column headers. If more than one, header parts are joined with ' / '.",
           "type": [
@@ -469,8 +479,8 @@
             "null"
           ]
         },
-        "delimiters": {
-          "description": "Column delimiter character(s) used in the data file.",
+        "delimiter": {
+          "description": "Column delimiter character used in the data file.",
           "type": [
             "string",
             "null"
