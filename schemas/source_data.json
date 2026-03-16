@@ -3,7 +3,6 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "additionalProperties": true,
   "description": "Metadata schema for source data files in echemdb, combining system description, curation, source provenance, experimental details, figure description, and data format description.",
-  "metamodel_version": "1.7.0",
   "properties": {
     "curation": {
       "$ref": "#/$defs/Curation",
@@ -12,6 +11,13 @@
     "dataDescription": {
       "$ref": "#/$defs/DataDescription",
       "description": "Description of the raw data file format."
+    },
+    "echemdbSchemaVersion": {
+      "description": "Version of the echemdb metadata schema this data conforms to.",
+      "type": [
+        "string",
+        "null"
+      ]
     },
     "experimental": {
       "$ref": "#/$defs/Experimental",
@@ -40,7 +46,6 @@
   ],
   "title": "source_data",
   "type": "object",
-  "version": null,
   "$defs": {
     "Atmosphere": {
       "additionalProperties": false,
@@ -1423,6 +1428,13 @@
         "dataDescription": {
           "$ref": "#/$defs/DataDescription",
           "description": "Description of the raw data file format."
+        },
+        "echemdbSchemaVersion": {
+          "description": "Version of the echemdb metadata schema this data conforms to.",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "experimental": {
           "$ref": "#/$defs/Experimental",

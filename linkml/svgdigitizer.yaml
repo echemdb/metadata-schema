@@ -25,6 +25,11 @@ classes:
       Metadata schema for the input YAML file used by svgdigitizer
       to create echemdb compatible data packages.
     attributes:
+      echemdbSchemaVersion:
+        range: string
+        description: Version of the echemdb metadata schema this data conforms to.
+        examples:
+          - value: "0.6.0"
       curation:
         range: Curation
         required: true

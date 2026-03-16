@@ -24,6 +24,11 @@ classes:
       Complete metadata schema for YAML templates used by autotag,
       combining all metadata sections into a single comprehensive structure.
     attributes:
+      echemdbSchemaVersion:
+        range: string
+        description: Version of the echemdb metadata schema this data conforms to.
+        examples:
+          - value: "0.6.0"
       curation:
         range: Curation
         required: true

@@ -46,6 +46,11 @@ classes:
   SvgdigitizerEchemdbMetadata:
     description: Simplified echemdb metadata for digitized data.
     attributes:
+      echemdbSchemaVersion:
+        range: string
+        description: Version of the echemdb metadata schema this data conforms to.
+        examples:
+          - value: "0.6.0"
       experimental:
         range: SvgdigitizerExperimental
         description: Experimental tags or keywords.

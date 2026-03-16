@@ -10,10 +10,19 @@ concurrency:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.remote-data == 'remote' }}
     strategy:
       matrix:
         environment: ["python-311", "python-312", "python-313", "python-314"]
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        remote-data: [""]
+        include:
+        - os: "ubuntu-latest"
+          environment: "python-314"
+          # This leg validates example files against the remote schemas
+          # on GitHub. It may fail when schema changes have not been
+          # released yet.
+          remote-data: 'remote'
     steps:
       - name: checkout
         uses: actions/checkout@v6
@@ -21,7 +30,8 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.9.3
         with: { pixi-version: v0.63.2 }
       - name: doctest
-        run: pixi run -e ${{ matrix.environment }} doctest
+        run: |
+          pixi run -e ${{ matrix.environment }} doctest ${{ matrix.remote-data == 'remote' && '--remote-data' || '' }}
       - name: test-comprehensive
         run: pixi run -e ${{ matrix.environment }} test-comprehensive
       - name: test-resolved-schemas

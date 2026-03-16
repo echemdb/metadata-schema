@@ -466,12 +466,13 @@ def validate_echemdb_package(data: Any, version: str = None) -> None:
 
         Local validation (always in sync with the working tree)::
 
-            >>> import json
+            >>> import json, contextlib, io
             >>> from pathlib import Path
             >>> from mdstools.schema.validate_examples import validate_data, build_package_registry
             >>> schema = json.load(open('schemas/echemdb_package.json'))
             >>> data = json.load(open('examples/file_schemas/echemdb_package.json'))
-            >>> registry = build_package_registry(Path('schemas'))
+            >>> with contextlib.redirect_stdout(io.StringIO()):
+            ...     registry = build_package_registry(Path('schemas'))
             >>> errors = validate_data(data, schema, registry=registry)
             >>> len(errors)
             0
@@ -492,12 +493,13 @@ def validate_svgdigitizer_package(data: Any, version: str = None) -> None:
 
         Local validation (always in sync with the working tree)::
 
-            >>> import json
+            >>> import json, contextlib, io
             >>> from pathlib import Path
             >>> from mdstools.schema.validate_examples import validate_data, build_package_registry
             >>> schema = json.load(open('schemas/svgdigitizer_package.json'))
             >>> data = json.load(open('examples/file_schemas/svgdigitizer_package.json'))
-            >>> registry = build_package_registry(Path('schemas'))
+            >>> with contextlib.redirect_stdout(io.StringIO()):
+            ...     registry = build_package_registry(Path('schemas'))
             >>> errors = validate_data(data, schema, registry=registry)
             >>> len(errors)
             0

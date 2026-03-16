@@ -198,6 +198,10 @@ def generate_json_schemas():
         schema["$schema"] = "http://json-schema.org/draft-07/schema#"
         schema["$id"] = f"https://echemdb.github.io/metadata-schema/{model_name}"
 
+        # Strip LinkML-specific metadata fields that are not part of JSON Schema
+        schema.pop("version", None)
+        schema.pop("metamodel_version", None)
+
         # Post-process: add fieldMapping to DataDescription if present
         # (fieldMapping is a free-form dict not expressible in LinkML)
         defs = schema.get("$defs", {})
@@ -276,6 +280,10 @@ def _postprocess_pydantic(code: str) -> str:
         'extra = "forbid",',
         'extra = "allow",\n        coerce_numbers_to_str = True,',
     )
+
+    # Strip LinkML-specific module-level version constants
+    code = code.replace('metamodel_version = "None"\n', "")
+    code = code.replace('version = "None"\n', "")
 
     return code
 
