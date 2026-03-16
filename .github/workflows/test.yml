@@ -37,7 +37,7 @@ jobs:
         with: { pixi-version: v0.63.2 }
       - name: regenerate schemas and models
         run: pixi run generate-all
-      - name: refresh expected schema snapshots
-        run: pixi run update-expected-schemas
+      - name: verify generated schemas match expected baselines
+        run: pixi run diff-schemas
       - name: verify generated artifacts are committed
         run: git diff --exit-code -- schemas mdstools/models
