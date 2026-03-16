@@ -2,7 +2,7 @@ project = "metadata-schema"
 copyright = "2022-2025, the echemdb authors"
 author = "the echemdb authors"
 
-release = "0.6.0"
+release = "0.7.1"
 
 extensions = ["sphinx.ext.autodoc", "sphinx.ext.todo", "myst_parser", "sphinxcontrib.mermaid", "sphinx_design"]
 

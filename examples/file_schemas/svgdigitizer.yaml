@@ -1,7 +1,7 @@
 # This file describes a figure from a publication containing electrochemical data.
 # For the `echemdb/website` project, the source, curator and electrochemicalSystem is mandatory.
 # figureDescription is optional. It is created automatically by the cv module of svgdigitizer
-echemdbSchemaVersion: 0.6.0
+echemdbSchemaVersion: 0.7.1
 curation:
   process:
     - role: curator

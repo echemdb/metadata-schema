@@ -50,7 +50,7 @@ classes:
         range: string
         description: Version of the echemdb metadata schema this data conforms to.
         examples:
-          - value: "0.6.0"
+          - value: "0.7.1"
       experimental:
         range: SvgdigitizerExperimental
         description: Experimental tags or keywords.
