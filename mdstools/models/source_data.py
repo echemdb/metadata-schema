@@ -718,6 +718,7 @@ class Electrode(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -1008,6 +1009,7 @@ class Shape(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -1059,6 +1061,7 @@ class ElectrodePreparation(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -1209,7 +1212,7 @@ class Component(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "alias": "flow",
-                "domain_of": ["Component"],
+                "domain_of": ["Component", "MassTransport"],
                 "examples": [{"value": "{value: 50, unit: ml / min}"}],
             }
         },
@@ -1402,17 +1405,6 @@ class Electrolyte(ConfiguredBaseModel):
             }
         },
     )
-    temperature: Optional[Quantity] = Field(
-        default=None,
-        description="""Temperature of the electrolyte during the experiment.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "temperature",
-                "domain_of": ["Electrolyte"],
-                "examples": [{"value": "{value: 298.15, unit: K}"}],
-            }
-        },
-    )
     comment: Optional[str] = Field(
         default=None,
         description="""Additional notes or observations about the electrolyte.""",
@@ -1459,6 +1451,7 @@ class ElectrolyteContainer(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -1718,6 +1711,7 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -1916,6 +1910,7 @@ class Atmosphere(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -2230,6 +2225,404 @@ class Instrumentation(ConfiguredBaseModel):
     )
 
 
+class OperationParameters(ConfiguredBaseModel):
+    """
+    Parameters describing how the measurement was operated, such as thermal control of the electrolyte and forced mass transport at the electrode.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    temperature: Optional[ControlledQuantity] = Field(
+        default=None,
+        description="""Temperature of the electrolyte and how it was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "temperature",
+                "domain_of": ["OperationParameters"],
+            }
+        },
+    )
+    massTransport: Optional[MassTransport] = Field(
+        default=None,
+        description="""Forced-convection modes used to induce mass transport.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "massTransport",
+                "domain_of": ["OperationParameters"],
+            }
+        },
+    )
+
+
+class Control(ConfiguredBaseModel):
+    """
+    How a parameter was actively controlled during the measurement, including a reference to the controlling instrument.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    instrument: Optional[str] = Field(
+        default=None,
+        description="""Name of the controlling instrument. Must match the name of an entry under experimental.instrumentation (Instrumentation.name).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "instrument",
+                "domain_of": ["Control"],
+                "examples": [{"value": "Rotator1"}],
+            }
+        },
+    )
+    description: Optional[str] = Field(
+        default=None,
+        description="""Additional details about how the parameter was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "description",
+                "domain_of": [
+                    "Electrode",
+                    "Shape",
+                    "ElectrodePreparation",
+                    "ElectrolyteContainer",
+                    "ElectrochemicalCellComponent",
+                    "Atmosphere",
+                    "Control",
+                    "Experimental",
+                    "DataField",
+                    "FieldUnit",
+                ],
+                "examples": [{"value": "Jacketed cell with circulating water bath"}],
+            }
+        },
+    )
+
+
+class ControlledQuantity(Quantity):
+    """
+    A physical quantity that was actively controlled by an instrument.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the quantity was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+    value: Optional[float] = Field(
+        default=None,
+        description="""Numerical value of the quantity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "value",
+                "domain_of": ["Quantity", "Uncertainty", "Purity"],
+                "examples": [{"value": "0.5"}],
+            }
+        },
+    )
+    unit: Optional[str] = Field(
+        default=None,
+        description="""Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "unit",
+                "domain_of": [
+                    "Quantity",
+                    "Uncertainty",
+                    "Purity",
+                    "DataField",
+                    "FieldUnit",
+                ],
+                "examples": [
+                    {"value": "mol / l"},
+                    {"value": "V"},
+                    {"value": "mA / cm2"},
+                ],
+            }
+        },
+    )
+    uncertainty: Optional[Uncertainty] = Field(
+        default=None,
+        description="""Uncertainty information for a measured quantity.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "uncertainty", "domain_of": ["Quantity"]}
+        },
+    )
+    comment: Optional[str] = Field(
+        default=None,
+        description="""Additional notes about the measurement or quantity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "comment",
+                "domain_of": [
+                    "Quantity",
+                    "Uncertainty",
+                    "Component",
+                    "Electrolyte",
+                    "ElectrolyteContainerComponent",
+                    "Atmosphere",
+                    "Source",
+                    "FigureDescription",
+                ],
+                "examples": [{"value": "Measured at room temperature"}],
+            }
+        },
+    )
+    calculation: Optional[str] = Field(
+        default=None,
+        description="""Method or formula used to calculate this quantity.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "calculation",
+                "domain_of": ["Quantity"],
+                "examples": [{"value": "Obtained by multiplying U and I"}],
+            }
+        },
+    )
+
+
+class ControlledOperation(ConfiguredBaseModel):
+    """
+    Base class for a controlled operation characterised by one or more quantities, sharing a single control block.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "abstract": True,
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation",
+        }
+    )
+
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the operation was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+
+
+class MassTransport(ConfiguredBaseModel):
+    """
+    Forced-convection modes inducing mass transport during the measurement.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    rotation: Optional[Rotation] = Field(
+        default=None,
+        description="""Rotating (disc) electrode, e.g. RDE or RRDE.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "rotation", "domain_of": ["MassTransport"]}
+        },
+    )
+    flow: Optional[Flow] = Field(
+        default=None,
+        description="""Forced electrolyte flow, e.g. a flow or channel cell.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "flow",
+                "domain_of": ["Component", "MassTransport"],
+            }
+        },
+    )
+    ultrasound: Optional[Ultrasound] = Field(
+        default=None,
+        description="""Ultrasound applied to the electrolyte (sonoelectrochemistry).""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "ultrasound", "domain_of": ["MassTransport"]}
+        },
+    )
+    stirring: Optional[Stirring] = Field(
+        default=None,
+        description="""Stirring of the electrolyte, e.g. with a magnetic stirrer.""",
+        json_schema_extra={
+            "linkml_meta": {"alias": "stirring", "domain_of": ["MassTransport"]}
+        },
+    )
+
+
+class Rotation(ControlledOperation):
+    """
+    Rotation of a rotating (disc) electrode.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    rate: Optional[Quantity] = Field(
+        default=None,
+        description="""Rotation rate of the electrode.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "rate",
+                "domain_of": ["Rotation", "Flow", "Stirring"],
+                "examples": [{"value": "{value: 1600, unit: 1 / min}"}],
+            }
+        },
+    )
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the operation was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+
+
+class Flow(ControlledOperation):
+    """
+    Forced flow of the electrolyte.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    rate: Optional[Quantity] = Field(
+        default=None,
+        description="""Volumetric or linear flow rate of the electrolyte.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "rate",
+                "domain_of": ["Rotation", "Flow", "Stirring"],
+                "examples": [{"value": "{value: 10, unit: ml / min}"}],
+            }
+        },
+    )
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the operation was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+
+
+class Stirring(ControlledOperation):
+    """
+    Stirring of the electrolyte.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    rate: Optional[Quantity] = Field(
+        default=None,
+        description="""Stirring rate.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "rate",
+                "domain_of": ["Rotation", "Flow", "Stirring"],
+                "examples": [{"value": "{value: 400, unit: 1 / min}"}],
+            }
+        },
+    )
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the operation was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+
+
+class Ultrasound(ControlledOperation):
+    """
+    Ultrasound applied to the electrolyte.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/experimental/operation"
+        }
+    )
+
+    power: Optional[Quantity] = Field(
+        default=None,
+        description="""Acoustic power of the ultrasound source.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "power",
+                "domain_of": ["Ultrasound"],
+                "examples": [{"value": "{value: 20, unit: W}"}],
+            }
+        },
+    )
+    frequency: Optional[Quantity] = Field(
+        default=None,
+        description="""Frequency of the ultrasound.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "frequency",
+                "domain_of": ["Ultrasound"],
+                "examples": [{"value": "{value: 20, unit: kHz}"}],
+            }
+        },
+    )
+    amplitude: Optional[Quantity] = Field(
+        default=None,
+        description="""Amplitude of the ultrasound source, e.g. as horn displacement or as a percentage of the maximum.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "amplitude",
+                "domain_of": ["Ultrasound"],
+                "examples": [{"value": "{value: 40, unit: percent}"}],
+            }
+        },
+    )
+    control: Optional[Control] = Field(
+        default=None,
+        description="""How the operation was controlled.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "control",
+                "domain_of": ["ControlledQuantity", "ControlledOperation"],
+            }
+        },
+    )
+
+
 class Experimental(ConfiguredBaseModel):
     """
     Details about the configuration of the experimental setup.
@@ -2294,6 +2687,7 @@ class Experimental(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -2304,6 +2698,16 @@ class Experimental(ConfiguredBaseModel):
                         "50 mV/s scan rate"
                     }
                 ],
+            }
+        },
+    )
+    operationParameters: Optional[OperationParameters] = Field(
+        default=None,
+        description="""Parameters describing how the measurement was operated, such as temperature control and forced mass transport.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "alias": "operationParameters",
+                "domain_of": ["Experimental"],
             }
         },
     )
@@ -2501,6 +2905,7 @@ class DataField(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -2742,6 +3147,7 @@ class FieldUnit(ConfiguredBaseModel):
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
+                    "Control",
                     "Experimental",
                     "DataField",
                     "FieldUnit",
@@ -2856,6 +3262,15 @@ Atmosphere.model_rebuild()
 System.model_rebuild()
 Source.model_rebuild()
 Instrumentation.model_rebuild()
+OperationParameters.model_rebuild()
+Control.model_rebuild()
+ControlledQuantity.model_rebuild()
+ControlledOperation.model_rebuild()
+MassTransport.model_rebuild()
+Rotation.model_rebuild()
+Flow.model_rebuild()
+Stirring.model_rebuild()
+Ultrasound.model_rebuild()
 Experimental.model_rebuild()
 FigureDescription.model_rebuild()
 DataField.model_rebuild()

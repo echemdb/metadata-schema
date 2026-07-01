@@ -1,0 +1,146 @@
+id: https://echemdb.github.io/metadata-schema/experimental/operation
+name: operation
+description: >-
+  Operational parameters applied during a measurement, such as thermal control
+  of the electrolyte and forced mass transport at the electrode.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - ../general/quantity
+
+default_range: string
+
+classes:
+  OperationParameters:
+    description: >-
+      Parameters describing how the measurement was operated, such as thermal
+      control of the electrolyte and forced mass transport at the electrode.
+    attributes:
+      temperature:
+        range: ControlledQuantity
+        description: Temperature of the electrolyte and how it was controlled.
+        inlined: true
+      massTransport:
+        range: MassTransport
+        description: Forced-convection modes used to induce mass transport.
+        inlined: true
+
+  Control:
+    description: >-
+      How a parameter was actively controlled during the measurement, including
+      a reference to the controlling instrument.
+    attributes:
+      instrument:
+        range: string
+        description: >-
+          Name of the controlling instrument. Must match the name of an entry
+          under experimental.instrumentation (Instrumentation.name).
+        examples:
+          - value: "Rotator1"
+      description:
+        range: string
+        description: Additional details about how the parameter was controlled.
+        examples:
+          - value: "Jacketed cell with circulating water bath"
+
+  ControlledQuantity:
+    is_a: Quantity
+    description: A physical quantity that was actively controlled by an instrument.
+    attributes:
+      control:
+        range: Control
+        description: How the quantity was controlled.
+        inlined: true
+
+  ControlledOperation:
+    abstract: true
+    description: >-
+      Base class for a controlled operation characterised by one or more
+      quantities, sharing a single control block.
+    attributes:
+      control:
+        range: Control
+        description: How the operation was controlled.
+        inlined: true
+
+  MassTransport:
+    description: Forced-convection modes inducing mass transport during the measurement.
+    attributes:
+      rotation:
+        range: Rotation
+        description: Rotating (disc) electrode, e.g. RDE or RRDE.
+        inlined: true
+      flow:
+        range: Flow
+        description: Forced electrolyte flow, e.g. a flow or channel cell.
+        inlined: true
+      ultrasound:
+        range: Ultrasound
+        description: Ultrasound applied to the electrolyte (sonoelectrochemistry).
+        inlined: true
+      stirring:
+        range: Stirring
+        description: Stirring of the electrolyte, e.g. with a magnetic stirrer.
+        inlined: true
+
+  Rotation:
+    is_a: ControlledOperation
+    description: Rotation of a rotating (disc) electrode.
+    attributes:
+      rate:
+        range: Quantity
+        description: Rotation rate of the electrode.
+        inlined: true
+        examples:
+          - value: "{value: 1600, unit: 1 / min}"
+
+  Flow:
+    is_a: ControlledOperation
+    description: Forced flow of the electrolyte.
+    attributes:
+      rate:
+        range: Quantity
+        description: Volumetric or linear flow rate of the electrolyte.
+        inlined: true
+        examples:
+          - value: "{value: 10, unit: ml / min}"
+
+  Stirring:
+    is_a: ControlledOperation
+    description: Stirring of the electrolyte.
+    attributes:
+      rate:
+        range: Quantity
+        description: Stirring rate.
+        inlined: true
+        examples:
+          - value: "{value: 400, unit: 1 / min}"
+
+  Ultrasound:
+    is_a: ControlledOperation
+    description: Ultrasound applied to the electrolyte.
+    attributes:
+      power:
+        range: Quantity
+        description: Acoustic power of the ultrasound source.
+        inlined: true
+        examples:
+          - value: "{value: 20, unit: W}"
+      frequency:
+        range: Quantity
+        description: Frequency of the ultrasound.
+        inlined: true
+        examples:
+          - value: "{value: 20, unit: kHz}"
+      amplitude:
+        range: Quantity
+        description: >-
+          Amplitude of the ultrasound source, e.g. as horn displacement or as a
+          percentage of the maximum.
+        inlined: true
+        examples:
+          - value: "{value: 40, unit: percent}"

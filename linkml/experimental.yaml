@@ -10,6 +10,7 @@ imports:
   - linkml:types
   - ./general/url
   - ./experimental/instrumentation
+  - ./experimental/operation
 
 default_range: string
 
@@ -41,3 +42,9 @@ classes:
         description: Detailed description of the experimental setup and conditions.
         examples:
           - value: "Cyclic voltammetry performed at room temperature with 50 mV/s scan rate"
+      operationParameters:
+        range: OperationParameters
+        description: >-
+          Parameters describing how the measurement was operated, such as
+          temperature control and forced mass transport.
+        inlined: true

@@ -220,6 +220,96 @@ def validate_with_pydantic(data: Any, schema_name: str) -> Any:
 
 
 # ---------------------------------------------------------------------------
+# Referential integrity (cannot be expressed in JSON Schema)
+# ---------------------------------------------------------------------------
+
+
+def _iter_experimental_blocks(node: Any):
+    """Yield every ``experimental``-like dict (one carrying ``operationParameters``).
+
+    The metadata may be a bare experimental object, a full file-schema document
+    (``experimental`` at the top level) or a data package (``experimental``
+    nested under ``resources[].metadata.echemdb``), so the search is recursive.
+    """
+    if isinstance(node, dict):
+        if "operationParameters" in node:
+            yield node
+        for value in node.values():
+            yield from _iter_experimental_blocks(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _iter_experimental_blocks(item)
+
+
+def _iter_instrument_references(node: Any):
+    """Yield every ``control.instrument`` value found beneath *node*."""
+    if isinstance(node, dict):
+        control = node.get("control")
+        if isinstance(control, dict):
+            instrument = control.get("instrument")
+            if instrument is not None:
+                yield instrument
+        for value in node.values():
+            yield from _iter_instrument_references(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _iter_instrument_references(item)
+
+
+def validate_instrument_references(data: Any) -> list:
+    r"""Check that every ``control.instrument`` resolves to an instrument name.
+
+    Within each ``experimental`` block, every ``operationParameters`` control
+    block references an instrument by name; that name must match the ``name``
+    of an entry in the same block's ``instrumentation`` list.  JSON Schema
+    cannot express this cross-reference, so it is checked here.
+
+    :param data: Metadata dict (object, file-schema, or package document).
+    :returns: List of human-readable error messages (empty if all resolve).
+
+    EXAMPLES:
+
+        Resolving references pass silently::
+
+            >>> from mdstools.schema.validator import validate_instrument_references
+            >>> data = {"experimental": {
+            ...     "instrumentation": [{"name": "Rotator1"}],
+            ...     "operationParameters": {"massTransport": {"rotation": {
+            ...         "rate": {"value": 1600, "unit": "1 / min"},
+            ...         "control": {"instrument": "Rotator1"}}}}}}
+            >>> validate_instrument_references(data)
+            []
+
+        A dangling reference is reported::
+
+            >>> bad = {"experimental": {
+            ...     "instrumentation": [{"name": "Rotator1"}],
+            ...     "operationParameters": {"temperature": {
+            ...         "value": 298, "unit": "K",
+            ...         "control": {"instrument": "Thermostat9"}}}}}
+            >>> validate_instrument_references(bad)
+            ["control.instrument 'Thermostat9' does not match any instrumentation name (available: ['Rotator1'])"]
+
+    """
+    errors = []
+    for experimental in _iter_experimental_blocks(data):
+        instrumentation = experimental.get("instrumentation") or []
+        names = {
+            item.get("name")
+            for item in instrumentation
+            if isinstance(item, dict) and item.get("name") is not None
+        }
+        operation_params = experimental.get("operationParameters")
+        for instrument in _iter_instrument_references(operation_params):
+            if instrument not in names:
+                errors.append(
+                    f"control.instrument '{instrument}' does not match any "
+                    f"instrumentation name (available: {sorted(names)})"
+                )
+    return errors
+
+
+# ---------------------------------------------------------------------------
 # Public remote-validation API
 # ---------------------------------------------------------------------------
 

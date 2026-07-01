@@ -53,6 +53,8 @@ from pathlib import Path
 import jsonschema
 import yaml
 
+from mdstools.schema.validator import validate_instrument_references
+
 
 def _load_generated_schema(schema_path: Path) -> dict:
     """Load a generated JSON schema file."""
@@ -148,11 +150,14 @@ def validate_objects():
             data = yaml.safe_load(f)
 
         errors = validate_data(data, schema)
-        if errors:
-            print(f"  FAIL {obj}: {len(errors)} error(s)")
+        ref_errors = validate_instrument_references(data)
+        if errors or ref_errors:
+            print(f"  FAIL {obj}: {len(errors) + len(ref_errors)} error(s)")
             for err in errors[:5]:
                 path = "/".join(str(p) for p in err.absolute_path) or "<root>"
                 print(f"       - {err.message} (at {path})")
+            for msg in ref_errors[:5]:
+                print(f"       - {msg}")
             ok = False
         else:
             print(f"  ok   {obj}")
@@ -189,11 +194,14 @@ def validate_file_schemas():
             data = yaml.safe_load(f)
 
         errors = validate_data(data, schema)
-        if errors:
-            print(f"  FAIL {name}: {len(errors)} error(s)")
+        ref_errors = validate_instrument_references(data)
+        if errors or ref_errors:
+            print(f"  FAIL {name}: {len(errors) + len(ref_errors)} error(s)")
             for err in errors[:5]:
                 path = "/".join(str(p) for p in err.absolute_path) or "<root>"
                 print(f"       - {err.message} (at {path})")
+            for msg in ref_errors[:5]:
+                print(f"       - {msg}")
             ok = False
         else:
             print(f"  ok   {name}")
@@ -285,11 +293,14 @@ def validate_package_schemas():
             data = json.load(f)
 
         errors = validate_data(data, schema, registry=registry)
-        if errors:
-            print(f"  FAIL {name}: {len(errors)} error(s)")
+        ref_errors = validate_instrument_references(data)
+        if errors or ref_errors:
+            print(f"  FAIL {name}: {len(errors) + len(ref_errors)} error(s)")
             for err in errors[:5]:
                 path = "/".join(str(p) for p in err.absolute_path) or "<root>"
                 print(f"       - {err.message} (at {path})")
+            for msg in ref_errors[:5]:
+                print(f"       - {msg}")
             ok = False
         else:
             print(f"  ok   {name}")

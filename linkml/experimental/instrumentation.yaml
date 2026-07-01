@@ -30,6 +30,7 @@ classes:
       name:
         range: string
         required: true
+        identifier: true
         description: Name or identifier of the instrument.
         examples:
           - value: "Poti05"

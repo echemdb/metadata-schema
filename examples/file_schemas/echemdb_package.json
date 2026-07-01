@@ -93,10 +93,6 @@
                             "ph": {
                                 "value": 1
                             },
-                            "temperature": {
-                                "unit": "K",
-                                "value": 298.15
-                            },
                             "type": "aqueous"
                         }
                     },
@@ -128,7 +124,13 @@
                         "tags": [
                             "BCV",
                             "HER"
-                        ]
+                        ],
+                        "operationParameters": {
+                            "temperature": {
+                                "unit": "K",
+                                "value": 298.15
+                            }
+                        }
                     },
                     "figureDescription": {
                         "type": "digitized",
