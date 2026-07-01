@@ -30,7 +30,66 @@ experimental:
       model: Lab850
       manufacturer: SI Analytics
       name: FancyDevice15 # a unique name of the device
+    # The instruments below control the operationParameters and are referenced there by `name`.
+    - type: thermostat
+      name: Thermostat1
+    - type: rotator
+      name: Rotator1
+    - type: pump
+      name: Pump1
+    - type: sonicator
+      name: Sonicator1
+    - type: stirrer
+      name: Stirrer1
   description: some description # A string or a new set of metadata
+  # DRAFT (not yet in the schema): how the measurement was operated.
+  # Each controlled parameter carries its value(s) plus a `control` block that references
+  # an instrument by `name` from the instrumentation list above. Provide only what applies.
+  operationParameters:
+    temperature: # thermal control of the electrolyte
+      value: 298.15
+      unit: K # [K, C, F]
+      uncertainty:
+        value: 2
+        unit: K
+      control:
+        instrument: Thermostat1 # name of the controlling instrument in the instrumentation list
+        description: Jacketed cell with circulating water bath
+    massTransport: # forced-convection modes inducing mass transport; add only those used
+      rotation: # rotating (disc) electrode, RDE/RRDE
+        rate:
+          value: 1600
+          unit: 1 / min # revolutions per minute in astropy notation (not min-1)
+        control:
+          instrument: Rotator1
+          description: null
+      flow: # flow / channel cell
+        rate:
+          value: 10
+          unit: ml / min
+        control:
+          instrument: Pump1
+          description: Peristaltic pump
+      ultrasound: # sonoelectrochemistry; described by several quantities, one controller
+        power:
+          value: 20
+          unit: W
+        frequency:
+          value: 20
+          unit: kHz
+        amplitude:
+          value: 40
+          unit: percent
+        control:
+          instrument: Sonicator1
+          description: Horn positioned 5 mm above the electrode
+      stirring: # magnetic stirrer
+        rate:
+          value: 400
+          unit: 1 / min
+        control:
+          instrument: Stirrer1
+          description: null
 figureDescription: #This section will be updated by module `svgdigitizer.electrochemistry.cv.CV`
     type: raw
     simultaneousMeasurements: # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data
@@ -156,9 +215,6 @@ system:
       value: 13
       uncertainty:
         value: 0.1
-    temperature: # provide the temperature as it is given in the article. Assume room temperature if nothing is provided
-      value: 298.15
-      unit: K # [K, C, F]
   electrodes:
     - name: RHE
       function: reference electrode
