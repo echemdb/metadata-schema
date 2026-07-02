@@ -25,11 +25,24 @@ from decimal import Decimal
 from enum import Enum
 from typing import Any, ClassVar, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    RootModel,
+    SerializationInfo,
+    SerializerFunctionWrapHandler,
+    field_validator,
+    model_serializer,
+)
+
+metamodel_version = "1.7.0"
 
 
 class ConfiguredBaseModel(BaseModel):
     model_config = ConfigDict(
+        serialize_by_alias=True,
+        validate_by_name=True,
         validate_assignment=True,
         validate_default=True,
         extra="allow",
@@ -38,7 +51,6 @@ class ConfiguredBaseModel(BaseModel):
         use_enum_values=True,
         strict=False,
     )
-    pass
 
 
 class LinkMLMeta(RootModel):
@@ -148,7 +160,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Numerical value of the quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty"],
                 "examples": [{"value": "0.5"}],
             }
@@ -159,7 +170,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField"],
                 "examples": [
                     {"value": "mol / l"},
@@ -172,16 +182,13 @@ class Quantity(ConfiguredBaseModel):
     uncertainty: Optional[Uncertainty] = Field(
         default=None,
         description="""Uncertainty information for a measured quantity.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "uncertainty", "domain_of": ["Quantity"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Quantity"]}},
     )
     comment: Optional[str] = Field(
         default=None,
         description="""Additional notes about the measurement or quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": ["Quantity", "Uncertainty", "FigureDescription"],
                 "examples": [{"value": "Measured at room temperature"}],
             }
@@ -192,7 +199,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Method or formula used to calculate this quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "calculation",
                 "domain_of": ["Quantity"],
                 "examples": [{"value": "Obtained by multiplying U and I"}],
             }
@@ -214,7 +220,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Symmetric uncertainty value (±).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty"],
                 "examples": [{"value": "0.01"}],
             }
@@ -225,7 +230,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Unit of the uncertainty value, following astropy's string notation. Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField"],
                 "examples": [{"value": "mol / l"}],
             }
@@ -236,7 +240,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Upper bound (+) for asymmetric uncertainties.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "positiveValue",
                 "domain_of": ["Uncertainty"],
                 "examples": [{"value": "0.02"}],
             }
@@ -247,7 +250,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Lower bound (-) for asymmetric uncertainties.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "negativeValue",
                 "domain_of": ["Uncertainty"],
                 "examples": [{"value": "0.01"}],
             }
@@ -258,7 +260,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Additional information about the uncertainty estimation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": ["Quantity", "Uncertainty", "FigureDescription"],
                 "examples": [
                     {"value": "Standard deviation from 3 replicate measurements"}
@@ -271,7 +272,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Type of uncertainty (absolute or relative).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
                 "examples": [{"value": "absolute"}, {"value": "relative"}],
             }
@@ -293,7 +293,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Source or origin of the data, such as digitized, raw, simulated, or processed.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
                 "examples": [
                     {"value": "raw"},
@@ -309,7 +308,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Acronym type for the measurement performed, such as CV, EIS, XPS, etc.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "measurementType",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "LSV"}],
             }
@@ -320,7 +318,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "simultaneousMeasurements",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "DEMS"}, {"value": "Raman"}],
             }
@@ -331,7 +328,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Additional notes about the figure or data.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": ["Quantity", "Uncertainty", "FigureDescription"],
                 "examples": [{"value": "Data below 0 V was cut off by the x-axis."}],
             }
@@ -340,16 +336,13 @@ class FigureDescription(ConfiguredBaseModel):
     fields: Optional[list[DataField]] = Field(
         default=None,
         description="""Description of data fields/columns in the figure.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "fields", "domain_of": ["FigureDescription"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
     )
     scanRate: Optional[Quantity] = Field(
         default=None,
         description="""The rate at which the data has been recorded.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "scanRate",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "{value: 50, unit: mV / s}"}],
             }
@@ -370,11 +363,7 @@ class DataField(ConfiguredBaseModel):
         default=...,
         description="""Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "name",
-                "domain_of": ["DataField"],
-                "examples": [{"value": "E_WE"}],
-            }
+            "linkml_meta": {"domain_of": ["DataField"], "examples": [{"value": "E_WE"}]}
         },
     )
     type: Optional[str] = Field(
@@ -382,7 +371,6 @@ class DataField(ConfiguredBaseModel):
         description="""Data type of the field (string, number, integer, boolean, object, array, date, time, datetime, year, duration, geopoint, geojson, any).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": ["Uncertainty", "FigureDescription", "DataField"],
                 "examples": [
                     {"value": "number"},
@@ -397,7 +385,6 @@ class DataField(ConfiguredBaseModel):
         description="""Format specification for the field type (default, email, uri, binary, uuid for strings; default for numbers).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "format",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "default"}],
             }
@@ -408,7 +395,6 @@ class DataField(ConfiguredBaseModel):
         description="""A human-readable title for this field.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "title",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "Electrode Potential"}],
             }
@@ -419,7 +405,6 @@ class DataField(ConfiguredBaseModel):
         description="""A description of that field.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": ["DataField"],
                 "examples": [
                     {
@@ -435,7 +420,6 @@ class DataField(ConfiguredBaseModel):
         description="""Physical dimension of the field (e.g., 'time', 'potential', 'current density').""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "dimension",
                 "domain_of": ["DataField"],
                 "examples": [
                     {"value": "potential"},
@@ -450,7 +434,6 @@ class DataField(ConfiguredBaseModel):
         description="""Unit of measurement for this field (SI or conventional electrochemical units), following astropy's string unit notation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField"],
                 "examples": [{"value": "V"}, {"value": "mA / cm2"}, {"value": "s"}],
             }
@@ -461,7 +444,6 @@ class DataField(ConfiguredBaseModel):
         description="""Reference electrode or reference point for this measurement (electrochemistry-specific).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "reference",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
@@ -472,7 +454,6 @@ class DataField(ConfiguredBaseModel):
         description="""Axis orientation in plots (horizontal for x-axis, vertical for y-axis).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "orientation",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "horizontal"}, {"value": "vertical"}],
             }
@@ -495,9 +476,7 @@ class SvgdigitizerPackage(ConfiguredBaseModel):
     resources: Optional[list[SvgdigitizerResource]] = Field(
         default=None,
         description="""Data resources within the package.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "resources", "domain_of": ["SvgdigitizerPackage"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["SvgdigitizerPackage"]}},
     )
 
 
@@ -515,9 +494,7 @@ class SvgdigitizerResource(ConfiguredBaseModel):
     metadata: Optional[SvgdigitizerResourceMetadata] = Field(
         default=None,
         description="""Metadata container for the digitized resource.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "metadata", "domain_of": ["SvgdigitizerResource"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["SvgdigitizerResource"]}},
     )
 
 
@@ -536,10 +513,7 @@ class SvgdigitizerResourceMetadata(ConfiguredBaseModel):
         default=...,
         description="""Simplified echemdb metadata for digitized data.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "echemdb",
-                "domain_of": ["SvgdigitizerResourceMetadata"],
-            }
+            "linkml_meta": {"domain_of": ["SvgdigitizerResourceMetadata"]}
         },
     )
 
@@ -560,7 +534,6 @@ class SvgdigitizerEchemdbMetadata(ConfiguredBaseModel):
         description="""Version of the echemdb metadata schema this data conforms to.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "echemdbSchemaVersion",
                 "domain_of": ["SvgdigitizerEchemdbMetadata"],
                 "examples": [{"value": "0.7.1"}],
             }
@@ -570,30 +543,21 @@ class SvgdigitizerEchemdbMetadata(ConfiguredBaseModel):
         default=None,
         description="""Experimental tags or keywords.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "experimental",
-                "domain_of": ["SvgdigitizerEchemdbMetadata"],
-            }
+            "linkml_meta": {"domain_of": ["SvgdigitizerEchemdbMetadata"]}
         },
     )
     figureDescription: FigureDescription = Field(
         default=...,
         description="""Description of the digitized figure.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "figureDescription",
-                "domain_of": ["SvgdigitizerEchemdbMetadata"],
-            }
+            "linkml_meta": {"domain_of": ["SvgdigitizerEchemdbMetadata"]}
         },
     )
     source: Optional[SvgdigitizerSource] = Field(
         default=None,
         description="""Source publication information for digitized data.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "source",
-                "domain_of": ["SvgdigitizerEchemdbMetadata"],
-            }
+            "linkml_meta": {"domain_of": ["SvgdigitizerEchemdbMetadata"]}
         },
     )
 
@@ -614,7 +578,6 @@ class SvgdigitizerExperimental(ConfiguredBaseModel):
         description="""List of tags describing the experiment or measurement.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "tags",
                 "domain_of": ["SvgdigitizerExperimental"],
                 "examples": [{"value": "BCV"}, {"value": "ORR"}, {"value": "HER"}],
             }
@@ -638,7 +601,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""Figure identifier in the source publication.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "figure",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [{"value": "2a"}, {"value": "1"}, {"value": "S3b"}],
             }
@@ -649,7 +611,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""Specific curve identifier within the figure.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "curve",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [{"value": "blue"}, {"value": "solid"}, {"value": "1"}],
             }
@@ -660,7 +621,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""BibTeX citation key for the source following <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber> format.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "citationKey",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [{"value": "doe_2024_electrochemistry_543"}],
             }
@@ -671,7 +631,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""URL or DOI of the source publication.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [{"value": "https://doi.org/10.1039/C0CP01001D"}],
             }
@@ -682,7 +641,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""BibTeX bibliographic data.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "bibdata",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [
                     {
@@ -698,7 +656,6 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""Techniques used in the source data.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "techniques",
                 "domain_of": ["SvgdigitizerSource"],
                 "examples": [{"value": "CV"}, {"value": "LSV"}, {"value": "CA"}],
             }
