@@ -38,6 +38,38 @@ Or via pixi:
 pixi run unflatten generated/output.xlsx
 ```
 
+### Update metadata to a newer schema version
+
+Migrate a metadata file (or data package) from an older schema version to a
+newer one. Without `--in-place` this is a dry run that reports the migration
+steps per document:
+
+```bash
+mdstools update path/to/metadata.yaml
+```
+
+Apply the migration, rewriting the file in place (YAML comments and layout are
+preserved):
+
+```bash
+mdstools update path/to/metadata.yaml --in-place
+```
+
+Or via pixi:
+
+```bash
+pixi run update path/to/metadata.yaml --in-place
+```
+
+Options:
+
+- `--to-version` — Target schema version (default: the installed version).
+- `--in-place` — Write the migrated file back in place. Without it, `update`
+  only reports what would change.
+
+Data packages are handled per resource: each `resources[].metadata.<key>` block
+is migrated using its own `echemdbSchemaVersion`.
+
 ## Python API
 
 ### Basic flattening
@@ -80,3 +112,20 @@ validate_with_json_schema(data, schema_name="minimum_echemdb")
 # Pydantic validation
 validate_with_pydantic(data, schema_name="minimum_echemdb")
 ```
+
+### Migrating metadata across schema versions
+
+```python
+from mdstools.schema.migrate import MetadataMigrator, migrate_file
+
+# In memory: migrate a dict, then validate the result against a target schema
+migrated = MetadataMigrator(data, target_version="latest").migrated()
+MetadataMigrator(data).validate("minimum_echemdb")
+
+# From a file (returns the migrated dict; pass in_place=True to overwrite,
+# preserving YAML comments)
+migrated = migrate_file("metadata.yaml", in_place=True)
+```
+
+Only breaking schema changes need a migration step; additive changes are
+backward-compatible. Steps are declared in `mdstools/schema/migrations.py`.

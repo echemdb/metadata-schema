@@ -437,6 +437,12 @@ Currently ~14% on test data — limited by how many `description`/`examples` are
   - These files document changes since the last release
   - If a branch modifies behaviour already described in an existing `.rst` news file, update that file too — it is the source of truth for the upcoming release
 
+- **Schema migrations (breaking changes)**:
+  - Metadata files are upgraded across schema versions by `mdstools/schema/migrate.py` (`MetadataMigrator`, `migrate_file`, CLI `mdstools update`); steps are declared in `mdstools/schema/migrations.py`.
+  - **Any breaking change to the LinkML schema** — a field moved, removed, renamed, or retyped, i.e. anything that would fail validation of existing data — MUST, in the same PR, add a migration step to `mdstools/schema/migrations.py` with `to_version="UNRELEASED"` that upgrades old data, plus a fixture under `tests/migrations/` proving old → new. Purely additive changes need no migration.
+  - The `UNRELEASED` placeholder is stamped to the concrete release version at tag time by `mdstools/schema/finalize_migrations.py` (wired into `rever.xsh`). A breaking change bumps the minor version (0.7.x → 0.8.0) — a human/CI convention, since rever's version is chosen by hand.
+  - Add the migration step together with the `doc/news/<branch>.rst` entry — the two staged artefacts always go together.
+
 - **Generated folders**:
   - `/generated` - Project outputs (user-facing conversions)
   - `/tests/generated` - Test outputs
