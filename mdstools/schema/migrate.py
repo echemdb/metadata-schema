@@ -28,6 +28,7 @@ changes need a step; additive changes are backward-compatible. See
 #  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
+import json
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
@@ -293,17 +294,66 @@ def migrate_document(data: Any, target_version: str = "latest") -> dict:
     return MetadataMigrator(data, target_version).migrated()
 
 
-def migrate_file(path: Any, target_version: str = "latest") -> dict:
-    """Load a metadata file and return the migrated dict.
+def _roundtrip_yaml():
+    """A ruamel YAML instance configured for comment-preserving round-trips."""
+    from ruamel.yaml import YAML
 
-    Reading uses :func:`mdstools.schema.validator._load_data` (YAML or JSON by
-    extension) and dispatches to :func:`migrate_document`, so both loose
-    metadata files and data packages are handled. Writing back in place — which
-    must preserve YAML comments — is added in a later stage; for now callers
-    receive the migrated dict.
+    yaml = YAML()  # round-trip mode by default
+    yaml.preserve_quotes = True
+    yaml.width = 4096  # do not wrap long scalars (URLs, bibdata, ...)
+    yaml.indent(mapping=2, sequence=4, offset=2)
+    return yaml
+
+
+def _load_roundtrip(path: Path) -> Any:
+    """Load a file for in-place writing.
+
+    YAML is loaded with the ruamel round-trip loader so comments and layout
+    survive; JSON is loaded plainly (JSON has no comments).
+    """
+    path = Path(path)
+    if path.suffix in (".yaml", ".yml"):
+        with open(path, encoding="utf-8") as handle:
+            return _roundtrip_yaml().load(handle)
+    return _load_data(path)
+
+
+def _dump_data(data: Any, path: Path) -> None:
+    """Write *data* back to *path* as YAML or JSON, chosen by extension.
+
+    YAML is written with the ruamel round-trip dumper, so comments carried on a
+    :class:`ruamel.yaml.comments.CommentedMap` are preserved.
+    """
+    path = Path(path)
+    if path.suffix in (".yaml", ".yml"):
+        with open(path, "w", encoding="utf-8") as handle:
+            _roundtrip_yaml().dump(data, handle)
+    elif path.suffix == ".json":
+        with open(path, "w", encoding="utf-8") as handle:
+            json.dump(data, handle, indent=2, ensure_ascii=False)
+            handle.write("\n")
+    else:
+        raise ValueError(f"Unsupported file extension: {path.suffix}")
+
+
+def migrate_file(
+    path: Any, target_version: str = "latest", in_place: bool = False
+) -> dict:
+    """Load a metadata file, migrate it, and optionally overwrite it.
+
+    Handles both loose metadata files and data packages (via
+    :func:`migrate_document`). When *in_place* is true the file is rewritten in
+    its original format; YAML is round-tripped through ruamel so curator
+    comments and layout are preserved.
 
     :param path: Path to a YAML or JSON metadata file.
     :param target_version: Version to migrate to, or ``"latest"``.
+    :param in_place: When true, write the migrated document back to *path*.
     :returns: The migrated metadata (or package) dict.
     """
+    if in_place:
+        data = _load_roundtrip(path)
+        result = migrate_document(data, target_version)
+        _dump_data(result, Path(path))
+        return result
     return migrate_document(_load_data(path), target_version)
