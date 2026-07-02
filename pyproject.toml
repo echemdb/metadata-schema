@@ -17,6 +17,7 @@ dependencies = [
     "jsonschema>=4,<5",
     "jsonref>=1.1,<2",
     "referencing>=0.35,<1",
+    "ruamel.yaml>=0.18,<0.19",
     "linkml>=1.9,<2",
     "linkml-runtime>=1.9,<1.10",
 ]
@@ -62,6 +63,7 @@ click = ">=8,<9"
 linkml = ">=1.9,<2"
 linkml-runtime = ">=1.9,<1.10"
 jsonref = ">=1.1.0,<2"
+"ruamel.yaml" = ">=0.18,<0.19"
 
 
 [tool.pixi.pypi-dependencies]
