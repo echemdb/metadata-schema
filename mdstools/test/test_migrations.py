@@ -2,7 +2,7 @@
 
 Covers the 0.8.0 temperature move directly (transform correctness,
 idempotency, conflict) and end-to-end through the engine against the current
-JSON schema.
+JSON schema, plus MetadataMigrator.validate.
 """
 
 # ********************************************************************
@@ -44,6 +44,7 @@ AUTOTAG_EXAMPLE = "examples/file_schemas/autotag.yaml"
 
 
 def test_registry_registers_temperature_step_as_unreleased():
+    """The temperature step is registered exactly once, marked UNRELEASED."""
     steps = [m for m in MIGRATIONS if "temperature" in m.description.lower()]
     assert len(steps) == 1
     assert steps[0].to_version == UNRELEASED
@@ -51,17 +52,18 @@ def test_registry_registers_temperature_step_as_unreleased():
 
 
 def test_transform_moves_temperature():
+    """Temperature is moved from electrolyte to operationParameters."""
     before = {
         "system": {"electrolyte": {"type": "aqueous", "temperature": {"value": 298}}},
     }
     after = _move_temperature_to_operation_parameters(before)
     assert after["experimental"]["operationParameters"]["temperature"] == {"value": 298}
     assert "temperature" not in after["system"]["electrolyte"]
-    # electrolyte otherwise preserved
     assert after["system"]["electrolyte"]["type"] == "aqueous"
 
 
 def test_transform_is_idempotent():
+    """Applying the transform twice is a no-op."""
     before = {"system": {"electrolyte": {"temperature": {"value": 298}}}}
     once = _move_temperature_to_operation_parameters(before)
     twice = _move_temperature_to_operation_parameters(once)
@@ -69,17 +71,20 @@ def test_transform_is_idempotent():
 
 
 def test_transform_noop_without_temperature():
+    """A document without a temperature is returned unchanged."""
     doc = {"system": {"electrolyte": {"type": "aqueous"}}}
     assert _move_temperature_to_operation_parameters(doc) == doc
 
 
 def test_transform_does_not_mutate_input():
+    """The transform does not mutate its input document."""
     before = {"system": {"electrolyte": {"temperature": {"value": 298}}}}
     _move_temperature_to_operation_parameters(before)
     assert before == {"system": {"electrolyte": {"temperature": {"value": 298}}}}
 
 
 def test_transform_conflict_raises():
+    """Temperature in both locations with different values raises."""
     before = {
         "system": {"electrolyte": {"temperature": {"value": 298}}},
         "experimental": {"operationParameters": {"temperature": {"value": 300}}},
@@ -89,6 +94,7 @@ def test_transform_conflict_raises():
 
 
 def test_transform_conflict_same_value_is_noop():
+    """Temperature in both locations with the same value is not a conflict."""
     same = {"value": 298}
     before = {
         "system": {"electrolyte": {"temperature": same}},
@@ -100,6 +106,7 @@ def test_transform_conflict_same_value_is_noop():
 
 
 def test_fixture_fails_current_schema_but_validates_after_migration(monkeypatch):
+    """The pre-move fixture fails the current schema but validates once migrated."""
     with open(FIXTURE, encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
 
@@ -122,32 +129,31 @@ def test_fixture_fails_current_schema_but_validates_after_migration(monkeypatch)
         "unit": "K",
     }
     assert migrated["echemdbSchemaVersion"] == "0.8.0"
-    # Now it validates against the current schema.
     validate_metadata(migrated, SCHEMA)
 
 
-# --- MetadataMigrator.validate() -------------------------------------------
-
-
 def test_validate_passes_on_valid_document():
+    """MetadataMigrator.validate returns the validated document."""
     with open(AUTOTAG_EXAMPLE, encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
-    # Returns the validated (migrated) document without raising.
     result = MetadataMigrator(data).validate("autotag")
     assert result["experimental"]["operationParameters"]["temperature"]["unit"] == "K"
 
 
 def test_validate_raises_on_invalid_document():
+    """An invalid document fails schema validation."""
     with pytest.raises(ValueError, match="validation failed"):
         MetadataMigrator({}, "0.8.0").validate("minimum_echemdb")
 
 
 def test_validate_unknown_schema_name_raises():
+    """An unknown schema name is rejected."""
     with pytest.raises(ValueError, match="Unknown schema"):
         MetadataMigrator({}).validate("does_not_exist")
 
 
 def test_validate_detects_dangling_instrument_reference():
+    """A control.instrument that names no listed instrument is caught."""
     with open(AUTOTAG_EXAMPLE, encoding="utf-8") as handle:
         data = yaml.safe_load(handle)
     broken = deepcopy(data)
@@ -159,18 +165,18 @@ def test_validate_detects_dangling_instrument_reference():
 
 
 def test_rate_without_instrument_passes_reference_check():
-    # A rotation rate reported without the controlling instrument (e.g. taken
-    # from a manuscript) must not fail: the check only fires when an instrument
-    # is actually named.
+    """A controlled parameter without a named instrument does not fail."""
     no_control = {
         "experimental": {
             "instrumentation": [],
             "operationParameters": {
-                "massTransport": {"rotation": {"rate": {"value": 1600, "unit": "1 / min"}}}
+                "massTransport": {
+                    "rotation": {"rate": {"value": 1600, "unit": "1 / min"}}
+                }
             },
         }
     }
-    assert validate_instrument_references(no_control) == []
+    assert not validate_instrument_references(no_control)
 
     control_without_instrument = {
         "experimental": {
@@ -185,4 +191,4 @@ def test_rate_without_instrument_passes_reference_check():
             },
         }
     }
-    assert validate_instrument_references(control_without_instrument) == []
+    assert not validate_instrument_references(control_without_instrument)

@@ -27,7 +27,7 @@ from mdstools.schema.finalize_migrations import (
     finalize_migrations,
 )
 
-UNRELEASED_SNIPPET = '''\
+UNRELEASED_SNIPPET = """\
 UNRELEASED = "UNRELEASED"
 
 MIGRATIONS = [
@@ -37,16 +37,18 @@ MIGRATIONS = [
         apply=_step,
     ),
 ]
-'''
+"""
 
 
 def _write(tmp_path, text):
+    """Write *text* to a temporary migrations module and return its path."""
     path = tmp_path / "migrations.py"
     path.write_text(text, encoding="utf-8")
     return path
 
 
 def test_finalize_rewrites_placeholder(tmp_path):
+    """A single placeholder is rewritten; the constant is left intact."""
     path = _write(tmp_path, UNRELEASED_SNIPPET)
     count = finalize_migrations("0.8.0", migrations_path=path)
     assert count == 1
@@ -54,11 +56,11 @@ def test_finalize_rewrites_placeholder(tmp_path):
     text = path.read_text(encoding="utf-8")
     assert 'to_version="0.8.0"' in text
     assert PLACEHOLDER not in text
-    # The constant definition itself is left intact.
     assert 'UNRELEASED = "UNRELEASED"' in text
 
 
 def test_finalize_rewrites_multiple_placeholders(tmp_path):
+    """All placeholders present are rewritten."""
     text = UNRELEASED_SNIPPET + "\n" + UNRELEASED_SNIPPET
     path = _write(tmp_path, text)
     assert finalize_migrations("0.8.0", migrations_path=path) == 2
@@ -66,6 +68,7 @@ def test_finalize_rewrites_multiple_placeholders(tmp_path):
 
 
 def test_finalize_no_placeholder_is_noop(tmp_path):
+    """Without a placeholder the file is left unchanged."""
     original = 'MIGRATIONS = [\n    Migration(to_version="0.8.0", ...),\n]\n'
     path = _write(tmp_path, original)
     assert finalize_migrations("0.9.0", migrations_path=path) == 0
@@ -73,20 +76,22 @@ def test_finalize_no_placeholder_is_noop(tmp_path):
 
 
 def test_guardrail_rejects_patch_bump_with_placeholder(tmp_path):
+    """A patch bump with a pending breaking migration is refused."""
     path = _write(tmp_path, UNRELEASED_SNIPPET)
     with pytest.raises(ValueError, match="patch bump"):
         finalize_migrations("0.7.2", migrations_path=path, previous_version="0.7.1")
-    # Nothing was written.
     assert PLACEHOLDER in path.read_text(encoding="utf-8")
 
 
 def test_guardrail_allows_minor_bump_with_placeholder(tmp_path):
+    """A minor bump with a pending breaking migration is allowed."""
     path = _write(tmp_path, UNRELEASED_SNIPPET)
     assert (
-        finalize_migrations("0.8.0", migrations_path=path, previous_version="0.7.1") == 1
+        finalize_migrations("0.8.0", migrations_path=path, previous_version="0.7.1")
+        == 1
     )
 
 
 def test_registry_still_has_unreleased_placeholder():
-    # The temperature step must stay UNRELEASED until a release stamps it.
+    """The real registry keeps the placeholder until a release stamps it."""
     assert PLACEHOLDER in MIGRATIONS_FILE.read_text(encoding="utf-8")

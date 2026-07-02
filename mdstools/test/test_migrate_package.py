@@ -28,8 +28,6 @@ import io
 import json
 from pathlib import Path
 
-import pytest
-
 from mdstools.schema.migrate import _is_package, migrate_document, migrate_file
 from mdstools.schema.migrations import (
     Migration,
@@ -41,8 +39,7 @@ FIXTURE = "tests/migrations/echemdb_package_pre_0_8_0.json"
 PACKAGE_SCHEMA = "schemas/echemdb_package.json"
 
 
-@pytest.fixture
-def temperature_registry(monkeypatch):
+def _register_temperature_step(monkeypatch):
     """Register the temperature step under a concrete 0.8.0 version."""
     monkeypatch.setattr(
         "mdstools.schema.migrate.MIGRATIONS",
@@ -51,11 +48,13 @@ def temperature_registry(monkeypatch):
 
 
 def _load(path):
+    """Load a JSON file."""
     with open(path, encoding="utf-8") as handle:
         return json.load(handle)
 
 
 def test_is_package_detection():
+    """A dict with a resources list is a package; other shapes are not."""
     assert _is_package({"resources": [{"name": "r"}]}) is True
     assert _is_package({"resources": []}) is True
     assert _is_package({"system": {}, "experimental": {}}) is False
@@ -63,7 +62,9 @@ def test_is_package_detection():
     assert _is_package("not a dict") is False
 
 
-def test_migrate_document_migrates_each_resource(temperature_registry):
+def test_migrate_document_migrates_each_resource(monkeypatch):
+    """Each resource's embedded metadata is migrated; the envelope is kept."""
+    _register_temperature_step(monkeypatch)
     package = _load(FIXTURE)
     migrated = migrate_document(package, "0.8.0")
 
@@ -80,14 +81,20 @@ def test_migrate_document_migrates_each_resource(temperature_registry):
     assert migrated["resources"][0]["path"] == package["resources"][0]["path"]
 
 
-def test_input_package_not_mutated(temperature_registry):
+def test_input_package_not_mutated(monkeypatch):
+    """Migrating a package does not mutate the input."""
+    _register_temperature_step(monkeypatch)
     package = _load(FIXTURE)
     migrate_document(package, "0.8.0")
-    electrolyte = package["resources"][0]["metadata"]["echemdb"]["system"]["electrolyte"]
+    electrolyte = package["resources"][0]["metadata"]["echemdb"]["system"][
+        "electrolyte"
+    ]
     assert "temperature" in electrolyte  # original still in the old location
 
 
-def test_plain_document_not_treated_as_package(temperature_registry):
+def test_plain_document_not_treated_as_package(monkeypatch):
+    """A document without a resources list is migrated directly."""
+    _register_temperature_step(monkeypatch)
     doc = {
         "echemdbSchemaVersion": "0.7.1",
         "system": {"electrolyte": {"temperature": {"value": 298}}},
@@ -99,9 +106,9 @@ def test_plain_document_not_treated_as_package(temperature_registry):
     }
 
 
-def test_package_fails_current_schema_then_validates_after_migration(
-    temperature_registry,
-):
+def test_package_fails_current_schema_then_validates_after_migration(monkeypatch):
+    """The pre-move package fails the package schema but validates once migrated."""
+    _register_temperature_step(monkeypatch)
     package = _load(FIXTURE)
     schema = _load(PACKAGE_SCHEMA)
     with contextlib.redirect_stdout(io.StringIO()):
@@ -111,10 +118,12 @@ def test_package_fails_current_schema_then_validates_after_migration(
     assert validate_data(package, schema, registry=registry)
 
     migrated = migrate_document(package, "0.8.0")
-    assert validate_data(migrated, schema, registry=registry) == []
+    assert not validate_data(migrated, schema, registry=registry)
 
 
-def test_migrate_file_handles_json_package(temperature_registry):
+def test_migrate_file_handles_json_package(monkeypatch):
+    """migrate_file migrates a JSON data package."""
+    _register_temperature_step(monkeypatch)
     migrated = migrate_file(FIXTURE, "0.8.0")
     echemdb = migrated["resources"][0]["metadata"]["echemdb"]
     assert echemdb["experimental"]["operationParameters"]["temperature"]["unit"] == "K"

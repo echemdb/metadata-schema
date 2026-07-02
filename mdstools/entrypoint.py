@@ -257,7 +257,9 @@ def update(input_file, to_version, in_place):
     def _versioned_docs():
         if _is_package(data):
             for index, resource in enumerate(data.get("resources", [])):
-                metadata = resource.get("metadata") if isinstance(resource, dict) else None
+                metadata = (
+                    resource.get("metadata") if isinstance(resource, dict) else None
+                )
                 if isinstance(metadata, dict):
                     for key, doc in metadata.items():
                         if isinstance(doc, dict) and VERSION_FIELD in doc:

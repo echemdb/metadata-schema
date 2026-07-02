@@ -88,7 +88,9 @@ def finalize_migrations(
     if count == 0:
         return 0
 
-    if previous_version is not None and not _is_breaking_bump(previous_version, version):
+    if previous_version is not None and not _is_breaking_bump(
+        previous_version, version
+    ):
         raise ValueError(
             f"{count} unreleased breaking migration(s) present, but {version} is "
             f"only a patch bump over {previous_version}; breaking changes require "
