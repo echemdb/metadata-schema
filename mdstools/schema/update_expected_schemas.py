@@ -49,15 +49,15 @@ def main():
         dest = expected_dir / schema_name
 
         if not source.exists():
-            print(f"⚠ Skipping {schema_name} (not found)")
+            print(f"WARN Skipping {schema_name} (not found)")
             continue
 
         # Copy resolved schema to expected
         shutil.copy2(source, dest)
-        print(f"✓ Updated {dest}")
+        print(f"OK Updated {dest}")
 
     print("=" * 60)
-    print("✓ Expected schemas updated successfully")
+    print("OK Expected schemas updated successfully")
     print("\nCommit these changes with your schema updates:")
     print("  git add schemas/expected/")
     print("  git commit -m 'Update expected resolved schemas'")

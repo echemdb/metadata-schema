@@ -54,12 +54,6 @@ classes:
         inlined: true
         examples:
           - value: "{value: 1, unit: ''}"
-      temperature:
-        range: Quantity
-        description: Temperature of the electrolyte during the experiment.
-        inlined: true
-        examples:
-          - value: "{value: 298.15, unit: K}"
       comment:
         range: string
         description: Additional notes or observations about the electrolyte.

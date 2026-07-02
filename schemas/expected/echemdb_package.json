@@ -301,6 +301,88 @@
       "title": "ComponentType",
       "type": "string"
     },
+    "Control": {
+      "additionalProperties": false,
+      "description": "How a parameter was actively controlled during the measurement, including a reference to the controlling instrument.",
+      "properties": {
+        "description": {
+          "description": "Additional details about how the parameter was controlled.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "instrument": {
+          "description": "Name of the controlling instrument. Must match the name of an entry under experimental.instrumentation (Instrumentation.name).",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "Control",
+      "type": "object"
+    },
+    "ControlledQuantity": {
+      "additionalProperties": false,
+      "description": "A physical quantity that was actively controlled by an instrument.",
+      "properties": {
+        "calculation": {
+          "description": "Method or formula used to calculate this quantity.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "comment": {
+          "description": "Additional notes about the measurement or quantity.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the quantity was controlled."
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Uncertainty information for a measured quantity."
+        },
+        "unit": {
+          "description": "Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.",
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "Numerical value of the quantity.",
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        }
+      },
+      "title": "ControlledQuantity",
+      "type": "object"
+    },
     "Curation": {
       "additionalProperties": false,
       "description": "Details on the curation process of the data.",
@@ -836,17 +918,6 @@
           ],
           "description": "pH value of the electrolyte solution."
         },
-        "temperature": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/Quantity"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Temperature of the electrolyte during the experiment."
-        },
         "type": {
           "$ref": "#/$defs/ElectrolyteType",
           "description": "Type of electrolyte defined by the solvent."
@@ -943,6 +1014,17 @@
             "array",
             "null"
           ]
+        },
+        "operationParameters": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OperationParameters"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Parameters describing how the measurement was operated, such as temperature control and forced mass transport."
         },
         "tags": {
           "description": "Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.",
@@ -1046,6 +1128,36 @@
       "title": "FigureDescriptionType",
       "type": "string"
     },
+    "Flow": {
+      "additionalProperties": false,
+      "description": "Forced flow of the electrolyte.",
+      "properties": {
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the operation was controlled."
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Volumetric or linear flow rate of the electrolyte."
+        }
+      },
+      "title": "Flow",
+      "type": "object"
+    },
     "Instrumentation": {
       "additionalProperties": false,
       "description": "The instruments used to perform the experiment.",
@@ -1087,6 +1199,88 @@
         "name"
       ],
       "title": "Instrumentation",
+      "type": "object"
+    },
+    "MassTransport": {
+      "additionalProperties": false,
+      "description": "Forced-convection modes inducing mass transport during the measurement.",
+      "properties": {
+        "flow": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Flow"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Forced electrolyte flow, e.g. a flow or channel cell."
+        },
+        "rotation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Rotation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Rotating (disc) electrode, e.g. RDE or RRDE."
+        },
+        "stirring": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Stirring"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Stirring of the electrolyte, e.g. with a magnetic stirrer."
+        },
+        "ultrasound": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ultrasound"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Ultrasound applied to the electrolyte (sonoelectrochemistry)."
+        }
+      },
+      "title": "MassTransport",
+      "type": "object"
+    },
+    "OperationParameters": {
+      "additionalProperties": false,
+      "description": "Parameters describing how the measurement was operated, such as thermal control of the electrolyte and forced mass transport at the electrode.",
+      "properties": {
+        "massTransport": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MassTransport"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Forced-convection modes used to induce mass transport."
+        },
+        "temperature": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ControlledQuantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Temperature of the electrolyte and how it was controlled."
+        }
+      },
+      "title": "OperationParameters",
       "type": "object"
     },
     "Process": {
@@ -1252,6 +1446,36 @@
       "title": "Quantity",
       "type": "object"
     },
+    "Rotation": {
+      "additionalProperties": false,
+      "description": "Rotation of a rotating (disc) electrode.",
+      "properties": {
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the operation was controlled."
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Rotation rate of the electrode."
+        }
+      },
+      "title": "Rotation",
+      "type": "object"
+    },
     "Shape": {
       "additionalProperties": false,
       "description": "Physical dimensions and shape of the electrode.",
@@ -1373,6 +1597,36 @@
       "title": "Source",
       "type": "object"
     },
+    "Stirring": {
+      "additionalProperties": false,
+      "description": "Stirring of the electrolyte.",
+      "properties": {
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the operation was controlled."
+        },
+        "rate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Stirring rate."
+        }
+      },
+      "title": "Stirring",
+      "type": "object"
+    },
     "System": {
       "additionalProperties": false,
       "description": "Description of the experimental system including electrodes, electrolyte, and environmental conditions.",
@@ -1430,6 +1684,58 @@
       ],
       "title": "SystemType",
       "type": "string"
+    },
+    "Ultrasound": {
+      "additionalProperties": false,
+      "description": "Ultrasound applied to the electrolyte.",
+      "properties": {
+        "amplitude": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Amplitude of the ultrasound source, e.g. as horn displacement or as a percentage of the maximum."
+        },
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the operation was controlled."
+        },
+        "frequency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Frequency of the ultrasound."
+        },
+        "power": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Acoustic power of the ultrasound source."
+        }
+      },
+      "title": "Ultrasound",
+      "type": "object"
     },
     "Uncertainty": {
       "additionalProperties": false,

@@ -221,12 +221,15 @@ def generate_json_schemas():
 
         # Post-process: Quantity.value and Quantity.unit must accept numbers
         # because YAML parses numeric values as int/float, not string.
-        if "Quantity" in defs:
-            q_props = defs["Quantity"].get("properties", {})
-            if "value" in q_props:
-                q_props["value"]["type"] = ["string", "number", "null"]
-            if "unit" in q_props:
-                q_props["unit"]["type"] = ["string", "number", "null"]
+        # ControlledQuantity is_a Quantity, so it carries the same value/unit
+        # slots (flattened by the JSON Schema generator) and needs the same fix.
+        for q_name in ("Quantity", "ControlledQuantity"):
+            if q_name in defs:
+                q_props = defs[q_name].get("properties", {})
+                if "value" in q_props:
+                    q_props["value"]["type"] = ["string", "number", "null"]
+                if "unit" in q_props:
+                    q_props["unit"]["type"] = ["string", "number", "null"]
 
         # Post-process: compose package schemas with Frictionless Data Package
         # schemas so that standard resource properties (name, path, format, etc.)
