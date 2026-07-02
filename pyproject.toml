@@ -110,6 +110,7 @@ generate-schemas = "python mdstools/schema/generate_from_linkml.py --json-schema
 generate-models = "python mdstools/schema/generate_from_linkml.py --pydantic && black mdstools"
 generate-all = "python mdstools/schema/generate_from_linkml.py --all && black mdstools"
 update-expected-schemas = "python mdstools/schema/update_expected_schemas.py"
+finalize-migrations = "python -m mdstools.schema.finalize_migrations"
 diff-schemas = {cmd = [
     "bash", "-c",
     '''
