@@ -239,16 +239,71 @@ class MetadataMigrator:
         _remote_validate(self.data, schema=schema, version=self.current_version)
 
 
+def _is_package(data: Any) -> bool:
+    """True if *data* looks like a (Frictionless) data package.
+
+    Detection is intentionally **structural**, not a Frictionless schema
+    validation: routing must work offline and must recognise *old or invalid*
+    packages (the very inputs the migrator exists to fix). A data package is
+    defined by its ``resources`` array — the required top-level property of the
+    pinned datapackage profile — so that is what we key on. Full Frictionless
+    validation happens in the validation step, not here.
+    """
+    return (
+        isinstance(data, dict)
+        and isinstance(data.get("resources"), list)
+        and all(isinstance(resource, dict) for resource in data["resources"])
+    )
+
+
+def _migrate_package(package: dict, target_version: str) -> dict:
+    """Migrate the embedded metadata of every resource in a data package.
+
+    In a package the metadata is nested under ``resources[].metadata.<key>``
+    (e.g. ``metadata.echemdb``) and each resource carries its own
+    ``echemdbSchemaVersion``. Every metadata sub-document that declares a
+    version is migrated with :class:`MetadataMigrator`, reusing the exact same
+    steps as loose files. The Frictionless envelope is left untouched.
+    """
+    result = deepcopy(package)
+    for resource in result.get("resources", []):
+        if not isinstance(resource, dict):
+            continue
+        metadata = resource.get("metadata")
+        if not isinstance(metadata, dict):
+            continue
+        for key, document in metadata.items():
+            if isinstance(document, dict) and VERSION_FIELD in document:
+                metadata[key] = MetadataMigrator(document, target_version).migrated()
+    return result
+
+
+def migrate_document(data: Any, target_version: str = "latest") -> dict:
+    """Migrate a metadata document *or* a data package.
+
+    A data package (a dict with a ``resources`` list) is migrated per resource;
+    any other document is migrated directly. Returns a new dict; the input is
+    not mutated.
+
+    :param data: A metadata dict or a data-package dict.
+    :param target_version: Version to migrate to, or ``"latest"``.
+    """
+    if _is_package(data):
+        return _migrate_package(data, target_version)
+    return MetadataMigrator(data, target_version).migrated()
+
+
 def migrate_file(path: Any, target_version: str = "latest") -> dict:
     """Load a metadata file and return the migrated dict.
 
     Reading uses :func:`mdstools.schema.validator._load_data` (YAML or JSON by
-    extension). Writing back in place — which must preserve YAML comments — is
-    added in a later stage; for now callers receive the migrated dict.
+    extension) and dispatches to :func:`migrate_document`, so both loose
+    metadata files and data packages are handled. Writing back in place — which
+    must preserve YAML comments — is added in a later stage; for now callers
+    receive the migrated dict.
 
     :param path: Path to a YAML or JSON metadata file.
     :param target_version: Version to migrate to, or ``"latest"``.
-    :returns: The migrated metadata dict.
+    :returns: The migrated metadata (or package) dict.
     """
-    data = _load_data(path)
-    return MetadataMigrator(data, target_version).migrated()
+    return migrate_document(_load_data(path), target_version)
