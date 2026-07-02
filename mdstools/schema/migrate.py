@@ -29,15 +29,48 @@ changes need a step; additive changes are backward-compatible. See
 # ********************************************************************
 
 from copy import deepcopy
+from pathlib import Path
 from typing import Any
 
 from packaging.version import Version
 
 from mdstools.schema.migrations import MIGRATIONS, UNRELEASED
-from mdstools.schema.validator import _load_data
+from mdstools.schema.validator import (
+    KNOWN_SCHEMAS,
+    _load_data,
+    validate_instrument_references,
+    validate_metadata,
+)
 
 #: Field carrying the schema version inside a metadata document.
 VERSION_FIELD = "echemdbSchemaVersion"
+
+#: Directory holding the generated local JSON schemas.
+SCHEMAS_DIR = Path("schemas")
+
+
+def _resolve_schema_path(schema: str) -> Path:
+    """Resolve a schema *name* or path to a local JSON Schema file.
+
+    Accepts a known schema name (e.g. ``"minimum_echemdb"``) or a path to a
+    ``.json`` schema file.
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.migrate import _resolve_schema_path
+        >>> _resolve_schema_path("minimum_echemdb").as_posix()
+        'schemas/minimum_echemdb.json'
+
+    """
+    path = Path(schema)
+    if path.suffix == ".json":
+        return path
+    if schema not in KNOWN_SCHEMAS:
+        raise ValueError(
+            f"Unknown schema '{schema}'. "
+            f"Available: {', '.join(sorted(KNOWN_SCHEMAS))}"
+        )
+    return SCHEMAS_DIR / KNOWN_SCHEMAS[schema]
 
 
 def _resolve_latest(target_version: str) -> str:
@@ -146,6 +179,64 @@ class MetadataMigrator:
             data[VERSION_FIELD] = migration.to_version
         data[VERSION_FIELD] = self.target_version
         return data
+
+    def validate(self, schema: str, data: dict = None) -> dict:
+        r"""Validate a document against a local target schema.
+
+        Runs both the JSON Schema check and the instrument-reference check
+        (which JSON Schema cannot express). Validates :meth:`migrated` by
+        default, i.e. the *result* of the migration.
+
+        The instrument-reference check only fires when an instrument is actually
+        named: a controlled parameter given without a ``control`` block (or with
+        a ``control`` that omits ``instrument``) is fine — e.g. a rotation rate
+        taken from a manuscript where the rotator was not reported.
+
+        :param schema: Schema name (e.g. ``"svgdigitizer"``) or path to a
+            ``.json`` schema file.
+        :param data: Document to validate; defaults to :meth:`migrated`.
+        :returns: The validated document.
+        :raises ValueError: if schema or instrument-reference validation fails.
+        """
+        if data is None:
+            data = self.migrated()
+
+        validate_metadata(data, str(_resolve_schema_path(schema)))
+
+        reference_errors = validate_instrument_references(data)
+        if reference_errors:
+            details = "\n".join(f"- {message}" for message in reference_errors)
+            raise ValueError(
+                "Instrument reference validation failed with "
+                f"{len(reference_errors)} error(s):\n{details}"
+            )
+        return data
+
+    def validate_input(self, schema: str) -> None:
+        r"""Validate the *source* document against its declared version's schema.
+
+        Fetches the schema for :attr:`current_version` from the metadata-schema
+        repository (by git tag) and validates the original, un-migrated input
+        against it. Useful as a pre-flight check that the input is a
+        well-formed document of the version it claims to be.
+
+        Requires network access.
+
+        :param schema: Schema name (e.g. ``"svgdigitizer"``).
+        :raises ValueError: if the input does not validate against its declared
+            version's schema.
+
+        EXAMPLES::
+
+            >>> from mdstools.schema.migrate import MetadataMigrator  # doctest: +REMOTE_DATA
+            >>> import yaml  # doctest: +REMOTE_DATA
+            >>> data = yaml.safe_load(open("examples/file_schemas/autotag.yaml"))  # doctest: +REMOTE_DATA
+            >>> MetadataMigrator(data).validate_input("autotag")  # doctest: +REMOTE_DATA, +SKIP
+
+        """
+        from mdstools.schema.validator import validate as _remote_validate
+
+        _remote_validate(self.data, schema=schema, version=self.current_version)
 
 
 def migrate_file(path: Any, target_version: str = "latest") -> dict:

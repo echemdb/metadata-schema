@@ -24,6 +24,8 @@ JSON schema.
 #  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
+from copy import deepcopy
+
 import pytest
 import yaml
 
@@ -34,10 +36,11 @@ from mdstools.schema.migrations import (
     Migration,
     _move_temperature_to_operation_parameters,
 )
-from mdstools.schema.validator import validate_metadata
+from mdstools.schema.validator import validate_instrument_references, validate_metadata
 
 FIXTURE = "tests/migrations/minimum_echemdb_pre_0_8_0.yaml"
 SCHEMA = "schemas/minimum_echemdb.json"
+AUTOTAG_EXAMPLE = "examples/file_schemas/autotag.yaml"
 
 
 def test_registry_registers_temperature_step_as_unreleased():
@@ -121,3 +124,65 @@ def test_fixture_fails_current_schema_but_validates_after_migration(monkeypatch)
     assert migrated["echemdbSchemaVersion"] == "0.8.0"
     # Now it validates against the current schema.
     validate_metadata(migrated, SCHEMA)
+
+
+# --- MetadataMigrator.validate() -------------------------------------------
+
+
+def test_validate_passes_on_valid_document():
+    with open(AUTOTAG_EXAMPLE, encoding="utf-8") as handle:
+        data = yaml.safe_load(handle)
+    # Returns the validated (migrated) document without raising.
+    result = MetadataMigrator(data).validate("autotag")
+    assert result["experimental"]["operationParameters"]["temperature"]["unit"] == "K"
+
+
+def test_validate_raises_on_invalid_document():
+    with pytest.raises(ValueError, match="validation failed"):
+        MetadataMigrator({}, "0.8.0").validate("minimum_echemdb")
+
+
+def test_validate_unknown_schema_name_raises():
+    with pytest.raises(ValueError, match="Unknown schema"):
+        MetadataMigrator({}).validate("does_not_exist")
+
+
+def test_validate_detects_dangling_instrument_reference():
+    with open(AUTOTAG_EXAMPLE, encoding="utf-8") as handle:
+        data = yaml.safe_load(handle)
+    broken = deepcopy(data)
+    broken["experimental"]["operationParameters"]["massTransport"]["rotation"][
+        "control"
+    ]["instrument"] = "NotInList"
+    with pytest.raises(ValueError, match="Instrument reference"):
+        MetadataMigrator(data).validate("autotag", data=broken)
+
+
+def test_rate_without_instrument_passes_reference_check():
+    # A rotation rate reported without the controlling instrument (e.g. taken
+    # from a manuscript) must not fail: the check only fires when an instrument
+    # is actually named.
+    no_control = {
+        "experimental": {
+            "instrumentation": [],
+            "operationParameters": {
+                "massTransport": {"rotation": {"rate": {"value": 1600, "unit": "1 / min"}}}
+            },
+        }
+    }
+    assert validate_instrument_references(no_control) == []
+
+    control_without_instrument = {
+        "experimental": {
+            "instrumentation": [],
+            "operationParameters": {
+                "massTransport": {
+                    "rotation": {
+                        "rate": {"value": 1600},
+                        "control": {"description": "rotator not reported"},
+                    }
+                }
+            },
+        }
+    }
+    assert validate_instrument_references(control_without_instrument) == []
