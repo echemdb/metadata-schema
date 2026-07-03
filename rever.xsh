@@ -48,7 +48,10 @@ command('pixi', 'pixi install -e dev --manifest-path "$PWD/pyproject.toml"')
 # while a breaking migration is still pending (breaking changes require at least
 # a minor bump). The new tag is not created yet at this point, so the most recent
 # tag is the previous release; if there is no tag yet we omit it.
-previous_version = $(git describe --tags --abbrev=0).strip()
+# !() captures without raising on a nonzero exit (unlike $(), which would
+# abort the script in a repository without any tag).
+_describe = !(git describe --tags --abbrev=0)
+previous_version = _describe.output.strip() if _describe.returncode == 0 else ''
 finalize_command = 'pixi run -e dev finalize-migrations $VERSION'
 if previous_version:
     finalize_command = finalize_command + ' ' + previous_version
