@@ -424,9 +424,15 @@ def validate(data: Any, schema: str = "echemdb_package", version: str = None) ->
             ...     data = yaml.safe_load(f)
             >>> validate(data, schema='minimum_echemdb')  # doctest: +REMOTE_DATA
 
-        Validate against a specific version (git tag)::
+        Validate against a specific version (git tag).  The current example
+        uses fields added after ``0.5.1`` (e.g. ``operationParameters``), so it
+        does not validate against that older schema::
 
-            >>> validate('examples/file_schemas/autotag.yaml', schema='autotag', version='0.5.1')  # doctest: +REMOTE_DATA
+            >>> try:  # doctest: +REMOTE_DATA
+            ...     validate('examples/file_schemas/autotag.yaml', schema='autotag', version='0.5.1')
+            ... except ValueError as e:
+            ...     'validation failed' in str(e).lower()
+            True
 
         Invalid data raises ``ValueError``::
 

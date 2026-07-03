@@ -20,12 +20,13 @@
 # ********************************************************************
 
 import pytest
+from packaging.version import Version
 
 from mdstools.schema.finalize_migrations import (
-    MIGRATIONS_FILE,
     PLACEHOLDER,
     finalize_migrations,
 )
+from mdstools.schema.migrations import MIGRATIONS, UNRELEASED
 
 UNRELEASED_SNIPPET = """\
 UNRELEASED = "UNRELEASED"
@@ -92,6 +93,17 @@ def test_guardrail_allows_minor_bump_with_placeholder(tmp_path):
     )
 
 
-def test_registry_still_has_unreleased_placeholder():
-    """The real registry keeps the placeholder until a release stamps it."""
-    assert PLACEHOLDER in MIGRATIONS_FILE.read_text(encoding="utf-8")
+def test_registry_targets_are_placeholder_or_valid_versions():
+    """Every registered migration targets UNRELEASED or a valid release version.
+
+    While a breaking change is in development its step carries the UNRELEASED
+    placeholder; at release time :func:`finalize_migrations` stamps it to a
+    concrete version. Both are acceptable — anything else (a malformed or
+    half-finalized target) is a bug. This replaces the old "placeholder must be
+    present" check, which could not hold on a release commit or on ``main``
+    between breaking releases.
+    """
+    for step in MIGRATIONS:
+        if step.to_version == UNRELEASED:
+            continue
+        Version(step.to_version)  # raises InvalidVersion if malformed

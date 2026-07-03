@@ -28,6 +28,7 @@ from copy import deepcopy
 
 import pytest
 import yaml
+from packaging.version import Version
 
 from mdstools.schema.migrate import MetadataMigrator
 from mdstools.schema.migrations import (
@@ -43,12 +44,19 @@ SCHEMA = "schemas/minimum_echemdb.json"
 AUTOTAG_EXAMPLE = "examples/file_schemas/autotag.yaml"
 
 
-def test_registry_registers_temperature_step_as_unreleased():
-    """The temperature step is registered exactly once, marked UNRELEASED."""
+def test_registry_registers_temperature_step():
+    """The temperature step is registered exactly once with the right transform.
+
+    Its ``to_version`` is the :data:`UNRELEASED` placeholder while the change is
+    in development and the stamped concrete version (>= 0.8.0) once a release
+    finalizes it, so we accept either rather than pinning to one — otherwise the
+    test would fail on every release commit and on ``main`` thereafter.
+    """
     steps = [m for m in MIGRATIONS if "temperature" in m.description.lower()]
     assert len(steps) == 1
-    assert steps[0].to_version == UNRELEASED
     assert steps[0].apply is _move_temperature_to_operation_parameters
+    to_version = steps[0].to_version
+    assert to_version == UNRELEASED or Version(to_version) >= Version("0.8.0")
 
 
 def test_transform_moves_temperature():
