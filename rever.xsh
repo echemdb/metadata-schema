@@ -42,11 +42,15 @@ $PROJECT = 'metadata-schema'
 from rever.activities.command import command
 
 command('pixi', 'pixi install -e dev --manifest-path "$PWD/pyproject.toml"')
+# Stamp the concrete release version into any unreleased migration steps
+# (to_version=UNRELEASED). No-op for patch-only releases with no breaking steps.
+command('finalize_migrations', 'pixi run -e dev finalize-migrations $VERSION')
 command('regenerate_schemas', 'pixi run -e dev generate-all && pixi run -e dev update-expected-schemas')
 
 $ACTIVITIES = [
     'version_bump',
     'pixi',
+    'finalize_migrations',
     'regenerate_schemas',
     'changelog',
     'tag',

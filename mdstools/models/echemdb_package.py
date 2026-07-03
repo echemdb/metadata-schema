@@ -25,11 +25,24 @@ from decimal import Decimal
 from enum import Enum
 from typing import Any, ClassVar, Literal, Optional, Union
 
-from pydantic import BaseModel, ConfigDict, Field, RootModel, field_validator
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    RootModel,
+    SerializationInfo,
+    SerializerFunctionWrapHandler,
+    field_validator,
+    model_serializer,
+)
+
+metamodel_version = "1.7.0"
 
 
 class ConfiguredBaseModel(BaseModel):
     model_config = ConfigDict(
+        serialize_by_alias=True,
+        validate_by_name=True,
         validate_assignment=True,
         validate_default=True,
         extra="allow",
@@ -38,7 +51,6 @@ class ConfiguredBaseModel(BaseModel):
         use_enum_values=True,
         strict=False,
     )
-    pass
 
 
 class LinkMLMeta(RootModel):
@@ -261,9 +273,7 @@ class Curation(ConfiguredBaseModel):
     process: list[Process] = Field(
         default=...,
         description="""List of people involved in creating, recording, or curating this data.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "process", "domain_of": ["Curation"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Curation"]}},
     )
 
 
@@ -281,7 +291,6 @@ class Process(ConfiguredBaseModel):
         description="""Role of the person in the data curation process.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "role",
                 "domain_of": ["Process"],
                 "examples": [
                     {"value": "experimentalist"},
@@ -297,7 +306,6 @@ class Process(ConfiguredBaseModel):
         description="""Full name of the person.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -316,7 +324,6 @@ class Process(ConfiguredBaseModel):
         description="""An URL containing the ORCID.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "orcid",
                 "domain_of": ["Process"],
                 "examples": [{"value": "https://orcid.org/0000-0001-2345-6789"}],
             }
@@ -327,7 +334,6 @@ class Process(ConfiguredBaseModel):
         description="""Date when the person performed their role (ISO 8601 format: YYYY-MM-DD).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "date",
                 "domain_of": ["Process"],
                 "examples": [{"value": "2024-01-15"}],
             }
@@ -351,7 +357,6 @@ class Instrumentation(ConfiguredBaseModel):
         description="""Type or category of instrument.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -379,7 +384,6 @@ class Instrumentation(ConfiguredBaseModel):
         description="""Manufacturer of the instrument.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "manufacturer",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Awesome Supplier Inc."}],
             }
@@ -390,7 +394,6 @@ class Instrumentation(ConfiguredBaseModel):
         description="""Name or identifier of the instrument.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -409,7 +412,6 @@ class Instrumentation(ConfiguredBaseModel):
         description="""Model number or designation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "model",
                 "domain_of": ["Instrumentation", "ElectrodeSource"],
                 "examples": [{"value": "P302NX5"}],
             }
@@ -420,7 +422,6 @@ class Instrumentation(ConfiguredBaseModel):
         description="""Supplier of the instrument.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "supplier",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Awesome Supplier Inc."}],
             }
@@ -442,7 +443,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Numerical value of the quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
                 "examples": [{"value": "0.5"}],
             }
@@ -453,7 +453,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField", "Purity"],
                 "examples": [
                     {"value": "mol / l"},
@@ -466,16 +465,13 @@ class Quantity(ConfiguredBaseModel):
     uncertainty: Optional[Uncertainty] = Field(
         default=None,
         description="""Uncertainty information for a measured quantity.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "uncertainty", "domain_of": ["Quantity"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Quantity"]}},
     )
     comment: Optional[str] = Field(
         default=None,
         description="""Additional notes about the measurement or quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -495,7 +491,6 @@ class Quantity(ConfiguredBaseModel):
         description="""Method or formula used to calculate this quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "calculation",
                 "domain_of": ["Quantity"],
                 "examples": [{"value": "Obtained by multiplying U and I"}],
             }
@@ -517,7 +512,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Symmetric uncertainty value (±).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
                 "examples": [{"value": "0.01"}],
             }
@@ -528,7 +522,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Unit of the uncertainty value, following astropy's string notation. Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField", "Purity"],
                 "examples": [{"value": "mol / l"}],
             }
@@ -539,7 +532,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Upper bound (+) for asymmetric uncertainties.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "positiveValue",
                 "domain_of": ["Uncertainty"],
                 "examples": [{"value": "0.02"}],
             }
@@ -550,7 +542,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Lower bound (-) for asymmetric uncertainties.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "negativeValue",
                 "domain_of": ["Uncertainty"],
                 "examples": [{"value": "0.01"}],
             }
@@ -561,7 +552,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Additional information about the uncertainty estimation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -583,7 +573,6 @@ class Uncertainty(ConfiguredBaseModel):
         description="""Type of uncertainty (absolute or relative).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -618,22 +607,12 @@ class OperationParameters(ConfiguredBaseModel):
     temperature: Optional[ControlledQuantity] = Field(
         default=None,
         description="""Temperature of the electrolyte and how it was controlled.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "temperature",
-                "domain_of": ["OperationParameters"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["OperationParameters"]}},
     )
     massTransport: Optional[MassTransport] = Field(
         default=None,
         description="""Forced-convection modes used to induce mass transport.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "massTransport",
-                "domain_of": ["OperationParameters"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["OperationParameters"]}},
     )
 
 
@@ -653,7 +632,6 @@ class Control(ConfiguredBaseModel):
         description="""Name of the controlling instrument. Must match the name of an entry under experimental.instrumentation (Instrumentation.name).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "instrument",
                 "domain_of": ["Control"],
                 "examples": [{"value": "Rotator1"}],
             }
@@ -664,7 +642,6 @@ class Control(ConfiguredBaseModel):
         description="""Additional details about how the parameter was controlled.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -697,10 +674,7 @@ class ControlledQuantity(Quantity):
         default=None,
         description="""How the quantity was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
     value: Optional[float] = Field(
@@ -708,7 +682,6 @@ class ControlledQuantity(Quantity):
         description="""Numerical value of the quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
                 "examples": [{"value": "0.5"}],
             }
@@ -719,7 +692,6 @@ class ControlledQuantity(Quantity):
         description="""Unit of measurement following astropy's string notation (e.g., 'mol / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField", "Purity"],
                 "examples": [
                     {"value": "mol / l"},
@@ -732,16 +704,13 @@ class ControlledQuantity(Quantity):
     uncertainty: Optional[Uncertainty] = Field(
         default=None,
         description="""Uncertainty information for a measured quantity.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "uncertainty", "domain_of": ["Quantity"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Quantity"]}},
     )
     comment: Optional[str] = Field(
         default=None,
         description="""Additional notes about the measurement or quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -761,7 +730,6 @@ class ControlledQuantity(Quantity):
         description="""Method or formula used to calculate this quantity.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "calculation",
                 "domain_of": ["Quantity"],
                 "examples": [{"value": "Obtained by multiplying U and I"}],
             }
@@ -785,10 +753,7 @@ class ControlledOperation(ConfiguredBaseModel):
         default=None,
         description="""How the operation was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
 
@@ -807,33 +772,24 @@ class MassTransport(ConfiguredBaseModel):
     rotation: Optional[Rotation] = Field(
         default=None,
         description="""Rotating (disc) electrode, e.g. RDE or RRDE.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "rotation", "domain_of": ["MassTransport"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["MassTransport"]}},
     )
     flow: Optional[Flow] = Field(
         default=None,
         description="""Forced electrolyte flow, e.g. a flow or channel cell.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "flow",
-                "domain_of": ["MassTransport", "Component"],
-            }
+            "linkml_meta": {"domain_of": ["MassTransport", "Component"]}
         },
     )
     ultrasound: Optional[Ultrasound] = Field(
         default=None,
         description="""Ultrasound applied to the electrolyte (sonoelectrochemistry).""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "ultrasound", "domain_of": ["MassTransport"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["MassTransport"]}},
     )
     stirring: Optional[Stirring] = Field(
         default=None,
         description="""Stirring of the electrolyte, e.g. with a magnetic stirrer.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "stirring", "domain_of": ["MassTransport"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["MassTransport"]}},
     )
 
 
@@ -853,7 +809,6 @@ class Rotation(ControlledOperation):
         description="""Rotation rate of the electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "rate",
                 "domain_of": ["Rotation", "Flow", "Stirring"],
                 "examples": [{"value": "{value: 1600, unit: 1 / min}"}],
             }
@@ -863,10 +818,7 @@ class Rotation(ControlledOperation):
         default=None,
         description="""How the operation was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
 
@@ -887,7 +839,6 @@ class Flow(ControlledOperation):
         description="""Volumetric or linear flow rate of the electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "rate",
                 "domain_of": ["Rotation", "Flow", "Stirring"],
                 "examples": [{"value": "{value: 10, unit: ml / min}"}],
             }
@@ -897,10 +848,7 @@ class Flow(ControlledOperation):
         default=None,
         description="""How the operation was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
 
@@ -921,7 +869,6 @@ class Stirring(ControlledOperation):
         description="""Stirring rate.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "rate",
                 "domain_of": ["Rotation", "Flow", "Stirring"],
                 "examples": [{"value": "{value: 400, unit: 1 / min}"}],
             }
@@ -931,10 +878,7 @@ class Stirring(ControlledOperation):
         default=None,
         description="""How the operation was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
 
@@ -955,7 +899,6 @@ class Ultrasound(ControlledOperation):
         description="""Acoustic power of the ultrasound source.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "power",
                 "domain_of": ["Ultrasound"],
                 "examples": [{"value": "{value: 20, unit: W}"}],
             }
@@ -966,7 +909,6 @@ class Ultrasound(ControlledOperation):
         description="""Frequency of the ultrasound.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "frequency",
                 "domain_of": ["Ultrasound"],
                 "examples": [{"value": "{value: 20, unit: kHz}"}],
             }
@@ -977,7 +919,6 @@ class Ultrasound(ControlledOperation):
         description="""Amplitude of the ultrasound source, e.g. as horn displacement or as a percentage of the maximum.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "amplitude",
                 "domain_of": ["Ultrasound"],
                 "examples": [{"value": "{value: 40, unit: percent}"}],
             }
@@ -987,10 +928,7 @@ class Ultrasound(ControlledOperation):
         default=None,
         description="""How the operation was controlled.""",
         json_schema_extra={
-            "linkml_meta": {
-                "alias": "control",
-                "domain_of": ["ControlledQuantity", "ControlledOperation"],
-            }
+            "linkml_meta": {"domain_of": ["ControlledQuantity", "ControlledOperation"]}
         },
     )
 
@@ -1009,7 +947,6 @@ class Experimental(ConfiguredBaseModel):
         description="""Keywords or tags describing the experiment, such as BCV, ORR, COOR, XPS, or MS.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "tags",
                 "domain_of": ["Experimental"],
                 "examples": [
                     {"value": "BCV"},
@@ -1025,7 +962,6 @@ class Experimental(ConfiguredBaseModel):
         description="""URL to related documentation, publication (DOI), or ELN entry.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -1042,16 +978,13 @@ class Experimental(ConfiguredBaseModel):
     instrumentation: Optional[list[Instrumentation]] = Field(
         default=None,
         description="""Instruments and equipment used in the experiment.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "instrumentation", "domain_of": ["Experimental"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Experimental"]}},
     )
     description: Optional[str] = Field(
         default=None,
         description="""Detailed description of the experimental setup and conditions.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -1075,12 +1008,7 @@ class Experimental(ConfiguredBaseModel):
     operationParameters: Optional[OperationParameters] = Field(
         default=None,
         description="""Parameters describing how the measurement was operated, such as temperature control and forced mass transport.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "operationParameters",
-                "domain_of": ["Experimental"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Experimental"]}},
     )
 
 
@@ -1098,7 +1026,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Source or origin of the data, such as digitized, raw, simulated, or processed.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -1127,7 +1054,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Acronym type for the measurement performed, such as CV, EIS, XPS, etc.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "measurementType",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "LSV"}],
             }
@@ -1138,7 +1064,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Other measurements performed simultaneously, such as ring current, IR, Raman, ICP-MS.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "simultaneousMeasurements",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "DEMS"}, {"value": "Raman"}],
             }
@@ -1149,7 +1074,6 @@ class FigureDescription(ConfiguredBaseModel):
         description="""Additional notes about the figure or data.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -1167,16 +1091,13 @@ class FigureDescription(ConfiguredBaseModel):
     fields: Optional[list[DataField]] = Field(
         default=None,
         description="""Description of data fields/columns in the figure.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "fields", "domain_of": ["FigureDescription"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
     )
     scanRate: Optional[Quantity] = Field(
         default=None,
         description="""The rate at which the data has been recorded.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "scanRate",
                 "domain_of": ["FigureDescription"],
                 "examples": [{"value": "{value: 50, unit: mV / s}"}],
             }
@@ -1198,7 +1119,6 @@ class DataField(ConfiguredBaseModel):
         description="""Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -1217,7 +1137,6 @@ class DataField(ConfiguredBaseModel):
         description="""Data type of the field (string, number, integer, boolean, object, array, date, time, datetime, year, duration, geopoint, geojson, any).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -1245,7 +1164,6 @@ class DataField(ConfiguredBaseModel):
         description="""Format specification for the field type (default, email, uri, binary, uuid for strings; default for numbers).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "format",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "default"}],
             }
@@ -1256,7 +1174,6 @@ class DataField(ConfiguredBaseModel):
         description="""A human-readable title for this field.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "title",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "Electrode Potential"}],
             }
@@ -1267,7 +1184,6 @@ class DataField(ConfiguredBaseModel):
         description="""A description of that field.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -1293,7 +1209,6 @@ class DataField(ConfiguredBaseModel):
         description="""Physical dimension of the field (e.g., 'time', 'potential', 'current density').""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "dimension",
                 "domain_of": ["DataField"],
                 "examples": [
                     {"value": "potential"},
@@ -1308,7 +1223,6 @@ class DataField(ConfiguredBaseModel):
         description="""Unit of measurement for this field (SI or conventional electrochemical units), following astropy's string unit notation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField", "Purity"],
                 "examples": [{"value": "V"}, {"value": "mA / cm2"}, {"value": "s"}],
             }
@@ -1319,7 +1233,6 @@ class DataField(ConfiguredBaseModel):
         description="""Reference electrode or reference point for this measurement (electrochemistry-specific).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "reference",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
@@ -1330,7 +1243,6 @@ class DataField(ConfiguredBaseModel):
         description="""Axis orientation in plots (horizontal for x-axis, vertical for y-axis).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "orientation",
                 "domain_of": ["DataField"],
                 "examples": [{"value": "horizontal"}, {"value": "vertical"}],
             }
@@ -1352,7 +1264,6 @@ class Purity(ConfiguredBaseModel):
         description="""Quality grade designation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "grade",
                 "domain_of": ["Purity"],
                 "examples": [{"value": "ACS reagent"}],
             }
@@ -1363,7 +1274,6 @@ class Purity(ConfiguredBaseModel):
         description="""Value for the total organic carbon content measurement.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "totalOrganicCarbon",
                 "domain_of": ["Purity", "Atmosphere"],
                 "examples": [{"value": "{value: 3, unit: ppb}"}],
             }
@@ -1374,7 +1284,6 @@ class Purity(ConfiguredBaseModel):
         description="""Value for the total ionic conductivity measurement.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "totalIonConductivity",
                 "domain_of": ["Purity"],
                 "examples": [{"value": "{value: 0.055, unit: uS / cm}"}],
             }
@@ -1385,7 +1294,6 @@ class Purity(ConfiguredBaseModel):
         description="""Purity value as a number.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "value",
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
                 "examples": [{"value": "99.9"}],
             }
@@ -1396,7 +1304,6 @@ class Purity(ConfiguredBaseModel):
         description="""Unit for purity value.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "unit",
                 "domain_of": ["Quantity", "Uncertainty", "DataField", "Purity"],
                 "examples": [{"value": "pct"}],
             }
@@ -1407,7 +1314,6 @@ class Purity(ConfiguredBaseModel):
         description="""Name or identifier of the container in which the chemical is stored.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "container",
                 "domain_of": ["Purity"],
                 "examples": [{"value": "Glass bottle, amber"}],
             }
@@ -1418,7 +1324,6 @@ class Purity(ConfiguredBaseModel):
         description="""Internal LOT or batch number.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "internalLot",
                 "domain_of": ["Purity"],
                 "examples": [{"value": "LOT-2024-001"}],
             }
@@ -1429,7 +1334,6 @@ class Purity(ConfiguredBaseModel):
         description="""URL with further details on the purity or container.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -1450,7 +1354,6 @@ class Purity(ConfiguredBaseModel):
         description="""Description of additional purification or treatment performed.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "refinement",
                 "domain_of": ["Purity", "ComponentSource"],
                 "examples": [{"value": "Triple distilled"}],
             }
@@ -1472,7 +1375,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Name or identifier for the electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -1491,7 +1393,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Role of the electrode in the electrochemical cell. Typical values: working electrode, counter electrode, reference electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "function",
                 "domain_of": ["Electrode"],
                 "examples": [
                     {"value": "working electrode"},
@@ -1506,7 +1407,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Name of the reference electrode redox system (RHE, SCE, Ag/AgCl, etc.).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "redoxSystem",
                 "domain_of": ["Electrode"],
                 "examples": [{"value": "RHE"}, {"value": "Ag/AgCl"}, {"value": "SCE"}],
             }
@@ -1517,7 +1417,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Detailed description of the electrode (especially for custom-made electrodes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -1543,7 +1442,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Geometric surface area of electrode in contact with electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "geometricElectrolyteContactArea",
                 "domain_of": ["Electrode"],
                 "examples": [{"value": "{value: 0.196, unit: cm2}"}],
             }
@@ -1554,42 +1452,36 @@ class Electrode(ConfiguredBaseModel):
         description="""Purity specifications of the electrode material.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "purity",
                 "domain_of": [
                     "Electrode",
                     "ElectrodeSource",
                     "Component",
                     "ComponentSource",
-                ],
+                ]
             }
         },
     )
     preparationProcedure: Optional[ElectrodePreparation] = Field(
         default=None,
         description="""Procedures used to prepare the electrode before measurement.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "preparationProcedure", "domain_of": ["Electrode"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Electrode"]}},
     )
     shape: Optional[Shape] = Field(
         default=None,
         description="""Physical shape and dimensions of the electrode.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "shape", "domain_of": ["Electrode"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Electrode"]}},
     )
     source: Optional[ElectrodeSource] = Field(
         default=None,
         description="""Source and supplier information for the electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "source",
                 "domain_of": [
                     "Electrode",
                     "Component",
                     "ElectrochemicalCell",
                     "EchemdbMetadata",
-                ],
+                ]
             }
         },
     )
@@ -1598,7 +1490,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Type of electrode, such as single crystal, powder catalyst, metal sheet, or metal wire.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -1626,7 +1517,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Chemical symbol or abbreviation of the electrode material.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "material",
                 "domain_of": ["Electrode"],
                 "examples": [{"value": "Pt"}, {"value": "Au"}, {"value": "GC"}],
             }
@@ -1637,7 +1527,6 @@ class Electrode(ConfiguredBaseModel):
         description="""Miller indices of the surface orientation or 'poly' for polycrystalline. Always use spaces for value separation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "crystallographicOrientation",
                 "domain_of": ["Electrode"],
                 "examples": [{"value": "(1 1 1)"}, {"value": "poly"}],
             }
@@ -1659,7 +1548,6 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""Name of the electrode manufacturer.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "manufacturer",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Your Favorite Crystals GmbH"}],
             }
@@ -1670,7 +1558,6 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""LOT or batch number.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "lot",
                 "domain_of": ["ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "LOT-2024-PT111"}],
             }
@@ -1681,13 +1568,12 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""Purity specifications from the manufacturer or supplier.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "purity",
                 "domain_of": [
                     "Electrode",
                     "ElectrodeSource",
                     "Component",
                     "ComponentSource",
-                ],
+                ]
             }
         },
     )
@@ -1696,7 +1582,6 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""Model number or designation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "model",
                 "domain_of": ["Instrumentation", "ElectrodeSource"],
                 "examples": [{"value": "PT111-10"}],
             }
@@ -1707,7 +1592,6 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""URL to product specification or datasheet.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -1728,7 +1612,6 @@ class ElectrodeSource(ConfiguredBaseModel):
         description="""Name of the supplier.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "supplier",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Chemicals & More Inc."}],
             }
@@ -1750,7 +1633,6 @@ class Shape(ConfiguredBaseModel):
         description="""Type or shape of electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -1774,7 +1656,6 @@ class Shape(ConfiguredBaseModel):
         description="""Height of the electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "height",
                 "domain_of": ["Shape"],
                 "examples": [{"value": "{value: 5, unit: mm}"}],
             }
@@ -1785,7 +1666,6 @@ class Shape(ConfiguredBaseModel):
         description="""Diameter of the electrode (for cylindrical shapes).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "diameter",
                 "domain_of": ["Shape"],
                 "examples": [{"value": "{value: 5, unit: mm}"}],
             }
@@ -1796,7 +1676,6 @@ class Shape(ConfiguredBaseModel):
         description="""Length of the electrode.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "length",
                 "domain_of": ["Shape"],
                 "examples": [{"value": "{value: 10, unit: mm}"}],
             }
@@ -1807,7 +1686,6 @@ class Shape(ConfiguredBaseModel):
         description="""Detailed description of the electrode shape.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -1839,7 +1717,6 @@ class ElectrodePreparation(ConfiguredBaseModel):
         description="""URL to detailed preparation protocol or procedure, such as an article DOI.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -1858,7 +1735,6 @@ class ElectrodePreparation(ConfiguredBaseModel):
         description="""Step-by-step description of preparation procedure.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -1895,7 +1771,6 @@ class Component(ConfiguredBaseModel):
         description="""Name or identifier of the chemical component (trivial name, formula, or IUPAC name).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -1914,7 +1789,6 @@ class Component(ConfiguredBaseModel):
         description="""Role or function of the component in the electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -1942,16 +1816,13 @@ class Component(ConfiguredBaseModel):
     chemicalIdentifiers: Optional[ChemicalIdentifiers] = Field(
         default=None,
         description="""Standard chemical identifiers (CAS, SMILES, InChI, etc.) for unambiguous identification.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "chemicalIdentifiers", "domain_of": ["Component"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Component"]}},
     )
     concentration: Optional[Quantity] = Field(
         default=None,
         description="""Concentration of the component in the electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "concentration",
                 "domain_of": ["Component"],
                 "examples": [{"value": "{value: 0.1, unit: mol / l}"}],
             }
@@ -1962,13 +1833,12 @@ class Component(ConfiguredBaseModel):
         description="""Information about the supplier and supplied quality of the chemical.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "source",
                 "domain_of": [
                     "Electrode",
                     "Component",
                     "ElectrochemicalCell",
                     "EchemdbMetadata",
-                ],
+                ]
             }
         },
     )
@@ -1977,13 +1847,12 @@ class Component(ConfiguredBaseModel):
         description="""Purity level of the chemical component after the purification process.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "purity",
                 "domain_of": [
                     "Electrode",
                     "ElectrodeSource",
                     "Component",
                     "ComponentSource",
-                ],
+                ]
             }
         },
     )
@@ -1992,7 +1861,6 @@ class Component(ConfiguredBaseModel):
         description="""Partial pressure of a gaseous / volatile component.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "partialPressure",
                 "domain_of": ["Component"],
                 "examples": [{"value": "{value: 1, unit: bar}"}],
             }
@@ -2003,7 +1871,6 @@ class Component(ConfiguredBaseModel):
         description="""Proportion of the component (e.g., volume percent, mole fraction).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "proportion",
                 "domain_of": ["Component"],
                 "examples": [{"value": "{value: 50, unit: pct}"}],
             }
@@ -2014,7 +1881,6 @@ class Component(ConfiguredBaseModel):
         description="""Flow rate for gaseous components.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "flow",
                 "domain_of": ["MassTransport", "Component"],
                 "examples": [{"value": "{value: 50, unit: ml / min}"}],
             }
@@ -2025,7 +1891,6 @@ class Component(ConfiguredBaseModel):
         description="""Additional notes or observations about this component.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -2045,7 +1910,6 @@ class Component(ConfiguredBaseModel):
         description="""Pressure for gaseous components.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "pressure",
                 "domain_of": ["Component"],
                 "examples": [{"value": "{value: 1.013, unit: bar}"}],
             }
@@ -2067,7 +1931,6 @@ class ComponentSource(ConfiguredBaseModel):
         description="""Name of the company that supplied the chemical.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "supplier",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Your Chemical Supplier Inc."}],
             }
@@ -2078,7 +1941,6 @@ class ComponentSource(ConfiguredBaseModel):
         description="""Name of the company or organization that manufactured the chemical.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "manufacturer",
                 "domain_of": ["Instrumentation", "ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "Organic Chemistry II - Bar Group"}],
             }
@@ -2089,7 +1951,6 @@ class ComponentSource(ConfiguredBaseModel):
         description="""LOT or batch number provided by the manufacturer or supplier for traceability.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "lot",
                 "domain_of": ["ElectrodeSource", "ComponentSource"],
                 "examples": [{"value": "LOT12345"}],
             }
@@ -2100,13 +1961,12 @@ class ComponentSource(ConfiguredBaseModel):
         description="""Stated purity level from the supplier or manufacturer.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "purity",
                 "domain_of": [
                     "Electrode",
                     "ElectrodeSource",
                     "Component",
                     "ComponentSource",
-                ],
+                ]
             }
         },
     )
@@ -2115,7 +1975,6 @@ class ComponentSource(ConfiguredBaseModel):
         description="""Any additional purification or treatment performed.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "refinement",
                 "domain_of": ["Purity", "ComponentSource"],
                 "examples": [{"value": "Recrystallized from ethanol"}],
             }
@@ -2126,7 +1985,6 @@ class ComponentSource(ConfiguredBaseModel):
         description="""Quality grade of the chemical.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "quality",
                 "domain_of": ["ComponentSource"],
                 "examples": [{"value": "ACS reagent grade"}],
             }
@@ -2148,7 +2006,6 @@ class Electrolyte(ConfiguredBaseModel):
         description="""Type of electrolyte defined by the solvent.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -2175,25 +2032,19 @@ class Electrolyte(ConfiguredBaseModel):
     electrolyteContainer: Optional[ElectrolyteContainer] = Field(
         default=None,
         description="""Container used to prepare or store the electrolyte before the measurement.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "electrolyteContainer",
-                "domain_of": ["Electrolyte"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["Electrolyte"]}},
     )
     components: Optional[list[Component]] = Field(
         default=None,
         description="""Chemical components of the electrolyte including solvents, salts, acids, bases, and gases.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "components",
                 "domain_of": [
                     "Electrolyte",
                     "ElectrolyteContainer",
                     "ElectrochemicalCell",
                     "Atmosphere",
-                ],
+                ]
             }
         },
     )
@@ -2202,7 +2053,6 @@ class Electrolyte(ConfiguredBaseModel):
         description="""pH value of the electrolyte solution.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "ph",
                 "domain_of": ["Electrolyte"],
                 "examples": [{"value": "{value: 1, unit: ''}"}],
             }
@@ -2213,7 +2063,6 @@ class Electrolyte(ConfiguredBaseModel):
         description="""Additional notes or observations about the electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -2246,7 +2095,6 @@ class ElectrolyteContainer(ConfiguredBaseModel):
         description="""The vessel in which the supplying electrolyte was prepared or stored before the measurement.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -2267,13 +2115,12 @@ class ElectrolyteContainer(ConfiguredBaseModel):
         description="""Components of the electrolyte container.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "components",
                 "domain_of": [
                     "Electrolyte",
                     "ElectrolyteContainer",
                     "ElectrochemicalCell",
                     "Atmosphere",
-                ],
+                ]
             }
         },
     )
@@ -2293,7 +2140,6 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
         description="""A unique identifier.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -2312,7 +2158,6 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
         description="""The type of the container, i.e., a flask.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -2340,7 +2185,6 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
         description="""Additional notes.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -2373,7 +2217,6 @@ class ElectrochemicalCell(ConfiguredBaseModel):
         description="""Type of electrochemical cell, such as H-cell, beaker glass, flow cell.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -2401,13 +2244,12 @@ class ElectrochemicalCell(ConfiguredBaseModel):
         description="""Physical components and parts of the cell that are in contact with the electrolyte.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "components",
                 "domain_of": [
                     "Electrolyte",
                     "ElectrolyteContainer",
                     "ElectrochemicalCell",
                     "Atmosphere",
-                ],
+                ]
             }
         },
     )
@@ -2416,7 +2258,6 @@ class ElectrochemicalCell(ConfiguredBaseModel):
         description="""Detailed description of the cell configuration.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "cellDescription",
                 "domain_of": ["ElectrochemicalCell"],
                 "examples": [
                     {"value": "Three-electrode setup with glass cell and Teflon " "cap"}
@@ -2429,7 +2270,6 @@ class ElectrochemicalCell(ConfiguredBaseModel):
         description="""Procedure used to clean the cell before experiments.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "cleaningProcedure",
                 "domain_of": ["ElectrochemicalCell"],
                 "examples": [
                     {
@@ -2445,13 +2285,12 @@ class ElectrochemicalCell(ConfiguredBaseModel):
         description="""Source and supplier information for the cell.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "source",
                 "domain_of": [
                     "Electrode",
                     "Component",
                     "ElectrochemicalCell",
                     "EchemdbMetadata",
-                ],
+                ]
             }
         },
     )
@@ -2473,7 +2312,6 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
         description="""Name or identifier of the component.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "name",
                 "domain_of": [
                     "Process",
                     "Instrumentation",
@@ -2492,7 +2330,6 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
         description="""Part number or designation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "part",
                 "domain_of": ["ElectrochemicalCellComponent"],
                 "examples": [{"value": "EC-CELL-100"}],
             }
@@ -2503,7 +2340,6 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
         description="""Detailed description of the component.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -2537,7 +2373,6 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
         description="""URL to product page or technical documentation.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -2571,7 +2406,6 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
         description="""CAS Registry Number (Chemical Abstracts Service identifier).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "cas",
                 "domain_of": ["ChemicalIdentifiers"],
                 "examples": [{"value": "7664-93-9"}],
             }
@@ -2582,7 +2416,6 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
         description="""InChI (International Chemical Identifier) string.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "inchi",
                 "domain_of": ["ChemicalIdentifiers"],
                 "examples": [{"value": "InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)"}],
             }
@@ -2593,7 +2426,6 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
         description="""InChIKey (hashed InChI for easier searching).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "inchikey",
                 "domain_of": ["ChemicalIdentifiers"],
                 "examples": [{"value": "QAOWNCQODCNURD-UHFFFAOYSA-N"}],
             }
@@ -2604,7 +2436,6 @@ class ChemicalIdentifiers(ConfiguredBaseModel):
         description="""SMILES (Simplified Molecular Input Line Entry System).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "smiles",
                 "domain_of": ["ChemicalIdentifiers"],
                 "examples": [{"value": "[Cl-].[Cl-].[Ca+2]"}],
             }
@@ -2626,7 +2457,6 @@ class Atmosphere(ConfiguredBaseModel):
         description="""Type of atmospheric condition, such as inert (Ar saturated), ambient, UHV (ultra high vacuum).""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -2654,7 +2484,6 @@ class Atmosphere(ConfiguredBaseModel):
         description="""Total organic carbon content measurement in the atmosphere.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "totalOrganicCarbon",
                 "domain_of": ["Purity", "Atmosphere"],
                 "examples": [{"value": "{value: 3, unit: ppb}"}],
             }
@@ -2665,13 +2494,12 @@ class Atmosphere(ConfiguredBaseModel):
         description="""Gas components present in the atmosphere.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "components",
                 "domain_of": [
                     "Electrolyte",
                     "ElectrolyteContainer",
                     "ElectrochemicalCell",
                     "Atmosphere",
-                ],
+                ]
             }
         },
     )
@@ -2680,7 +2508,6 @@ class Atmosphere(ConfiguredBaseModel):
         description="""URL with further details on the atmospheric setup or control system.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -2701,7 +2528,6 @@ class Atmosphere(ConfiguredBaseModel):
         description="""Detailed description of the atmospheric conditions.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "description",
                 "domain_of": [
                     "Control",
                     "Experimental",
@@ -2724,7 +2550,6 @@ class Atmosphere(ConfiguredBaseModel):
         description="""Additional notes about the atmosphere.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -2757,7 +2582,6 @@ class System(ConfiguredBaseModel):
         description="""Type of experimental system.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "type",
                 "domain_of": [
                     "Instrumentation",
                     "Uncertainty",
@@ -2779,30 +2603,22 @@ class System(ConfiguredBaseModel):
     electrolyte: Electrolyte = Field(
         default=...,
         description="""The electrolyte solution used in the experiment.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "electrolyte", "domain_of": ["System"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["System"]}},
     )
     electrodes: list[Electrode] = Field(
         default=...,
         description="""List of electrodes used in the electrochemical cell (working, reference, counter electrodes, ring electrodes).""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "electrodes", "domain_of": ["System"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["System"]}},
     )
     electrochemicalCell: Optional[ElectrochemicalCell] = Field(
         default=None,
         description="""Description of the electrochemical cell and its configuration.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "electrochemicalCell", "domain_of": ["System"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["System"]}},
     )
     atmosphere: Optional[Atmosphere] = Field(
         default=None,
         description="""Atmospheric conditions during the experiment.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "atmosphere", "domain_of": ["System"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["System"]}},
     )
 
 
@@ -2820,7 +2636,6 @@ class Source(ConfiguredBaseModel):
         description="""Unique citation key for bibliographic reference, usually <FirstAuthorName>_<Year>_<FirstWordOfTitle>_<FirstPageNumber>.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "citationKey",
                 "domain_of": ["Source"],
                 "examples": [{"value": "electrobear_2024_electrochemistry_563"}],
             }
@@ -2831,7 +2646,6 @@ class Source(ConfiguredBaseModel):
         description="""DOI (URL) to the publication or dataset.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "url",
                 "domain_of": [
                     "Experimental",
                     "Purity",
@@ -2850,7 +2664,6 @@ class Source(ConfiguredBaseModel):
         description="""Experimental techniques used in the study.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "techniques",
                 "domain_of": ["Source"],
                 "examples": [{"value": "CV"}, {"value": "EIS"}, {"value": "CA"}],
             }
@@ -2861,7 +2674,6 @@ class Source(ConfiguredBaseModel):
         description="""Figure number or identifier from the source including subfigure label.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "figure",
                 "domain_of": ["Source"],
                 "examples": [{"value": "Figure 2a"}],
             }
@@ -2872,7 +2684,6 @@ class Source(ConfiguredBaseModel):
         description="""Original filename of the data file.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "originalFilename",
                 "domain_of": ["Source"],
                 "examples": [{"value": "2023-04-24_cv_data_001.csv"}],
             }
@@ -2883,7 +2694,6 @@ class Source(ConfiguredBaseModel):
         description="""BibTeX bibliographic data.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "bibdata",
                 "domain_of": ["Source"],
                 "examples": [
                     {
@@ -2899,7 +2709,6 @@ class Source(ConfiguredBaseModel):
         description="""Additional notes about the source.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "comment",
                 "domain_of": [
                     "Quantity",
                     "Uncertainty",
@@ -2921,7 +2730,6 @@ class Source(ConfiguredBaseModel):
         description="""Specific curve or trace identifier within a figure.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "curve",
                 "domain_of": ["Source"],
                 "examples": [{"value": "blue"}, {"value": "solid"}, {"value": "1"}],
             }
@@ -2944,9 +2752,7 @@ class EchemdbPackage(ConfiguredBaseModel):
     resources: Optional[list[EchemdbResource]] = Field(
         default=None,
         description="""Data resources within the package.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "resources", "domain_of": ["EchemdbPackage"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbPackage"]}},
     )
 
 
@@ -2962,9 +2768,7 @@ class EchemdbResource(ConfiguredBaseModel):
     metadata: Optional[EchemdbResourceMetadata] = Field(
         default=None,
         description="""Metadata container for the resource.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "metadata", "domain_of": ["EchemdbResource"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbResource"]}},
     )
 
 
@@ -2980,12 +2784,7 @@ class EchemdbResourceMetadata(ConfiguredBaseModel):
     echemdb: EchemdbMetadata = Field(
         default=...,
         description="""echemdb-specific metadata for electrochemical data.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "echemdb",
-                "domain_of": ["EchemdbResourceMetadata"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbResourceMetadata"]}},
     )
 
 
@@ -3003,7 +2802,6 @@ class EchemdbMetadata(ConfiguredBaseModel):
         description="""Version of the echemdb metadata schema this data conforms to.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "echemdbSchemaVersion",
                 "domain_of": ["EchemdbMetadata"],
                 "examples": [{"value": "0.7.1"}],
             }
@@ -3012,46 +2810,34 @@ class EchemdbMetadata(ConfiguredBaseModel):
     curation: Curation = Field(
         default=...,
         description="""Details on the curation process.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "curation", "domain_of": ["EchemdbMetadata"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbMetadata"]}},
     )
     experimental: Experimental = Field(
         default=...,
         description="""Details about the experimental setup.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "experimental", "domain_of": ["EchemdbMetadata"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbMetadata"]}},
     )
     figureDescription: FigureDescription = Field(
         default=...,
         description="""Description of the data to a figure or plot.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "alias": "figureDescription",
-                "domain_of": ["EchemdbMetadata"],
-            }
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbMetadata"]}},
     )
     system: System = Field(
         default=...,
         description="""Description of the experimental system.""",
-        json_schema_extra={
-            "linkml_meta": {"alias": "system", "domain_of": ["EchemdbMetadata"]}
-        },
+        json_schema_extra={"linkml_meta": {"domain_of": ["EchemdbMetadata"]}},
     )
     source: Source = Field(
         default=...,
         description="""Information about the source publication or dataset.""",
         json_schema_extra={
             "linkml_meta": {
-                "alias": "source",
                 "domain_of": [
                     "Electrode",
                     "Component",
                     "ElectrochemicalCell",
                     "EchemdbMetadata",
-                ],
+                ]
             }
         },
     )

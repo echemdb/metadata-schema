@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pixi run validate)",
+      "Bash(pixi run validate-objects)",
+      "Bash(pixi run validate-file-schemas)",
+      "Bash(pixi run validate-package-schemas)",
+      "Bash(pixi run check-naming)",
+      "Bash(pixi run diff-schemas)",
+      "Bash(pixi run test)",
+      "Bash(pixi run doctest)",
+      "Bash(pixi run test-comprehensive)",
+      "Bash(pixi run test-resolved-schemas)"
+    ]
+  }
+}

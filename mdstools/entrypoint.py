@@ -15,6 +15,7 @@ EXAMPLES::
     Commands:
       flatten    Flatten a YAML metadata file into enriched Excel/CSV formats.
       unflatten  Unflatten an Excel/CSV file back to YAML metadata.
+      update     Update a metadata file to a newer schema version.
 
 """
 
@@ -210,8 +211,84 @@ def unflatten(input_file, output_dir, schema_file):
     click.echo(f"✓ Wrote {output_path.as_posix()}")
 
 
+@click.command(name="update")
+@click.argument("input_file", type=click.Path(exists=True))
+@click.option(
+    "--to-version",
+    "to_version",
+    default="latest",
+    help="Target schema version (default: the installed version).",
+)
+@click.option(
+    "--in-place",
+    is_flag=True,
+    default=False,
+    help="Write the migrated file back in place (YAML comments preserved).",
+)
+def update(input_file, to_version, in_place):
+    r"""
+    Update a metadata file to a newer schema version.
+    \f
+
+    Reports the migration steps per document (a data package is reported per
+    resource). Without ``--in-place`` this is a dry run; pass ``--in-place`` to
+    rewrite the file in its original format (YAML comments are preserved).
+
+    EXAMPLES::
+
+        >>> from mdstools.test.cli import invoke
+        >>> from mdstools.entrypoint import cli
+        >>> invoke(cli, "update", "tests/migrations/minimum_echemdb_pre_0_8_0.yaml", "--to-version", "0.7.1")  # doctest: +NORMALIZE_WHITESPACE
+        tests/migrations/minimum_echemdb_pre_0_8_0.yaml: 0.7.1 -> 0.7.1
+          (no migration steps)
+
+    """
+    from mdstools.schema.migrate import (
+        VERSION_FIELD,
+        MetadataMigrator,
+        _is_package,
+        migrate_file,
+    )
+    from mdstools.schema.validator import _load_data
+
+    input_path = Path(input_file)
+    data = _load_data(str(input_path))
+
+    def _versioned_docs():
+        if _is_package(data):
+            for index, resource in enumerate(data.get("resources", [])):
+                metadata = (
+                    resource.get("metadata") if isinstance(resource, dict) else None
+                )
+                if isinstance(metadata, dict):
+                    for key, doc in metadata.items():
+                        if isinstance(doc, dict) and VERSION_FIELD in doc:
+                            yield (f"resources[{index}].metadata.{key}", doc)
+        else:
+            yield (input_path.as_posix(), data)
+
+    any_steps = False
+    for label, doc in _versioned_docs():
+        migrator = MetadataMigrator(doc, to_version)
+        steps = migrator.pending()
+        click.echo(f"{label}: {migrator.current_version} -> {migrator.target_version}")
+        if steps:
+            any_steps = True
+            for step in steps:
+                click.echo(f"  - {step.to_version}: {step.description}")
+        else:
+            click.echo("  (no migration steps)")
+
+    if in_place:
+        migrate_file(str(input_path), to_version, in_place=True)
+        click.echo(f"✓ Updated {input_path.as_posix()}")
+    elif any_steps:
+        click.echo("Dry run: re-run with --in-place to apply.")
+
+
 cli.add_command(flatten)
 cli.add_command(unflatten)
+cli.add_command(update)
 
 
 # Register command docstrings for doctesting.

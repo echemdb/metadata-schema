@@ -1,0 +1,137 @@
+{
+    "resources": [
+        {
+            "name": "alves_2011_electrochemistry_6010_f1a_solid",
+            "type": "table",
+            "path": "alves_2011_electrochemistry_6010_f1a_solid.csv",
+            "scheme": "file",
+            "format": "csv",
+            "mediatype": "text/csv",
+            "encoding": "utf-8",
+            "schema": {
+                "fields": [
+                    {
+                        "name": "t",
+                        "type": "number",
+                        "unit": "s"
+                    },
+                    {
+                        "name": "E",
+                        "type": "number",
+                        "unit": "V",
+                        "reference": "RHE"
+                    },
+                    {
+                        "name": "j",
+                        "type": "number",
+                        "unit": "A / m2"
+                    }
+                ]
+            },
+            "metadata": {
+                "echemdb": {
+                    "echemdbSchemaVersion": "0.7.1",
+                    "system": {
+                        "type": "electrochemical",
+                        "electrodes": [
+                            {
+                                "name": "REF",
+                                "function": "reference electrode",
+                                "source": {
+                                    "manufacturer": "homemade"
+                                },
+                                "type": "RHE"
+                            },
+                            {
+                                "name": "WE",
+                                "function": "working electrode",
+                                "crystallographicOrientation": "0001",
+                                "material": "Ru",
+                                "source": {
+                                    "manufacturer": "MaTecK"
+                                }
+                            }
+                        ],
+                        "electrolyte": {
+                            "components": [
+                                {
+                                    "name": "H2O",
+                                    "proportion": {
+                                        "unit": "volume percent",
+                                        "value": 100
+                                    },
+                                    "type": "solvent"
+                                },
+                                {
+                                    "concentration": {
+                                        "unit": "mol / l",
+                                        "value": 0.1
+                                    },
+                                    "name": "HClO4",
+                                    "type": "acid"
+                                }
+                            ],
+                            "ph": {
+                                "value": 1
+                            },
+                            "temperature": {
+                                "unit": "K",
+                                "value": 298.15
+                            },
+                            "type": "aqueous"
+                        }
+                    },
+                    "source": {
+                        "citationKey": "alves_2011_electrochemistry_6010",
+                        "url": "https://doi.org/10.1039/C0CP01001D",
+                        "originalFilename": "YYYY-MM-DD_my_experiment001.csv",
+                        "figure": "1a",
+                        "curve": "solid",
+                        "bibdata": "@article{alves_2011_electrochemistry_6010, year = \"2011\"}"
+                    },
+                    "curation": {
+                        "process": [
+                            {
+                                "role": "curator",
+                                "name": "Albert Engstfeld",
+                                "orcid": "https://orcid.org/0000-0002-9686-3948",
+                                "date": "2021-07-09"
+                            }
+                        ]
+                    },
+                    "experimental": {
+                        "tags": [
+                            "BCV",
+                            "HER"
+                        ]
+                    },
+                    "figureDescription": {
+                        "type": "digitized",
+                        "simultaneousMeasurements": [],
+                        "measurementType": "CV",
+                        "fields": [
+                            {
+                                "name": "E",
+                                "type": "number",
+                                "unit": "V",
+                                "orientation": "horizontal",
+                                "reference": "RHE"
+                            },
+                            {
+                                "name": "j",
+                                "type": "number",
+                                "unit": "mA / cm2",
+                                "orientation": "vertical"
+                            }
+                        ],
+                        "comment": "",
+                        "scanRate": {
+                            "value": 0.05,
+                            "unit": "V / s"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
