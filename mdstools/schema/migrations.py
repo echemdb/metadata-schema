@@ -118,7 +118,7 @@ def _move_temperature_to_operation_parameters(data: dict) -> dict:
 #: the release is cut (see the ``finalize_migrations`` helper, added later).
 MIGRATIONS: list[Migration] = [
     Migration(
-        to_version=UNRELEASED,
+        to_version="0.8.0",
         description=(
             "Move system.electrolyte.temperature to "
             "experimental.operationParameters.temperature"

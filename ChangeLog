@@ -4,6 +4,55 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.8.0
+====================
+
+**Added:**
+
+* Added a metadata migration engine (``mdstools.schema.migrate``) that upgrades
+  echemdb metadata dicts, files and data packages from older to newer schema
+  versions. Breaking-change steps are declared in ``mdstools.schema.migrations``;
+  only breaking changes need a step (additive changes are backward-compatible).
+* Added the ``mdstools update`` command (and ``pixi run update``) to report or
+  apply migrations. Without ``--in-place`` it is a dry run; ``--in-place``
+  rewrites the file in its original format, preserving YAML comments and layout.
+* Added ``MetadataMigrator.validate`` to check a migrated document against its
+  target schema, including the instrument-reference check.
+* Added ``experimental.operationParameters`` describing how a measurement was
+  operated: ``temperature`` (with active thermal control) and ``massTransport``
+  with the forced-convection modes ``rotation`` (RDE/RRDE), ``flow``,
+  ``ultrasound`` (sonoelectrochemistry) and ``stirring``. Each mode carries its
+  defining quantity(ies) plus a ``control`` block referencing the controlling
+  instrument by name.
+* Added the ``ControlledQuantity``, ``Control``, ``MassTransport``,
+  ``Rotation``, ``Flow``, ``Stirring`` and ``Ultrasound`` classes
+  (``linkml/experimental/operation.yaml``).
+* Added ``validate_instrument_references`` which checks that every
+  ``operationParameters`` control block references an instrument that exists in
+  the same ``experimental.instrumentation`` list. This cross-reference cannot
+  be expressed in JSON Schema, so it is enforced during example validation.
+
+**Changed:**
+
+* The release process (``rever.xsh``) now stamps unreleased migration steps
+  (``to_version="UNRELEASED"``) with the concrete release version via a new
+  ``finalize_migrations`` activity.
+* Added ``ruamel.yaml`` as a dependency for comment-preserving YAML round-trips.
+* ``Instrumentation.name`` is now the class ``identifier``; it is the key that
+  ``operationParameters`` control blocks reference.
+
+**Removed:**
+
+* Removed ``temperature`` from ``system.electrolyte``; the temperature and its
+  control now live under ``experimental.operationParameters.temperature``.
+
+**Fixed:**
+
+* Made ``update_expected_schemas`` output ASCII so it no longer crashes on
+  Windows consoles using the cp1252 code page.
+
+
+
 v0.7.1
 ====================
 
