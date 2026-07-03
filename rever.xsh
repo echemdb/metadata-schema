@@ -44,7 +44,15 @@ from rever.activities.command import command
 command('pixi', 'pixi install -e dev --manifest-path "$PWD/pyproject.toml"')
 # Stamp the concrete release version into any unreleased migration steps
 # (to_version=UNRELEASED). No-op for patch-only releases with no breaking steps.
-command('finalize_migrations', 'pixi run -e dev finalize-migrations $VERSION')
+# Pass the previous release tag so finalize_migrations refuses a patch-only bump
+# while a breaking migration is still pending (breaking changes require at least
+# a minor bump). The new tag is not created yet at this point, so the most recent
+# tag is the previous release; if there is no tag yet we omit it.
+previous_version = $(git describe --tags --abbrev=0).strip()
+finalize_command = 'pixi run -e dev finalize-migrations $VERSION'
+if previous_version:
+    finalize_command = finalize_command + ' ' + previous_version
+command('finalize_migrations', finalize_command)
 command('regenerate_schemas', 'pixi run -e dev generate-all && pixi run -e dev update-expected-schemas')
 
 $ACTIVITIES = [
