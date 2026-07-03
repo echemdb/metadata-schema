@@ -30,7 +30,7 @@
             },
             "metadata": {
                 "echemdb": {
-                    "echemdbSchemaVersion": "0.8.0",
+                    "echemdbSchemaVersion": "0.8.1",
                     "system": {
                         "type": "electrochemical",
                         "electrodes": [
