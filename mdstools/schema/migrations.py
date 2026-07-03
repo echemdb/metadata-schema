@@ -4,10 +4,10 @@ Each :class:`Migration` upgrades a metadata dict across one *breaking* schema
 release. Only breaking changes (minor-version bumps) need an entry — additive
 changes are backward-compatible and require none.
 
-A step for an upcoming breaking change is registered with
-``to_version=UNRELEASED``; the concrete version is stamped in when the release
-is cut (see the ``finalize_migrations`` release helper). Released steps keep
-their concrete ``to_version`` permanently as the migration history grows.
+A step for an upcoming breaking change uses the :data:`UNRELEASED` placeholder
+as its target version; the concrete version is stamped in when the release is
+cut (see the ``finalize_migrations`` release helper). Released steps keep their
+concrete target version permanently as the migration history grows.
 """
 
 # ********************************************************************
