@@ -33,6 +33,7 @@ Three validation approaches are available:
 #  along with mdstools. If not, see <https://www.gnu.org/licenses/>.
 # ********************************************************************
 
+import datetime
 import importlib
 import json
 import urllib.request
@@ -314,8 +315,63 @@ def validate_instrument_references(data: Any) -> list:
 # ---------------------------------------------------------------------------
 
 
+def _dates_to_strings(value: Any) -> Any:
+    r"""Return ``value`` with dates and datetimes replaced by ISO strings.
+
+    PyYAML resolves unquoted YAML dates (e.g. ``date: 2021-07-09``) to
+    ``datetime.date`` objects, but the metadata schemas type dates as strings
+    (JSON Schema has no date type). Containers are rebuilt recursively.
+
+    EXAMPLES::
+
+        >>> import datetime
+        >>> from mdstools.schema.validator import _dates_to_strings
+        >>> _dates_to_strings({'date': datetime.date(2021, 7, 9)})
+        {'date': '2021-07-09'}
+
+        >>> _dates_to_strings([datetime.datetime(2021, 7, 9, 12, 30)])
+        ['2021-07-09T12:30:00']
+
+        >>> _dates_to_strings({'value': 298.15})
+        {'value': 298.15}
+
+    """
+    if isinstance(value, dict):
+        return {key: _dates_to_strings(item) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_dates_to_strings(item) for item in value]
+    if isinstance(value, (datetime.date, datetime.datetime)):
+        return value.isoformat()
+    return value
+
+
+def load_yaml_metadata(stream: Any) -> Any:
+    r"""Load YAML metadata with dates and timestamps as plain strings.
+
+    A drop-in replacement for ``yaml.safe_load`` for metadata documents:
+    unquoted YAML dates must reach the validator as strings rather than
+    ``datetime.date`` objects, which fail validation of string-typed schema
+    fields.
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.validator import load_yaml_metadata
+        >>> load_yaml_metadata("date: 2021-07-09")
+        {'date': '2021-07-09'}
+
+        >>> import yaml
+        >>> yaml.safe_load("date: 2021-07-09")
+        {'date': datetime.date(2021, 7, 9)}
+
+    """
+    return _dates_to_strings(yaml.safe_load(stream))
+
+
 def _load_data(data: Any) -> dict:
     r"""Load metadata from a file path (YAML/JSON) or return a dict as-is.
+
+    YAML is loaded with :func:`load_yaml_metadata`, so unquoted dates stay
+    plain strings as required for validation of string-typed schema fields.
 
     EXAMPLES::
 
@@ -334,7 +390,7 @@ def _load_data(data: Any) -> dict:
             raise FileNotFoundError(f"File not found: {path}")
         with open(path, "r", encoding="utf-8") as f:
             if path.suffix in (".yaml", ".yml"):
-                return yaml.safe_load(f)
+                return load_yaml_metadata(f)
             if path.suffix == ".json":
                 return json.load(f)
             raise ValueError(f"Unsupported file extension: {path.suffix}")

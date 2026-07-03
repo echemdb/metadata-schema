@@ -51,9 +51,11 @@ import sys
 from pathlib import Path
 
 import jsonschema
-import yaml
 
-from mdstools.schema.validator import validate_instrument_references
+from mdstools.schema.validator import (
+    load_yaml_metadata,
+    validate_instrument_references,
+)
 
 
 def _load_generated_schema(schema_path: Path) -> dict:
@@ -147,7 +149,7 @@ def validate_objects():
             schema = _build_object_schema(parent, def_name)
 
         with open(example_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+            data = load_yaml_metadata(f)
 
         errors = validate_data(data, schema)
         ref_errors = validate_instrument_references(data)
@@ -191,7 +193,7 @@ def validate_file_schemas():
 
         schema = _load_generated_schema(schema_path)
         with open(example_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
+            data = load_yaml_metadata(f)
 
         errors = validate_data(data, schema)
         ref_errors = validate_instrument_references(data)
