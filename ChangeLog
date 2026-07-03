@@ -4,6 +4,28 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.8.1
+====================
+
+**Fixed:**
+
+* Fixed migration-registry tests that required the ``UNRELEASED`` placeholder to
+  always be present. After a release, ``finalize_migrations`` stamps the
+  placeholder to the concrete version, so the checks now accept either the
+  placeholder (during development) or a valid released version, and no longer
+  fail on the release commit or on ``main`` between breaking releases.
+
+* Fixed a fragile ``validator.validate`` doctest that validated the current
+  example against the frozen ``0.5.1`` schema; it now demonstrates (and expects)
+  that a newer example does not validate against that older schema version.
+
+* Fixed the release process to pass the previous release tag to
+  ``finalize_migrations``, activating the guardrail that refuses a patch-only
+  version bump while a breaking migration is still pending (breaking changes
+  require at least a minor bump).
+
+
+
 v0.8.0
 ====================
 
