@@ -4,10 +4,10 @@ Each :class:`Migration` upgrades a metadata dict across one *breaking* schema
 release. Only breaking changes (minor-version bumps) need an entry — additive
 changes are backward-compatible and require none.
 
-The registry is intentionally empty at this stage: the engine
-(:mod:`mdstools.schema.migrate`) is introduced first and exercised with test
-migrations. Real steps (e.g. the 0.8.0 temperature move) are registered in
-later stages.
+A step for an upcoming breaking change is registered with
+``to_version=UNRELEASED``; the concrete version is stamped in when the release
+is cut (see the ``finalize_migrations`` release helper). Released steps keep
+their concrete ``to_version`` permanently as the migration history grows.
 """
 
 # ********************************************************************
