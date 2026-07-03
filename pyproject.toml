@@ -162,3 +162,7 @@ rever = { args = [ { "arg" = "version", "default" = "--help" } ],cmd = "rever {{
 rever = ">=0.5.1,<0.6"
 make = ">=4.4.1,<5"
 python = "*"
+# rever 0.5.x imports distutils, removed from the stdlib in Python 3.12+.
+# setuptools < 74 still vendors a distutils shim and registers it via
+# distutils-precedence.pth, so `import distutils` keeps working on newer Python.
+setuptools = "<74"
