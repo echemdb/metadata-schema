@@ -165,14 +165,15 @@ def _reorder_schema_keys(schema: dict) -> dict:
     return reordered
 
 
-def generate_json_schemas():
+def generate_json_schemas(output_dir: Path = SCHEMAS_DIR, ensure_frictionless=True):
     """Generate JSON Schema files from LinkML models."""
-    SCHEMAS_DIR.mkdir(parents=True, exist_ok=True)
-    ensure_frictionless_schemas(SCHEMAS_DIR)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if ensure_frictionless:
+        ensure_frictionless_schemas(SCHEMAS_DIR)
 
     for model_name in MAIN_MODELS:
         linkml_file = LINKML_DIR / f"{model_name}.yaml"
-        output_file = SCHEMAS_DIR / f"{model_name}.json"
+        output_file = output_dir / f"{model_name}.json"
 
         if not linkml_file.exists():
             print(f"  SKIP {model_name} (LinkML file not found: {linkml_file})")
@@ -245,7 +246,7 @@ def generate_json_schemas():
 
         print(f"  OK {output_file.name}")
 
-    print(f"\nGenerated {len(MAIN_MODELS)} JSON Schema files in {SCHEMAS_DIR}")
+    print(f"\nGenerated {len(MAIN_MODELS)} JSON Schema files in {output_dir}")
 
 
 def _postprocess_pydantic(code: str) -> str:
@@ -291,12 +292,12 @@ def _postprocess_pydantic(code: str) -> str:
     return code
 
 
-def generate_pydantic_models():
+def generate_pydantic_models(output_dir: Path = MODELS_DIR):
     """Generate Pydantic models from LinkML models."""
-    MODELS_DIR.mkdir(parents=True, exist_ok=True)
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     # Create __init__.py if it doesn't exist
-    init_file = MODELS_DIR / "__init__.py"
+    init_file = output_dir / "__init__.py"
     if not init_file.exists():
         init_file.write_text(
             '"""Auto-generated Pydantic models from LinkML schemas."""\n',
@@ -305,7 +306,7 @@ def generate_pydantic_models():
 
     for model_name in MAIN_MODELS:
         linkml_file = LINKML_DIR / f"{model_name}.yaml"
-        output_file = MODELS_DIR / f"{model_name}.py"
+        output_file = output_dir / f"{model_name}.py"
 
         if not linkml_file.exists():
             print(f"  SKIP {model_name} (LinkML file not found: {linkml_file})")
@@ -334,7 +335,7 @@ def generate_pydantic_models():
 
         print(f"  OK {output_file.name}")
 
-    print(f"\nGenerated {len(MAIN_MODELS)} Pydantic model files in {MODELS_DIR}")
+    print(f"\nGenerated {len(MAIN_MODELS)} Pydantic model files in {output_dir}")
 
 
 def main():

@@ -95,6 +95,7 @@
         },
         "url": {
           "description": "URL with further details on the atmospheric setup or control system.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -343,6 +344,25 @@
         }
       },
       "title": "Control",
+      "type": "object"
+    },
+    "ControlledOperation": {
+      "additionalProperties": false,
+      "description": "Base class for a controlled operation characterised by one or more quantities, sharing a single control block.",
+      "properties": {
+        "control": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Control"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How the operation was controlled."
+        }
+      },
+      "title": "ControlledOperation",
       "type": "object"
     },
     "ControlledQuantity": {
@@ -674,6 +694,7 @@
       "properties": {
         "url": {
           "description": "URL to product page or technical documentation.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -820,6 +841,7 @@
         },
         "url": {
           "description": "URL to detailed preparation protocol or procedure, such as an article DOI.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -875,6 +897,7 @@
         },
         "url": {
           "description": "URL to product specification or datasheet.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -1048,6 +1071,7 @@
         },
         "url": {
           "description": "URL to related documentation, publication (DOI), or ELN entry.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -1345,6 +1369,7 @@
         },
         "orcid": {
           "description": "An URL containing the ORCID.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": "string"
         },
@@ -1424,6 +1449,7 @@
         },
         "url": {
           "description": "URL with further details on the purity or container.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
@@ -1630,6 +1656,7 @@
         },
         "url": {
           "description": "DOI (URL) to the publication or dataset.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": "string"
         }

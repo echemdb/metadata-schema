@@ -18,8 +18,8 @@ dependencies = [
     "jsonref>=1.1,<2",
     "referencing>=0.35,<1",
     "ruamel.yaml>=0.18,<0.19",
-    "linkml>=1.10,<1.11",
-    "linkml-runtime>=1.9,<1.10",
+    "linkml>=1.11,<1.12",
+    "linkml-runtime>=1.10,<1.12",
 ]
 
 [project.scripts]
@@ -60,8 +60,8 @@ check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
-linkml = ">=1.10,<1.11"
-linkml-runtime = ">=1.9,<1.10"
+linkml = ">=1.11,<1.12"
+linkml-runtime = ">=1.10,<1.12"
 jsonref = ">=1.1.0,<2"
 "ruamel.yaml" = ">=0.18,<0.19"
 
@@ -90,10 +90,11 @@ pytest-doctestplus = ">=1.7.1,<2"
 pytest-remotedata = ">=0.4.1,<0.5"
 
 [tool.pixi.feature.test.tasks]
-doctest = "pytest -n auto --doctest-plus mdstools --ignore=mdstools/test/test_comprehensive.py --ignore=mdstools/test/test_resolved_schemas.py"
+doctest = "pytest -n auto --doctest-plus mdstools --ignore=mdstools/test/test_comprehensive.py --ignore=mdstools/test/test_resolved_schemas.py --ignore=mdstools/test/test_generated_artifacts.py"
 test-comprehensive = "pytest mdstools/test/test_comprehensive.py -v"
 test-resolved-schemas = "pytest mdstools/test/test_resolved_schemas.py -v"
-test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas"] }
+test-generated-artifacts = "pytest mdstools/test/test_generated_artifacts.py -v"
+test-all = { depends-on = ["doctest", "test-comprehensive", "test-resolved-schemas", "test-generated-artifacts"] }
 
 [tool.pixi.feature.lint.dependencies]
 black = "*"

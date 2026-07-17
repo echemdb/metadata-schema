@@ -25,11 +25,26 @@ TEMPLATE_DIR = DOC_DIR / "_templates" / "docgen"
 def _postprocess_markdown(output_dir):
     """Fix generated markdown for Sphinx/MyST compatibility.
 
+    - Strip MkDocs-Material search front matter and search-exclude divs
+      (emitted by gen-doc >= 1.11; meaningless in Sphinx and the type pages
+      glue the closing --- onto the H1, which MyST rejects as a transition)
     - Convert ```mermaid to ```{mermaid} for sphinxcontrib-mermaid
     - Add a glob toctree to index.md so all generated pages are included
     """
     for md_file in output_dir.glob("*.md"):
         content = md_file.read_text(encoding="utf-8")
+        # Strip leading "search: boost" front matter; handles both the
+        # well-formed block and the malformed "---# Heading" variant
+        content = re.sub(
+            r"\A---\n.*?\n---", "", content, flags=re.DOTALL
+        ).lstrip("\n")
+        # Strip MkDocs search-exclude wrapper divs
+        content = re.sub(
+            r'^<div data-search-exclude markdown="1">\n|^</div>\n?',
+            "",
+            content,
+            flags=re.MULTILINE,
+        )
         # Convert fenced mermaid code blocks to MyST directive syntax
         content = re.sub(r"^```mermaid$", "```{mermaid}", content, flags=re.MULTILINE)
         # Remove mermaid blocks that contain only "None" (failed top-level diagrams)
