@@ -1,0 +1,167 @@
+# Class: OperationParameters 
+
+
+_Parameters describing how the measurement was operated, such as thermal control of the electrolyte and forced mass transport at the electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/OperationParameters](https://echemdb.github.io/metadata-schema/source_data/OperationParameters)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class OperationParameters
+    click OperationParameters href "../OperationParameters/"
+      OperationParameters : massTransport
+        
+          
+    
+        
+        
+        OperationParameters --> "0..1" MassTransport : massTransport
+        click MassTransport href "../MassTransport/"
+    
+
+        
+      OperationParameters : temperature
+        
+          
+    
+        
+        
+        OperationParameters --> "0..1" ControlledQuantity : temperature
+        click ControlledQuantity href "../ControlledQuantity/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [temperature](temperature.md) | 0..1 <br/> [ControlledQuantity](ControlledQuantity.md) | Temperature of the electrolyte and how it was controlled |  |
+| [massTransport](massTransport.md) | 0..1 <br/> [MassTransport](MassTransport.md) | Forced-convection modes used to induce mass transport |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Experimental](Experimental.md) | [operationParameters](operationParameters.md) | range | [OperationParameters](OperationParameters.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/OperationParameters |
+| native | https://echemdb.github.io/metadata-schema/source_data/OperationParameters |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: OperationParameters
+description: Parameters describing how the measurement was operated, such as thermal
+  control of the electrolyte and forced mass transport at the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  temperature:
+    name: temperature
+    description: Temperature of the electrolyte and how it was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - OperationParameters
+    range: ControlledQuantity
+    inlined: true
+  massTransport:
+    name: massTransport
+    description: Forced-convection modes used to induce mass transport.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - OperationParameters
+    range: MassTransport
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: OperationParameters
+description: Parameters describing how the measurement was operated, such as thermal
+  control of the electrolyte and forced mass transport at the electrode.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+attributes:
+  temperature:
+    name: temperature
+    description: Temperature of the electrolyte and how it was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: OperationParameters
+    domain_of:
+    - OperationParameters
+    range: ControlledQuantity
+    inlined: true
+  massTransport:
+    name: massTransport
+    description: Forced-convection modes used to induce mass transport.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: OperationParameters
+    domain_of:
+    - OperationParameters
+    range: MassTransport
+    inlined: true
+
+```
+</details>

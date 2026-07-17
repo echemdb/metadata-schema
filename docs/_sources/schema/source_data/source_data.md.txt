@@ -1,0 +1,5 @@
+# source_data 
+
+Metadata schema for source data files in echemdb.
+
+URI: https://echemdb.github.io/metadata-schema/source_data

@@ -1,0 +1,173 @@
+# Class: Rotation 
+
+
+_Rotation of a rotating (disc) electrode._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Rotation](https://echemdb.github.io/metadata-schema/autotag/Rotation)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Rotation
+    click Rotation href "../Rotation/"
+      ControlledOperation <|-- Rotation
+        click ControlledOperation href "../ControlledOperation/"
+      
+      Rotation : control
+        
+          
+    
+        
+        
+        Rotation --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      Rotation : rate
+        
+          
+    
+        
+        
+        Rotation --> "0..1" Quantity : rate
+        click Quantity href "../Quantity/"
+    
+
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* [ControlledOperation](ControlledOperation.md)
+    * **Rotation**
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [rate](rate.md) | 0..1 <br/> [Quantity](Quantity.md) | Rotation rate of the electrode | `{value: 1600, unit: 1 / min}` |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the operation was controlled |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [MassTransport](MassTransport.md) | [rotation](rotation.md) | range | [Rotation](Rotation.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Rotation |
+| native | https://echemdb.github.io/metadata-schema/autotag/Rotation |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Rotation
+description: Rotation of a rotating (disc) electrode.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Rotation rate of the electrode.
+    examples:
+    - value: '{value: 1600, unit: 1 / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Rotation
+description: Rotation of a rotating (disc) electrode.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Rotation rate of the electrode.
+    examples:
+    - value: '{value: 1600, unit: 1 / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: Rotation
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Rotation
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>

@@ -1,0 +1,76 @@
+# Slot: value 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/value](https://echemdb.github.io/metadata-schema/svgdigitizer_package/value)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Quantity](Quantity.md), [Uncertainty](Uncertainty.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/value |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/value |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: value
+domain_of:
+- Quantity
+- Uncertainty
+range: string
+
+```
+</details></div>

@@ -1,0 +1,113 @@
+# Slot: candidateDelimiters 
+
+
+_Optional list of candidate delimiters used when trying to infer the file dialect._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/candidateDelimiters](https://echemdb.github.io/metadata-schema/source_data/candidateDelimiters)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Dialect](Dialect.md) | CSV dialect specification describing the format of the source data file |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Dialect](Dialect.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Multivalued | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Dialect](Dialect.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| , |
+| ; |
+| \t |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/candidateDelimiters |
+| native | https://echemdb.github.io/metadata-schema/source_data/candidateDelimiters |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: candidateDelimiters
+description: Optional list of candidate delimiters used when trying to infer the file
+  dialect.
+examples:
+- value: ','
+- value: ;
+- value: \t
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: Dialect
+domain_of:
+- Dialect
+range: string
+multivalued: true
+
+```
+</details></div>

@@ -1,0 +1,98 @@
+# Slot: ultrasound 
+
+
+_Ultrasound applied to the electrolyte (sonoelectrochemistry)._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/ultrasound](https://echemdb.github.io/metadata-schema/source_data/ultrasound)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [MassTransport](MassTransport.md) | Forced-convection modes inducing mass transport during the measurement |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Ultrasound](Ultrasound.md) |
+| Domain Of | [MassTransport](MassTransport.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [MassTransport](MassTransport.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/ultrasound |
+| native | https://echemdb.github.io/metadata-schema/source_data/ultrasound |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: ultrasound
+description: Ultrasound applied to the electrolyte (sonoelectrochemistry).
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: MassTransport
+domain_of:
+- MassTransport
+range: Ultrasound
+inlined: true
+
+```
+</details></div>

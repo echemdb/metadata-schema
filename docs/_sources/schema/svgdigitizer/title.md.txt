@@ -1,0 +1,76 @@
+# Slot: title 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/title](https://echemdb.github.io/metadata-schema/svgdigitizer/title)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Project](Project.md) | Information about a research project or funding source |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [DataField](DataField.md), [Project](Project.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/title |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/title |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: title
+domain_of:
+- DataField
+- Project
+range: string
+
+```
+</details></div>

@@ -1,0 +1,80 @@
+# Slot: source 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/source](https://echemdb.github.io/metadata-schema/echemdb_package/source)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [EchemdbMetadata](EchemdbMetadata.md) | echemdb-specific metadata for electrochemical data |  no  |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [EchemdbMetadata](EchemdbMetadata.md), [Electrode](Electrode.md), [Component](Component.md), [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/source |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/source |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: source
+domain_of:
+- EchemdbMetadata
+- Electrode
+- Component
+- ElectrochemicalCell
+range: string
+
+```
+</details></div>

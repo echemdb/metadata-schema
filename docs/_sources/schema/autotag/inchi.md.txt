@@ -1,0 +1,106 @@
+# Slot: inchi 
+
+
+_InChI (International Chemical Identifier) string._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/inchi](https://echemdb.github.io/metadata-schema/autotag/inchi)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ChemicalIdentifiers](ChemicalIdentifiers.md) | Standard chemical identifiers for unambiguous identification of compounds |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [ChemicalIdentifiers](ChemicalIdentifiers.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [ChemicalIdentifiers](ChemicalIdentifiers.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4) |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/inchi |
+| native | https://echemdb.github.io/metadata-schema/autotag/inchi |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: inchi
+description: InChI (International Chemical Identifier) string.
+examples:
+- value: InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+owner: ChemicalIdentifiers
+domain_of:
+- ChemicalIdentifiers
+range: string
+
+```
+</details></div>

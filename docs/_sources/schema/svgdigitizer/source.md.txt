@@ -1,0 +1,80 @@
+# Slot: source 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/source](https://echemdb.github.io/metadata-schema/svgdigitizer/source)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Svgdigitizer](Svgdigitizer.md), [Electrode](Electrode.md), [Component](Component.md), [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/source |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/source |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: source
+domain_of:
+- Svgdigitizer
+- Electrode
+- Component
+- ElectrochemicalCell
+range: string
+
+```
+</details></div>

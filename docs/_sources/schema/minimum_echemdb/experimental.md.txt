@@ -1,0 +1,100 @@
+# Slot: experimental 
+
+
+_Details about the experimental setup._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/experimental](https://echemdb.github.io/metadata-schema/minimum_echemdb/experimental)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [MinimumEchemdb](MinimumEchemdb.md) | Minimum set of metadata to describe an electrochemical system for echemdb |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Experimental](Experimental.md) |
+| Domain Of | [MinimumEchemdb](MinimumEchemdb.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [MinimumEchemdb](MinimumEchemdb.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/experimental |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Details about the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+owner: MinimumEchemdb
+domain_of:
+- MinimumEchemdb
+range: Experimental
+required: true
+inlined: true
+
+```
+</details></div>

@@ -1,0 +1,80 @@
+# Slot: purity 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/purity](https://echemdb.github.io/metadata-schema/autotag/purity)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Electrode](Electrode.md), [ElectrodeSource](ElectrodeSource.md), [Component](Component.md), [ComponentSource](ComponentSource.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/purity |
+| native | https://echemdb.github.io/metadata-schema/autotag/purity |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: purity
+domain_of:
+- Electrode
+- ElectrodeSource
+- Component
+- ComponentSource
+range: string
+
+```
+</details></div>

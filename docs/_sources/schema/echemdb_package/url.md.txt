@@ -1,0 +1,86 @@
+# Slot: url 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/url](https://echemdb.github.io/metadata-schema/echemdb_package/url)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [ElectrodePreparation](ElectrodePreparation.md) | Procedures and methods used to prepare the electrode |  no  |
+| [ElectrochemicalCellSource](ElectrochemicalCellSource.md) | Source information for the electrochemical cell |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Experimental](Experimental.md), [Purity](Purity.md), [ElectrodeSource](ElectrodeSource.md), [ElectrodePreparation](ElectrodePreparation.md), [ElectrochemicalCellSource](ElectrochemicalCellSource.md), [Atmosphere](Atmosphere.md), [Source](Source.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/url |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/url |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: url
+domain_of:
+- Experimental
+- Purity
+- ElectrodeSource
+- ElectrodePreparation
+- ElectrochemicalCellSource
+- Atmosphere
+- Source
+range: string
+
+```
+</details></div>

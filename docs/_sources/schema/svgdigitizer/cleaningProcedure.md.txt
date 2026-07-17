@@ -1,0 +1,106 @@
+# Slot: cleaningProcedure 
+
+
+_Procedure used to clean the cell before experiments._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/cleaningProcedure](https://echemdb.github.io/metadata-schema/svgdigitizer/cleaningProcedure)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/cleaningProcedure |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/cleaningProcedure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: cleaningProcedure
+description: Procedure used to clean the cell before experiments.
+examples:
+- value: Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: ElectrochemicalCell
+domain_of:
+- ElectrochemicalCell
+range: string
+
+```
+</details></div>

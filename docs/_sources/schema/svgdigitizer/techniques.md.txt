@@ -1,0 +1,112 @@
+# Slot: techniques 
+
+
+_Experimental techniques used in the study._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/techniques](https://echemdb.github.io/metadata-schema/svgdigitizer/techniques)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Source](Source.md) | Information about the source publication or dataset |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Source](Source.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Multivalued | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Source](Source.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| CV |
+| EIS |
+| CA |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/techniques |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/techniques |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: techniques
+description: Experimental techniques used in the study.
+examples:
+- value: CV
+- value: EIS
+- value: CA
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: Source
+domain_of:
+- Source
+range: string
+multivalued: true
+
+```
+</details></div>

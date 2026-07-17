@@ -1,0 +1,92 @@
+# Slot: description 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/description](https://echemdb.github.io/metadata-schema/source_data/description)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+| [ElectrodePreparation](ElectrodePreparation.md) | Procedures and methods used to prepare the electrode |  no  |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |  no  |
+| [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md) | A component or part of the electrochemical cell |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+| [Control](Control.md) | How a parameter was actively controlled during the measurement, including a r... |  no  |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [FieldUnit](FieldUnit.md) | Unit specification for a data field, following astropy's string unit notation |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Electrode](Electrode.md), [Shape](Shape.md), [ElectrodePreparation](ElectrodePreparation.md), [ElectrolyteContainer](ElectrolyteContainer.md), [ElectrochemicalCellComponent](ElectrochemicalCellComponent.md), [Atmosphere](Atmosphere.md), [Control](Control.md), [Experimental](Experimental.md), [DataField](DataField.md), [FieldUnit](FieldUnit.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/description |
+| native | https://echemdb.github.io/metadata-schema/source_data/description |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: description
+domain_of:
+- Electrode
+- Shape
+- ElectrodePreparation
+- ElectrolyteContainer
+- ElectrochemicalCellComponent
+- Atmosphere
+- Control
+- Experimental
+- DataField
+- FieldUnit
+range: string
+
+```
+</details></div>

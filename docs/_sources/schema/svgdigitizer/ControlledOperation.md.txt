@@ -1,0 +1,149 @@
+# Class: ControlledOperation 
+
+
+_Base class for a controlled operation characterised by one or more quantities, sharing a single control block._
+
+
+
+
+* __NOTE__: this is an abstract class and should not be instantiated directly
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/ControlledOperation](https://echemdb.github.io/metadata-schema/svgdigitizer/ControlledOperation)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ControlledOperation
+    click ControlledOperation href "../ControlledOperation/"
+      ControlledOperation <|-- Rotation
+        click Rotation href "../Rotation/"
+      ControlledOperation <|-- Flow
+        click Flow href "../Flow/"
+      ControlledOperation <|-- Stirring
+        click Stirring href "../Stirring/"
+      ControlledOperation <|-- Ultrasound
+        click Ultrasound href "../Ultrasound/"
+      
+      ControlledOperation : control
+        
+          
+    
+        
+        
+        ControlledOperation --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* **ControlledOperation**
+    * [Rotation](Rotation.md)
+    * [Flow](Flow.md)
+    * [Stirring](Stirring.md)
+    * [Ultrasound](Ultrasound.md)
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the operation was controlled |  |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/ControlledOperation |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/ControlledOperation |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ControlledOperation
+description: Base class for a controlled operation characterised by one or more quantities,
+  sharing a single control block.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+abstract: true
+attributes:
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ControlledOperation
+description: Base class for a controlled operation characterised by one or more quantities,
+  sharing a single control block.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+abstract: true
+attributes:
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: ControlledOperation
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>

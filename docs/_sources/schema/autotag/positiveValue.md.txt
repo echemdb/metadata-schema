@@ -1,0 +1,106 @@
+# Slot: positiveValue 
+
+
+_Upper bound (+) for asymmetric uncertainties._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/positiveValue](https://echemdb.github.io/metadata-schema/autotag/positiveValue)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Float](Float.md) |
+| Domain Of | [Uncertainty](Uncertainty.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Uncertainty](Uncertainty.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.02 |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/positiveValue |
+| native | https://echemdb.github.io/metadata-schema/autotag/positiveValue |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: positiveValue
+description: Upper bound (+) for asymmetric uncertainties.
+examples:
+- value: '0.02'
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+owner: Uncertainty
+domain_of:
+- Uncertainty
+range: float
+
+```
+</details></div>
