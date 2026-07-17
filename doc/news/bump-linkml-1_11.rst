@@ -1,3 +1,7 @@
+**Added:**
+
+* Added ``pixi run test-generated-artifacts`` (part of ``pixi run test``), which regenerates the JSON Schemas and Pydantic models into a temporary directory and compares them with the committed files, catching stale generated artifacts locally instead of in CI.
+
 **Changed:**
 
 * Changed version bounds of `linkml` and `linkml-runtime` from `>=10,<11` to `>=11,<12`.
