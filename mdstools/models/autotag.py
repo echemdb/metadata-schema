@@ -2768,7 +2768,7 @@ class Autotag(ConfiguredBaseModel):
         default=None,
         description="""Version of the echemdb metadata schema this data conforms to.""",
         json_schema_extra={
-            "linkml_meta": {"domain_of": ["Autotag"], "examples": [{"value": "0.8.2"}]}
+            "linkml_meta": {"domain_of": ["Autotag"], "examples": [{"value": "0.8.3"}]}
         },
     )
     curation: Curation = Field(

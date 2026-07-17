@@ -2755,7 +2755,7 @@ class MinimumEchemdb(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["MinimumEchemdb"],
-                "examples": [{"value": "0.8.2"}],
+                "examples": [{"value": "0.8.3"}],
             }
         },
     )
