@@ -387,6 +387,7 @@
         },
         "url": {
           "description": "URL or DOI of the source publication.",
+          "format": "uri",
           "pattern": "^https?://.*$",
           "type": [
             "string",
