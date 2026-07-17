@@ -18,8 +18,8 @@ dependencies = [
     "jsonref>=1.1,<2",
     "referencing>=0.35,<1",
     "ruamel.yaml>=0.18,<0.19",
-    "linkml>=1.10,<1.11",
-    "linkml-runtime>=1.9,<1.10",
+    "linkml>=1.11,<1.12",
+    "linkml-runtime>=1.10,<1.12",
 ]
 
 [project.scripts]
@@ -60,8 +60,8 @@ check-jsonschema = ">=0.36.1,<0.37"
 pyyaml = ">=6.0.3,<7"
 jsonschema = ">=4.23.0,<5"
 click = ">=8,<9"
-linkml = ">=1.10,<1.11"
-linkml-runtime = ">=1.9,<1.10"
+linkml = ">=1.11,<1.12"
+linkml-runtime = ">=1.10,<1.12"
 jsonref = ">=1.1.0,<2"
 "ruamel.yaml" = ">=0.18,<0.19"
 
