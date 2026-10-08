@@ -443,6 +443,11 @@ Currently ~14% on test data — limited by how many `description`/`examples` are
   - The `UNRELEASED` placeholder is stamped to the concrete release version at tag time by `mdstools/schema/finalize_migrations.py` (wired into `rever.xsh`). A breaking change bumps the minor version (0.7.x → 0.8.0) — a human/CI convention, since rever's version is chosen by hand.
   - Add the migration step together with the `doc/news/<branch>.rst` entry — the two staged artefacts always go together.
 
+- **Regenerating schemas and models**:
+  - Generation must depend only on the LinkML input: the same `linkml/` must give identical `schemas/` and `mdstools/models/` on every platform.
+  - After `pixi run generate-all`, read `git diff -- schemas mdstools/models` and check that every change follows from the LinkML edit. Passing tests are not enough: the regeneration tests reuse the generator, so they repeat any bug in it.
+  - Any change you can't explain (encoding, file paths, formatting) is a generator bug. Fix it in `mdstools/schema/generate_from_linkml.py` instead of committing it.
+
 - **Generated folders**:
   - `/generated` - Project outputs (user-facing conversions)
   - `/tests/generated` - Test outputs

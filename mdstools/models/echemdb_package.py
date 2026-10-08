@@ -309,6 +309,7 @@ class Process(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -397,6 +398,7 @@ class Instrumentation(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -964,6 +966,7 @@ class Experimental(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -1103,6 +1106,70 @@ class FigureDescription(ConfiguredBaseModel):
             }
         },
     )
+    software: Optional[Software] = Field(
+        default=None,
+        description="""Software that created the data, e.g., recorded it with an instrument, digitized it from a figure, simulated it, or processed it.""",
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
+    )
+
+
+class Software(ConfiguredBaseModel):
+    """
+    Software used to create the data.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "https://echemdb.github.io/metadata-schema/figure_description"}
+    )
+
+    name: str = Field(
+        default=...,
+        description="""Name of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Process",
+                    "Instrumentation",
+                    "Software",
+                    "DataField",
+                    "Electrode",
+                    "Component",
+                    "ElectrolyteContainerComponent",
+                    "ElectrochemicalCellComponent",
+                ],
+                "examples": [{"value": "svgdigitizer"}],
+            }
+        },
+    )
+    version: str = Field(
+        default=...,
+        description="""Version of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software"],
+                "examples": [{"value": "0.14.5"}],
+            }
+        },
+    )
+    url: Optional[str] = Field(
+        default=None,
+        description="""URL of the software, e.g., its repository.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Experimental",
+                    "Software",
+                    "Purity",
+                    "ElectrodeSource",
+                    "ElectrodePreparation",
+                    "ElectrochemicalCellSource",
+                    "Atmosphere",
+                    "Source",
+                ],
+                "examples": [{"value": "https://github.com/echemdb/svgdigitizer"}],
+            }
+        },
+    )
 
 
 class DataField(ConfiguredBaseModel):
@@ -1122,6 +1189,7 @@ class DataField(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -1336,6 +1404,7 @@ class Purity(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -1378,6 +1447,7 @@ class Electrode(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -1594,6 +1664,7 @@ class ElectrodeSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -1719,6 +1790,7 @@ class ElectrodePreparation(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -1774,6 +1846,7 @@ class Component(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -2143,6 +2216,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -2315,6 +2389,7 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Electrode",
                     "Component",
@@ -2375,6 +2450,7 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -2510,6 +2586,7 @@ class Atmosphere(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -2648,6 +2725,7 @@ class Source(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": [
                     "Experimental",
+                    "Software",
                     "Purity",
                     "ElectrodeSource",
                     "ElectrodePreparation",
@@ -2861,6 +2939,7 @@ Stirring.model_rebuild()
 Ultrasound.model_rebuild()
 Experimental.model_rebuild()
 FigureDescription.model_rebuild()
+Software.model_rebuild()
 DataField.model_rebuild()
 Purity.model_rebuild()
 Electrode.model_rebuild()

@@ -33,6 +33,7 @@ import difflib
 import pytest
 
 from mdstools.schema.generate_from_linkml import (
+    LINKML_DIR,
     MAIN_MODELS,
     MODELS_DIR,
     SCHEMAS_DIR,
@@ -86,3 +87,29 @@ def test_pydantic_models_up_to_date(tmp_path):
             committed, regenerated, name
         )
         assert committed == regenerated, message
+
+
+def _non_ascii(text: str) -> set:
+    return {c for c in text if ord(c) > 127}
+
+
+@pytest.mark.parametrize(
+    "path",
+    [SCHEMAS_DIR / f"{m}.json" for m in MAIN_MODELS]
+    + [MODELS_DIR / f"{m}.py" for m in MAIN_MODELS],
+    ids=lambda p: p.name,
+)
+def test_no_foreign_characters(path):
+    """Generated artifacts contain no non-ASCII characters absent from the LinkML sources.
+
+    Unlike the regeneration tests above, this does not rely on the generator
+    itself and thus catches encoding errors (e.g. "±" turned into "Â±" when
+    decoding UTF-8 as cp1252) that a regeneration would reproduce.
+    """
+    sources = "".join(p.read_text(encoding="utf-8") for p in LINKML_DIR.rglob("*.yaml"))
+    foreign = _non_ascii(path.read_text(encoding="utf-8")) - _non_ascii(sources)
+    assert not foreign, (
+        f"{path.name} contains characters not present in linkml/: "
+        f"{sorted(foreign)}. This usually indicates an encoding error during "
+        f"generation. {REGENERATE_HINT}"
+    )

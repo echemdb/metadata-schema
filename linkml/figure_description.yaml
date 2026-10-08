@@ -9,6 +9,7 @@ prefixes:
 imports:
   - linkml:types
   - ./general/quantity
+  - ./general/url
 
 default_range: string
 
@@ -76,6 +77,33 @@ classes:
         inlined: true
         examples:
           - value: "{value: 50, unit: mV / s}"
+      software:
+        range: Software
+        description: >-
+          Software that created the data, e.g., recorded it with an instrument,
+          digitized it from a figure, simulated it, or processed it.
+        inlined: true
+
+  Software:
+    description: Software used to create the data.
+    attributes:
+      name:
+        range: string
+        required: true
+        description: Name of the software.
+        examples:
+          - value: "svgdigitizer"
+      version:
+        range: string
+        required: true
+        description: Version of the software.
+        examples:
+          - value: "0.14.5"
+      url:
+        range: HttpUrl
+        description: URL of the software, e.g., its repository.
+        examples:
+          - value: "https://github.com/echemdb/svgdigitizer"
 
   DataField:
     description: >-
