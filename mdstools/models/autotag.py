@@ -1141,7 +1141,7 @@ class FigureDescription(ConfiguredBaseModel):
     )
     software: Optional[Software] = Field(
         default=None,
-        description="""Software that created the data, e.g., digitized it from a figure, simulated it, or processed it. Not applicable to raw data.""",
+        description="""Software that created the data, e.g., recorded it with an instrument, digitized it from a figure, simulated it, or processed it.""",
         json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
     )
 
