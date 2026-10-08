@@ -106,9 +106,7 @@ def test_no_foreign_characters(path):
     itself and thus catches encoding errors (e.g. "±" turned into "Â±" when
     decoding UTF-8 as cp1252) that a regeneration would reproduce.
     """
-    sources = "".join(
-        p.read_text(encoding="utf-8") for p in LINKML_DIR.rglob("*.yaml")
-    )
+    sources = "".join(p.read_text(encoding="utf-8") for p in LINKML_DIR.rglob("*.yaml"))
     foreign = _non_ascii(path.read_text(encoding="utf-8")) - _non_ascii(sources)
     assert not foreign, (
         f"{path.name} contains characters not present in linkml/: "
