@@ -1,6 +1,10 @@
 # Descriptor providing information on the original data axis (field) units, measurementType and linked measuremnts of source data.
 # This descriptor is not required in combination with an SVG converted with `svgdigitizer.electrochemistry.cv.CV`.
 type: digitized # raw, digitized
+software: # software that created the data, e.g., digitized it. Not applicable to raw data.
+  name: svgdigitizer
+  version: 0.14.5
+  url: https://github.com/echemdb/svgdigitizer
 measurementType: CV
 simultaneousMeasurements:
   - ring current # FTIR, SXRD, Ring Disc - indicate if any other operando methods were shown in the same plot, which is linked to the data. Created by `svgdigitizer.electrochemistry.cv.CV`

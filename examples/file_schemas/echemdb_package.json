@@ -134,6 +134,11 @@
                     },
                     "figureDescription": {
                         "type": "digitized",
+                        "software": {
+                            "name": "svgdigitizer",
+                            "version": "0.14.5",
+                            "url": "https://github.com/echemdb/svgdigitizer"
+                        },
                         "simultaneousMeasurements": [],
                         "measurementType": "CV",
                         "fields": [

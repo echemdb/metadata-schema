@@ -313,6 +313,7 @@ class Process(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -428,7 +429,7 @@ class Uncertainty(ConfiguredBaseModel):
 
     value: Optional[float] = Field(
         default=None,
-        description="""Symmetric uncertainty value (±).""",
+        description="""Symmetric uncertainty value (Â±).""",
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
@@ -616,6 +617,7 @@ class Purity(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [
                     {"value": "https://your-chemical-supplier.com/specification/12345"}
@@ -656,6 +658,7 @@ class Electrode(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -876,6 +879,7 @@ class ElectrodeSource(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [
                     {"value": "https://your-crystal-supplier.com/product/pt111"}
@@ -1002,6 +1006,7 @@ class ElectrodePreparation(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [{"value": "https://doi.org/10.1234/preparation.2024"}],
             }
@@ -1056,6 +1061,7 @@ class Component(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -1427,6 +1433,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -1600,6 +1607,7 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -1664,6 +1672,7 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [
                     {"value": "https://your-cell-supplier.com/product/h-cell"}
@@ -1799,6 +1808,7 @@ class Atmosphere(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [
                     {"value": "https://doi.org/10.1234/atmosphere-protocol.2024"}
@@ -1938,6 +1948,7 @@ class Source(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [{"value": "https://doi.org/10.1234/example.2024"}],
             }
@@ -2081,6 +2092,7 @@ class Instrumentation(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -2494,6 +2506,7 @@ class Experimental(ConfiguredBaseModel):
                     "Atmosphere",
                     "Source",
                     "Experimental",
+                    "Software",
                 ],
                 "examples": [{"value": "https://doi.org/10.1234/experiment.2024"}],
             }
@@ -2628,6 +2641,71 @@ class FigureDescription(ConfiguredBaseModel):
             }
         },
     )
+    software: Optional[Software] = Field(
+        default=None,
+        description="""Software that created the data, e.g., digitized it from a figure, simulated it, or processed it. Not applicable to raw data.""",
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
+    )
+
+
+class Software(ConfiguredBaseModel):
+    """
+    Software used to create the data.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "https://echemdb.github.io/metadata-schema/figure_description"}
+    )
+
+    name: str = Field(
+        default=...,
+        description="""Name of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Process",
+                    "Electrode",
+                    "Component",
+                    "ElectrolyteContainerComponent",
+                    "ElectrochemicalCellComponent",
+                    "Instrumentation",
+                    "Software",
+                    "DataField",
+                    "FieldUnit",
+                ],
+                "examples": [{"value": "svgdigitizer"}],
+            }
+        },
+    )
+    version: str = Field(
+        default=...,
+        description="""Version of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software"],
+                "examples": [{"value": "0.14.5"}],
+            }
+        },
+    )
+    url: Optional[str] = Field(
+        default=None,
+        description="""URL of the software, e.g., its repository.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Purity",
+                    "ElectrodeSource",
+                    "ElectrodePreparation",
+                    "ElectrochemicalCellSource",
+                    "Atmosphere",
+                    "Source",
+                    "Experimental",
+                    "Software",
+                ],
+                "examples": [{"value": "https://github.com/echemdb/svgdigitizer"}],
+            }
+        },
+    )
 
 
 class DataField(ConfiguredBaseModel):
@@ -2651,6 +2729,7 @@ class DataField(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -2890,6 +2969,7 @@ class FieldUnit(ConfiguredBaseModel):
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "FieldUnit",
                 ],
@@ -3049,6 +3129,7 @@ Stirring.model_rebuild()
 Ultrasound.model_rebuild()
 Experimental.model_rebuild()
 FigureDescription.model_rebuild()
+Software.model_rebuild()
 DataField.model_rebuild()
 DataDescription.model_rebuild()
 Dialect.model_rebuild()

@@ -310,6 +310,7 @@ class Process(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -360,6 +361,7 @@ class Eln(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -431,6 +433,7 @@ class Instrumentation(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -544,7 +547,7 @@ class Uncertainty(ConfiguredBaseModel):
 
     value: Optional[float] = Field(
         default=None,
-        description="""Symmetric uncertainty value (±).""",
+        description="""Symmetric uncertainty value (Â±).""",
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
@@ -1001,6 +1004,7 @@ class Experimental(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -1142,6 +1146,73 @@ class FigureDescription(ConfiguredBaseModel):
             }
         },
     )
+    software: Optional[Software] = Field(
+        default=None,
+        description="""Software that created the data, e.g., digitized it from a figure, simulated it, or processed it. Not applicable to raw data.""",
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
+    )
+
+
+class Software(ConfiguredBaseModel):
+    """
+    Software used to create the data.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "https://echemdb.github.io/metadata-schema/figure_description"}
+    )
+
+    name: str = Field(
+        default=...,
+        description="""Name of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Process",
+                    "Instrumentation",
+                    "Software",
+                    "DataField",
+                    "Project",
+                    "Electrode",
+                    "Component",
+                    "ElectrolyteContainerComponent",
+                    "ElectrochemicalCellComponent",
+                ],
+                "examples": [{"value": "svgdigitizer"}],
+            }
+        },
+    )
+    version: str = Field(
+        default=...,
+        description="""Version of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software"],
+                "examples": [{"value": "0.14.5"}],
+            }
+        },
+    )
+    url: Optional[str] = Field(
+        default=None,
+        description="""URL of the software, e.g., its repository.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Eln",
+                    "Experimental",
+                    "Software",
+                    "Project",
+                    "Source",
+                    "Purity",
+                    "ElectrodeSource",
+                    "ElectrodePreparation",
+                    "ElectrochemicalCellSource",
+                    "Atmosphere",
+                ],
+                "examples": [{"value": "https://github.com/echemdb/svgdigitizer"}],
+            }
+        },
+    )
 
 
 class DataField(ConfiguredBaseModel):
@@ -1161,6 +1232,7 @@ class DataField(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -1308,6 +1380,7 @@ class Project(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -1369,6 +1442,7 @@ class Project(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -1417,6 +1491,7 @@ class Source(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -1594,6 +1669,7 @@ class Purity(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -1637,6 +1713,7 @@ class Electrode(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -1856,6 +1933,7 @@ class ElectrodeSource(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -1984,6 +2062,7 @@ class ElectrodePreparation(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -2040,6 +2119,7 @@ class Component(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -2412,6 +2492,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -2587,6 +2668,7 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                 "domain_of": [
                     "Process",
                     "Instrumentation",
+                    "Software",
                     "DataField",
                     "Project",
                     "Electrode",
@@ -2649,6 +2731,7 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -2787,6 +2870,7 @@ class Atmosphere(ConfiguredBaseModel):
                 "domain_of": [
                     "Eln",
                     "Experimental",
+                    "Software",
                     "Project",
                     "Source",
                     "Purity",
@@ -2988,6 +3072,7 @@ Stirring.model_rebuild()
 Ultrasound.model_rebuild()
 Experimental.model_rebuild()
 FigureDescription.model_rebuild()
+Software.model_rebuild()
 DataField.model_rebuild()
 Project.model_rebuild()
 Source.model_rebuild()

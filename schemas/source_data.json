@@ -1174,6 +1174,17 @@
             "null"
           ]
         },
+        "software": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Software"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Software that created the data, e.g., digitized it from a figure, simulated it, or processed it. Not applicable to raw data."
+        },
         "type": {
           "$ref": "#/$defs/FigureDescriptionType",
           "description": "Source or origin of the data, such as digitized, raw, simulated, or processed."
@@ -1599,6 +1610,35 @@
         }
       },
       "title": "Shape",
+      "type": "object"
+    },
+    "Software": {
+      "additionalProperties": false,
+      "description": "Software used to create the data.",
+      "properties": {
+        "name": {
+          "description": "Name of the software.",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL of the software, e.g., its repository.",
+          "format": "uri",
+          "pattern": "^https?://.*$",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "description": "Version of the software.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "title": "Software",
       "type": "object"
     },
     "Source": {

@@ -217,7 +217,7 @@ class Uncertainty(ConfiguredBaseModel):
 
     value: Optional[float] = Field(
         default=None,
-        description="""Symmetric uncertainty value (±).""",
+        description="""Symmetric uncertainty value (Â±).""",
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["Quantity", "Uncertainty"],
@@ -348,6 +348,52 @@ class FigureDescription(ConfiguredBaseModel):
             }
         },
     )
+    software: Optional[Software] = Field(
+        default=None,
+        description="""Software that created the data, e.g., digitized it from a figure, simulated it, or processed it. Not applicable to raw data.""",
+        json_schema_extra={"linkml_meta": {"domain_of": ["FigureDescription"]}},
+    )
+
+
+class Software(ConfiguredBaseModel):
+    """
+    Software used to create the data.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {"from_schema": "https://echemdb.github.io/metadata-schema/figure_description"}
+    )
+
+    name: str = Field(
+        default=...,
+        description="""Name of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software", "DataField"],
+                "examples": [{"value": "svgdigitizer"}],
+            }
+        },
+    )
+    version: str = Field(
+        default=...,
+        description="""Version of the software.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software"],
+                "examples": [{"value": "0.14.5"}],
+            }
+        },
+    )
+    url: Optional[str] = Field(
+        default=None,
+        description="""URL of the software, e.g., its repository.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Software", "SvgdigitizerSource"],
+                "examples": [{"value": "https://github.com/echemdb/svgdigitizer"}],
+            }
+        },
+    )
 
 
 class DataField(ConfiguredBaseModel):
@@ -363,7 +409,10 @@ class DataField(ConfiguredBaseModel):
         default=...,
         description="""Name of the data field. Use single letters for specific systems. Otherwise use descriptive names like 't_rel', 'E_WE', or 'j_WE'.""",
         json_schema_extra={
-            "linkml_meta": {"domain_of": ["DataField"], "examples": [{"value": "E_WE"}]}
+            "linkml_meta": {
+                "domain_of": ["Software", "DataField"],
+                "examples": [{"value": "E_WE"}],
+            }
         },
     )
     type: Optional[str] = Field(
@@ -631,7 +680,7 @@ class SvgdigitizerSource(ConfiguredBaseModel):
         description="""URL or DOI of the source publication.""",
         json_schema_extra={
             "linkml_meta": {
-                "domain_of": ["SvgdigitizerSource"],
+                "domain_of": ["Software", "SvgdigitizerSource"],
                 "examples": [{"value": "https://doi.org/10.1039/C0CP01001D"}],
             }
         },
@@ -668,6 +717,7 @@ class SvgdigitizerSource(ConfiguredBaseModel):
 Quantity.model_rebuild()
 Uncertainty.model_rebuild()
 FigureDescription.model_rebuild()
+Software.model_rebuild()
 DataField.model_rebuild()
 SvgdigitizerPackage.model_rebuild()
 SvgdigitizerResource.model_rebuild()
