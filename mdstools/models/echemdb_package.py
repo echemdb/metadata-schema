@@ -2881,7 +2881,7 @@ class EchemdbMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["EchemdbMetadata"],
-                "examples": [{"value": "0.8.3"}],
+                "examples": [{"value": "0.8.4"}],
             }
         },
     )

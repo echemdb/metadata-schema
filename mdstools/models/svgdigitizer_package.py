@@ -584,7 +584,7 @@ class SvgdigitizerEchemdbMetadata(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["SvgdigitizerEchemdbMetadata"],
-                "examples": [{"value": "0.8.3"}],
+                "examples": [{"value": "0.8.4"}],
             }
         },
     )
