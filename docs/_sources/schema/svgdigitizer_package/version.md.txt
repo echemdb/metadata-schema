@@ -1,0 +1,108 @@
+# Slot: version 
+
+
+_Version of the software._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/version](https://echemdb.github.io/metadata-schema/svgdigitizer_package/version)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Software](Software.md) | Software used to create the data |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Software](Software.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Software](Software.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| 0.14.5 |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/version |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/version |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: version
+description: Version of the software.
+examples:
+- value: 0.14.5
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer_package
+rank: 1000
+owner: Software
+domain_of:
+- Software
+range: string
+required: true
+
+```
+</details></div>

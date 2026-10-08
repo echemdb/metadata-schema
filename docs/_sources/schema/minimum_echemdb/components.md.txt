@@ -1,0 +1,80 @@
+# Slot: components 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/components](https://echemdb.github.io/metadata-schema/minimum_echemdb/components)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+| [ElectrolyteContainer](ElectrolyteContainer.md) | Container used to prepare or store the electrolyte before the measurement |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+| [Atmosphere](Atmosphere.md) | Atmospheric conditions and gas composition during the experiment |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Electrolyte](Electrolyte.md), [ElectrolyteContainer](ElectrolyteContainer.md), [ElectrochemicalCell](ElectrochemicalCell.md), [Atmosphere](Atmosphere.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/components |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/components |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: components
+domain_of:
+- Electrolyte
+- ElectrolyteContainer
+- ElectrochemicalCell
+- Atmosphere
+range: string
+
+```
+</details></div>

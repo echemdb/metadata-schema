@@ -1,0 +1,5 @@
+# autotag 
+
+Complete metadata schema for YAML templates used by autotag.
+
+URI: https://echemdb.github.io/metadata-schema/autotag

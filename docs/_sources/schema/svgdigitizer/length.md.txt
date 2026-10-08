@@ -1,0 +1,107 @@
+# Slot: length 
+
+
+_Length of the electrode._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/length](https://echemdb.github.io/metadata-schema/svgdigitizer/length)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Shape](Shape.md) | Physical dimensions and shape of the electrode |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Quantity](Quantity.md) |
+| Domain Of | [Shape](Shape.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Shape](Shape.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 10, unit: mm} |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/length |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/length |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: length
+description: Length of the electrode.
+examples:
+- value: '{value: 10, unit: mm}'
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: Shape
+domain_of:
+- Shape
+range: Quantity
+inlined: true
+
+```
+</details></div>

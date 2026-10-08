@@ -1,0 +1,5 @@
+# svgdigitizer_package 
+
+Data package schema for svgdigitizer output.
+
+URI: https://echemdb.github.io/metadata-schema/svgdigitizer_package

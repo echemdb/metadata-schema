@@ -1,0 +1,203 @@
+# Class: Software 
+
+
+_Software used to create the data._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/Software](https://echemdb.github.io/metadata-schema/minimum_echemdb/Software)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Software
+    click Software href "../Software/"
+      Software : name
+        
+      Software : url
+        
+      Software : version
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [name](name.md) | 1 <br/> [String](String.md) | Name of the software | `svgdigitizer` |
+| [version](version.md) | 1 <br/> [String](String.md) | Version of the software | `0.14.5` |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL of the software, e | `https://github.com/echemdb/svgdigitizer` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | [software](software.md) | range | [Software](Software.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/Software |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/Software |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Software
+description: Software used to create the data.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  name:
+    name: name
+    description: Name of the software.
+    examples:
+    - value: svgdigitizer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Software
+    - DataField
+    - Instrumentation
+    range: string
+    required: true
+  version:
+    name: version
+    description: Version of the software.
+    examples:
+    - value: 0.14.5
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    domain_of:
+    - Software
+    range: string
+    required: true
+  url:
+    name: url
+    description: URL of the software, e.g., its repository.
+    examples:
+    - value: https://github.com/echemdb/svgdigitizer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Software
+    - Experimental
+    range: HttpUrl
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Software
+description: Software used to create the data.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  name:
+    name: name
+    description: Name of the software.
+    examples:
+    - value: svgdigitizer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    owner: Software
+    domain_of:
+    - Process
+    - Electrode
+    - Component
+    - ElectrolyteContainerComponent
+    - ElectrochemicalCellComponent
+    - Software
+    - DataField
+    - Instrumentation
+    range: string
+    required: true
+  version:
+    name: version
+    description: Version of the software.
+    examples:
+    - value: 0.14.5
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    rank: 1000
+    owner: Software
+    domain_of:
+    - Software
+    range: string
+    required: true
+  url:
+    name: url
+    description: URL of the software, e.g., its repository.
+    examples:
+    - value: https://github.com/echemdb/svgdigitizer
+    from_schema: https://echemdb.github.io/metadata-schema/figure_description
+    owner: Software
+    domain_of:
+    - Purity
+    - ElectrodeSource
+    - ElectrodePreparation
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Software
+    - Experimental
+    range: HttpUrl
+
+```
+</details>

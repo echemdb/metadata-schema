@@ -1,0 +1,107 @@
+# Slot: power 
+
+
+_Acoustic power of the ultrasound source._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/power](https://echemdb.github.io/metadata-schema/echemdb_package/power)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Ultrasound](Ultrasound.md) | Ultrasound applied to the electrolyte |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Quantity](Quantity.md) |
+| Domain Of | [Ultrasound](Ultrasound.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Ultrasound](Ultrasound.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 20, unit: W} |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/power |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/power |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: power
+description: Acoustic power of the ultrasound source.
+examples:
+- value: '{value: 20, unit: W}'
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+owner: Ultrasound
+domain_of:
+- Ultrasound
+range: Quantity
+inlined: true
+
+```
+</details></div>

@@ -1,0 +1,81 @@
+# Slot: unit 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/unit](https://echemdb.github.io/metadata-schema/echemdb_package/unit)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Quantity](Quantity.md) | A physical quantity with a value, unit, and optional uncertainty |  no  |
+| [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  no  |
+| [ControlledQuantity](ControlledQuantity.md) | A physical quantity that was actively controlled by an instrument |  no  |
+| [DataField](DataField.md) | Description of a data field (column) compatible with frictionless table-schem... |  no  |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Quantity](Quantity.md), [Uncertainty](Uncertainty.md), [DataField](DataField.md), [Purity](Purity.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/unit |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/unit |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: unit
+domain_of:
+- Quantity
+- Uncertainty
+- DataField
+- Purity
+range: string
+
+```
+</details></div>

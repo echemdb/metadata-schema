@@ -1,0 +1,107 @@
+# Slot: frequency 
+
+
+_Frequency of the ultrasound._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/frequency](https://echemdb.github.io/metadata-schema/minimum_echemdb/frequency)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Ultrasound](Ultrasound.md) | Ultrasound applied to the electrolyte |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Quantity](Quantity.md) |
+| Domain Of | [Ultrasound](Ultrasound.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Ultrasound](Ultrasound.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 20, unit: kHz} |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/frequency |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/frequency |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: frequency
+description: Frequency of the ultrasound.
+examples:
+- value: '{value: 20, unit: kHz}'
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+owner: Ultrasound
+domain_of:
+- Ultrasound
+range: Quantity
+inlined: true
+
+```
+</details></div>

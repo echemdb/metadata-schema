@@ -1,0 +1,171 @@
+# Class: Stirring 
+
+
+_Stirring of the electrolyte._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/Stirring](https://echemdb.github.io/metadata-schema/minimum_echemdb/Stirring)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Stirring
+    click Stirring href "../Stirring/"
+      ControlledOperation <|-- Stirring
+        click ControlledOperation href "../ControlledOperation/"
+      
+      Stirring : control
+        
+          
+    
+        
+        
+        Stirring --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      Stirring : rate
+        
+          
+    
+        
+        
+        Stirring --> "0..1" Quantity : rate
+        click Quantity href "../Quantity/"
+    
+
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* [ControlledOperation](ControlledOperation.md)
+    * **Stirring**
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [rate](rate.md) | 0..1 <br/> [Quantity](Quantity.md) | Stirring rate | `{value: 400, unit: 1 / min}` |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the operation was controlled |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [MassTransport](MassTransport.md) | [stirring](stirring.md) | range | [Stirring](Stirring.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/Stirring |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/Stirring |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Stirring
+description: Stirring of the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Stirring rate.
+    examples:
+    - value: '{value: 400, unit: 1 / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Stirring
+description: Stirring of the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Stirring rate.
+    examples:
+    - value: '{value: 400, unit: 1 / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Stirring
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Stirring
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>

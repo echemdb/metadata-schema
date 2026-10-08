@@ -1,0 +1,241 @@
+# Class: Ultrasound 
+
+
+_Ultrasound applied to the electrolyte._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/Ultrasound](https://echemdb.github.io/metadata-schema/autotag/Ultrasound)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Ultrasound
+    click Ultrasound href "../Ultrasound/"
+      ControlledOperation <|-- Ultrasound
+        click ControlledOperation href "../ControlledOperation/"
+      
+      Ultrasound : amplitude
+        
+          
+    
+        
+        
+        Ultrasound --> "0..1" Quantity : amplitude
+        click Quantity href "../Quantity/"
+    
+
+        
+      Ultrasound : control
+        
+          
+    
+        
+        
+        Ultrasound --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      Ultrasound : frequency
+        
+          
+    
+        
+        
+        Ultrasound --> "0..1" Quantity : frequency
+        click Quantity href "../Quantity/"
+    
+
+        
+      Ultrasound : power
+        
+          
+    
+        
+        
+        Ultrasound --> "0..1" Quantity : power
+        click Quantity href "../Quantity/"
+    
+
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* [ControlledOperation](ControlledOperation.md)
+    * **Ultrasound**
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [power](power.md) | 0..1 <br/> [Quantity](Quantity.md) | Acoustic power of the ultrasound source | `{value: 20, unit: W}` |
+| [frequency](frequency.md) | 0..1 <br/> [Quantity](Quantity.md) | Frequency of the ultrasound | `{value: 20, unit: kHz}` |
+| [amplitude](amplitude.md) | 0..1 <br/> [Quantity](Quantity.md) | Amplitude of the ultrasound source, e | `{value: 40, unit: percent}` |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the operation was controlled |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [MassTransport](MassTransport.md) | [ultrasound](ultrasound.md) | range | [Ultrasound](Ultrasound.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/Ultrasound |
+| native | https://echemdb.github.io/metadata-schema/autotag/Ultrasound |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Ultrasound
+description: Ultrasound applied to the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+is_a: ControlledOperation
+attributes:
+  power:
+    name: power
+    description: Acoustic power of the ultrasound source.
+    examples:
+    - value: '{value: 20, unit: W}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+  frequency:
+    name: frequency
+    description: Frequency of the ultrasound.
+    examples:
+    - value: '{value: 20, unit: kHz}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+  amplitude:
+    name: amplitude
+    description: Amplitude of the ultrasound source, e.g. as horn displacement or
+      as a percentage of the maximum.
+    examples:
+    - value: '{value: 40, unit: percent}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Ultrasound
+description: Ultrasound applied to the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+is_a: ControlledOperation
+attributes:
+  power:
+    name: power
+    description: Acoustic power of the ultrasound source.
+    examples:
+    - value: '{value: 20, unit: W}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: Ultrasound
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+  frequency:
+    name: frequency
+    description: Frequency of the ultrasound.
+    examples:
+    - value: '{value: 20, unit: kHz}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: Ultrasound
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+  amplitude:
+    name: amplitude
+    description: Amplitude of the ultrasound source, e.g. as horn displacement or
+      as a percentage of the maximum.
+    examples:
+    - value: '{value: 40, unit: percent}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: Ultrasound
+    domain_of:
+    - Ultrasound
+    range: Quantity
+    inlined: true
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Ultrasound
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>

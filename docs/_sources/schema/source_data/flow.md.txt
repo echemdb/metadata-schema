@@ -1,0 +1,76 @@
+# Slot: flow 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/flow](https://echemdb.github.io/metadata-schema/source_data/flow)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Component](Component.md) | A chemical component of the electrolyte solution |  no  |
+| [MassTransport](MassTransport.md) | Forced-convection modes inducing mass transport during the measurement |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Component](Component.md), [MassTransport](MassTransport.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/flow |
+| native | https://echemdb.github.io/metadata-schema/source_data/flow |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: flow
+domain_of:
+- Component
+- MassTransport
+range: string
+
+```
+</details></div>

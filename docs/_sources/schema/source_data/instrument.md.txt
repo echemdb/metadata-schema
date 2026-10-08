@@ -1,0 +1,107 @@
+# Slot: instrument 
+
+
+_Name of the controlling instrument. Must match the name of an entry under experimental.instrumentation (Instrumentation.name)._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/instrument](https://echemdb.github.io/metadata-schema/source_data/instrument)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Control](Control.md) | How a parameter was actively controlled during the measurement, including a r... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Control](Control.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Control](Control.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| Rotator1 |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/instrument |
+| native | https://echemdb.github.io/metadata-schema/source_data/instrument |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: instrument
+description: Name of the controlling instrument. Must match the name of an entry under
+  experimental.instrumentation (Instrumentation.name).
+examples:
+- value: Rotator1
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: Control
+domain_of:
+- Control
+range: string
+
+```
+</details></div>

@@ -1,0 +1,108 @@
+# Slot: amplitude 
+
+
+_Amplitude of the ultrasound source, e.g. as horn displacement or as a percentage of the maximum._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/amplitude](https://echemdb.github.io/metadata-schema/autotag/amplitude)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Ultrasound](Ultrasound.md) | Ultrasound applied to the electrolyte |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Quantity](Quantity.md) |
+| Domain Of | [Ultrasound](Ultrasound.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Ultrasound](Ultrasound.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| {value: 40, unit: percent} |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/amplitude |
+| native | https://echemdb.github.io/metadata-schema/autotag/amplitude |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: amplitude
+description: Amplitude of the ultrasound source, e.g. as horn displacement or as a
+  percentage of the maximum.
+examples:
+- value: '{value: 40, unit: percent}'
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+owner: Ultrasound
+domain_of:
+- Ultrasound
+range: Quantity
+inlined: true
+
+```
+</details></div>

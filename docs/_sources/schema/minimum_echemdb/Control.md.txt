@@ -1,0 +1,174 @@
+# Class: Control 
+
+
+_How a parameter was actively controlled during the measurement, including a reference to the controlling instrument._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/Control](https://echemdb.github.io/metadata-schema/minimum_echemdb/Control)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Control
+    click Control href "../Control/"
+      Control : description
+        
+      Control : instrument
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [instrument](instrument.md) | 0..1 <br/> [String](String.md) | Name of the controlling instrument | `Rotator1` |
+| [description](description.md) | 0..1 <br/> [String](String.md) | Additional details about how the parameter was controlled | `Jacketed cell with circulating water bath` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [ControlledQuantity](ControlledQuantity.md) | [control](control.md) | range | [Control](Control.md) |
+| [ControlledOperation](ControlledOperation.md) | [control](control.md) | range | [Control](Control.md) |
+| [Rotation](Rotation.md) | [control](control.md) | range | [Control](Control.md) |
+| [Flow](Flow.md) | [control](control.md) | range | [Control](Control.md) |
+| [Stirring](Stirring.md) | [control](control.md) | range | [Control](Control.md) |
+| [Ultrasound](Ultrasound.md) | [control](control.md) | range | [Control](Control.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/Control |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/Control |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Control
+description: How a parameter was actively controlled during the measurement, including
+  a reference to the controlling instrument.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  instrument:
+    name: instrument
+    description: Name of the controlling instrument. Must match the name of an entry
+      under experimental.instrumentation (Instrumentation.name).
+    examples:
+    - value: Rotator1
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - Control
+    range: string
+  description:
+    name: description
+    description: Additional details about how the parameter was controlled.
+    examples:
+    - value: Jacketed cell with circulating water bath
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Control
+    - Experimental
+    range: string
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Control
+description: How a parameter was actively controlled during the measurement, including
+  a reference to the controlling instrument.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  instrument:
+    name: instrument
+    description: Name of the controlling instrument. Must match the name of an entry
+      under experimental.instrumentation (Instrumentation.name).
+    examples:
+    - value: Rotator1
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: Control
+    domain_of:
+    - Control
+    range: string
+  description:
+    name: description
+    description: Additional details about how the parameter was controlled.
+    examples:
+    - value: Jacketed cell with circulating water bath
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Control
+    domain_of:
+    - Electrode
+    - Shape
+    - ElectrodePreparation
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Control
+    - Experimental
+    range: string
+
+```
+</details>
