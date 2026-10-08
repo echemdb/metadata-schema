@@ -28,6 +28,7 @@ Usage:
 # ********************************************************************
 
 import json
+import os
 import subprocess
 import sys
 import urllib.request
@@ -38,6 +39,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 LINKML_DIR = REPO_ROOT / "linkml"
 SCHEMAS_DIR = REPO_ROOT / "schemas"
 MODELS_DIR = REPO_ROOT / "mdstools" / "models"
+
+# Make the LinkML generators write UTF-8 to stdout regardless of the platform's
+# locale encoding (e.g. cp1252 on Windows), which would otherwise mangle
+# non-ASCII characters such as "±" in descriptions.
+_UTF8_ENV = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
 
 # Frictionless schemas to download on demand
 FRICTIONLESS_SCHEMAS = {
@@ -184,6 +190,8 @@ def generate_json_schemas(output_dir: Path = SCHEMAS_DIR, ensure_frictionless=Tr
             ["gen-json-schema", str(linkml_file)],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            env=_UTF8_ENV,
             check=False,
         )
 
@@ -319,6 +327,8 @@ def generate_pydantic_models(output_dir: Path = MODELS_DIR):
             ["gen-pydantic", linkml_rel],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            env=_UTF8_ENV,
             check=False,
             cwd=str(REPO_ROOT),
         )

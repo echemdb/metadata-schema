@@ -547,7 +547,7 @@ class Uncertainty(ConfiguredBaseModel):
 
     value: Optional[float] = Field(
         default=None,
-        description="""Symmetric uncertainty value (Â±).""",
+        description="""Symmetric uncertainty value (±).""",
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["Quantity", "Uncertainty", "Purity"],
