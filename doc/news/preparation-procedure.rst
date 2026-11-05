@@ -12,15 +12,3 @@
 **Removed:**
 
 * Removed ``system.electrochemicalCell.cleaningProcedure``; existing files are upgraded by the migration.
-
-**Fixed:**
-
-* <news item>
-
-**Deprecated:**
-
-* <news item>
-
-**Performance:**
-
-* <news item>
