@@ -22,3 +22,5 @@ jobs:
         run: pixi run black --diff --check
       - name: isort
         run: pixi run isort --check --diff
+      - name: news entries
+        run: pixi run check-news
