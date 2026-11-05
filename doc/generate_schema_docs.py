@@ -1,9 +1,9 @@
 """Generate schema documentation from LinkML YAML files using gen-doc."""
 
 import re
-import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 # Schema names matching the LinkML YAML files under linkml/
@@ -62,16 +62,54 @@ def _postprocess_markdown(output_dir):
             index_file.write_text(content, encoding="utf-8")
 
 
+def _sync_tree(source, target):
+    """Make ``target`` identical to ``source``, touching only files that differ.
+
+    Unchanged files keep their modification time, so an incremental Sphinx
+    build only re-renders the schema pages whose content actually changed.
+    Hidden files in ``target`` (such as the stamp of ``doc_fast.py``) are kept.
+    Returns the number of written and removed files.
+    """
+    written = removed = 0
+    source_files = {p.relative_to(source) for p in source.rglob("*") if p.is_file()}
+    if target.exists():
+        for path in sorted(target.rglob("*"), reverse=True):
+            relative = path.relative_to(target)
+            if path.name.startswith("."):
+                continue
+            if path.is_file() and relative not in source_files:
+                path.unlink()
+                removed += 1
+            elif path.is_dir() and not any(path.iterdir()):
+                path.rmdir()
+    for relative in sorted(source_files):
+        new = (source / relative).read_bytes()
+        destination = target / relative
+        if destination.exists() and destination.read_bytes() == new:
+            continue
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(new)
+        written += 1
+    return written, removed
+
+
 def generate_schema_docs():
     """Generate Markdown documentation for each LinkML schema into doc/schema/<name>/."""
-    # Clean previous generated schema docs
-    if SCHEMA_DOC_DIR.exists():
-        shutil.rmtree(SCHEMA_DOC_DIR)
-    SCHEMA_DOC_DIR.mkdir()
+    with tempfile.TemporaryDirectory() as tmp:
+        _generate_into(Path(tmp))
+        written, removed = _sync_tree(Path(tmp), SCHEMA_DOC_DIR)
 
+    print(
+        f"Schema documentation generated successfully "
+        f"({written} pages written, {removed} removed, others unchanged)."
+    )
+
+
+def _generate_into(schema_doc_dir):
+    """Run gen-doc for all schemas into ``schema_doc_dir``."""
     for schema_name in SCHEMAS:
         linkml_file = LINKML_DIR / f"{schema_name}.yaml"
-        output_dir = SCHEMA_DOC_DIR / schema_name
+        output_dir = schema_doc_dir / schema_name
 
         if not linkml_file.exists():
             print(f"WARNING: {linkml_file} not found, skipping")
@@ -102,9 +140,6 @@ def generate_schema_docs():
             sys.exit(1)
 
         _postprocess_markdown(output_dir)
-        print(f"  -> {output_dir}")
-
-    print("Schema documentation generated successfully.")
 
 
 if __name__ == "__main__":
