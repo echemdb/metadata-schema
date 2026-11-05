@@ -1,6 +1,6 @@
 # Schema Reference
 
-The schemas describe electrochemical data: the electrochemical system (electrodes, electrolyte, cell, atmosphere), the experimental setup and instrumentation, the source of the data, its curation, and the description of digitized figures. They are combined into the schema types below, each made for a specific use.
+The metadata is organized in the schema types below, each made for a specific use.
 
 How the schemas are built and generated is described in [Schema Generation](generation.md).
 
