@@ -129,6 +129,7 @@ pylint = "pylint mdstools"
 black = "black mdstools"
 isort = "isort --profile black mdstools"
 lint = { depends-on = ["pylint", "black", "isort"] }
+check-news = "python .github/scripts/check_news.py"
 
 [tool.pixi.feature.validate.tasks]
 validate-objects = "python mdstools/schema/validate_examples.py --objects"
