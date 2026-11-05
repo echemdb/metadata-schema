@@ -11,6 +11,7 @@ imports:
   - ../general/quantity
   - ../general/purity
   - ../general/url
+  - ../general/preparation_procedure
 
 default_range: string
 
@@ -68,7 +69,7 @@ classes:
         description: Purity specifications of the electrode material.
         inlined: true
       preparationProcedure:
-        range: ElectrodePreparation
+        range: PreparationProcedure
         description: Procedures used to prepare the electrode before measurement.
         inlined: true
       shape:
@@ -166,18 +167,3 @@ classes:
         description: Detailed description of the electrode shape.
         examples:
           - value: "Hemispherical tip"
-
-  ElectrodePreparation:
-    description: Procedures and methods used to prepare the electrode.
-    attributes:
-      url:
-        range: HttpUrl
-        description: URL to detailed preparation protocol or procedure, such as an article DOI.
-        examples:
-          - value: "https://doi.org/10.1234/preparation.2024"
-      description:
-        range: string
-        description: Step-by-step description of preparation procedure.
-        multivalued: true
-        examples:
-          - value: "Polished with 0.05 um alumina, rinsed with ultrapure water"

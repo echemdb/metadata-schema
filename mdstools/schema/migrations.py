@@ -113,6 +113,67 @@ def _move_temperature_to_operation_parameters(data: dict) -> dict:
     return result
 
 
+def _cleaning_procedure_to_preparation_procedure(data: dict) -> dict:
+    r"""Breaking change: replace the cell's ``cleaningProcedure`` string.
+
+    Move ``system.electrochemicalCell.cleaningProcedure`` (a free-text string)
+    into ``system.electrochemicalCell.preparationProcedure.description`` (a
+    list of steps), following the shared ``PreparationProcedure`` structure
+    already used by electrodes. If a ``preparationProcedure.description`` exists
+    already, the cleaning text is appended to it (unless already listed), so no
+    information is lost.
+
+    Pure ``dict -> dict``: the input is not mutated. Idempotent: if there is no
+    ``cleaningProcedure`` (already migrated, or never present) the document is
+    returned unchanged.
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.migrations import (
+        ...     _cleaning_procedure_to_preparation_procedure as move)
+        >>> before = {"system": {"electrochemicalCell": {
+        ...     "cleaningProcedure": "Boiled in Milli-Q water."}}}
+        >>> after = move(before)
+        >>> after["system"]["electrochemicalCell"]
+        {'preparationProcedure': {'description': ['Boiled in Milli-Q water.']}}
+        >>> move(after) == after      # idempotent
+        True
+
+    An existing preparation procedure is extended rather than overwritten::
+
+        >>> both = {"system": {"electrochemicalCell": {
+        ...     "cleaningProcedure": "Boiled.",
+        ...     "preparationProcedure": {"url": "https://doi.org/x",
+        ...                              "description": ["Assembled."]}}}}
+        >>> move(both)["system"]["electrochemicalCell"]["preparationProcedure"]
+        {'url': 'https://doi.org/x', 'description': ['Assembled.', 'Boiled.']}
+
+    """
+    result = deepcopy(data)
+
+    system = result.get("system")
+    cell = system.get("electrochemicalCell") if isinstance(system, dict) else None
+    if not isinstance(cell, dict) or "cleaningProcedure" not in cell:
+        return result
+    cleaning = cell.pop("cleaningProcedure")
+
+    if cleaning is None or cleaning == "" or cleaning == []:
+        return result
+    steps = list(cleaning) if isinstance(cleaning, list) else [str(cleaning)]
+
+    preparation = cell.get("preparationProcedure")
+    if preparation is None:
+        preparation = cell["preparationProcedure"] = {}
+    description = preparation.get("description")
+    if description is None:
+        description = []
+    elif not isinstance(description, list):
+        description = [description]
+    description.extend(step for step in steps if step not in description)
+    preparation["description"] = description
+    return result
+
+
 #: Registered migrations, in ascending ``to_version`` order.
 #: The temperature move is unreleased; its concrete version is stamped in when
 #: the release is cut (see the ``finalize_migrations`` helper, added later).
@@ -124,5 +185,13 @@ MIGRATIONS: list[Migration] = [
             "experimental.operationParameters.temperature"
         ),
         apply=_move_temperature_to_operation_parameters,
+    ),
+    Migration(
+        to_version=UNRELEASED,
+        description=(
+            "Replace system.electrochemicalCell.cleaningProcedure with "
+            "system.electrochemicalCell.preparationProcedure.description"
+        ),
+        apply=_cleaning_procedure_to_preparation_procedure,
     ),
 ]
