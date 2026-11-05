@@ -1,10 +1,10 @@
 # Schema Reference
 
-All metadata schemas are defined as [LinkML](https://linkml.io/) YAML files and serve as the single source of truth. From these definitions, JSON Schema files and Pydantic models are generated automatically.
+The metadata is organized in the schema types below, each made for a specific use.
+
+How the schemas are built and generated is described in [Schema Generation](generation.md).
 
 ## Available schemas
-
-The following schema types are available:
 
 ::::{grid} 2
 :gutter: 3
@@ -47,29 +47,6 @@ Data package schema for SVG Digitizer output.
 
 ::::
 
-## Schema generation
-
-Schemas are generated from LinkML YAML definitions:
-
-```bash
-# Generate JSON Schemas
-pixi run generate-schemas
-
-# Generate Pydantic models
-pixi run generate-models
-
-# Generate both
-pixi run generate-all
-```
-
-## Validation
-
-Validate example files against the schemas:
-
-```bash
-pixi run validate
-```
-
 ## Schema details
 
 ```{toctree}
@@ -81,8 +58,4 @@ schema/source_data/index
 schema/svgdigitizer/index
 schema/echemdb_package/index
 schema/svgdigitizer_package/index
-```
-
-```bash
-pixi run validate
 ```
