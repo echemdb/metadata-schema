@@ -51,6 +51,22 @@ Design decisions and discussion belong in the issue or pull request, not in the 
 
 ## Changing the schema
 
+**Start with an example, not with the schema.** Edit the example in `examples/objects/` that
+covers the part you want to change (e.g. `system.yaml` for electrodes, electrolytes or cells)
+so that it shows the metadata as it *should* look. The example illustrates the proposal,
+makes it easy to discuss, and stays in the repository as the example for the new fields.
+
+If the change may be breaking, first copy the unchanged example to `tests/migrations/`. It is
+the old-style data the migration has to upgrade (see step 5), and you can trim it to the part
+that changes.
+
+Discuss the proposal before implementing it: in the related issue, or by pushing the example
+change alone and opening a draft pull request. Such a draft fails `validate` in CI until the
+schema is implemented; that is expected. Besides the example, say whether new fields are
+required, which values are allowed, and which units apply. A single new optional field needs
+little discussion; a short note in the issue or the pull request is enough. Implement the
+schema once the structure is agreed:
+
 1. Edit the LinkML files in `linkml/`. Never edit `schemas/` or `mdstools/models/` by hand;
    they are generated.
 2. Regenerate:
@@ -64,12 +80,15 @@ Design decisions and discussion belong in the issue or pull request, not in the 
    edit. Generation depends only on the LinkML input, so the output is identical on every
    platform. A change you cannot explain (encoding, file paths, formatting) is a bug in
    `mdstools/schema/generate_from_linkml.py`; fix it there instead of committing it.
-4. Update or add examples in `examples/` so the new fields are covered.
+4. Run `pixi run validate`: the changed example must now pass. Update the other examples in
+   `examples/` (e.g. `examples/file_schemas/`) where they include the changed part.
 5. **Breaking changes**: a field moved, removed, renamed or retyped, or anything else that would
    make existing data fail validation. In the same branch:
    - add a migration step to `mdstools/schema/migrations.py` with `to_version="UNRELEASED"`
      (applied by `mdstools update`);
-   - add a fixture under `tests/migrations/` proving old → new;
+   - keep the old-style fixture under `tests/migrations/` and add a test that migrates it and
+     validates the result against the current schema. Fixtures are committed: migrations
+     chain across versions, and the tests run in CI without git history;
    - say in the news entry that the change is breaking.
 
    `UNRELEASED` is replaced by the release version when a release is made. A breaking change

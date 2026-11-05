@@ -1,6 +1,6 @@
 **Added:**
 
-* Added ``CONTRIBUTING.md`` describing the fork-based workflow (one minimal branch per change, checks run locally before pushing), schema changes with migrations, and how to write news entries, together with a pull request template.
+* Added ``CONTRIBUTING.md`` describing the fork-based workflow (one minimal branch per change, checks run locally before pushing), schema changes (starting from an edited example that is discussed before the LinkML is changed) with migrations, and how to write news entries, together with a pull request template.
 * Added Claude Code skills ``/new-pr``, ``/schema-change`` and ``/record-decision`` in ``.claude/skills/`` for the same workflow.
 * Added ``pixi run check-news``, also run in CI, which rejects malformed news entries (placeholders, unknown or empty sections, byte order mark).
 
