@@ -1,6 +1,7 @@
 **Added:**
 
-* Added a "Schema Generation" page to the documentation with a workflow figure, explaining how the JSON Schemas and Pydantic models are generated from LinkML and how the package schemas build on the Frictionless Data Package standard.
+* Added a figure of the workflow from a suggested change in an example to validated metadata to the "Tools" page of the documentation.
+* Added a "Schema Generation" page to the documentation explaining how the JSON Schemas and Pydantic models are generated from LinkML and how the package schemas build on the Frictionless Data Package standard.
 
 **Changed:**
 

@@ -1,6 +1,6 @@
 # Schema Generation
 
-![From an example YAML via LinkML to JSON Schemas and Pydantic models, which are used to validate metadata files](images/schema_workflow.svg)
+This page covers the generation step of the workflow shown on the [Tools](tools.md) page.
 
 The schemas are written in [LinkML](https://linkml.io/) because a single definition gives several outputs: the JSON Schemas in `schemas/`, the Pydantic models in `mdstools/models/`, and the schema reference pages of this documentation. The JSON Schemas and the Pydantic models are generated separately from the LinkML files and are never edited by hand. A schema change usually starts with an edited example in `examples/`, which shows how the metadata should look and is validated once the schema is updated.
 
