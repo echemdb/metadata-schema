@@ -4,4 +4,4 @@
 
 **Changed:**
 
-* Changed the documentation start page and navigation into two parts, "Electrochemistry metadata" (schema reference, examples, JSON Schema downloads) and "Tools" (installation, usage, schema generation, API reference), and added the workflow figure to the start page.
+* Changed the documentation start page and navigation into two parts, "Electrochemistry metadata" (schema reference, examples, JSON Schema downloads) and "Tools" (installation, usage, schema generation, API reference), and added a figure of an electrochemical cell next to the metadata that describes it to the start page.

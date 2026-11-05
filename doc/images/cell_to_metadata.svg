@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" width="900" height="400" font-family="Helvetica, Arial, sans-serif">
+  <title>An electrochemical cell and its metadata</title>
+  <defs>
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333333"/>
+    </marker>
+  </defs>
+  <rect width="900" height="400" fill="#ffffff"/>
+
+  <!-- Electrochemical cell -->
+  <!-- electrolyte (blue) -->
+  <path d="M73,190 L73,340 Q73,357 90,357 L330,357 Q347,357 347,340 L347,190 Z" fill="#dbeaf7"/>
+  <line x1="73" y1="190" x2="347" y2="190" stroke="#2b7bb9" stroke-width="2"/>
+  <!-- gas inlet and bubbles (part of the electrolyte) -->
+  <line x1="330" y1="40" x2="330" y2="330" stroke="#2b7bb9" stroke-width="2"/>
+  <g fill="#ffffff" stroke="#2b7bb9" stroke-width="1.5">
+    <circle cx="325" cy="318" r="4"/>
+    <circle cx="334" cy="296" r="3"/>
+    <circle cx="323" cy="272" r="4"/>
+    <circle cx="333" cy="248" r="3"/>
+    <circle cx="324" cy="224" r="3.5"/>
+  </g>
+  <!-- reference electrode (purple) -->
+  <rect x="110" y="40" width="20" height="260" rx="4" fill="#f3ecfa" stroke="#8b5cb8" stroke-width="2"/>
+  <line x1="120" y1="60" x2="120" y2="290" stroke="#8b5cb8" stroke-width="1.5"/>
+  <rect x="112" y="290" width="16" height="10" fill="#8b5cb8"/>
+  <!-- working electrode (orange) -->
+  <rect x="200" y="40" width="20" height="232" fill="#f9e3cc" stroke="#d9822b" stroke-width="2"/>
+  <rect x="192" y="272" width="36" height="14" fill="#d9822b"/>
+  <!-- counter electrode (green) -->
+  <path d="M275,40 L275,230 L265,240 L285,250 L265,260 L285,270 L265,280 L285,290 L265,300 L285,310 L275,320" fill="none" stroke="#3a9a5b" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- glass cell (grey) -->
+  <path d="M70,120 L70,340 Q70,360 90,360 L330,360 Q350,360 350,340 L350,120" fill="none" stroke="#666666" stroke-width="3"/>
+  <line x1="62" y1="120" x2="78" y2="120" stroke="#666666" stroke-width="3"/>
+  <line x1="342" y1="120" x2="358" y2="120" stroke="#666666" stroke-width="3"/>
+
+  <!-- part labels -->
+  <g font-size="14" font-weight="bold" text-anchor="middle">
+    <text x="120" y="30" fill="#8b5cb8">RE</text>
+    <text x="210" y="30" fill="#d9822b">WE</text>
+    <text x="275" y="30" fill="#3a9a5b">CE</text>
+    <text x="330" y="30" fill="#2b7bb9">N₂</text>
+    <text x="210" y="385" fill="#666666">glass cell</text>
+  </g>
+
+  <!-- arrow from cell to metadata -->
+  <line x1="372" y1="200" x2="470" y2="200" stroke="#333333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="420" y="190" font-size="12" text-anchor="middle" fill="#333333">described by</text>
+
+  <!-- Metadata card -->
+  <rect x="480" y="30" width="400" height="345" rx="8" fill="#fafafa" stroke="#cccccc" stroke-width="1.5"/>
+  <!-- tints matching the cell parts -->
+  <rect x="482" y="61" width="396" height="126" fill="#dbeaf7"/>
+  <rect x="482" y="205" width="396" height="54" fill="#f9e3cc"/>
+  <rect x="482" y="259" width="396" height="36" fill="#dff1e5"/>
+  <rect x="482" y="295" width="396" height="36" fill="#f3ecfa"/>
+  <rect x="482" y="331" width="396" height="36" fill="#ececec"/>
+
+  <g font-family="Consolas, Menlo, monospace" font-size="13" fill="#222222">
+    <text x="496.0" y="56">system:</text>
+    <text x="510.3" y="74">electrolyte:</text>
+    <text x="524.6" y="92">type: aqueous</text>
+    <text x="524.6" y="110">components:</text>
+    <text x="538.9" y="128">- name: H2SO4</text>
+    <text x="553.2" y="146">concentration: {value: 0.1, unit: mol / l}</text>
+    <text x="538.9" y="164">- name: N2</text>
+    <text x="553.2" y="182">type: gas</text>
+    <text x="510.3" y="200">electrodes:</text>
+    <text x="524.6" y="218">- name: WE</text>
+    <text x="538.9" y="236">material: Ni</text>
+    <text x="538.9" y="254">crystallographicOrientation: "111"</text>
+    <text x="524.6" y="272">- name: CE</text>
+    <text x="538.9" y="290">material: Pt</text>
+    <text x="524.6" y="308">- name: RHE</text>
+    <text x="538.9" y="326">function: reference electrode</text>
+    <text x="510.3" y="344">electrochemicalCell:</text>
+    <text x="524.6" y="362">type: glass electrolysis cell</text>
+  </g>
+</svg>

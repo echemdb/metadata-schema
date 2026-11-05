@@ -1,8 +1,9 @@
 # echemdb metadata-schema
 
-The [metadata-schema](https://github.com/echemdb/metadata-schema) repository provides standardized metadata schemas for electrochemical data in the [echemdb](https://www.echemdb.org) project, together with the `mdstools` Python package to generate, validate and work with them.
+The [metadata-schema](https://github.com/echemdb/metadata-schema) repository provides standardized metadata schemas to describe electrochemical systems and the collected data. The `mdstools` Python package allows generating, validating and working with them.
+This project is part of the [echemdb](https://www.echemdb.org) community project.
 
-![From an example YAML via LinkML to JSON Schemas and Pydantic models, which are used to validate metadata files](images/schema_workflow.svg)
+![A three-electrode glass cell next to the YAML metadata that describes it; each part of the cell has the same colour as its block in the metadata](images/cell_to_metadata.svg)
 
 ::::{grid} 1 1 2 2
 :gutter: 3
