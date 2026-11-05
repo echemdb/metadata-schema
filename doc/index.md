@@ -1,14 +1,34 @@
-# Welcome to metadata-schema's documentation!
+# echemdb metadata-schema
 
-The [metadata-schema](https://github.com/echemdb/metadata-schema) repository provides standardized metadata schemas for the [echemdb](https://www.echemdb.org) project. Schemas are defined in [LinkML](https://linkml.io/) and used to validate and describe electrochemical data packages.
+The [metadata-schema](https://github.com/echemdb/metadata-schema) repository provides standardized metadata schemas for electrochemical data in the [echemdb](https://www.echemdb.org) project, together with the `mdstools` Python package to generate, validate and work with them.
 
-The `mdstools` Python package provides tools for working with these schemas:
+![From an example YAML via LinkML to JSON Schemas and Pydantic models, which are used to validate metadata files](images/schema_workflow.svg)
 
-- Flatten nested YAML metadata into tabular (Excel/CSV) format
-- Enrich flattened metadata with descriptions and examples from the schemas
-- Validate metadata against the schemas
-- Convert between YAML, Excel, and CSV formats
+::::{grid} 1 1 2 2
+:gutter: 3
 
+:::{grid-item-card} Electrochemistry metadata
+Schemas for describing electrochemical data: electrodes, electrolytes, cells, the experimental setup, the data source and its curation.
+
+- [Schema reference](schemas.md)
+- [Example files](examples.md)
+- {ref}`JSON Schema downloads <json-schemas>`
+
+:::
+
+:::{grid-item-card} Tools
+How the schemas are generated from LinkML, and how to flatten, enrich, validate and migrate metadata with `mdstools`.
+
+- [Installation](installation.md)
+- [Usage](usage.md)
+- [Schema generation](generation.md)
+- [API reference](api.md)
+
+:::
+
+::::
+
+(json-schemas)=
 ## JSON Schemas (v0.5.1)
 
 The following JSON Schema files can be used to validate metadata in any language or tool that supports JSON Schema:
@@ -22,18 +42,22 @@ The following JSON Schema files can be used to validate metadata in any language
 | echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/echemdb_package.json) |
 | SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/svgdigitizer_package.json) |
 
-## Getting started
+```{toctree}
+:caption: Electrochemistry metadata
+:maxdepth: 2
+:hidden:
 
-See the [installation guide](installation.md) for setup instructions.
-
-## Contents
+schemas
+examples
+```
 
 ```{toctree}
+:caption: Tools
 :maxdepth: 2
+:hidden:
 
 installation
 usage
-schemas
-examples
+generation
 api
 ```
