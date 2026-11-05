@@ -34,7 +34,9 @@ All contributions go through a **fork** and a **pull request** to `echemdb/metad
    git checkout -b <short-topic-name> --no-track origin/main
    ```
 
-   Do not work on `main`, and do not reuse an old branch for a new change.
+   Do not work on `main`, and do not reuse an old branch for a new change. If the change
+   builds on a pull request that is not merged yet, branch from that pull request's branch
+   instead and write `Depends on #<number>` in the description of your pull request.
 3. **Keep each branch minimal.** One concern per branch and pull request; no unrelated
    refactoring or formatting. This matters most for **schema changes that need a migration**:
    each breaking change gets its own branch with its migration, fixture and news entry, so it

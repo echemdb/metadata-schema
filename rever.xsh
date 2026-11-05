@@ -72,8 +72,14 @@ $VERSION_BUMP_PATTERNS = [
     ('pyproject.toml', r'version =', 'version = "$VERSION"'),
     ('mdstools/__init__.py', r'__version__', '__version__ = "$VERSION"'),
     ('doc/conf.py', r'release =', 'release = "$VERSION"'),
-    ('doc/index.md', r'JSON Schemas \(v', 'JSON Schemas (v$VERSION)'),
-    ('doc/index.md', r'metadata-schema/\d+\.\d+\.\d+/schemas/', 'metadata-schema/$VERSION/schemas/'),
+    # rever matches from the start of a line and replaces the whole line.
+    ('doc/index.md', r'## JSON Schemas \(v', '## JSON Schemas (v$VERSION)'),
+    ('doc/index.md', r'\| Autotag \|', '| Autotag | [autotag.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/autotag.json) |'),
+    ('doc/index.md', r'\| Minimum echemdb \|', '| Minimum echemdb | [minimum_echemdb.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/minimum_echemdb.json) |'),
+    ('doc/index.md', r'\| Source Data \|', '| Source Data | [source_data.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/source_data.json) |'),
+    ('doc/index.md', r'\| SVG Digitizer \|', '| SVG Digitizer | [svgdigitizer.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/svgdigitizer.json) |'),
+    ('doc/index.md', r'\| echemdb Package \|', '| echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/echemdb_package.json) |'),
+    ('doc/index.md', r'\| SVG Digitizer Package \|', '| SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/$VERSION/schemas/svgdigitizer_package.json) |'),
     # echemdbSchemaVersion in LinkML schemas (example values)
     ('linkml/minimum_echemdb.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),
     ('linkml/autotag.yaml', r'- value: "\d+\.\d+\.\d+"', '- value: "$VERSION"'),

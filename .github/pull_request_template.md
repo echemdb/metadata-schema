@@ -1,6 +1,6 @@
 ## What and why
 
-<!-- What does this PR change, and why? Link the related issue, e.g. "Closes #123" or "Part of #123". -->
+<!-- What does this PR change, and why? Link the related issue, e.g. "Closes #123" or "Part of #123". If it builds on an unmerged PR, add "Depends on #123". -->
 
 ## Checklist
 
