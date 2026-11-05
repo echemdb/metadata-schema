@@ -161,7 +161,10 @@ electrochemicalCell:
     - name: nafion
       part: membrane
   cellDescription: A description of the cell. # freetext description
-  cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # freetext description
+  preparationProcedure:
+    description: # Short description of the cell preparation, such as cleaning.
+      - Storing in highly concentrated KOH.
+      - Boiling in Milli-Q water.
   source:
     url: https://doi.org/10.1016/0039-6028 # DOI or URL where the design is published
 atmosphere:

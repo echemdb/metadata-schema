@@ -10,6 +10,7 @@ imports:
   - linkml:types
   - ../general/quantity
   - ../general/component
+  - ../general/preparation_procedure
 
 default_range: string
 
@@ -54,6 +55,12 @@ classes:
         inlined: true
         examples:
           - value: "{value: 1, unit: ''}"
+      preparationProcedure:
+        range: PreparationProcedure
+        description: Procedures used to prepare the electrolyte, such as purification or degassing, before the measurement.
+        inlined: true
+        examples:
+          - value: "{description: ['Prepared from ultrapure water and suprapur HClO4', 'Purged with Ar for 30 min']}"
       comment:
         range: string
         description: Additional notes or observations about the electrolyte.

@@ -363,8 +363,8 @@ class Eln(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -681,9 +681,9 @@ class Control(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -1002,8 +1002,8 @@ class Experimental(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -1025,9 +1025,9 @@ class Experimental(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -1196,8 +1196,8 @@ class Software(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -1293,9 +1293,9 @@ class DataField(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -1437,8 +1437,8 @@ class Project(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -1545,8 +1545,8 @@ class Purity(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -1563,6 +1563,64 @@ class Purity(ConfiguredBaseModel):
             "linkml_meta": {
                 "domain_of": ["Purity", "ComponentSource"],
                 "examples": [{"value": "Triple distilled"}],
+            }
+        },
+    )
+
+
+class PreparationProcedure(ConfiguredBaseModel):
+    """
+    Procedures and methods used to prepare an object, such as an electrode, a cell, or an electrolyte, before the measurement.
+    """
+
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
+        {
+            "from_schema": "https://echemdb.github.io/metadata-schema/general/preparation_procedure"
+        }
+    )
+
+    url: Optional[str] = Field(
+        default=None,
+        description="""URL to detailed preparation protocol or procedure, such as an article DOI.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Eln",
+                    "Experimental",
+                    "Software",
+                    "Project",
+                    "Purity",
+                    "PreparationProcedure",
+                    "ElectrodeSource",
+                    "ElectrochemicalCellSource",
+                    "Atmosphere",
+                ],
+                "examples": [{"value": "https://doi.org/10.1234/preparation.2024"}],
+            }
+        },
+    )
+    description: Optional[list[str]] = Field(
+        default=None,
+        description="""Step-by-step description of preparation procedure.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Control",
+                    "Experimental",
+                    "DataField",
+                    "PreparationProcedure",
+                    "Electrode",
+                    "Shape",
+                    "ElectrolyteContainer",
+                    "ElectrochemicalCellComponent",
+                    "Atmosphere",
+                ],
+                "examples": [
+                    {
+                        "value": "Polished with 0.05 um alumina, rinsed with ultrapure "
+                        "water"
+                    }
+                ],
             }
         },
     )
@@ -1630,9 +1688,9 @@ class Electrode(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -1670,10 +1728,14 @@ class Electrode(ConfiguredBaseModel):
             }
         },
     )
-    preparationProcedure: Optional[ElectrodePreparation] = Field(
+    preparationProcedure: Optional[PreparationProcedure] = Field(
         default=None,
         description="""Procedures used to prepare the electrode before measurement.""",
-        json_schema_extra={"linkml_meta": {"domain_of": ["Electrode"]}},
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Electrode", "Electrolyte", "ElectrochemicalCell"]
+            }
+        },
     )
     shape: Optional[Shape] = Field(
         default=None,
@@ -1803,8 +1865,8 @@ class ElectrodeSource(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -1898,70 +1960,14 @@ class Shape(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
                 ],
                 "examples": [{"value": "Hemispherical tip"}],
-            }
-        },
-    )
-
-
-class ElectrodePreparation(ConfiguredBaseModel):
-    """
-    Procedures and methods used to prepare the electrode.
-    """
-
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta(
-        {"from_schema": "https://echemdb.github.io/metadata-schema/system/electrode"}
-    )
-
-    url: Optional[str] = Field(
-        default=None,
-        description="""URL to detailed preparation protocol or procedure, such as an article DOI.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "domain_of": [
-                    "Eln",
-                    "Experimental",
-                    "Software",
-                    "Project",
-                    "Purity",
-                    "ElectrodeSource",
-                    "ElectrodePreparation",
-                    "ElectrochemicalCellSource",
-                    "Atmosphere",
-                ],
-                "examples": [{"value": "https://doi.org/10.1234/preparation.2024"}],
-            }
-        },
-    )
-    description: Optional[list[str]] = Field(
-        default=None,
-        description="""Step-by-step description of preparation procedure.""",
-        json_schema_extra={
-            "linkml_meta": {
-                "domain_of": [
-                    "Control",
-                    "Experimental",
-                    "DataField",
-                    "Electrode",
-                    "Shape",
-                    "ElectrodePreparation",
-                    "ElectrolyteContainer",
-                    "ElectrochemicalCellComponent",
-                    "Atmosphere",
-                ],
-                "examples": [
-                    {
-                        "value": "Polished with 0.05 um alumina, rinsed with ultrapure "
-                        "water"
-                    }
-                ],
             }
         },
     )
@@ -2266,6 +2272,21 @@ class Electrolyte(ConfiguredBaseModel):
             }
         },
     )
+    preparationProcedure: Optional[PreparationProcedure] = Field(
+        default=None,
+        description="""Procedures used to prepare the electrolyte, such as purification or degassing, before the measurement.""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": ["Electrode", "Electrolyte", "ElectrochemicalCell"],
+                "examples": [
+                    {
+                        "value": "{description: ['Prepared from ultrapure water and "
+                        "suprapur HClO4', 'Purged with Ar for 30 min']}"
+                    }
+                ],
+            }
+        },
+    )
     comment: Optional[str] = Field(
         default=None,
         description="""Additional notes or observations about the electrolyte.""",
@@ -2306,9 +2327,9 @@ class ElectrolyteContainer(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -2475,16 +2496,16 @@ class ElectrochemicalCell(ConfiguredBaseModel):
             }
         },
     )
-    cleaningProcedure: Optional[str] = Field(
+    preparationProcedure: Optional[PreparationProcedure] = Field(
         default=None,
-        description="""Procedure used to clean the cell before experiments.""",
+        description="""Procedures used to prepare the cell, such as cleaning, before the measurement.""",
         json_schema_extra={
             "linkml_meta": {
-                "domain_of": ["ElectrochemicalCell"],
+                "domain_of": ["Electrode", "Electrolyte", "ElectrochemicalCell"],
                 "examples": [
                     {
-                        "value": "Cleaned with aqua regia, rinsed with ultrapure water, "
-                        "and dried in Ar stream"
+                        "value": "{description: ['Cleaned with aqua regia', 'Rinsed "
+                        "with ultrapure water', 'Dried in Ar stream']}"
                     }
                 ],
             }
@@ -2551,9 +2572,9 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -2586,8 +2607,8 @@ class ElectrochemicalCellSource(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -2724,8 +2745,8 @@ class Atmosphere(ConfiguredBaseModel):
                     "Software",
                     "Project",
                     "Purity",
+                    "PreparationProcedure",
                     "ElectrodeSource",
-                    "ElectrodePreparation",
                     "ElectrochemicalCellSource",
                     "Atmosphere",
                 ],
@@ -2744,9 +2765,9 @@ class Atmosphere(ConfiguredBaseModel):
                     "Control",
                     "Experimental",
                     "DataField",
+                    "PreparationProcedure",
                     "Electrode",
                     "Shape",
-                    "ElectrodePreparation",
                     "ElectrolyteContainer",
                     "ElectrochemicalCellComponent",
                     "Atmosphere",
@@ -2918,10 +2939,10 @@ Software.model_rebuild()
 DataField.model_rebuild()
 Project.model_rebuild()
 Purity.model_rebuild()
+PreparationProcedure.model_rebuild()
 Electrode.model_rebuild()
 ElectrodeSource.model_rebuild()
 Shape.model_rebuild()
-ElectrodePreparation.model_rebuild()
 Component.model_rebuild()
 ComponentSource.model_rebuild()
 Electrolyte.model_rebuild()

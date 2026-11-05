@@ -9,6 +9,7 @@ prefixes:
 imports:
   - linkml:types
   - ../general/url
+  - ../general/preparation_procedure
 
 default_range: string
 
@@ -33,11 +34,12 @@ classes:
         description: Detailed description of the cell configuration.
         examples:
           - value: "Three-electrode setup with glass cell and Teflon cap"
-      cleaningProcedure:
-        range: string
-        description: Procedure used to clean the cell before experiments.
+      preparationProcedure:
+        range: PreparationProcedure
+        description: Procedures used to prepare the cell, such as cleaning, before the measurement.
+        inlined: true
         examples:
-          - value: "Cleaned with aqua regia, rinsed with ultrapure water, and dried in Ar stream"
+          - value: "{description: ['Cleaned with aqua regia', 'Rinsed with ultrapure water', 'Dried in Ar stream']}"
       source:
         range: ElectrochemicalCellSource
         description: Source and supplier information for the cell.

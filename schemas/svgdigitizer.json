@@ -561,13 +561,6 @@
             "null"
           ]
         },
-        "cleaningProcedure": {
-          "description": "Procedure used to clean the cell before experiments.",
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "components": {
           "description": "Physical components and parts of the cell that are in contact with the electrolyte.",
           "items": {
@@ -577,6 +570,17 @@
             "array",
             "null"
           ]
+        },
+        "preparationProcedure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreparationProcedure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Procedures used to prepare the cell, such as cleaning, before the measurement."
         },
         "source": {
           "anyOf": [
@@ -691,7 +695,7 @@
         "preparationProcedure": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ElectrodePreparation"
+              "$ref": "#/$defs/PreparationProcedure"
             },
             {
               "type": "null"
@@ -763,33 +767,6 @@
       ],
       "title": "ElectrodeFunction",
       "type": "string"
-    },
-    "ElectrodePreparation": {
-      "additionalProperties": false,
-      "description": "Procedures and methods used to prepare the electrode.",
-      "properties": {
-        "description": {
-          "description": "Step-by-step description of preparation procedure.",
-          "items": {
-            "type": "string"
-          },
-          "type": [
-            "array",
-            "null"
-          ]
-        },
-        "url": {
-          "description": "URL to detailed preparation protocol or procedure, such as an article DOI.",
-          "format": "uri",
-          "pattern": "^https?://.*$",
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      },
-      "title": "ElectrodePreparation",
-      "type": "object"
     },
     "ElectrodeSource": {
       "additionalProperties": false,
@@ -889,6 +866,17 @@
             }
           ],
           "description": "pH value of the electrolyte solution."
+        },
+        "preparationProcedure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PreparationProcedure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Procedures used to prepare the electrolyte, such as purification or degassing, before the measurement."
         },
         "type": {
           "$ref": "#/$defs/ElectrolyteType",
@@ -1282,6 +1270,33 @@
         }
       },
       "title": "OperationParameters",
+      "type": "object"
+    },
+    "PreparationProcedure": {
+      "additionalProperties": false,
+      "description": "Procedures and methods used to prepare an object, such as an electrode, a cell, or an electrolyte, before the measurement.",
+      "properties": {
+        "description": {
+          "description": "Step-by-step description of preparation procedure.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "url": {
+          "description": "URL to detailed preparation protocol or procedure, such as an article DOI.",
+          "format": "uri",
+          "pattern": "^https?://.*$",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "title": "PreparationProcedure",
       "type": "object"
     },
     "Process": {

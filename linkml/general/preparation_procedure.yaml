@@ -1,0 +1,29 @@
+id: https://echemdb.github.io/metadata-schema/general/preparation_procedure
+name: preparation_procedure
+description: Reusable description of a preparation procedure, e.g., for electrodes, cells, or electrolytes.
+
+prefixes:
+  echemdb: https://echemdb.github.io/metadata-schema/
+  linkml: https://w3id.org/linkml/
+
+imports:
+  - linkml:types
+  - url
+
+default_range: string
+
+classes:
+  PreparationProcedure:
+    description: Procedures and methods used to prepare an object, such as an electrode, a cell, or an electrolyte, before the measurement.
+    attributes:
+      url:
+        range: HttpUrl
+        description: URL to detailed preparation protocol or procedure, such as an article DOI.
+        examples:
+          - value: "https://doi.org/10.1234/preparation.2024"
+      description:
+        range: string
+        description: Step-by-step description of preparation procedure.
+        multivalued: true
+        examples:
+          - value: "Polished with 0.05 um alumina, rinsed with ultrapure water"

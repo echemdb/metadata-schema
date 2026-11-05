@@ -1,0 +1,71 @@
+# Fixture: minimum_echemdb metadata in the 0.8.x layout, i.e. with the free-text
+# `cleaningProcedure` still under `system.electrochemicalCell`. It fails
+# validation against the current schema and must validate after the migration
+# moves the text to `system.electrochemicalCell.preparationProcedure.description`.
+echemdbSchemaVersion: 0.8.4
+curation:
+  process:
+    - role: curator
+      name: Albert Engstfeld
+      orcid: https://orcid.org/0000-0002-9686-3948
+system:
+  type: electrochemical
+  electrolyte:
+    type: aqueous
+    components:
+      - name: NaCl
+        concentration:
+          value: 0.1
+          unit: mol / l
+        type: salt
+      - name: water
+        type: solvent
+        proportion:
+          value: 100
+          unit: volume percent
+    ph:
+      value: 13
+      uncertainty:
+        value: 0.1
+  electrodes:
+    - name: RE
+      function: reference electrode
+      redoxSystem: RHE
+      material: Pt
+      type: wire
+    - name: WE
+      function: working electrode
+      type: single crystal
+      material: Ni
+      crystallographicOrientation: "111"
+      geometricElectrolyteContactArea:
+        value: 1
+        unit: cm-2
+  electrochemicalCell:
+    type: flow cell attached to UHV system
+    cleaningProcedure: Storing in highly concentrated KOH and boiling in Milli-Q water. # old field, replaced by the migration
+    source:
+      url: https://doi.org/10.1002/chem.201803418
+source:
+  citationKey: engstfeld_2018_polycrystalline_17743
+  url: https://doi.org/10.1002/chem.201803418
+  figure: 4b
+  curve: blue
+  techniques:
+    - XPS
+    - STM
+experimental:
+  tags:
+    - BCV
+    - ORR
+  operationParameters:
+    temperature:
+      value: 298.15
+      unit: K
+figureDescription:
+  type: raw
+  measurementType: CV
+  comment: Comment about the data.
+  scanRate:
+    value: 50
+    unit: mV / s
