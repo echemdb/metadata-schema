@@ -117,6 +117,8 @@ when a release is made.
   `**Deprecated:**`, `**Removed:**`, `**Fixed:**`, `**Performance:**`.
 - Format: header line, blank line, one `*` bullet per item, blank line before the next header.
   Use RST double backticks for code: ``` ``field.name`` ```. Reference issues as `(#123)`.
+- Each entry must be understandable on its own. Entries are merged and may be reordered in
+  the `ChangeLog`, so do not refer to other entries ("the same", "see above").
 - Save as UTF-8 without BOM. On Windows, do not create the file with PowerShell
   `>`, `Set-Content` or `Out-File`; use your editor.
 - If your branch changes something that already has a staged news file, update that file
