@@ -1,0 +1,54 @@
+{
+    "upload_type": "software",
+    "title": "echemdb metadata-schema",
+    "description": "<p>Metadata schemas for describing electrochemical systems and the collected data, developed within the <a href=\"https://www.echemdb.org\">echemdb</a> community project. The repository contains</p><ul><li>the schemas defined in <a href=\"https://linkml.io\">LinkML</a> (<code>linkml/</code>), the single source of truth,</li><li>the JSON Schemas generated from them (<code>schemas/</code>), which can be used to validate metadata in any language or tool that supports JSON Schema,</li><li>example and template metadata files (<code>examples/</code>), and</li><li>the <code>mdstools</code> Python package to flatten, enrich, validate and migrate metadata files.</li></ul><p>A new version is archived for every release. Changes between versions are listed in the <a href=\"https://github.com/echemdb/metadata-schema/blob/main/ChangeLog\">ChangeLog</a>.</p>",
+    "creators": [
+        {
+            "orcid": "0000-0002-9686-3948",
+            "name": "Engstfeld, Albert Kilian",
+            "affiliation": "Ulm University"
+        },
+        {
+            "orcid": "0000-0001-7119-1295",
+            "name": "Hermann, Johannes M.",
+            "affiliation": "Ulm University"
+        },
+        {
+            "orcid": "0000-0001-6944-5575",
+            "name": "Hörmann, Nicolas",
+            "affiliation": "Fritz-Haber-Institut"
+        },
+        {
+            "orcid": "0000-0002-3930-9107",
+            "name": "Rüth, Julian"
+        },
+        {
+            "orcid": "0009-0004-0799-6215",
+            "name": "Leist, Justus",
+            "affiliation": "Ulm University"
+        }
+    ],
+    "license": "GPL-3.0-or-later",
+    "keywords": [
+        "electrochemistry",
+        "metadata",
+        "metadata schema",
+        "LinkML",
+        "JSON Schema",
+        "FAIR data",
+        "research data management",
+        "echemdb"
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://echemdb.github.io/metadata-schema/",
+            "relation": "isDocumentedBy",
+            "resource_type": "publication-softwaredocumentation"
+        },
+        {
+            "identifier": "https://www.echemdb.org",
+            "relation": "isPartOf",
+            "resource_type": "other"
+        }
+    ]
+}
