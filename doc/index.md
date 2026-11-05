@@ -9,18 +9,18 @@ The `mdstools` Python package provides tools for working with these schemas:
 - Validate metadata against the schemas
 - Convert between YAML, Excel, and CSV formats
 
-## JSON Schemas (v0.5.1)
+## JSON Schemas (v0.8.4)
 
 The following JSON Schema files can be used to validate metadata in any language or tool that supports JSON Schema:
 
 | Schema | Download |
 | --- | --- |
-| Autotag | [autotag.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/autotag.json) |
-| Minimum echemdb | [minimum_echemdb.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/minimum_echemdb.json) |
-| Source Data | [source_data.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/source_data.json) |
-| SVG Digitizer | [svgdigitizer.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/svgdigitizer.json) |
-| echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/echemdb_package.json) |
-| SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.5.1/schemas/svgdigitizer_package.json) |
+| Autotag | [autotag.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/autotag.json) |
+| Minimum echemdb | [minimum_echemdb.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/minimum_echemdb.json) |
+| Source Data | [source_data.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/source_data.json) |
+| SVG Digitizer | [svgdigitizer.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/svgdigitizer.json) |
+| echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/echemdb_package.json) |
+| SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/svgdigitizer_package.json) |
 
 ## Getting started
 

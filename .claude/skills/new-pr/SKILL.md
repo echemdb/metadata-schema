@@ -28,6 +28,9 @@ git fetch origin
 git checkout -b <short-topic-name> --no-track origin/main
 ```
 
+If the change needs an unmerged PR, branch from that PR's branch instead of `origin/main`
+and add `Depends on #<number>` to the PR description.
+
 One concern per branch. If the user's request covers several independent changes, propose
 one branch per change. A breaking schema change always gets its own branch.
 
