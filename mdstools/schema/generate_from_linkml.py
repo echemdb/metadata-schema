@@ -248,7 +248,8 @@ def generate_json_schemas(output_dir: Path = SCHEMAS_DIR, ensure_frictionless=Tr
         # Reorder keys so root schema properties come first and $defs last
         schema = _reorder_schema_keys(schema)
 
-        with open(output_file, "w", encoding="utf-8") as f:
+        # newline="\n": write LF on every platform (Windows would write CRLF)
+        with open(output_file, "w", encoding="utf-8", newline="\n") as f:
             json.dump(schema, f, indent=2, ensure_ascii=False)
             f.write("\n")
 
@@ -310,6 +311,7 @@ def generate_pydantic_models(output_dir: Path = MODELS_DIR):
         init_file.write_text(
             '"""Auto-generated Pydantic models from LinkML schemas."""\n',
             encoding="utf-8",
+            newline="\n",
         )
 
     for model_name in MAIN_MODELS:
@@ -340,7 +342,8 @@ def generate_pydantic_models(output_dir: Path = MODELS_DIR):
 
         code = _postprocess_pydantic(result.stdout)
 
-        with open(output_file, "w", encoding="utf-8") as f:
+        # newline="\n": write LF on every platform (Windows would write CRLF)
+        with open(output_file, "w", encoding="utf-8", newline="\n") as f:
             f.write(code)
 
         print(f"  OK {output_file.name}")
