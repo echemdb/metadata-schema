@@ -9,20 +9,33 @@ The `mdstools` CLI provides commands for converting between YAML and tabular for
 Convert a nested YAML metadata file to a tabular format:
 
 ```bash
-mdstools flatten tests/example_metadata.yaml --output-dir generated
+mdstools flatten tests/example_metadata.yaml
 ```
 
 Or via pixi:
 
 ```bash
-pixi run flatten tests/example_metadata.yaml --output-dir generated
+pixi run flatten tests/example_metadata.yaml
 ```
+
+This writes the following files to `generated/`:
+
+- `example_metadata.csv` — all metadata in one table
+- `example_metadata.xlsx` — single-sheet Excel file
+- `example_metadata_sheets.xlsx` — Excel file with one sheet per top-level key
+- `example_metadata.md` — Markdown table
+- `example_metadata.tex` — LaTeX table
+
+Each table has the columns `Number`, `Key` and `Value`. By default, the tables are
+**enriched**: `Description` and `Example` columns are added with the description and an
+example of each field, taken from the JSON Schemas in `schemas/`. This makes the tables
+usable as templates to fill out. Fields not found in the schemas keep these columns empty.
 
 Options:
 
-- `--output-dir` — Output directory (default: `generated/`)
-- `--schema` — Schema name for enrichment (adds descriptions and examples)
-- `--format` — Output format: `xlsx`, `csv`, or `md`
+- `--schema-dir` — Directory with the JSON Schemas used for enrichment (default: `schemas`)
+- `--output-dir` — Output directory (default: `generated`)
+- `--no-enrichment` — Write only the `Number`, `Key` and `Value` columns
 
 ### Unflatten Excel/CSV to YAML
 
@@ -104,14 +117,20 @@ enriched.to_excel("output.xlsx", separate_sheets=True)
 ### Schema validation
 
 ```python
-from mdstools.schema.validator import validate_with_json_schema, validate_with_pydantic
+from mdstools.schema.validator import validate, validate_metadata, validate_with_pydantic
 
-# JSON Schema validation
-validate_with_json_schema(data, schema_name="minimum_echemdb")
+# JSON Schema validation against a local schema file
+validate_metadata(data, "schemas/minimum_echemdb.json")
 
-# Pydantic validation
-validate_with_pydantic(data, schema_name="minimum_echemdb")
+# JSON Schema validation against the published schema of the installed version
+# (data can also be a path to a YAML or JSON file)
+validate(data, schema="minimum_echemdb")
+
+# Pydantic validation, returns the Pydantic model
+model = validate_with_pydantic(data, schema_name="minimum_echemdb")
 ```
+
+All three raise a `ValueError` if the metadata is invalid.
 
 ### Migrating metadata across schema versions
 
