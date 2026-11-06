@@ -96,11 +96,11 @@ def flatten(yaml_file, schema_dir, output_dir, no_enrichment):
         Enrichment: 8/15 fields (53.3%) have descriptions
         <BLANKLINE>
         Exporting to tests/generated/cli_convert/
-          ✓ simple_test.csv
-          ✓ simple_test.xlsx
-          ✓ simple_test_sheets.xlsx
-          ✓ simple_test.md
-          ✓ simple_test.tex
+          simple_test.csv
+          simple_test.xlsx
+          simple_test_sheets.xlsx
+          simple_test.md
+          simple_test.tex
         <BLANKLINE>
         Done!
 
@@ -153,7 +153,7 @@ def flatten(yaml_file, schema_dir, output_dir, no_enrichment):
             source.to_markdown(str(path))
         elif suffix == ".tex":
             source.to_latex(str(path))
-        click.echo(f"  ✓ {path.name}")
+        click.echo(f"  {path.name}")
 
     click.echo("\nDone!")
 
@@ -188,7 +188,7 @@ def unflatten(input_file, output_dir, schema_file):
         >>> os.makedirs("tests/generated/cli_unflatten", exist_ok=True)
         >>> flattened.to_excel("tests/generated/cli_unflatten/input.xlsx")
         >>> invoke(cli, "unflatten", "tests/generated/cli_unflatten/input.xlsx", "--output-dir", "tests/generated/cli_unflatten")
-        ✓ Wrote tests/generated/cli_unflatten/input.yaml
+        Wrote tests/generated/cli_unflatten/input.yaml
 
     """
     from mdstools.metadata.flattened_metadata import FlattenedMetadata
@@ -208,7 +208,7 @@ def unflatten(input_file, output_dir, schema_file):
     out.mkdir(parents=True, exist_ok=True)
     output_path = out / f"{input_path.stem}.yaml"
     metadata.to_yaml(str(output_path))
-    click.echo(f"✓ Wrote {output_path.as_posix()}")
+    click.echo(f"Wrote {output_path.as_posix()}")
 
 
 @click.command(name="update")
@@ -281,7 +281,7 @@ def update(input_file, to_version, in_place):
 
     if in_place:
         migrate_file(str(input_path), to_version, in_place=True)
-        click.echo(f"✓ Updated {input_path.as_posix()}")
+        click.echo(f"Updated {input_path.as_posix()}")
     elif any_steps:
         click.echo("Dry run: re-run with --in-place to apply.")
 
