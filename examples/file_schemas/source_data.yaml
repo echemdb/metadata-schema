@@ -14,36 +14,37 @@ curation: # Requires only the curator information
       orcid: https://orcid.org/0000-0003-9876-5432
 system:
   type: electrochemical
-  electrolyte:
-    type: aqueous # required: aqueous = aq, non-aqueous=naq, solid=s, gas=g
-    components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
-      - name: NaCl # can be trivia name, sum formula, etc
-        concentration:
+  electrolytes:
+    - name: electrolyte1
+      type: aqueous # required: aqueous = aq, non-aqueous=naq, solid=s, gas=g
+      components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
+        - name: NaCl # can be trivia name, sum formula, etc
+          concentration:
+            value: 0.1
+            unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+          type: salt #
+        - name: water # default solvent for aqueous electrolytes
+          type: solvent
+          proportion:
+            value: 100
+            unit: volume percent
+        - name: ethanol # optional: only for reactions
+          type: solvent
+          proportion:
+            value: 50
+            unit: volume percent
+        - name: H2SO4
+          type: acid
+          source:
+            supplier: Supplier name
+            lot: C45456
+          concentration:
+            value: 0.1
+            unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+      ph: # optional but recommended
+        value: 13
+        uncertainty:
           value: 0.1
-          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
-        type: salt #
-      - name: water # default solvent for aqueous electrolytes
-        type: solvent
-        proportion:
-          value: 100
-          unit: volume percent
-      - name: ethanol # optional: only for reactions
-        type: solvent
-        proportion:
-          value: 50
-          unit: volume percent
-      - name: H2SO4
-        type: acid
-        source:
-          supplier: Supplier name
-          lot: C45456
-        concentration:
-          value: 0.1
-          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
-    ph: # optional but recommended
-      value: 13
-      uncertainty:
-        value: 0.1
   electrodes:
     - name: RE
       function: reference electrode

@@ -1,7 +1,7 @@
 **Added:**
 
 * Added a shared ``PreparationProcedure`` class (``linkml/general/preparation_procedure.yaml``) with ``url`` and a step-by-step ``description`` list, used by electrodes, the electrochemical cell, and the electrolyte.
-* Added ``system.electrolyte.preparationProcedure`` to describe how the electrolyte was prepared, e.g., purification or degassing.
+* Added ``preparationProcedure`` to each entry of ``system.electrolytes`` to describe how the electrolyte was prepared, e.g., purification or degassing.
 * Added a migration step that converts ``system.electrochemicalCell.cleaningProcedure`` into ``system.electrochemicalCell.preparationProcedure.description`` (run ``mdstools update``).
 
 **Changed:**

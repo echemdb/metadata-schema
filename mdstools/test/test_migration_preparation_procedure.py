@@ -34,6 +34,7 @@ from mdstools.schema.migrations import (
     UNRELEASED,
     Migration,
     _cleaning_procedure_to_preparation_procedure,
+    _electrolyte_to_electrolytes,
 )
 from mdstools.schema.validator import validate_metadata
 
@@ -124,10 +125,15 @@ def test_fixture_fails_current_schema_but_validates_after_migration(monkeypatch)
         validate_metadata(data, SCHEMA)
 
     # Register under a concrete version so the engine applies it (UNRELEASED
-    # steps are skipped for concrete targets until a release stamps them).
+    # steps are skipped for concrete targets until a release stamps them). The
+    # fixture also has the single electrolyte of 0.8.x, so that step is needed
+    # to reach the current schema.
     monkeypatch.setattr(
         "mdstools.schema.migrate.MIGRATIONS",
-        [Migration("0.9.0", "cell", _cleaning_procedure_to_preparation_procedure)],
+        [
+            Migration("0.9.0", "cell", _cleaning_procedure_to_preparation_procedure),
+            Migration("0.9.0", "electrolytes", _electrolyte_to_electrolytes),
+        ],
     )
     migrated = MetadataMigrator(data, "0.9.0").migrated()
 

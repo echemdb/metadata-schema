@@ -32,11 +32,13 @@ classes:
         description: Type of experimental system.
         examples:
           - value: "electrochemical"
-      electrolyte:
+      electrolytes:
         range: Electrolyte
         required: true
-        description: The electrolyte solution used in the experiment.
-        inlined: true
+        description: List of electrolytes used in the experiment, each with a unique name. A divided cell (e.g. an H-cell) has several, such as catholyte and anolyte.
+        multivalued: true
+        minimum_cardinality: 1
+        inlined_as_list: true
       electrodes:
         range: Electrode
         required: true
