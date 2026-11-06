@@ -21,6 +21,9 @@ migrations, the checks, and news entries. This file only adds what is specific t
 
 ## Git and GitHub
 
+- Before answering questions about the current state of the repository (recent changes, what
+  is outdated, what is on `main`), run `git fetch origin` and compare against `origin/main`.
+  The local `main` and the current branch may be behind.
 - Never `git commit`, `git push`, or create, edit or comment on issues and PRs without showing
   exactly what will happen and getting an explicit "yes". Approval for one step does not
   cover the next.
