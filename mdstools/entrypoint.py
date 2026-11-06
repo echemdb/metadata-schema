@@ -92,8 +92,8 @@ def flatten(yaml_file, schema_dir, output_dir, no_enrichment):
         >>> from mdstools.entrypoint import cli
         >>> invoke(cli, "flatten", "tests/simple_test.yaml", "--output-dir", "tests/generated/cli_convert")  # doctest: +NORMALIZE_WHITESPACE
         Loading tests/simple_test.yaml...
-        Processed 15 fields
-        Enrichment: 8/15 fields (53.3%) have descriptions
+        Processed 16 fields
+        Enrichment: 9/16 fields (56.2%) have descriptions
         <BLANKLINE>
         Exporting to tests/generated/cli_convert/
           ✓ simple_test.csv

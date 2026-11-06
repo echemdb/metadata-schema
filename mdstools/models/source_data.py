@@ -310,6 +310,7 @@ class Process(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -713,6 +714,7 @@ class Electrode(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -1064,6 +1066,7 @@ class Component(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -1292,6 +1295,32 @@ class Electrolyte(ConfiguredBaseModel):
         {"from_schema": "https://echemdb.github.io/metadata-schema/system/electrolyte"}
     )
 
+    name: str = Field(
+        default=...,
+        description="""Name of the electrolyte, unique within the system. Preferably descriptive, e.g. after its main component (KOH, HClO4), or its role in a divided cell (catholyte, anolyte).""",
+        json_schema_extra={
+            "linkml_meta": {
+                "domain_of": [
+                    "Process",
+                    "Electrode",
+                    "Component",
+                    "Electrolyte",
+                    "ElectrolyteContainerComponent",
+                    "ElectrochemicalCellComponent",
+                    "Instrumentation",
+                    "Software",
+                    "DataField",
+                    "FieldUnit",
+                ],
+                "examples": [
+                    {"value": "KOH"},
+                    {"value": "HClO4"},
+                    {"value": "catholyte"},
+                    {"value": "anolyte"},
+                ],
+            }
+        },
+    )
     type: ElectrolyteType = Field(
         default=...,
         description="""Type of electrolyte defined by the solvent.""",
@@ -1451,6 +1480,7 @@ class ElectrolyteContainerComponent(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -1625,6 +1655,7 @@ class ElectrochemicalCellComponent(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -1915,9 +1946,10 @@ class System(ConfiguredBaseModel):
             }
         },
     )
-    electrolyte: Electrolyte = Field(
+    electrolytes: list[Electrolyte] = Field(
         default=...,
-        description="""The electrolyte solution used in the experiment.""",
+        description="""List of electrolytes used in the experiment, each with a unique name. A divided cell (e.g. an H-cell) has several, such as catholyte and anolyte.""",
+        min_length=1,
         json_schema_extra={"linkml_meta": {"domain_of": ["System"]}},
     )
     electrodes: list[Electrode] = Field(
@@ -2110,6 +2142,7 @@ class Instrumentation(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -2687,6 +2720,7 @@ class Software(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -2747,6 +2781,7 @@ class DataField(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",
@@ -2987,6 +3022,7 @@ class FieldUnit(ConfiguredBaseModel):
                     "Process",
                     "Electrode",
                     "Component",
+                    "Electrolyte",
                     "ElectrolyteContainerComponent",
                     "ElectrochemicalCellComponent",
                     "Instrumentation",

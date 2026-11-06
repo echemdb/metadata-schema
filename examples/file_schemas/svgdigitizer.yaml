@@ -104,118 +104,119 @@ source:
   curve: solid # use a unique short description to identify the curve in the figure, i.e.. solid, dahed, blue, etc. Can be provided in the SVG instead.
 system:
   type: electrochemical
-  electrolyte:
-    type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
-    electrolyteContainer:
-        description: glass flask # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
-        components:
-          - name: borosilicate glass
-            type: flask
-            comment: some comment
-    components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
-      - name: Name # This is a standard component entry. Some entries are related to certain types of components.
-        concentration:
-          value: 1
-          unit: mol / l
-        type: salt # salt, base, acid, solvent, gas, ...
-        source:
-          supplier: company name # Company name, organic chemistry III - Uni Ulm
-          lot: 155464A # LOT number
-          purity:
-            grade: 5N # analytical grade, 5N, etc
+  electrolytes:
+    - name: electrolyte1
+      type: aqueous # aqueous = aq, non-aqueous=naq, solid=s, gas=g
+      electrolyteContainer:
+          description: glass flask # keys need to be defined for local data structuring. Usually anyway not provided in the literature.
+          components:
+            - name: borosilicate glass
+              type: flask
+              comment: some comment
+      components: # create as many components as necessary. A simple electrolyte consists of two components, i.e., H2SO4 and water. Often the electrolyte is purged with a gas, which should also be added as component
+        - name: Name # This is a standard component entry. Some entries are related to certain types of components.
+          concentration:
+            value: 1
+            unit: mol / l
+          type: salt # salt, base, acid, solvent, gas, ...
+          source:
+            supplier: company name # Company name, organic chemistry III - Uni Ulm
+            lot: 155464A # LOT number
+            purity:
+              grade: 5N # analytical grade, 5N, etc
+              totalOrganicCarbon:
+                value: 3
+                unit: ppb
+              totalIonConductivity:
+                value: 18
+                unit: MOhm cm
+          purity: # puity after refinement
+            refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
+            grade: 6N
             totalOrganicCarbon:
               value: 3
               unit: ppb
-            totalIonConductivity:
-              value: 18
-              unit: MOhm cm
-        purity: # puity after refinement
-          refinement: Thorough cleaning. # Description of additional cleaning procedures post purchase
-          grade: 6N
-          totalOrganicCarbon:
-            value: 3
-            unit: ppb
-          container: new name # the new container in which the chemical has been transferred for daily use
-          internalLot: Number # Flask in which some of the chemicals were transferred
-          url: https://some.url # details on the wiki
-        partialPressure: # if type gas
-          value: 1
-          unit: bar # use 1 bar for saturated solutions
-        proportion: # if type solvent
-          value: 100
-          unit: volume percent
-        flow:
-          value: null
-          unit: null
-        comment: Nothing special. # text description
-      - name: NaCl # can be trivia name, sum formula, etc
-        concentration:
-          value: 0.1
-          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
-        type: salt #
-        source:
-          supplier: Supplier name
-          lot: '654654'
-        purity:
-          grade: 5N
-      - name: water
-        type: solvent
-        proportion:
-          value: 50
-          unit: volume percent
-        source:
-          refinement: Sartorius Arium 611UV
-        purity:
-          grade: ultrapure water # qualitative description of the purity commonly used in the community
-          totalOrganicCarbon:
-            value: 3
-            unit: ppb
-      - name: ethanol
-        type: solvent
-        proportion:
-          value: 50
-          unit: volume percent
-        purity:
-          grade: analytical grade # qualitative description of the purity commonly used in the community
-      - name: BMPyr-TFSI
-        chemicalIdentifiers:
-            cas: 223437-11-4
-            inchi: InChI=1S/C9H20N.C2F6NO4S2/c1-3-4-7-10(2)8-5-6-9-10;3-1(4,5)14(10,11)9-15(12,13)2(6,7)8/h3-9H2,1-2H3;/q+1;-1
-            inchikey: InChIKey=HSLXOARVFIWOQF-UHFFFAOYSA-N
-        proportion:
-          unit: volume percent
-          value: 100
-        source:
-          supplier: MERCK/emd
+            container: new name # the new container in which the chemical has been transferred for daily use
+            internalLot: Number # Flask in which some of the chemicals were transferred
+            url: https://some.url # details on the wiki
+          partialPressure: # if type gas
+            value: 1
+            unit: bar # use 1 bar for saturated solutions
+          proportion: # if type solvent
+            value: 100
+            unit: volume percent
+          flow:
+            value: null
+            unit: null
+          comment: Nothing special. # text description
+        - name: NaCl # can be trivia name, sum formula, etc
+          concentration:
+            value: 0.1
+            unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+          type: salt #
+          source:
+            supplier: Supplier name
+            lot: '654654'
           purity:
-            grade: ultrapure
-        purity:
-          refinement: vacuum dried at 120 °C
-        type: solvent
-      - name: H2SO4
-        type: acid
-        source:
-          supplier: Supplier name
-          lot: C45456
-        concentration:
+            grade: 5N
+        - name: water
+          type: solvent
+          proportion:
+            value: 50
+            unit: volume percent
+          source:
+            refinement: Sartorius Arium 611UV
+          purity:
+            grade: ultrapure water # qualitative description of the purity commonly used in the community
+            totalOrganicCarbon:
+              value: 3
+              unit: ppb
+        - name: ethanol
+          type: solvent
+          proportion:
+            value: 50
+            unit: volume percent
+          purity:
+            grade: analytical grade # qualitative description of the purity commonly used in the community
+        - name: BMPyr-TFSI
+          chemicalIdentifiers:
+              cas: 223437-11-4
+              inchi: InChI=1S/C9H20N.C2F6NO4S2/c1-3-4-7-10(2)8-5-6-9-10;3-1(4,5)14(10,11)9-15(12,13)2(6,7)8/h3-9H2,1-2H3;/q+1;-1
+              inchikey: InChIKey=HSLXOARVFIWOQF-UHFFFAOYSA-N
+          proportion:
+            unit: volume percent
+            value: 100
+          source:
+            supplier: MERCK/emd
+            purity:
+              grade: ultrapure
+          purity:
+            refinement: vacuum dried at 120 °C
+          type: solvent
+        - name: H2SO4
+          type: acid
+          source:
+            supplier: Supplier name
+            lot: C45456
+          concentration:
+            value: 0.1
+            unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
+        - name: N2
+          type: gas
+          purity:
+            grade: N5.0 # some genereic name
+          partialPressure:
+            value: 1
+            unit: bar # use 1 bar for saturated solutions
+          proportion:
+            value: 100
+          flow:
+            value: null
+            unit: null
+      ph:
+        value: 13
+        uncertainty:
           value: 0.1
-          unit: mol / l # [mol / l, mmol / l, umol / l, g / kg, ...] Do not use M for molar. Use the string repesentation of units from astropy. https://docs.astropy.org/en/stable/units/index.html
-      - name: N2
-        type: gas
-        purity:
-          grade: N5.0 # some genereic name
-        partialPressure:
-          value: 1
-          unit: bar # use 1 bar for saturated solutions
-        proportion:
-          value: 100
-        flow:
-          value: null
-          unit: null
-    ph:
-      value: 13
-      uncertainty:
-        value: 0.1
   electrodes:
     - name: RHE
       function: reference electrode

@@ -31,6 +31,15 @@ classes:
   Electrolyte:
     description: The properties and components of the electrolyte solution.
     attributes:
+      name:
+        range: string
+        required: true
+        description: Name of the electrolyte, unique within the system. Preferably descriptive, e.g. after its main component (KOH, HClO4), or its role in a divided cell (catholyte, anolyte).
+        examples:
+          - value: "KOH"
+          - value: "HClO4"
+          - value: "catholyte"
+          - value: "anolyte"
       type:
         range: ElectrolyteType
         required: true

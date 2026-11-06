@@ -174,6 +174,80 @@ def _cleaning_procedure_to_preparation_procedure(data: dict) -> dict:
     return result
 
 
+#: Name given to the electrolyte when a single ``system.electrolyte`` is
+#: converted into the ``system.electrolytes`` list.
+DEFAULT_ELECTROLYTE_NAME = "electrolyte1"
+
+
+def _electrolyte_to_electrolytes(data: dict) -> dict:
+    r"""Breaking change: allow several electrolytes (#129).
+
+    Replace the single ``system.electrolyte`` object by the list
+    ``system.electrolytes``. The old electrolyte becomes the only entry and gets
+    the required ``name`` :data:`DEFAULT_ELECTROLYTE_NAME` unless it already has
+    one. The list takes the position of the old key, so the order of the keys in
+    ``system`` is kept.
+
+    Pure ``dict -> dict``: the input is not mutated. Idempotent: if there is no
+    ``system.electrolyte`` (already migrated, or never present) the document is
+    returned unchanged.
+
+    :raises ValueError: if both ``electrolyte`` and ``electrolytes`` are present
+        (ambiguous; needs manual resolution).
+
+    EXAMPLES::
+
+        >>> from mdstools.schema.migrations import (
+        ...     _electrolyte_to_electrolytes as move)
+        >>> before = {"system": {"type": "electrochemical",
+        ...                      "electrolyte": {"type": "aqueous"},
+        ...                      "electrodes": []}}
+        >>> after = move(before)
+        >>> after["system"]
+        {'type': 'electrochemical', 'electrolytes': [{'name': 'electrolyte1', 'type': 'aqueous'}], 'electrodes': []}
+        >>> move(after) == after      # idempotent
+        True
+
+    """
+    result = deepcopy(data)
+
+    system = result.get("system")
+    if not isinstance(system, dict) or "electrolyte" not in system:
+        return result
+    if "electrolytes" in system:
+        raise ValueError(
+            "cannot migrate electrolyte: both system.electrolyte and "
+            "system.electrolytes are present; resolve this manually before "
+            "migrating."
+        )
+
+    electrolyte = system["electrolyte"]
+    if electrolyte is None:
+        del system["electrolyte"]
+        return result
+    if not isinstance(electrolyte, dict):
+        raise ValueError(
+            "cannot migrate electrolyte: system.electrolyte is not a mapping."
+        )
+
+    if "name" not in electrolyte:
+        if hasattr(electrolyte, "insert"):  # ruamel CommentedMap: keep comments
+            electrolyte.insert(0, "name", DEFAULT_ELECTROLYTE_NAME)
+        else:
+            electrolyte = {"name": DEFAULT_ELECTROLYTE_NAME, **electrolyte}
+
+    position = list(system).index("electrolyte")
+    del system["electrolyte"]
+    if hasattr(system, "insert"):  # ruamel CommentedMap: keep comments
+        system.insert(position, "electrolytes", [electrolyte])
+    else:
+        items = list(system.items())
+        items.insert(position, ("electrolytes", [electrolyte]))
+        system.clear()
+        system.update(items)
+    return result
+
+
 #: Registered migrations, in ascending ``to_version`` order.
 #: The temperature move is unreleased; its concrete version is stamped in when
 #: the release is cut (see the ``finalize_migrations`` helper, added later).
@@ -193,5 +267,13 @@ MIGRATIONS: list[Migration] = [
             "system.electrochemicalCell.preparationProcedure.description"
         ),
         apply=_cleaning_procedure_to_preparation_procedure,
+    ),
+    Migration(
+        to_version=UNRELEASED,
+        description=(
+            "Replace system.electrolyte with the list system.electrolytes, "
+            "naming the electrolyte 'electrolyte1'"
+        ),
+        apply=_electrolyte_to_electrolytes,
     ),
 ]

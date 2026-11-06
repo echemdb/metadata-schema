@@ -917,6 +917,10 @@
           ],
           "description": "Container used to prepare or store the electrolyte before the measurement."
         },
+        "name": {
+          "description": "Name of the electrolyte, unique within the system. Preferably descriptive, e.g. after its main component (KOH, HClO4), or its role in a divided cell (catholyte, anolyte).",
+          "type": "string"
+        },
         "ph": {
           "anyOf": [
             {
@@ -945,6 +949,7 @@
         }
       },
       "required": [
+        "name",
         "type"
       ],
       "title": "Electrolyte",
@@ -1833,9 +1838,13 @@
           },
           "type": "array"
         },
-        "electrolyte": {
-          "$ref": "#/$defs/Electrolyte",
-          "description": "The electrolyte solution used in the experiment."
+        "electrolytes": {
+          "description": "List of electrolytes used in the experiment, each with a unique name. A divided cell (e.g. an H-cell) has several, such as catholyte and anolyte.",
+          "items": {
+            "$ref": "#/$defs/Electrolyte"
+          },
+          "minItems": 1,
+          "type": "array"
         },
         "type": {
           "$ref": "#/$defs/SystemType",
@@ -1844,7 +1853,7 @@
       },
       "required": [
         "type",
-        "electrolyte",
+        "electrolytes",
         "electrodes"
       ],
       "title": "System",

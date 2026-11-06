@@ -64,37 +64,40 @@
                                 }
                             }
                         ],
-                        "electrolyte": {
-                            "components": [
-                                {
-                                    "name": "H2O",
-                                    "proportion": {
-                                        "unit": "volume percent",
-                                        "value": 100
+                        "electrolytes": [
+                            {
+                                "name": "electrolyte1",
+                                "components": [
+                                    {
+                                        "name": "H2O",
+                                        "proportion": {
+                                            "unit": "volume percent",
+                                            "value": 100
+                                        },
+                                        "source": {
+                                            "quality": "ultrapure water",
+                                            "refinement": "Millipore MilliQ"
+                                        },
+                                        "type": "solvent"
                                     },
-                                    "source": {
-                                        "quality": "ultrapure water",
-                                        "refinement": "Millipore MilliQ"
-                                    },
-                                    "type": "solvent"
+                                    {
+                                        "concentration": {
+                                            "unit": "mol / l",
+                                            "value": 0.1
+                                        },
+                                        "name": "HClO4",
+                                        "source": {
+                                            "supplier": "Merck Suprapur"
+                                        },
+                                        "type": "acid"
+                                    }
+                                ],
+                                "ph": {
+                                    "value": 1
                                 },
-                                {
-                                    "concentration": {
-                                        "unit": "mol / l",
-                                        "value": 0.1
-                                    },
-                                    "name": "HClO4",
-                                    "source": {
-                                        "supplier": "Merck Suprapur"
-                                    },
-                                    "type": "acid"
-                                }
-                            ],
-                            "ph": {
-                                "value": 1
-                            },
-                            "type": "aqueous"
-                        }
+                                "type": "aqueous"
+                            }
+                        ]
                     },
                     "source": {
                         "citationKey": "alves_2011_electrochemistry_6010",

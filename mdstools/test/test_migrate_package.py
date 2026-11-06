@@ -31,6 +31,7 @@ from pathlib import Path
 from mdstools.schema.migrate import _is_package, migrate_document, migrate_file
 from mdstools.schema.migrations import (
     Migration,
+    _electrolyte_to_electrolytes,
     _move_temperature_to_operation_parameters,
 )
 from mdstools.schema.validate_examples import build_package_registry, validate_data
@@ -107,8 +108,18 @@ def test_plain_document_not_treated_as_package(monkeypatch):
 
 
 def test_package_fails_current_schema_then_validates_after_migration(monkeypatch):
-    """The pre-move package fails the package schema but validates once migrated."""
-    _register_temperature_step(monkeypatch)
+    """The pre-move package fails the package schema but validates once migrated.
+
+    The fixture predates later breaking changes too, so the whole chain up to
+    the current schema is registered, not only the temperature step.
+    """
+    monkeypatch.setattr(
+        "mdstools.schema.migrate.MIGRATIONS",
+        [
+            Migration("0.8.0", "temp", _move_temperature_to_operation_parameters),
+            Migration("0.9.0", "electrolytes", _electrolyte_to_electrolytes),
+        ],
+    )
     package = _load(FIXTURE)
     schema = _load(PACKAGE_SCHEMA)
     with contextlib.redirect_stdout(io.StringIO()):
@@ -117,7 +128,7 @@ def test_package_fails_current_schema_then_validates_after_migration(monkeypatch
     # As-is (old temperature location) it fails package validation.
     assert validate_data(package, schema, registry=registry)
 
-    migrated = migrate_document(package, "0.8.0")
+    migrated = migrate_document(package, "0.9.0")
     assert not validate_data(migrated, schema, registry=registry)
 
 

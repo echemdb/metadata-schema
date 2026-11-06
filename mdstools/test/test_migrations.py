@@ -35,6 +35,7 @@ from mdstools.schema.migrations import (
     MIGRATIONS,
     UNRELEASED,
     Migration,
+    _electrolyte_to_electrolytes,
     _move_temperature_to_operation_parameters,
 )
 from mdstools.schema.validator import validate_instrument_references, validate_metadata
@@ -122,21 +123,27 @@ def test_fixture_fails_current_schema_but_validates_after_migration(monkeypatch)
     with pytest.raises(ValueError):
         validate_metadata(data, SCHEMA)
 
-    # Register the step under a concrete version so the engine applies it
+    # Register the steps under concrete versions so the engine applies them
     # (UNRELEASED steps are skipped for concrete targets until a release stamps
-    # them). This mirrors what finalize_migrations does at release time.
+    # them). This mirrors what finalize_migrations does at release time. The
+    # fixture predates later breaking changes too, so the whole chain up to the
+    # current schema is registered.
     monkeypatch.setattr(
         "mdstools.schema.migrate.MIGRATIONS",
-        [Migration("0.8.0", "temp", _move_temperature_to_operation_parameters)],
+        [
+            Migration("0.8.0", "temp", _move_temperature_to_operation_parameters),
+            Migration("0.9.0", "electrolytes", _electrolyte_to_electrolytes),
+        ],
     )
-    migrated = MetadataMigrator(data, "0.8.0").migrated()
+    migrated = MetadataMigrator(data, "0.9.0").migrated()
 
-    assert "temperature" not in migrated["system"]["electrolyte"]
+    assert "electrolyte" not in migrated["system"]
+    assert "temperature" not in migrated["system"]["electrolytes"][0]
     assert migrated["experimental"]["operationParameters"]["temperature"] == {
         "value": 298.15,
         "unit": "K",
     }
-    assert migrated["echemdbSchemaVersion"] == "0.8.0"
+    assert migrated["echemdbSchemaVersion"] == "0.9.0"
     validate_metadata(migrated, SCHEMA)
 
 
