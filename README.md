@@ -1,7 +1,8 @@
 # echemdb metadata-schema
 
-Metadata schemas to describe electrochemical systems and the collected data, developed within
-the [echemdb](https://www.echemdb.org) community project.
+This repository provides standardized metadata schemas to describe electrochemical systems and
+the collected data, and the `mdstools` Python package to generate, validate and work with them.
+It is part of the [echemdb](https://www.echemdb.org) community project.
 
 **Documentation: <https://echemdb.github.io/metadata-schema/>**
 
