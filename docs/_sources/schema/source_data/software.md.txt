@@ -1,0 +1,99 @@
+# Slot: software 
+
+
+_Software that created the data, e.g., recorded it with an instrument, digitized it from a figure, simulated it, or processed it._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/software](https://echemdb.github.io/metadata-schema/source_data/software)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [FigureDescription](FigureDescription.md) | Description of the data to a figure or plot including data type and measureme... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Software](Software.md) |
+| Domain Of | [FigureDescription](FigureDescription.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [FigureDescription](FigureDescription.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/software |
+| native | https://echemdb.github.io/metadata-schema/source_data/software |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: software
+description: Software that created the data, e.g., recorded it with an instrument,
+  digitized it from a figure, simulated it, or processed it.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: FigureDescription
+domain_of:
+- FigureDescription
+range: Software
+inlined: true
+
+```
+</details></div>

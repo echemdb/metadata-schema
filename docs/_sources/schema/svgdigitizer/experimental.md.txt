@@ -1,0 +1,98 @@
+# Slot: experimental 
+
+
+_Details about the experimental setup._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/experimental](https://echemdb.github.io/metadata-schema/svgdigitizer/experimental)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Svgdigitizer](Svgdigitizer.md) | Metadata schema for the input YAML file used by svgdigitizer to create echemd... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Experimental](Experimental.md) |
+| Domain Of | [Svgdigitizer](Svgdigitizer.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Svgdigitizer](Svgdigitizer.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/experimental |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/experimental |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: experimental
+description: Details about the experimental setup.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: Svgdigitizer
+domain_of:
+- Svgdigitizer
+range: Experimental
+inlined: true
+
+```
+</details></div>

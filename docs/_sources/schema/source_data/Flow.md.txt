@@ -1,0 +1,171 @@
+# Class: Flow 
+
+
+_Forced flow of the electrolyte._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/Flow](https://echemdb.github.io/metadata-schema/source_data/Flow)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class Flow
+    click Flow href "../Flow/"
+      ControlledOperation <|-- Flow
+        click ControlledOperation href "../ControlledOperation/"
+      
+      Flow : control
+        
+          
+    
+        
+        
+        Flow --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      Flow : rate
+        
+          
+    
+        
+        
+        Flow --> "0..1" Quantity : rate
+        click Quantity href "../Quantity/"
+    
+
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* [ControlledOperation](ControlledOperation.md)
+    * **Flow**
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [rate](rate.md) | 0..1 <br/> [Quantity](Quantity.md) | Volumetric or linear flow rate of the electrolyte | `{value: 10, unit: ml / min}` |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the operation was controlled |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [MassTransport](MassTransport.md) | [flow](flow.md) | range | [Flow](Flow.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/Flow |
+| native | https://echemdb.github.io/metadata-schema/source_data/Flow |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: Flow
+description: Forced flow of the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Volumetric or linear flow rate of the electrolyte.
+    examples:
+    - value: '{value: 10, unit: ml / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: Flow
+description: Forced flow of the electrolyte.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+is_a: ControlledOperation
+attributes:
+  rate:
+    name: rate
+    description: Volumetric or linear flow rate of the electrolyte.
+    examples:
+    - value: '{value: 10, unit: ml / min}'
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Flow
+    domain_of:
+    - Rotation
+    - Flow
+    - Stirring
+    range: Quantity
+    inlined: true
+  control:
+    name: control
+    description: How the operation was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    owner: Flow
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>

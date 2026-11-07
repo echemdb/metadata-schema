@@ -1,0 +1,99 @@
+# Slot: operationParameters 
+
+
+_Parameters describing how the measurement was operated, such as temperature control and forced mass transport._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/operationParameters](https://echemdb.github.io/metadata-schema/svgdigitizer/operationParameters)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Experimental](Experimental.md) | Details about the configuration of the experimental setup |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [OperationParameters](OperationParameters.md) |
+| Domain Of | [Experimental](Experimental.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Experimental](Experimental.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/operationParameters |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/operationParameters |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: operationParameters
+description: Parameters describing how the measurement was operated, such as temperature
+  control and forced mass transport.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: Experimental
+domain_of:
+- Experimental
+range: OperationParameters
+inlined: true
+
+```
+</details></div>

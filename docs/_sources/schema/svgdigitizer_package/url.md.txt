@@ -1,0 +1,76 @@
+# Slot: url 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer_package/url](https://echemdb.github.io/metadata-schema/svgdigitizer_package/url)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [SvgdigitizerSource](SvgdigitizerSource.md) | Source publication information for digitized data |  no  |
+| [Software](Software.md) | Software used to create the data |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [SvgdigitizerSource](SvgdigitizerSource.md), [Software](Software.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer_package/url |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer_package/url |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: url
+domain_of:
+- SvgdigitizerSource
+- Software
+range: string
+
+```
+</details></div>

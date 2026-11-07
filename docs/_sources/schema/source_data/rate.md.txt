@@ -1,0 +1,78 @@
+# Slot: rate 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/rate](https://echemdb.github.io/metadata-schema/source_data/rate)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Rotation](Rotation.md) | Rotation of a rotating (disc) electrode |  no  |
+| [Flow](Flow.md) | Forced flow of the electrolyte |  no  |
+| [Stirring](Stirring.md) | Stirring of the electrolyte |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Rotation](Rotation.md), [Flow](Flow.md), [Stirring](Stirring.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/rate |
+| native | https://echemdb.github.io/metadata-schema/source_data/rate |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: rate
+domain_of:
+- Rotation
+- Flow
+- Stirring
+range: string
+
+```
+</details></div>

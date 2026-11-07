@@ -1,0 +1,76 @@
+# Slot: model 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/model](https://echemdb.github.io/metadata-schema/minimum_echemdb/model)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [ElectrodeSource](ElectrodeSource.md), [Instrumentation](Instrumentation.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/model |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/model |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: model
+domain_of:
+- ElectrodeSource
+- Instrumentation
+range: string
+
+```
+</details></div>

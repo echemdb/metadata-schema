@@ -1,0 +1,98 @@
+# Slot: massTransport 
+
+
+_Forced-convection modes used to induce mass transport._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/massTransport](https://echemdb.github.io/metadata-schema/svgdigitizer/massTransport)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [OperationParameters](OperationParameters.md) | Parameters describing how the measurement was operated, such as thermal contr... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [MassTransport](MassTransport.md) |
+| Domain Of | [OperationParameters](OperationParameters.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [OperationParameters](OperationParameters.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/massTransport |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/massTransport |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: massTransport
+description: Forced-convection modes used to induce mass transport.
+from_schema: https://echemdb.github.io/metadata-schema/svgdigitizer
+rank: 1000
+owner: OperationParameters
+domain_of:
+- OperationParameters
+range: MassTransport
+inlined: true
+
+```
+</details></div>

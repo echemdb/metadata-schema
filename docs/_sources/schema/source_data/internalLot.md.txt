@@ -1,0 +1,106 @@
+# Slot: internalLot 
+
+
+_Internal LOT or batch number._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/internalLot](https://echemdb.github.io/metadata-schema/source_data/internalLot)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Purity](Purity.md) | Purity specifications of a chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Purity](Purity.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Purity](Purity.md) |
+
+
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| LOT-2024-001 |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/internalLot |
+| native | https://echemdb.github.io/metadata-schema/source_data/internalLot |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: internalLot
+description: Internal LOT or batch number.
+examples:
+- value: LOT-2024-001
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: Purity
+domain_of:
+- Purity
+range: string
+
+```
+</details></div>

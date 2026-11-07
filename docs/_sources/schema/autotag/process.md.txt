@@ -1,0 +1,103 @@
+# Slot: process 
+
+
+_List of people involved in creating, recording, or curating this data._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/autotag/process](https://echemdb.github.io/metadata-schema/autotag/process)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Curation](Curation.md) | Details on the curation process of the data |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Process](Process.md) |
+| Domain Of | [Curation](Curation.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+| Multivalued | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [Curation](Curation.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/autotag
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/autotag/process |
+| native | https://echemdb.github.io/metadata-schema/autotag/process |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: process
+description: List of people involved in creating, recording, or curating this data.
+from_schema: https://echemdb.github.io/metadata-schema/autotag
+rank: 1000
+owner: Curation
+domain_of:
+- Curation
+range: Process
+required: true
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details></div>

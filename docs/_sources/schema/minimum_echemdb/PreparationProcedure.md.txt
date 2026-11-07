@@ -1,0 +1,187 @@
+# Class: PreparationProcedure 
+
+
+_Procedures and methods used to prepare an object, such as an electrode, a cell, or an electrolyte, before the measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/PreparationProcedure](https://echemdb.github.io/metadata-schema/minimum_echemdb/PreparationProcedure)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class PreparationProcedure
+    click PreparationProcedure href "../PreparationProcedure/"
+      PreparationProcedure : description
+        
+      PreparationProcedure : url
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [url](url.md) | 0..1 <br/> [HttpUrl](HttpUrl.md) | URL to detailed preparation protocol or procedure, such as an article DOI | `https://doi.org/10.1234/preparation.2024` |
+| [description](description.md) | * <br/> [String](String.md) | Step-by-step description of preparation procedure | `Polished with 0.05 um alumina, rinsed with ultrapure water` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [Electrode](Electrode.md) | [preparationProcedure](preparationProcedure.md) | range | [PreparationProcedure](PreparationProcedure.md) |
+| [Electrolyte](Electrolyte.md) | [preparationProcedure](preparationProcedure.md) | range | [PreparationProcedure](PreparationProcedure.md) |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | [preparationProcedure](preparationProcedure.md) | range | [PreparationProcedure](PreparationProcedure.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/PreparationProcedure |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/PreparationProcedure |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: PreparationProcedure
+description: Procedures and methods used to prepare an object, such as an electrode,
+  a cell, or an electrolyte, before the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  url:
+    name: url
+    description: URL to detailed preparation protocol or procedure, such as an article
+      DOI.
+    examples:
+    - value: https://doi.org/10.1234/preparation.2024
+    from_schema: https://echemdb.github.io/metadata-schema/general/preparation_procedure
+    domain_of:
+    - Purity
+    - PreparationProcedure
+    - ElectrodeSource
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Software
+    - Experimental
+    range: HttpUrl
+  description:
+    name: description
+    description: Step-by-step description of preparation procedure.
+    examples:
+    - value: Polished with 0.05 um alumina, rinsed with ultrapure water
+    from_schema: https://echemdb.github.io/metadata-schema/general/preparation_procedure
+    rank: 1000
+    domain_of:
+    - PreparationProcedure
+    - Electrode
+    - Shape
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Control
+    - Experimental
+    range: string
+    multivalued: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: PreparationProcedure
+description: Procedures and methods used to prepare an object, such as an electrode,
+  a cell, or an electrolyte, before the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+attributes:
+  url:
+    name: url
+    description: URL to detailed preparation protocol or procedure, such as an article
+      DOI.
+    examples:
+    - value: https://doi.org/10.1234/preparation.2024
+    from_schema: https://echemdb.github.io/metadata-schema/general/preparation_procedure
+    owner: PreparationProcedure
+    domain_of:
+    - Purity
+    - PreparationProcedure
+    - ElectrodeSource
+    - ElectrochemicalCellSource
+    - Atmosphere
+    - Source
+    - Software
+    - Experimental
+    range: HttpUrl
+  description:
+    name: description
+    description: Step-by-step description of preparation procedure.
+    examples:
+    - value: Polished with 0.05 um alumina, rinsed with ultrapure water
+    from_schema: https://echemdb.github.io/metadata-schema/general/preparation_procedure
+    rank: 1000
+    owner: PreparationProcedure
+    domain_of:
+    - PreparationProcedure
+    - Electrode
+    - Shape
+    - ElectrolyteContainer
+    - ElectrochemicalCellComponent
+    - Atmosphere
+    - DataField
+    - Control
+    - Experimental
+    range: string
+    multivalued: true
+
+```
+</details>

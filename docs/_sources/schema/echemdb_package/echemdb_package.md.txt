@@ -1,0 +1,5 @@
+# echemdb_package 
+
+Data package schema for echemdb following the Frictionless Data Package specification.
+
+URI: https://echemdb.github.io/metadata-schema/echemdb_package

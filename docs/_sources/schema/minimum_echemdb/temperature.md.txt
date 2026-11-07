@@ -1,0 +1,98 @@
+# Slot: temperature 
+
+
+_Temperature of the electrolyte and how it was controlled._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/temperature](https://echemdb.github.io/metadata-schema/minimum_echemdb/temperature)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [OperationParameters](OperationParameters.md) | Parameters describing how the measurement was operated, such as thermal contr... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [ControlledQuantity](ControlledQuantity.md) |
+| Domain Of | [OperationParameters](OperationParameters.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [OperationParameters](OperationParameters.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/temperature |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/temperature |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: temperature
+description: Temperature of the electrolyte and how it was controlled.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+rank: 1000
+owner: OperationParameters
+domain_of:
+- OperationParameters
+range: ControlledQuantity
+inlined: true
+
+```
+</details></div>

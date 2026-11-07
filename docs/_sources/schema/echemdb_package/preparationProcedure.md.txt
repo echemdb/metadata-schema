@@ -1,0 +1,78 @@
+# Slot: preparationProcedure 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/preparationProcedure](https://echemdb.github.io/metadata-schema/echemdb_package/preparationProcedure)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Electrode](Electrode.md) | An electrode used in the electrochemical cell, such as working, reference, co... |  no  |
+| [Electrolyte](Electrolyte.md) | The properties and components of the electrolyte solution |  no  |
+| [ElectrochemicalCell](ElectrochemicalCell.md) | Description of the electrochemical cell setup and configuration |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Electrode](Electrode.md), [Electrolyte](Electrolyte.md), [ElectrochemicalCell](ElectrochemicalCell.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/preparationProcedure |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/preparationProcedure |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: preparationProcedure
+domain_of:
+- Electrode
+- Electrolyte
+- ElectrochemicalCell
+range: string
+
+```
+</details></div>

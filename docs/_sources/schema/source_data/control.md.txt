@@ -1,0 +1,80 @@
+# Slot: control 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/control](https://echemdb.github.io/metadata-schema/source_data/control)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [ControlledQuantity](ControlledQuantity.md) | A physical quantity that was actively controlled by an instrument |  no  |
+| [ControlledOperation](ControlledOperation.md) | Base class for a controlled operation characterised by one or more quantities... |  no  |
+| [Rotation](Rotation.md) | Rotation of a rotating (disc) electrode |  no  |
+| [Flow](Flow.md) | Forced flow of the electrolyte |  no  |
+| [Stirring](Stirring.md) | Stirring of the electrolyte |  no  |
+| [Ultrasound](Ultrasound.md) | Ultrasound applied to the electrolyte |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [ControlledQuantity](ControlledQuantity.md), [ControlledOperation](ControlledOperation.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/control |
+| native | https://echemdb.github.io/metadata-schema/source_data/control |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: control
+domain_of:
+- ControlledQuantity
+- ControlledOperation
+range: string
+
+```
+</details></div>

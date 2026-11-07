@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schema Generation &mdash; metadata-schema 0.9.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=39bb1c6d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            metadata-schema
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Electrochemistry Metadata</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tools.html">Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Schema Generation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-packages-and-frictionless">Data packages and Frictionless</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commands">Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">metadata-schema</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tools.html">Tools</a></li>
+      <li class="breadcrumb-item active">Schema Generation</li>
+  
+  
+    
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/echemdb/metadata-schema/blob/main/doc/generation.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="schema-generation">
+<h1>Schema Generation<a class="headerlink" href="#schema-generation" title="Link to this heading"></a></h1>
+<p>This page covers the generation step of the workflow shown on the <a class="reference internal" href="tools.html"><span class="std std-doc">Tools</span></a> page.</p>
+<p>The schemas are written in <a class="reference external" href="https://linkml.io/">LinkML</a> because a single definition gives several outputs: the JSON Schemas in <code class="docutils literal notranslate"><span class="pre">schemas/</span></code>, the Pydantic models in <code class="docutils literal notranslate"><span class="pre">mdstools/models/</span></code>, and the schema reference pages of this documentation. The JSON Schemas and the Pydantic models are generated separately from the LinkML files and are never edited by hand. A schema change usually starts with an edited example in <code class="docutils literal notranslate"><span class="pre">examples/</span></code>, which shows how the metadata should look and is validated once the schema is updated.</p>
+<section id="data-packages-and-frictionless">
+<h2>Data packages and Frictionless<a class="headerlink" href="#data-packages-and-frictionless" title="Link to this heading"></a></h2>
+<p>The package schemas <code class="docutils literal notranslate"><span class="pre">echemdb_package</span></code> and <code class="docutils literal notranslate"><span class="pre">svgdigitizer_package</span></code> build on the <a class="reference external" href="https://datapackage.org/">Frictionless Data Package</a> standard. Each entry in <code class="docutils literal notranslate"><span class="pre">resources</span></code> must be valid against both the Frictionless data resource schema (fields such as <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">path</span></code> and <code class="docutils literal notranslate"><span class="pre">format</span></code>) and the echemdb resource definition, which adds the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> property. The generated JSON Schemas express this with <code class="docutils literal notranslate"><span class="pre">allOf</span></code> and refer to the Frictionless schema by its URL (<code class="docutils literal notranslate"><span class="pre">https://datapackage.org/profiles/2.0/dataresource.json</span></code>), so any JSON Schema validator can resolve it. Within this repository, <code class="docutils literal notranslate"><span class="pre">pixi</span> <span class="pre">run</span> <span class="pre">validate</span></code> and the schema enrichment use a copy of the Frictionless schemas that is downloaded on first use into <code class="docutils literal notranslate"><span class="pre">schemas/frictionless/</span></code> (not part of the repository).</p>
+</section>
+<section id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Link to this heading"></a></h2>
+<p>Schemas are generated from LinkML YAML definitions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate JSON Schemas</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-schemas
+
+<span class="c1"># Generate Pydantic models</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-models
+
+<span class="c1"># Generate both</span>
+pixi<span class="w"> </span>run<span class="w"> </span>generate-all
+</pre></div>
+</div>
+<p>Validate the example files against the schemas:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pixi<span class="w"> </span>run<span class="w"> </span>validate
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022-2025, the echemdb authors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

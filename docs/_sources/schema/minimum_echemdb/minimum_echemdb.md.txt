@@ -1,0 +1,5 @@
+# minimum_echemdb 
+
+Minimum set of metadata to describe an electrochemical system for echemdb.
+
+URI: https://echemdb.github.io/metadata-schema/minimum_echemdb

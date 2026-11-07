@@ -1,0 +1,102 @@
+# Slot: fieldUnits 
+
+
+_List of fields with their units and optional reference electrodes. Describes the physical units of each data column after mapping._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/fieldUnits](https://echemdb.github.io/metadata-schema/source_data/fieldUnits)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [DataDescription](DataDescription.md) | Description of the raw data file format, including CSV dialect, field mapping... |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [FieldUnit](FieldUnit.md) |
+| Domain Of | [DataDescription](DataDescription.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Multivalued | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [DataDescription](DataDescription.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/fieldUnits |
+| native | https://echemdb.github.io/metadata-schema/source_data/fieldUnits |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: fieldUnits
+description: List of fields with their units and optional reference electrodes. Describes
+  the physical units of each data column after mapping.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: DataDescription
+domain_of:
+- DataDescription
+range: FieldUnit
+multivalued: true
+inlined: true
+inlined_as_list: true
+
+```
+</details></div>

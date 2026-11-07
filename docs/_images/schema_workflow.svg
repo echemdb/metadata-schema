@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 380" width="880" height="380" font-family="Helvetica, Arial, sans-serif">
+  <title>From example to validated metadata</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333333"/>
+    </marker>
+  </defs>
+  <rect width="880" height="380" fill="#ffffff"/>
+
+  <!-- Boxes. Blue: hand-written source, green: generated, dashed: external -->
+  <g stroke="#333333" stroke-width="1.5">
+    <rect x="20" y="30" width="180" height="66" rx="6" fill="#fdf6e3"/>
+    <rect x="290" y="30" width="200" height="66" rx="6" fill="#eaf5e6"/>
+    <rect x="580" y="30" width="220" height="66" rx="6" fill="#ffffff" stroke-dasharray="6 4"/>
+    <rect x="20" y="150" width="180" height="60" rx="6" fill="#f4f6f8"/>
+    <rect x="290" y="150" width="200" height="60" rx="6" fill="#e3eefb"/>
+    <rect x="580" y="150" width="220" height="60" rx="6" fill="#eaf5e6"/>
+    <rect x="290" y="270" width="200" height="60" rx="6" fill="#f4f6f8"/>
+    <rect x="580" y="270" width="220" height="60" rx="6" fill="#f4f6f8"/>
+  </g>
+
+  <!-- Box titles -->
+  <g font-size="15" font-weight="bold" text-anchor="middle" fill="#111111">
+    <text x="110" y="59">User or LLM</text>
+    <text x="390" y="54">Pydantic models</text>
+    <text x="690" y="59">Frictionless</text>
+    <text x="110" y="176">Example YAML</text>
+    <text x="390" y="176">LinkML schema</text>
+    <text x="690" y="176">JSON Schemas</text>
+    <text x="390" y="296">Metadata files</text>
+    <text x="690" y="296">Validate</text>
+  </g>
+
+  <!-- Box subtitles -->
+  <g font-size="12" font-family="Consolas, Menlo, monospace" text-anchor="middle" fill="#444444">
+    <text x="390" y="72">mdstools/models/</text>
+    <text x="690" y="79">datapackage, dataresource</text>
+    <text x="110" y="196">examples/</text>
+    <text x="390" y="196">linkml/</text>
+    <text x="690" y="196">schemas/</text>
+    <text x="390" y="316">YAML/JSON</text>
+    <text x="690" y="316">JSON Schema validator</text>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#444444">
+    <text x="110" y="79">starting point</text>
+    <text x="390" y="88">for Python tools</text>
+  </g>
+
+  <!-- Arrows -->
+  <g stroke="#333333" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+    <path d="M110,96 L110,148"/>
+    <path d="M200,180 L288,180"/>
+    <path d="M490,180 L578,180"/>
+    <path d="M390,150 L390,98"/>
+    <path d="M690,96 L690,148" stroke-dasharray="6 4"/>
+    <path d="M690,210 L690,268"/>
+    <path d="M580,300 L492,300"/>
+    <path d="M690,330 L690,355 L110,355 L110,212"/>
+  </g>
+
+  <!-- Arrow labels -->
+  <g font-size="12" fill="#333333">
+    <text x="118" y="127">suggests changes</text>
+    <text x="244" y="172" text-anchor="middle">input for</text>
+    <text x="534" y="172" text-anchor="middle">generates</text>
+    <text x="398" y="128">generates</text>
+    <text x="698" y="118">package schemas</text>
+    <text x="698" y="134">only (allOf)</text>
+    <text x="698" y="244">used by</text>
+    <text x="536" y="292" text-anchor="middle">validates</text>
+    <text x="200" y="347" text-anchor="middle">validates</text>
+  </g>
+</svg>

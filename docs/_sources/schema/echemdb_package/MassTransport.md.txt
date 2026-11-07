@@ -1,0 +1,229 @@
+# Class: MassTransport 
+
+
+_Forced-convection modes inducing mass transport during the measurement._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/MassTransport](https://echemdb.github.io/metadata-schema/echemdb_package/MassTransport)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class MassTransport
+    click MassTransport href "../MassTransport/"
+      MassTransport : flow
+        
+          
+    
+        
+        
+        MassTransport --> "0..1" Flow : flow
+        click Flow href "../Flow/"
+    
+
+        
+      MassTransport : rotation
+        
+          
+    
+        
+        
+        MassTransport --> "0..1" Rotation : rotation
+        click Rotation href "../Rotation/"
+    
+
+        
+      MassTransport : stirring
+        
+          
+    
+        
+        
+        MassTransport --> "0..1" Stirring : stirring
+        click Stirring href "../Stirring/"
+    
+
+        
+      MassTransport : ultrasound
+        
+          
+    
+        
+        
+        MassTransport --> "0..1" Ultrasound : ultrasound
+        click Ultrasound href "../Ultrasound/"
+    
+
+        
+      
+```
+
+
+
+
+<!-- no inheritance hierarchy -->
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [rotation](rotation.md) | 0..1 <br/> [Rotation](Rotation.md) | Rotating (disc) electrode, e |  |
+| [flow](flow.md) | 0..1 <br/> [Flow](Flow.md) | Forced electrolyte flow, e |  |
+| [ultrasound](ultrasound.md) | 0..1 <br/> [Ultrasound](Ultrasound.md) | Ultrasound applied to the electrolyte (sonoelectrochemistry) |  |
+| [stirring](stirring.md) | 0..1 <br/> [Stirring](Stirring.md) | Stirring of the electrolyte, e |  |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [OperationParameters](OperationParameters.md) | [massTransport](massTransport.md) | range | [MassTransport](MassTransport.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/MassTransport |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/MassTransport |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: MassTransport
+description: Forced-convection modes inducing mass transport during the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  rotation:
+    name: rotation
+    description: Rotating (disc) electrode, e.g. RDE or RRDE.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - MassTransport
+    range: Rotation
+    inlined: true
+  flow:
+    name: flow
+    description: Forced electrolyte flow, e.g. a flow or channel cell.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - MassTransport
+    - Component
+    range: Flow
+    inlined: true
+  ultrasound:
+    name: ultrasound
+    description: Ultrasound applied to the electrolyte (sonoelectrochemistry).
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - MassTransport
+    range: Ultrasound
+    inlined: true
+  stirring:
+    name: stirring
+    description: Stirring of the electrolyte, e.g. with a magnetic stirrer.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - MassTransport
+    range: Stirring
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: MassTransport
+description: Forced-convection modes inducing mass transport during the measurement.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+attributes:
+  rotation:
+    name: rotation
+    description: Rotating (disc) electrode, e.g. RDE or RRDE.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: MassTransport
+    domain_of:
+    - MassTransport
+    range: Rotation
+    inlined: true
+  flow:
+    name: flow
+    description: Forced electrolyte flow, e.g. a flow or channel cell.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: MassTransport
+    domain_of:
+    - MassTransport
+    - Component
+    range: Flow
+    inlined: true
+  ultrasound:
+    name: ultrasound
+    description: Ultrasound applied to the electrolyte (sonoelectrochemistry).
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: MassTransport
+    domain_of:
+    - MassTransport
+    range: Ultrasound
+    inlined: true
+  stirring:
+    name: stirring
+    description: Stirring of the electrolyte, e.g. with a magnetic stirrer.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: MassTransport
+    domain_of:
+    - MassTransport
+    range: Stirring
+    inlined: true
+
+```
+</details>

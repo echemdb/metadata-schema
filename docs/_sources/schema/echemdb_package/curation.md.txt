@@ -1,0 +1,100 @@
+# Slot: curation 
+
+
+_Details on the curation process._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/echemdb_package/curation](https://echemdb.github.io/metadata-schema/echemdb_package/curation)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [EchemdbMetadata](EchemdbMetadata.md) | echemdb-specific metadata for electrochemical data |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Curation](Curation.md) |
+| Domain Of | [EchemdbMetadata](EchemdbMetadata.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+| Required | Yes |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [EchemdbMetadata](EchemdbMetadata.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/curation |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/curation |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: curation
+description: Details on the curation process.
+from_schema: https://echemdb.github.io/metadata-schema/echemdb_package
+rank: 1000
+owner: EchemdbMetadata
+domain_of:
+- EchemdbMetadata
+range: Curation
+required: true
+inlined: true
+
+```
+</details></div>

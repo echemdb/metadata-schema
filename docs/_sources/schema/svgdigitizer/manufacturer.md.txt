@@ -1,0 +1,78 @@
+# Slot: manufacturer 
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/svgdigitizer/manufacturer](https://echemdb.github.io/metadata-schema/svgdigitizer/manufacturer)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [Instrumentation](Instrumentation.md) | The instruments used to perform the experiment |  no  |
+| [ElectrodeSource](ElectrodeSource.md) | Information about the source and supplier of the electrode |  no  |
+| [ComponentSource](ComponentSource.md) | Information about the source and quality of the chemical component |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [String](String.md) |
+| Domain Of | [Instrumentation](Instrumentation.md), [ElectrodeSource](ElectrodeSource.md), [ComponentSource](ComponentSource.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/svgdigitizer/manufacturer |
+| native | https://echemdb.github.io/metadata-schema/svgdigitizer/manufacturer |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: manufacturer
+domain_of:
+- Instrumentation
+- ElectrodeSource
+- ComponentSource
+range: string
+
+```
+</details></div>

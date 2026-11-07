@@ -1,0 +1,98 @@
+# Slot: stirring 
+
+
+_Stirring of the electrolyte, e.g. with a magnetic stirrer._
+
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/source_data/stirring](https://echemdb.github.io/metadata-schema/source_data/stirring)
+<!-- no inheritance hierarchy -->
+
+
+
+
+
+## Applicable Classes
+
+| Name | Description | Modifies Slot |
+| --- | --- | --- |
+| [MassTransport](MassTransport.md) | Forced-convection modes inducing mass transport during the measurement |  no  |
+
+
+
+
+
+
+## Properties
+
+### Type and Range
+
+| Property | Value |
+| --- | --- |
+| Range | [Stirring](Stirring.md) |
+| Domain Of | [MassTransport](MassTransport.md) |
+
+### Cardinality and Requirements
+
+| Property | Value |
+| --- | --- |
+### Slot Characteristics
+
+| Property | Value |
+| --- | --- |
+| Owner | [MassTransport](MassTransport.md) |
+
+
+
+
+
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/source_data
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/source_data/stirring |
+| native | https://echemdb.github.io/metadata-schema/source_data/stirring |
+
+
+
+
+## LinkML Source
+
+<details>
+```yaml
+name: stirring
+description: Stirring of the electrolyte, e.g. with a magnetic stirrer.
+from_schema: https://echemdb.github.io/metadata-schema/source_data
+rank: 1000
+owner: MassTransport
+domain_of:
+- MassTransport
+range: Stirring
+inlined: true
+
+```
+</details></div>

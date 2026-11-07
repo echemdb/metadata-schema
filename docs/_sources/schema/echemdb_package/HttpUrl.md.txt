@@ -1,0 +1,66 @@
+# Type: HttpUrl 
+
+
+
+
+_A valid HTTP or HTTPS URL, including DOIs._
+
+
+
+
+URI: [xsd:anyURI](http://www.w3.org/2001/XMLSchema#anyURI)
+
+## Type Properties
+
+| Property | Value |
+| --- | --- |
+| Type Of | [Uri](Uri.md) |
+| Base | `URI` |
+| Type URI | [xsd:anyURI](http://www.w3.org/2001/XMLSchema#anyURI) |
+| Representation | `str` |
+## Value Constraints
+
+| Property | Value |
+| --- | --- |
+| Regex Pattern | `^https?://.*$` |
+
+
+
+
+
+
+
+
+
+## Examples
+
+| Value |
+| --- |
+| https://example.org |
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/echemdb_package
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/echemdb_package/HttpUrl |
+| native | https://echemdb.github.io/metadata-schema/echemdb_package/HttpUrl |
+
+
+
+

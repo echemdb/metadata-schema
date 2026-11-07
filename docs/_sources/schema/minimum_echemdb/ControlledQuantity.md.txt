@@ -1,0 +1,238 @@
+# Class: ControlledQuantity 
+
+
+_A physical quantity that was actively controlled by an instrument._
+
+
+
+
+
+URI: [https://echemdb.github.io/metadata-schema/minimum_echemdb/ControlledQuantity](https://echemdb.github.io/metadata-schema/minimum_echemdb/ControlledQuantity)
+
+
+
+
+
+```{mermaid}
+ classDiagram
+    class ControlledQuantity
+    click ControlledQuantity href "../ControlledQuantity/"
+      Quantity <|-- ControlledQuantity
+        click Quantity href "../Quantity/"
+      
+      ControlledQuantity : calculation
+        
+      ControlledQuantity : comment
+        
+      ControlledQuantity : control
+        
+          
+    
+        
+        
+        ControlledQuantity --> "0..1" Control : control
+        click Control href "../Control/"
+    
+
+        
+      ControlledQuantity : uncertainty
+        
+          
+    
+        
+        
+        ControlledQuantity --> "0..1" Uncertainty : uncertainty
+        click Uncertainty href "../Uncertainty/"
+    
+
+        
+      ControlledQuantity : unit
+        
+      ControlledQuantity : value
+        
+      
+```
+
+
+
+
+
+## Inheritance
+* [Quantity](Quantity.md)
+    * **ControlledQuantity**
+
+
+
+## Slots
+
+| Name | Cardinality and Range | Description | Examples |
+| ---  | --- | --- | --- |
+| [control](control.md) | 0..1 <br/> [Control](Control.md) | How the quantity was controlled |  |
+| [value](value.md) | 0..1 <br/> [Float](Float.md) | Numerical value of the quantity | `0.5` |
+| [unit](unit.md) | 0..1 <br/> [String](String.md) | Unit of measurement following astropy's string notation (e | `mol / l`,  `V`,  `mA / cm2` |
+| [uncertainty](uncertainty.md) | 0..1 <br/> [Uncertainty](Uncertainty.md) | Uncertainty information for a measured quantity |  |
+| [comment](comment.md) | 0..1 <br/> [String](String.md) | Additional notes about the measurement or quantity | `Measured at room temperature` |
+| [calculation](calculation.md) | 0..1 <br/> [String](String.md) | Method or formula used to calculate this quantity | `Obtained by multiplying U and I` |
+
+
+
+
+
+## Usages
+
+| used by | used in | type | used |
+| ---  | --- | --- | --- |
+| [OperationParameters](OperationParameters.md) | [temperature](temperature.md) | range | [ControlledQuantity](ControlledQuantity.md) |
+
+
+
+
+
+
+
+## Identifier and Mapping Information
+
+
+
+
+
+
+### Schema Source
+
+
+* from schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+
+
+
+
+## Mappings
+
+| Mapping Type | Mapped Value |
+| ---  | ---  |
+| self | https://echemdb.github.io/metadata-schema/minimum_echemdb/ControlledQuantity |
+| native | https://echemdb.github.io/metadata-schema/minimum_echemdb/ControlledQuantity |
+
+
+
+
+
+
+## LinkML Source
+
+<!-- TODO: investigate https://stackoverflow.com/questions/37606292/how-to-create-tabbed-code-blocks-in-mkdocs-or-sphinx -->
+
+### Direct
+
+<details>
+```yaml
+name: ControlledQuantity
+description: A physical quantity that was actively controlled by an instrument.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+is_a: Quantity
+attributes:
+  control:
+    name: control
+    description: How the quantity was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+
+```
+</details>
+
+### Induced
+
+<details>
+```yaml
+name: ControlledQuantity
+description: A physical quantity that was actively controlled by an instrument.
+from_schema: https://echemdb.github.io/metadata-schema/minimum_echemdb
+is_a: Quantity
+attributes:
+  control:
+    name: control
+    description: How the quantity was controlled.
+    from_schema: https://echemdb.github.io/metadata-schema/experimental/operation
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - ControlledQuantity
+    - ControlledOperation
+    range: Control
+    inlined: true
+  value:
+    name: value
+    description: Numerical value of the quantity.
+    examples:
+    - value: '0.5'
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    range: float
+  unit:
+    name: unit
+    description: Unit of measurement following astropy's string notation (e.g., 'mol
+      / l', 'V', 'mA / cm2'). Use an empty string for dimensionless quantities.
+    examples:
+    - value: mol / l
+    - value: V
+    - value: mA / cm2
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Purity
+    - DataField
+    range: string
+  uncertainty:
+    name: uncertainty
+    description: Uncertainty information for a measured quantity.
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - Quantity
+    range: Uncertainty
+    inlined: true
+  comment:
+    name: comment
+    description: Additional notes about the measurement or quantity.
+    examples:
+    - value: Measured at room temperature
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - Quantity
+    - Uncertainty
+    - Component
+    - Electrolyte
+    - ElectrolyteContainerComponent
+    - Atmosphere
+    - Source
+    - FigureDescription
+    range: string
+  calculation:
+    name: calculation
+    description: Method or formula used to calculate this quantity.
+    examples:
+    - value: Obtained by multiplying U and I
+    from_schema: https://echemdb.github.io/metadata-schema/general/quantity
+    rank: 1000
+    owner: ControlledQuantity
+    domain_of:
+    - Quantity
+    range: string
+
+```
+</details>
