@@ -4,6 +4,49 @@ echemdb-metadata-schema Change Log
 
 .. current developments
 
+v0.9.0
+====================
+
+**Added:**
+
+* Added ``CONTRIBUTING.md`` describing the fork-based workflow (one minimal branch per change, checks run locally before pushing), schema changes (starting from an edited example that is discussed before the LinkML is changed) with migrations, and how to write news entries, together with a pull request template.
+* Added Claude Code skills in ``.claude/skills/``: ``/new-pr`` for the fork-based pull request workflow, ``/schema-change`` for schema changes with migrations, and ``/record-decision`` for recording design decisions on GitHub issues and pull requests.
+* Added ``pixi run check-news``, also run in CI, which rejects malformed news entries (placeholders, unknown or empty sections, byte order mark).
+* Added ``pixi run doc-fast``, an incremental documentation build for quick previews while editing. It regenerates the schema pages only if ``linkml/`` changed and builds from scratch only if the page structure changed, so it is also safe after switching branches.
+* Added ``pixi run doc-fast-serve``, which serves the documentation built by ``pixi run doc-fast`` on http://localhost:8080.
+* Added a figure of the workflow from a suggested change in an example to validated metadata to the "Tools" page of the documentation.
+* Added a "Schema Generation" page to the documentation explaining how the JSON Schemas and Pydantic models are generated from LinkML and how the package schemas build on the Frictionless Data Package standard.
+* Added a shared ``PreparationProcedure`` class (``linkml/general/preparation_procedure.yaml``) with ``url`` and a step-by-step ``description`` list, used by electrodes, the electrochemical cell, and the electrolyte.
+* Added ``system.electrolyte.preparationProcedure`` to describe how the electrolyte was prepared, e.g., purification or degassing.
+* Added a migration step that converts ``system.electrochemicalCell.cleaningProcedure`` into ``system.electrochemicalCell.preparationProcedure.description`` (run ``mdstools update``).
+* Added Zenodo metadata in `.zenodo.json`, so that every release of this repository is archived on Zenodo with a DOI.
+
+**Changed:**
+
+* Changed ``CLAUDE.md`` into short instructions for Claude that refer to ``CONTRIBUTING.md``.
+* Changed ``.gitattributes`` so that text files are checked out with LF line endings on every platform.
+* Changed ``pixi run doc`` to always build the documentation from scratch, so that the navigation of unchanged pages is never outdated after the page structure changes.
+* Changed ``doc/generate_schema_docs.py`` to write only schema pages whose content changed, instead of deleting and regenerating all of them.
+* Changed the documentation start page and navigation into two parts, each with its own overview page: "Electrochemistry metadata" (schema reference, examples, JSON Schema downloads) and "Tools" (installation, usage, schema generation, API reference), and added a figure of an electrochemical cell next to the metadata that describes it to the start page.
+* Changed ``system.electrochemicalCell.cleaningProcedure`` (free-text string) to ``system.electrochemicalCell.preparationProcedure`` (``PreparationProcedure`` object), following the structure of the electrodes (see #128). This is a breaking change.
+* Changed the name of the ``ElectrodePreparation`` class to ``PreparationProcedure``; the structure of ``electrodes[].preparationProcedure`` is unchanged.
+* Changed the README to focus on ``mdstools`` and point to the documentation website for the schemas, usage and API.
+
+**Removed:**
+
+* Removed ``doc/Makefile``; the pixi tasks call ``sphinx-build`` directly, and ``make`` is no longer a dependency of the documentation environment.
+* Removed ``system.electrochemicalCell.cleaningProcedure``; existing files are upgraded by the migration.
+
+**Fixed:**
+
+* Fixed ``mdstools flatten``, ``unflatten`` and ``update`` failing with a ``UnicodeEncodeError`` on Windows when the output is not UTF-8 encoded (e.g. when it is piped). The commands no longer print a check mark.
+* Fixed the documentation of ``mdstools flatten``: the options are ``--schema-dir``, ``--output-dir`` and ``--no-enrichment``, all output files are listed, and the enrichment with descriptions and examples from the JSON Schemas is explained.
+* Fixed the validation example in the usage documentation, which imported the non-existent ``validate_with_json_schema``. It now shows ``validate_metadata``, ``validate`` and ``validate_with_pydantic``.
+* Fixed the schema generator writing Windows line endings (CRLF) on Windows; generated JSON Schemas and Pydantic models are now written with LF on every platform.
+* Fixed the case of ``README.md``, which ``pyproject.toml`` refers to but was tracked as ``readme.md``.
+
+
+
 v0.8.4
 ====================
 

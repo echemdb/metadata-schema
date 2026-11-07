@@ -3070,7 +3070,7 @@ class SourceData(ConfiguredBaseModel):
         json_schema_extra={
             "linkml_meta": {
                 "domain_of": ["SourceData"],
-                "examples": [{"value": "0.8.4"}],
+                "examples": [{"value": "0.9.0"}],
             }
         },
     )

@@ -187,7 +187,7 @@ MIGRATIONS: list[Migration] = [
         apply=_move_temperature_to_operation_parameters,
     ),
     Migration(
-        to_version=UNRELEASED,
+        to_version="0.9.0",
         description=(
             "Replace system.electrochemicalCell.cleaningProcedure with "
             "system.electrochemicalCell.preparationProcedure.description"
