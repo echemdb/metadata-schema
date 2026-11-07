@@ -26,18 +26,18 @@ How the schemas are generated from LinkML, and how to flatten, enrich, validate 
 ::::
 
 (json-schemas)=
-## JSON Schemas (v0.8.4)
+## JSON Schemas (v0.9.0)
 
 The following JSON Schema files can be used to validate metadata in any language or tool that supports JSON Schema:
 
 | Schema | Download |
 | --- | --- |
-| Autotag | [autotag.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/autotag.json) |
-| Minimum echemdb | [minimum_echemdb.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/minimum_echemdb.json) |
-| Source Data | [source_data.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/source_data.json) |
-| SVG Digitizer | [svgdigitizer.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/svgdigitizer.json) |
-| echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/echemdb_package.json) |
-| SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.8.4/schemas/svgdigitizer_package.json) |
+| Autotag | [autotag.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/autotag.json) |
+| Minimum echemdb | [minimum_echemdb.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/minimum_echemdb.json) |
+| Source Data | [source_data.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/source_data.json) |
+| SVG Digitizer | [svgdigitizer.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/svgdigitizer.json) |
+| echemdb Package | [echemdb_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/echemdb_package.json) |
+| SVG Digitizer Package | [svgdigitizer_package.json](https://raw.githubusercontent.com/echemdb/metadata-schema/0.9.0/schemas/svgdigitizer_package.json) |
 
 ```{toctree}
 :maxdepth: 2

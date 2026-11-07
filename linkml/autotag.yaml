@@ -28,7 +28,7 @@ classes:
         range: string
         description: Version of the echemdb metadata schema this data conforms to.
         examples:
-          - value: "0.8.4"
+          - value: "0.9.0"
       curation:
         range: Curation
         required: true
