@@ -1,5 +1,7 @@
 # echemdb metadata-schema
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24028952.svg)](https://doi.org/10.5281/zenodo.24028952)
+
 The [metadata-schema](https://github.com/echemdb/metadata-schema) repository provides standardized metadata schemas to describe electrochemical systems and the collected data. The `mdstools` Python package allows generating, validating and working with them.
 
 This project is part of the [echemdb](https://www.echemdb.org) community project.
